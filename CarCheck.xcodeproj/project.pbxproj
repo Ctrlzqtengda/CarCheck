@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
+		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
+		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
+		F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F04ACD9D1F79E20B00F4C50D /* Assets.xcassets */; };
+		F04ACDA41F79E20B00F4C50D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDA31F79E20B00F4C50D /* main.m */; };
+		F04ACDC11F7A391100F4C50D /* BaseTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDC01F7A391100F4C50D /* BaseTabBarViewController.m */; };
+		F04ACDC41F7A3C3F00F4C50D /* ZQMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */; };
+		F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDC61F7A3C7900F4C50D /* ZQCarServerViewController.m */; };
+		F04ACDCA1F7A3C9700F4C50D /* ZQCarProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDC91F7A3C9700F4C50D /* ZQCarProcessViewController.m */; };
+		F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDBD1F7A385500F4C50D /* BaseNavigationController.m */; };
+		F04ACDCE1F7A3D2A00F4C50D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDBB1F7A385500F4C50D /* BaseViewController.m */; };
+		F04ACDCF1F7A3D3000F4C50D /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDB21F7A347F00F4C50D /* Utility.m */; };
+		F04ACDD81F7A44A000F4C50D /* JKHttpClientTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDD31F7A435900F4C50D /* JKHttpClientTool.m */; };
+		F04ACDD91F7A44A400F4C50D /* JKHttpRequestService.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDD41F7A435900F4C50D /* JKHttpRequestService.m */; };
+		F04ACDDA1F7A44A900F4C50D /* JKNetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDD51F7A435900F4C50D /* JKNetManager.m */; };
+		F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDDC1F7A470E00F4C50D /* YtabBarButton.m */; };
+		F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */; };
+		F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F061A5001F7B49B80039C9EC /* ZQProcessCell.m */; };
+		F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA11F7A694500468EC2 /* ZQHeaderViewScoll.m */; };
+		F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */; };
+		F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */; };
+		F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */; };
+		F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarCheck.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
+		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
+		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F04ACD941F79E20B00F4C50D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F04ACD951F79E20B00F4C50D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F04ACD971F79E20B00F4C50D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F04ACD981F79E20B00F4C50D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F04ACD9D1F79E20B00F4C50D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F04ACDA21F79E20B00F4C50D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F04ACDA31F79E20B00F4C50D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F04ACDB11F7A347F00F4C50D /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		F04ACDB21F7A347F00F4C50D /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		F04ACDB91F7A351200F4C50D /* RestAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestAPI.h; sourceTree = "<group>"; };
+		F04ACDBB1F7A385500F4C50D /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		F04ACDBC1F7A385500F4C50D /* BaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
+		F04ACDBD1F7A385500F4C50D /* BaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
+		F04ACDBE1F7A385600F4C50D /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		F04ACDBF1F7A391100F4C50D /* BaseTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTabBarViewController.h; sourceTree = "<group>"; };
+		F04ACDC01F7A391100F4C50D /* BaseTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTabBarViewController.m; sourceTree = "<group>"; };
+		F04ACDC21F7A3C3F00F4C50D /* ZQMyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyViewController.h; sourceTree = "<group>"; };
+		F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyViewController.m; sourceTree = "<group>"; };
+		F04ACDC51F7A3C7900F4C50D /* ZQCarServerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQCarServerViewController.h; sourceTree = "<group>"; };
+		F04ACDC61F7A3C7900F4C50D /* ZQCarServerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQCarServerViewController.m; sourceTree = "<group>"; };
+		F04ACDC81F7A3C9700F4C50D /* ZQCarProcessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQCarProcessViewController.h; sourceTree = "<group>"; };
+		F04ACDC91F7A3C9700F4C50D /* ZQCarProcessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQCarProcessViewController.m; sourceTree = "<group>"; };
+		F04ACDD01F7A3E2A00F4C50D /* Custom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Custom.h; sourceTree = "<group>"; };
+		F04ACDD11F7A3E8300F4C50D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		F04ACDD21F7A435900F4C50D /* JKHttpRequestService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JKHttpRequestService.h; sourceTree = "<group>"; };
+		F04ACDD31F7A435900F4C50D /* JKHttpClientTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JKHttpClientTool.m; sourceTree = "<group>"; };
+		F04ACDD41F7A435900F4C50D /* JKHttpRequestService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JKHttpRequestService.m; sourceTree = "<group>"; };
+		F04ACDD51F7A435900F4C50D /* JKNetManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JKNetManager.m; sourceTree = "<group>"; };
+		F04ACDD61F7A435A00F4C50D /* JKNetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JKNetManager.h; sourceTree = "<group>"; };
+		F04ACDD71F7A435A00F4C50D /* JKHttpClientTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JKHttpClientTool.h; sourceTree = "<group>"; };
+		F04ACDDB1F7A470E00F4C50D /* YtabBarButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YtabBarButton.h; sourceTree = "<group>"; };
+		F04ACDDC1F7A470E00F4C50D /* YtabBarButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YtabBarButton.m; sourceTree = "<group>"; };
+		F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		F061A4FF1F7B49B80039C9EC /* ZQProcessCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessCell.h; sourceTree = "<group>"; };
+		F061A5001F7B49B80039C9EC /* ZQProcessCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessCell.m; sourceTree = "<group>"; };
+		F07F1DA01F7A694500468EC2 /* ZQHeaderViewScoll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQHeaderViewScoll.h; sourceTree = "<group>"; };
+		F07F1DA11F7A694500468EC2 /* ZQHeaderViewScoll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQHeaderViewScoll.m; sourceTree = "<group>"; };
+		F07F1DA21F7A694500468EC2 /* ZQScrollPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQScrollPageView.h; sourceTree = "<group>"; };
+		F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQScrollPageView.m; sourceTree = "<group>"; };
+		F07F1DA61F7A69A600468EC2 /* ZQServerViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQServerViewCell.h; sourceTree = "<group>"; };
+		F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQServerViewCell.m; sourceTree = "<group>"; };
+		F07F1DA91F7A72DF00468EC2 /* ZQAppointmentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAppointmentHeaderView.h; sourceTree = "<group>"; };
+		F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAppointmentHeaderView.m; sourceTree = "<group>"; };
+		F0C5ECB51F7B6024005F782D /* ZQProcessRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessRightCell.h; sourceTree = "<group>"; };
+		F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessRightCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F04ACD8E1F79E20B00F4C50D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09DC0D43BF6B2E1B1791FBA9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0A212E89E88AEFFD05F3D771 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */,
+				E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F04ACD881F79E20B00F4C50D = {
+			isa = PBXGroup;
+			children = (
+				F04ACD931F79E20B00F4C50D /* CarCheck */,
+				F04ACD921F79E20B00F4C50D /* Products */,
+				0A212E89E88AEFFD05F3D771 /* Pods */,
+				09DC0D43BF6B2E1B1791FBA9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F04ACD921F79E20B00F4C50D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACD911F79E20B00F4C50D /* CarCheck.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F04ACD931F79E20B00F4C50D /* CarCheck */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDB41F7A351200F4C50D /* RequestTools */,
+				F04ACDB31F7A34B700F4C50D /* Venders(第三方库) */,
+				F04ACDAF1F7A33FE00F4C50D /* BaseViewControllers */,
+				F04ACDB01F7A347F00F4C50D /* Utility */,
+				F04ACDAB1F79E25800F4C50D /* Classes */,
+				F04ACD941F79E20B00F4C50D /* AppDelegate.h */,
+				F04ACD951F79E20B00F4C50D /* AppDelegate.m */,
+				F04ACD971F79E20B00F4C50D /* ViewController.h */,
+				F04ACD981F79E20B00F4C50D /* ViewController.m */,
+				F04ACD9D1F79E20B00F4C50D /* Assets.xcassets */,
+				F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */,
+				F04ACDA21F79E20B00F4C50D /* Info.plist */,
+				F04ACDA31F79E20B00F4C50D /* main.m */,
+				F04ACDD11F7A3E8300F4C50D /* PrefixHeader.pch */,
+				F0C5ECB81F7B955D005F782D /* Resource */,
+			);
+			path = CarCheck;
+			sourceTree = "<group>";
+		};
+		F04ACDAB1F79E25800F4C50D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDAE1F79E30400F4C50D /* My(我的) */,
+				F04ACDAD1F79E2C800F4C50D /* Service(服务) */,
+				F04ACDAC1F79E28100F4C50D /* Process(流程) */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F04ACDAC1F79E28100F4C50D /* Process(流程) */ = {
+			isa = PBXGroup;
+			children = (
+				F061A4FE1F7B43A20039C9EC /* Views */,
+				F04ACDC81F7A3C9700F4C50D /* ZQCarProcessViewController.h */,
+				F04ACDC91F7A3C9700F4C50D /* ZQCarProcessViewController.m */,
+			);
+			path = "Process(流程)";
+			sourceTree = "<group>";
+		};
+		F04ACDAD1F79E2C800F4C50D /* Service(服务) */ = {
+			isa = PBXGroup;
+			children = (
+				F07F1D9F1F7A694500468EC2 /* Views */,
+				F04ACDC51F7A3C7900F4C50D /* ZQCarServerViewController.h */,
+				F04ACDC61F7A3C7900F4C50D /* ZQCarServerViewController.m */,
+			);
+			path = "Service(服务)";
+			sourceTree = "<group>";
+		};
+		F04ACDAE1F79E30400F4C50D /* My(我的) */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDC21F7A3C3F00F4C50D /* ZQMyViewController.h */,
+				F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */,
+			);
+			path = "My(我的)";
+			sourceTree = "<group>";
+		};
+		F04ACDAF1F7A33FE00F4C50D /* BaseViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDDB1F7A470E00F4C50D /* YtabBarButton.h */,
+				F04ACDDC1F7A470E00F4C50D /* YtabBarButton.m */,
+				F04ACDBF1F7A391100F4C50D /* BaseTabBarViewController.h */,
+				F04ACDC01F7A391100F4C50D /* BaseTabBarViewController.m */,
+				F04ACDBC1F7A385500F4C50D /* BaseNavigationController.h */,
+				F04ACDBD1F7A385500F4C50D /* BaseNavigationController.m */,
+				F04ACDBE1F7A385600F4C50D /* BaseViewController.h */,
+				F04ACDBB1F7A385500F4C50D /* BaseViewController.m */,
+			);
+			path = BaseViewControllers;
+			sourceTree = "<group>";
+		};
+		F04ACDB01F7A347F00F4C50D /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDD01F7A3E2A00F4C50D /* Custom.h */,
+				F04ACDB11F7A347F00F4C50D /* Utility.h */,
+				F04ACDB21F7A347F00F4C50D /* Utility.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		F04ACDB31F7A34B700F4C50D /* Venders(第三方库) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Venders(第三方库)";
+			sourceTree = "<group>";
+		};
+		F04ACDB41F7A351200F4C50D /* RequestTools */ = {
+			isa = PBXGroup;
+			children = (
+				F04ACDD71F7A435A00F4C50D /* JKHttpClientTool.h */,
+				F04ACDD31F7A435900F4C50D /* JKHttpClientTool.m */,
+				F04ACDD21F7A435900F4C50D /* JKHttpRequestService.h */,
+				F04ACDD41F7A435900F4C50D /* JKHttpRequestService.m */,
+				F04ACDD61F7A435A00F4C50D /* JKNetManager.h */,
+				F04ACDD51F7A435900F4C50D /* JKNetManager.m */,
+				F04ACDB91F7A351200F4C50D /* RestAPI.h */,
+			);
+			path = RequestTools;
+			sourceTree = "<group>";
+		};
+		F061A4FE1F7B43A20039C9EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F061A4FF1F7B49B80039C9EC /* ZQProcessCell.h */,
+				F061A5001F7B49B80039C9EC /* ZQProcessCell.m */,
+				F0C5ECB51F7B6024005F782D /* ZQProcessRightCell.h */,
+				F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F07F1D9F1F7A694500468EC2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F07F1DA01F7A694500468EC2 /* ZQHeaderViewScoll.h */,
+				F07F1DA11F7A694500468EC2 /* ZQHeaderViewScoll.m */,
+				F07F1DA91F7A72DF00468EC2 /* ZQAppointmentHeaderView.h */,
+				F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */,
+				F07F1DA21F7A694500468EC2 /* ZQScrollPageView.h */,
+				F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */,
+				F07F1DA61F7A69A600468EC2 /* ZQServerViewCell.h */,
+				F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */,
+			);
+			name = Views;
+			path = "CarCheck/Classes/Service(服务)/Views";
+			sourceTree = SOURCE_ROOT;
+		};
+		F0C5ECB81F7B955D005F782D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F04ACD901F79E20B00F4C50D /* CarCheck */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F04ACDA71F79E20B00F4C50D /* Build configuration list for PBXNativeTarget "CarCheck" */;
+			buildPhases = (
+				3E1A3B163BAEE90A91F03F78 /* [CP] Check Pods Manifest.lock */,
+				F04ACD8D1F79E20B00F4C50D /* Sources */,
+				F04ACD8E1F79E20B00F4C50D /* Frameworks */,
+				F04ACD8F1F79E20B00F4C50D /* Resources */,
+				38B0851047AA347772EFAA4F /* [CP] Embed Pods Frameworks */,
+				D80903C038F6B8EF61C88C3E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CarCheck;
+			productName = CarCheck;
+			productReference = F04ACD911F79E20B00F4C50D /* CarCheck.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F04ACD891F79E20B00F4C50D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ZQ;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = zhangqiang;
+				TargetAttributes = {
+					F04ACD901F79E20B00F4C50D = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F04ACD8C1F79E20B00F4C50D /* Build configuration list for PBXProject "CarCheck" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F04ACD881F79E20B00F4C50D;
+			productRefGroup = F04ACD921F79E20B00F4C50D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F04ACD901F79E20B00F4C50D /* CarCheck */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F04ACD8F1F79E20B00F4C50D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
+				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		38B0851047AA347772EFAA4F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E1A3B163BAEE90A91F03F78 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CarCheck-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D80903C038F6B8EF61C88C3E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F04ACD8D1F79E20B00F4C50D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */,
+				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
+				F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */,
+				F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */,
+				F04ACDDA1F7A44A900F4C50D /* JKNetManager.m in Sources */,
+				F04ACDD91F7A44A400F4C50D /* JKHttpRequestService.m in Sources */,
+				F04ACDD81F7A44A000F4C50D /* JKHttpClientTool.m in Sources */,
+				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
+				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
+				F04ACDCF1F7A3D3000F4C50D /* Utility.m in Sources */,
+				F04ACDCE1F7A3D2A00F4C50D /* BaseViewController.m in Sources */,
+				F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */,
+				F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */,
+				F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */,
+				F04ACDA41F79E20B00F4C50D /* main.m in Sources */,
+				F04ACDCA1F7A3C9700F4C50D /* ZQCarProcessViewController.m in Sources */,
+				F04ACDC41F7A3C3F00F4C50D /* ZQMyViewController.m in Sources */,
+				F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */,
+				F04ACDC11F7A391100F4C50D /* BaseTabBarViewController.m in Sources */,
+				F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F04ACDA51F79E20B00F4C50D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F04ACDA61F79E20B00F4C50D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F04ACDA81F79E20B00F4C50D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WSKT7LS6EE;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
+				INFOPLIST_FILE = CarCheck/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F04ACDA91F79E20B00F4C50D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WSKT7LS6EE;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
+				INFOPLIST_FILE = CarCheck/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F04ACD8C1F79E20B00F4C50D /* Build configuration list for PBXProject "CarCheck" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F04ACDA51F79E20B00F4C50D /* Debug */,
+				F04ACDA61F79E20B00F4C50D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F04ACDA71F79E20B00F4C50D /* Build configuration list for PBXNativeTarget "CarCheck" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F04ACDA81F79E20B00F4C50D /* Debug */,
+				F04ACDA91F79E20B00F4C50D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F04ACD891F79E20B00F4C50D /* Project object */;
+}
