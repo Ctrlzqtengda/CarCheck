@@ -9,6 +9,8 @@
 #import "ZQCarProcessViewController.h"
 #import "ZQProcessCell.h"
 #import "ZQProcessRightCell.h"
+#import "ZQViolationViewController.h"
+#import "ZQPayVioViewController.h"
 
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
@@ -52,11 +54,34 @@
 #pragma mark ZQProcessCellDelegate
 -(void)selectAtRow:(NSInteger)row index:(NSInteger)index {
     NSLog(@"ZQProcessCellDelegate row=%ld index = %ld",(long)row,(long)index);
+    switch (row) {
+        case 0:{
+            ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark ZQProcessRightCellDelegate
 -(void)selectRightAtRow:(NSInteger)row index:(NSInteger)index {
     NSLog(@"ZQProcessRightCellDelegate row=%ld index = %ld",(long)row,(long)index);
+    switch (row) {
+        case 1:{
+            ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark UITableViewDelegate
