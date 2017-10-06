@@ -34,6 +34,8 @@
 		F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F548181F8488D400E76ACF /* ZQViolationViewController.xib */; };
 		F0F5481E1F8497A800E76ACF /* ZQPayVioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5481C1F8497A800E76ACF /* ZQPayVioViewController.m */; };
 		F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F5481D1F8497A800E76ACF /* ZQPayVioViewController.xib */; };
+		F0F548231F87278400E76ACF /* ZQTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548221F87278400E76ACF /* ZQTViewController.m */; };
+		F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548281F8727D200E76ACF /* ZQzqViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,10 @@
 		F0F5481B1F8497A800E76ACF /* ZQPayVioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQPayVioViewController.h; sourceTree = "<group>"; };
 		F0F5481C1F8497A800E76ACF /* ZQPayVioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQPayVioViewController.m; sourceTree = "<group>"; };
 		F0F5481D1F8497A800E76ACF /* ZQPayVioViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQPayVioViewController.xib; sourceTree = "<group>"; };
+		F0F548211F87278400E76ACF /* ZQTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQTViewController.h; sourceTree = "<group>"; };
+		F0F548221F87278400E76ACF /* ZQTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQTViewController.m; sourceTree = "<group>"; };
+		F0F548271F8727D200E76ACF /* ZQzqViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQzqViewController.h; sourceTree = "<group>"; };
+		F0F548281F8727D200E76ACF /* ZQzqViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQzqViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +238,8 @@
 		F04ACDB31F7A34B700F4C50D /* Venders(第三方库) */ = {
 			isa = PBXGroup;
 			children = (
+				F0F548211F87278400E76ACF /* ZQTViewController.h */,
+				F0F548221F87278400E76ACF /* ZQTViewController.m */,
 			);
 			path = "Venders(第三方库)";
 			sourceTree = "<group>";
@@ -280,6 +288,8 @@
 		F0C5ECB81F7B955D005F782D /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				F0F548271F8727D200E76ACF /* ZQzqViewController.h */,
+				F0F548281F8727D200E76ACF /* ZQzqViewController.m */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -442,9 +452,11 @@
 				F0F5481E1F8497A800E76ACF /* ZQPayVioViewController.m in Sources */,
 				F04ACDDA1F7A44A900F4C50D /* JKNetManager.m in Sources */,
 				F04ACDD91F7A44A400F4C50D /* JKHttpRequestService.m in Sources */,
+				F0F548231F87278400E76ACF /* ZQTViewController.m in Sources */,
 				F04ACDD81F7A44A000F4C50D /* JKHttpClientTool.m in Sources */,
 				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
 				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
+				F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */,
 				F04ACDCF1F7A3D3000F4C50D /* Utility.m in Sources */,
 				F04ACDCE1F7A3D2A00F4C50D /* BaseViewController.m in Sources */,
 				F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */,
