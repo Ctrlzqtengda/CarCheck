@@ -11,5 +11,5 @@
 @interface ZQServerViewCell : UICollectionViewCell
 
 -(void)writeDataWithTitle:(NSString *)str imageStr:(NSString *)imgStr;
-
+-(void)writDataWithModel:(NSDictionary *)mDic;
 @end

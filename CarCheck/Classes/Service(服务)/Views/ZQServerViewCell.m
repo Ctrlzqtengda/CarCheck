@@ -38,13 +38,20 @@
 //    _imageView.backgroundColor = [UIColor redColor];
     [self addSubview:_imageView];
     
-    self.label = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(_imageView.frame), _width - 20, 20)];
+    self.label = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(_imageView.frame), _width - 10, 20)];
     _label.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_label];
 }
 
+-(void)writDataWithModel:(NSDictionary *)mDic
+{
+    _label.text = mDic[@"title"];
+    _label.font = [UIFont systemFontOfSize:13];
+    [_imageView setImage:[UIImage imageNamed:mDic[@"image"]]];
+}
 -(void)writeDataWithTitle:(NSString *)str imageStr:(NSString *)imgStr{
     _label.text = str;
+    _label.font = [UIFont systemFontOfSize:15];
     if (imgStr.length) {
         [_imageView setImage:[UIImage imageNamed:imgStr]];
     }

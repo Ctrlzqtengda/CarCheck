@@ -30,13 +30,13 @@
 
 -(void)initViews {
     
-    CGFloat imageWidth = 30;
+    CGFloat imageWidth = 31/2;
     UIImageView *imageLead = [[UIImageView alloc] initWithFrame:CGRectMake(10, (_frame.size.height - imageWidth)/2.0, imageWidth, imageWidth)];
-    imageLead.backgroundColor = [UIColor greenColor];
+    imageLead.image = [UIImage imageNamed:@"shouyeyuyue"];
     [self addSubview:imageLead];
     
-    UIImageView *imageRight = [[UIImageView alloc] initWithFrame:CGRectMake((_frame.size.width - imageWidth) - 10, CGRectGetMinY(imageLead.frame), imageWidth, imageWidth)];
-    imageRight.backgroundColor = [UIColor greenColor];
+    UIImageView *imageRight = [[UIImageView alloc] initWithFrame:CGRectMake((_frame.size.width - 6) - 10, CGRectGetMinY(imageLead.frame), 6, 23/2)];
+    imageRight.image = [UIImage imageNamed:@"shouyejiantou"];
     [self addSubview:imageRight];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageLead.frame)+10, CGRectGetMinY(imageLead.frame), _frame.size.width - 10 * 4, imageWidth)];

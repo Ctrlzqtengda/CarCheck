@@ -12,9 +12,9 @@
 #import "ZQAppointmentHeaderView.h"
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
-    NSMutableArray *_dataArray;
-    NSMutableArray *_imagePpointArray;
-    NSMutableArray *_appointArray;
+    NSArray *_dataArray;
+    NSArray *_imagePpointArray;
+    NSArray *_appointArray;
 }
 @property(strong,nonatomic) UICollectionView *mainView;
 @end
@@ -45,9 +45,9 @@
 }
 
 -(void)getData {
-    _appointArray = [NSMutableArray arrayWithObjects:@"预约须知",@"在线预约",@"电话预约检车", nil];
-    _imagePpointArray = [NSMutableArray arrayWithObjects:@"know",@"online",@"phone", nil];
-    _dataArray = [NSMutableArray arrayWithObjects:@"违章查询",@"检车机构列表",@"保险服务",@"车辆维修",@"代缴罚款",@"常见问题",@"法律咨询",@"加油充值", nil];
+    _appointArray = @[@"预约须知",@"在线预约",@"电话预约检车"];
+    _imagePpointArray = @[@"know",@"online",@"phone"];
+    _dataArray = @[@{@"title":@"违章查询",@"image":@"weizhang"},@{@"title":@"检车机构列表",@"image":@"jianche"},@{@"title":@"保险服务",@"image":@"baoxian"},@{@"title":@"车辆维修",@"image":@"weixiu"},@{@"title":@"代缴罚款",@"image":@"fakuan"},@{@"title":@"常见问题",@"image":@"wenti"},@{@"title":@"法律咨询",@"image":@"falv"},@{@"title":@"加油充值",@"image":@"jiayou"}];
 }
 
 #pragma mark UICollectionViewDelegate
@@ -74,7 +74,8 @@
         cell.backgroundColor = [UIColor clearColor];
         [cell writeDataWithTitle:_appointArray[indexPath.row] imageStr:_imagePpointArray[indexPath.row]];
     }else{
-        [cell writeDataWithTitle:_dataArray[indexPath.row] imageStr:nil];
+//        [cell writeDataWithTitle:_dataArray[indexPath.row] imageStr:nil];
+        [cell writDataWithModel:_dataArray[indexPath.row]];
         cell.backgroundColor = [UIColor whiteColor];
     }
     
