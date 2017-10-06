@@ -36,6 +36,15 @@
 		F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F5481D1F8497A800E76ACF /* ZQPayVioViewController.xib */; };
 		F0F548231F87278400E76ACF /* ZQTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548221F87278400E76ACF /* ZQTViewController.m */; };
 		F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548281F8727D200E76ACF /* ZQzqViewController.m */; };
+		F0F5482D1F8730E700E76ACF /* ZQLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5482C1F8730E700E76ACF /* ZQLoginViewController.m */; };
+		F0F548311F87314F00E76ACF /* ZQSubTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5482F1F87314F00E76ACF /* ZQSubTimeViewController.m */; };
+		F0F548381F8735E800E76ACF /* ZQCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548361F8735E800E76ACF /* ZQCollectionViewCell.m */; };
+		F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F548371F8735E800E76ACF /* ZQCollectionViewCell.xib */; };
+		F0F5483D1F87445E00E76ACF /* ZQTimeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5483B1F87445E00E76ACF /* ZQTimeCollectionViewCell.m */; };
+		F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F5483C1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib */; };
+		F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F5483F1F8749B500E76ACF /* ZQSubTimeViewController.xib */; };
+		F0F548441F87515C00E76ACF /* ZQOnlineSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548421F87515C00E76ACF /* ZQOnlineSubViewController.m */; };
+		F0F548451F87515C00E76ACF /* ZQOnlineSubViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F548431F87515C00E76ACF /* ZQOnlineSubViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +107,20 @@
 		F0F548221F87278400E76ACF /* ZQTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQTViewController.m; sourceTree = "<group>"; };
 		F0F548271F8727D200E76ACF /* ZQzqViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQzqViewController.h; sourceTree = "<group>"; };
 		F0F548281F8727D200E76ACF /* ZQzqViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQzqViewController.m; sourceTree = "<group>"; };
+		F0F5482B1F8730E700E76ACF /* ZQLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQLoginViewController.h; sourceTree = "<group>"; };
+		F0F5482C1F8730E700E76ACF /* ZQLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQLoginViewController.m; sourceTree = "<group>"; };
+		F0F5482E1F87314F00E76ACF /* ZQSubTimeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQSubTimeViewController.h; sourceTree = "<group>"; };
+		F0F5482F1F87314F00E76ACF /* ZQSubTimeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQSubTimeViewController.m; sourceTree = "<group>"; };
+		F0F548351F8735E800E76ACF /* ZQCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQCollectionViewCell.h; sourceTree = "<group>"; };
+		F0F548361F8735E800E76ACF /* ZQCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQCollectionViewCell.m; sourceTree = "<group>"; };
+		F0F548371F8735E800E76ACF /* ZQCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQCollectionViewCell.xib; sourceTree = "<group>"; };
+		F0F5483A1F87445E00E76ACF /* ZQTimeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQTimeCollectionViewCell.h; sourceTree = "<group>"; };
+		F0F5483B1F87445E00E76ACF /* ZQTimeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQTimeCollectionViewCell.m; sourceTree = "<group>"; };
+		F0F5483C1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQTimeCollectionViewCell.xib; sourceTree = "<group>"; };
+		F0F5483F1F8749B500E76ACF /* ZQSubTimeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQSubTimeViewController.xib; sourceTree = "<group>"; };
+		F0F548411F87515C00E76ACF /* ZQOnlineSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQOnlineSubViewController.h; sourceTree = "<group>"; };
+		F0F548421F87515C00E76ACF /* ZQOnlineSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQOnlineSubViewController.m; sourceTree = "<group>"; };
+		F0F548431F87515C00E76ACF /* ZQOnlineSubViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQOnlineSubViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +227,7 @@
 		F04ACDAE1F79E30400F4C50D /* My(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				F0F5482A1F8730AF00E76ACF /* LoginAndRegister */,
 				F04ACDC21F7A3C3F00F4C50D /* ZQMyViewController.h */,
 				F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */,
 			);
@@ -310,8 +334,37 @@
 		F0F548201F849D8E00E76ACF /* subscribe(预约) */ = {
 			isa = PBXGroup;
 			children = (
+				F0F548341F8735BD00E76ACF /* Views */,
+				F0F5482E1F87314F00E76ACF /* ZQSubTimeViewController.h */,
+				F0F5482F1F87314F00E76ACF /* ZQSubTimeViewController.m */,
+				F0F5483F1F8749B500E76ACF /* ZQSubTimeViewController.xib */,
+				F0F548411F87515C00E76ACF /* ZQOnlineSubViewController.h */,
+				F0F548421F87515C00E76ACF /* ZQOnlineSubViewController.m */,
+				F0F548431F87515C00E76ACF /* ZQOnlineSubViewController.xib */,
 			);
 			path = "subscribe(预约)";
+			sourceTree = "<group>";
+		};
+		F0F5482A1F8730AF00E76ACF /* LoginAndRegister */ = {
+			isa = PBXGroup;
+			children = (
+				F0F5482B1F8730E700E76ACF /* ZQLoginViewController.h */,
+				F0F5482C1F8730E700E76ACF /* ZQLoginViewController.m */,
+			);
+			path = LoginAndRegister;
+			sourceTree = "<group>";
+		};
+		F0F548341F8735BD00E76ACF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F0F548351F8735E800E76ACF /* ZQCollectionViewCell.h */,
+				F0F548361F8735E800E76ACF /* ZQCollectionViewCell.m */,
+				F0F548371F8735E800E76ACF /* ZQCollectionViewCell.xib */,
+				F0F5483A1F87445E00E76ACF /* ZQTimeCollectionViewCell.h */,
+				F0F5483B1F87445E00E76ACF /* ZQTimeCollectionViewCell.m */,
+				F0F5483C1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,8 +431,12 @@
 			files = (
 				F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */,
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
+				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
+				F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */,
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
+				F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */,
 				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
+				F0F548451F87515C00E76ACF /* ZQOnlineSubViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,16 +514,21 @@
 				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
 				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
 				F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */,
+				F0F5482D1F8730E700E76ACF /* ZQLoginViewController.m in Sources */,
+				F0F548441F87515C00E76ACF /* ZQOnlineSubViewController.m in Sources */,
 				F04ACDCF1F7A3D3000F4C50D /* Utility.m in Sources */,
 				F04ACDCE1F7A3D2A00F4C50D /* BaseViewController.m in Sources */,
 				F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */,
 				F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */,
 				F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */,
+				F0F548381F8735E800E76ACF /* ZQCollectionViewCell.m in Sources */,
 				F04ACDA41F79E20B00F4C50D /* main.m in Sources */,
 				F04ACDCA1F7A3C9700F4C50D /* ZQCarProcessViewController.m in Sources */,
+				F0F548311F87314F00E76ACF /* ZQSubTimeViewController.m in Sources */,
 				F04ACDC41F7A3C3F00F4C50D /* ZQMyViewController.m in Sources */,
 				F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */,
 				F04ACDC11F7A391100F4C50D /* BaseTabBarViewController.m in Sources */,
+				F0F5483D1F87445E00E76ACF /* ZQTimeCollectionViewCell.m in Sources */,
 				F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

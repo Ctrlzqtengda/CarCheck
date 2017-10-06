@@ -11,6 +11,7 @@
 #import "ZQProcessRightCell.h"
 #import "ZQViolationViewController.h"
 #import "ZQPayVioViewController.h"
+#import "ZQSubTimeViewController.h"
 
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
@@ -58,6 +59,11 @@
         case 0:{
             ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 2:{
+            ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+            [self.navigationController pushViewController:subVC animated:YES];
         }
             
             break;
