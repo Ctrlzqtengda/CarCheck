@@ -7,11 +7,15 @@
 //
 
 #import "ZQAlerInputView.h"
+#import "ZQAreaView.h"
+#import "ZQLoadingView.h"
 
 @interface ZQAlerInputView ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *alertView;
 @property (nonatomic, strong) UIButton *bgViewBtn;
+@property (nonatomic, strong) ZQAreaView *areaView;
+@property (nonatomic, strong) ZQAreaModel *provinceModel;
 @end
 
 @implementation ZQAlerInputView
@@ -115,10 +119,22 @@
                      }
      ];
 }
-
+#pragma mark -UITextFieldDelegate-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag) {
+    if (textField.tag==1) {
+        [self showPickViewWithTextField:textField];
+        return NO;
+    }
+    if (textField.tag==2) {
+        if (self.provinceModel) {
+             [self showPickViewWithTextField:textField];
+        }
+        else
+        {
+            [ZQLoadingView showAlertHUD:@"请选择省份" duration:SXLoadingTime];
+
+        }
         return NO;
     }
     return YES;
@@ -127,6 +143,40 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)showPickViewWithTextField:(UITextField *)textField
+{
+    CGPoint center = self.center;
+    center.y -=50;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.alertView setCenter:center];
+    }];
+    if (_areaView) {
+        [_areaView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [_areaView removeFromSuperview];
+        self.areaView = nil;
+    }
+    NSString *pId = nil;
+    if (self.provinceModel&&textField.tag==2) {
+        pId = self.provinceModel.areaId;
+    }
+    __weak __typeof(self) weakSelf = self;
+    __weak UITextField *wTextField = textField;
+    _areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-230, __kWidth, 230) provinceId:pId];
+    _areaView.handler = ^(ZQAreaModel *areaModel)
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            [weakSelf.alertView setCenter:weakSelf.center];
+        }];
+        if (areaModel) {
+            wTextField.text = areaModel.areaName;
+            if (wTextField.tag==1) {
+                weakSelf.provinceModel = areaModel;
+            }
+        }
+    };
+    [self addSubview:_areaView];
 }
 - (UIButton *)bgViewBtn
 {

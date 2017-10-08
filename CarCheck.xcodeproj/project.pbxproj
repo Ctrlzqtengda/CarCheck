@@ -11,6 +11,10 @@
 		5EA0FEAF1F876FE1005E882C /* ZQInspectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEAE1F876FE1005E882C /* ZQInspectionCell.m */; };
 		5EA0FEB21F8A0AB5005E882C /* ZQHtmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEB11F8A0AB5005E882C /* ZQHtmlViewController.m */; };
 		5EA0FEB61F8A1BFA005E882C /* ZQAlerInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEB51F8A1BFA005E882C /* ZQAlerInputView.m */; };
+		5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEBC1F8A304A005E882C /* ZQAreaView.m */; };
+		5EA0FEC41F8A33CC005E882C /* ZQAreaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEC31F8A33CC005E882C /* ZQAreaModel.m */; };
+		5EA0FEC81F8A3A74005E882C /* ZQLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEC71F8A3A74005E882C /* ZQLoadingView.m */; };
+		5EA0FEC91F8A3FBB005E882C /* YPAddress.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
@@ -61,6 +65,13 @@
 		5EA0FEB11F8A0AB5005E882C /* ZQHtmlViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQHtmlViewController.m; sourceTree = "<group>"; };
 		5EA0FEB41F8A1BFA005E882C /* ZQAlerInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAlerInputView.h; sourceTree = "<group>"; };
 		5EA0FEB51F8A1BFA005E882C /* ZQAlerInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAlerInputView.m; sourceTree = "<group>"; };
+		5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = YPAddress.plist; sourceTree = "<group>"; };
+		5EA0FEBB1F8A304A005E882C /* ZQAreaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAreaView.h; sourceTree = "<group>"; };
+		5EA0FEBC1F8A304A005E882C /* ZQAreaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAreaView.m; sourceTree = "<group>"; };
+		5EA0FEC21F8A33CC005E882C /* ZQAreaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAreaModel.h; sourceTree = "<group>"; };
+		5EA0FEC31F8A33CC005E882C /* ZQAreaModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAreaModel.m; sourceTree = "<group>"; };
+		5EA0FEC61F8A3A74005E882C /* ZQLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQLoadingView.h; sourceTree = "<group>"; };
+		5EA0FEC71F8A3A74005E882C /* ZQLoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQLoadingView.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +178,7 @@
 		5EA0FEA81F876701005E882C /* InspectionCarAgency(检车机构列表) */ = {
 			isa = PBXGroup;
 			children = (
+				5EA0FEBE1F8A3394005E882C /* Models */,
 				5EA0FEA91F876744005E882C /* Views */,
 				5EA0FEAA1F87677E005E882C /* ZQInspectionListController.h */,
 				5EA0FEAB1F87677E005E882C /* ZQInspectionListController.m */,
@@ -181,13 +193,34 @@
 				5EA0FEAE1F876FE1005E882C /* ZQInspectionCell.m */,
 				5EA0FEB41F8A1BFA005E882C /* ZQAlerInputView.h */,
 				5EA0FEB51F8A1BFA005E882C /* ZQAlerInputView.m */,
+				5EA0FEBB1F8A304A005E882C /* ZQAreaView.h */,
+				5EA0FEBC1F8A304A005E882C /* ZQAreaView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5EA0FEBE1F8A3394005E882C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEC21F8A33CC005E882C /* ZQAreaModel.h */,
+				5EA0FEC31F8A33CC005E882C /* ZQAreaModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5EA0FEC51F8A3A5A005E882C /* 加载提示 */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEC61F8A3A74005E882C /* ZQLoadingView.h */,
+				5EA0FEC71F8A3A74005E882C /* ZQLoadingView.m */,
+			);
+			path = "加载提示";
 			sourceTree = "<group>";
 		};
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
+				5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */,
 				F04ACD931F79E20B00F4C50D /* CarCheck */,
 				F04ACD921F79E20B00F4C50D /* Products */,
 				0A212E89E88AEFFD05F3D771 /* Pods */,
@@ -228,6 +261,7 @@
 		F04ACDAB1F79E25800F4C50D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5EA0FEC51F8A3A5A005E882C /* 加载提示 */,
 				F04ACDAE1F79E30400F4C50D /* My(我的) */,
 				F04ACDAD1F79E2C800F4C50D /* Service(服务) */,
 				F04ACDAC1F79E28100F4C50D /* Process(流程) */,
@@ -465,6 +499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EA0FEC91F8A3FBB005E882C /* YPAddress.plist in Resources */,
 				F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */,
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
 				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
@@ -539,6 +574,7 @@
 			files = (
 				F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */,
 				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
+				5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */,
 				F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */,
 				F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */,
 				F0F548191F8488D400E76ACF /* ZQViolationViewController.m in Sources */,
@@ -551,6 +587,7 @@
 				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
 				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
 				F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */,
+				5EA0FEC41F8A33CC005E882C /* ZQAreaModel.m in Sources */,
 				F0F5482D1F8730E700E76ACF /* ZQLoginViewController.m in Sources */,
 				F0F548441F87515C00E76ACF /* ZQOnlineSubViewController.m in Sources */,
 				5EA0FEB21F8A0AB5005E882C /* ZQHtmlViewController.m in Sources */,
@@ -561,6 +598,7 @@
 				F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */,
 				F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */,
 				F0F548381F8735E800E76ACF /* ZQCollectionViewCell.m in Sources */,
+				5EA0FEC81F8A3A74005E882C /* ZQLoadingView.m in Sources */,
 				F04ACDA41F79E20B00F4C50D /* main.m in Sources */,
 				F04ACDCA1F7A3C9700F4C50D /* ZQCarProcessViewController.m in Sources */,
 				F0F548311F87314F00E76ACF /* ZQSubTimeViewController.m in Sources */,
