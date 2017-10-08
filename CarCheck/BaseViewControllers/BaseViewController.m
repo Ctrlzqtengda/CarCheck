@@ -36,21 +36,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self addNavigationBar];
 
 }
 
 
 -(void)addNavigationBar{
-    //返回按钮
-    UIButton *backBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [backBtn setBackgroundImage:MImage(@"back") forState:BtnNormal];
-    [backBtn addTarget:self action:@selector(back) forControlEvents:BtnTouchUpInside];
+//    //返回按钮
+//    UIButton *backBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 22)];
+//    [backBtn setBackgroundImage:MImage(@"back") forState:BtnNormal];
+//    [backBtn addTarget:self action:@selector(back) forControlEvents:BtnTouchUpInside];
+//
+//    UIBarButtonItem *backItem=[[UIBarButtonItem alloc]initWithCustomView:backBtn];
+//    self.navigationItem.leftBarButtonItem = backItem;
     
-    UIBarButtonItem *backItem=[[UIBarButtonItem alloc]initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backItem;
-    
-    
+    if (self.navigationController.childViewControllers.count && [self.navigationController.childViewControllers[0] isEqual:self])
+    {
+    }
+    else
+    {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    }
 
     
 }

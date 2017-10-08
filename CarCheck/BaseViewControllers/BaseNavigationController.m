@@ -22,7 +22,7 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationBar setBarTintColor:HEXCOLOR(0xffffff)];
     
-    
+    self.navigationBar.tintColor = [UIColor darkGrayColor];
 //    [self.navigationBar setBackgroundImage:MImage(@"topBG_w") forBarMetrics:UIBarMetricsDefault];
 
 //    self.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:HEXCOLOR(0x333333),NSFontAttributeName:MFont(17)};

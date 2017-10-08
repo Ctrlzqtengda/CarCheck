@@ -16,6 +16,8 @@
 #import "JKHttpRequestService.h"
 #import "BaseViewController.h"
 
+#import "MJRefresh.h"
+
 #ifdef DEBUG
 #define ZQLog(...) NSLog(__VA_ARGS__)
 #else

@@ -11,6 +11,9 @@
 #import "ZQServerViewCell.h"
 #import "ZQAppointmentHeaderView.h"
 
+#import "ZQHtmlViewController.h"
+#import "ZQInspectionListController.h"
+
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
     NSArray *_imagePpointArray;
@@ -84,6 +87,67 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.section==2) {
+        switch (indexPath.row) {
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                [inspectionVC setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:inspectionVC animated:YES];
+                
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else if (indexPath.section==1)
+    {
+        switch (indexPath.row) {
+            case 0:
+            {
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"https://www.baidu.com"];
+                Vc.title = @"预约须知";
+                [Vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:Vc animated:YES];
+                break;
+            }
+            case 1:
+            {
+                break;
+            }
+            case 2:
+            {
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+                
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:phoneStr preferredStyle:UIAlertControllerStyleAlert];
+//                [alert addAction:[UIAlertAction actionWithTitle:@"呼叫" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//                    NSLog(@"点击了呼叫按钮10.2下");
+//                    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+//                    UIApplication * app = [UIApplication sharedApplication];
+//                    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+//                        [app openURL:[NSURL URLWithString:PhoneStr]];
+//                    }
+//                }]];
+//                [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//                    NSLog(@"点击了取消按钮");
+//                }]];
+//                [self presentViewController:alert animated:YES completion:nil];
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 #pragma mark headerAndFooter
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
