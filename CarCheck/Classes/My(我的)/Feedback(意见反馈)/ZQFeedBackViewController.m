@@ -39,6 +39,7 @@
     _contactView.backgroundColor = [UIColor whiteColor];
     _contactView.borderStyle = UITextBorderStyleRoundedRect;
     _contactView.autocorrectionType = UITextAutocorrectionTypeNo;
+    _contactView.returnKeyType = UIReturnKeyDone;
     _contactView.placeholder = @"请输入标题";
     //    _contactView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"选填,便于您联系" attributes:@{NSForegroundColorAttributeName:kHWColor5,NSFontAttributeName:kHWFont5}];
     _contactView.font = [UIFont systemFontOfSize:15];
@@ -51,14 +52,14 @@
     label.textColor = [UIColor darkGrayColor];
     [self.view addSubview:label];
     
-    UIView *textBgView = [[UIView alloc] initWithFrame:CGRectMake(KHWTintMargin, CGRectGetMaxY(label.frame)+5, CGRectGetWidth(self.view.frame)-2*KHWTintMargin, 180)];
+    UIView *textBgView = [[UIView alloc] initWithFrame:CGRectMake(KHWTintMargin, CGRectGetMaxY(label.frame)+5, CGRectGetWidth(self.view.frame)-2*KHWTintMargin, 140)];
     textBgView.backgroundColor = [UIColor whiteColor];
     textBgView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     textBgView.layer.borderWidth = 0.5;
     textBgView.layer.cornerRadius = 8;
     [self.view addSubview:textBgView];
 
-    _textView = [[FBTextView alloc] initWithFrame:CGRectMake(0, 0,CGRectGetWidth(textBgView.frame), 180)];
+    _textView = [[FBTextView alloc] initWithFrame:CGRectMake(0, 0,CGRectGetWidth(textBgView.frame), 140)];
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.font = [UIFont systemFontOfSize:14];
     _textView.showsVerticalScrollIndicator = NO;
@@ -75,9 +76,12 @@
     [sendBtn setBackgroundColor:[UIColor blueColor]];
     sendBtn.layer.cornerRadius = 4;
     sendBtn.clipsToBounds = YES;
-    sendBtn.frame = CGRectMake(KHWTintMargin, CGRectGetMaxY(textBgView.frame)+30, 100, 30);
+    sendBtn.frame = CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, CGRectGetMaxY(textBgView.frame)+30, 200, 40);
     [self.view addSubview:sendBtn];
     [sendBtn addTarget:self action:@selector(sendFeedback) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeKeyboard)];
+    [self.view addGestureRecognizer:tap];
 }
 - (void)sendFeedback
 {

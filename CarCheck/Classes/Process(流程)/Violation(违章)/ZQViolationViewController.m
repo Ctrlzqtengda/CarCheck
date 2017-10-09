@@ -7,8 +7,11 @@
 //
 
 #import "ZQViolationViewController.h"
+#import "ZQAreaView.h"
+#import "ZQAreaModel.h"
+#import "ZQLoadingView.h"
 
-@interface ZQViolationViewController ()
+@interface ZQViolationViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentSizeWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentSizeHeight;
@@ -22,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *driveCodeTf;
 @property (weak, nonatomic) IBOutlet UIButton *searchBtn2;
 
+@property (nonatomic, strong) ZQAreaView *areaView;
+@property (nonatomic, strong) ZQAreaModel *provinceModel;
 @end
 
 @implementation ZQViolationViewController
@@ -60,7 +65,61 @@
     }
     
 }
-
+- (void)showPickViewWithTextField:(UITextField *)textField
+{
+    if (_areaView) {
+        [_areaView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [_areaView removeFromSuperview];
+        self.areaView = nil;
+    }
+    NSString *pId = nil;
+    if ([textField isEqual:self.carProvinceTf]) {
+        pId = @"-1"; //展示省的简称
+    }
+    else
+    {
+        if (self.provinceModel&&[textField isEqual:self.cityTf]) {
+            pId = self.provinceModel.areaId;
+        }
+    }
+    __weak __typeof(self) weakSelf = self;
+    __weak UITextField *wTextField = textField;
+    _areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:pId];
+    _areaView.handler = ^(ZQAreaModel *areaModel)
+    {
+        if (areaModel) {
+            wTextField.text = areaModel.areaName;
+            if ([wTextField isEqual:weakSelf.provinceTf]) {
+                weakSelf.provinceModel = areaModel;
+            }
+        }
+    };
+    [self.view addSubview:_areaView];
+}
+#pragma mark -UITextFieldDelegate-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.provinceTf]) {
+        [self showPickViewWithTextField:textField];
+        return NO;
+    }
+    if ([textField isEqual:self.cityTf]) {
+        if (self.provinceModel) {
+            [self showPickViewWithTextField:textField];
+        }
+        else
+        {
+            [ZQLoadingView showAlertHUD:@"请选择省份" duration:SXLoadingTime];
+            
+        }
+        return NO;
+    }
+    if ([textField isEqual:self.carProvinceTf]) {
+        [self showPickViewWithTextField:textField];
+        return NO;
+    }
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
