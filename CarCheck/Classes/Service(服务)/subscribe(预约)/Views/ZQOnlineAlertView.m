@@ -1,24 +1,24 @@
 //
-//  ZQInsuranceView.m
+//  ZQOnlineAlertView.m
 //  CarCheck
 //
 //  Created by 岳宗申 on 2017/10/9.
 //  Copyright © 2017年 zhangqiang. All rights reserved.
 //
 
-#import "ZQInsuranceView.h"
+#import "ZQOnlineAlertView.h"
 #import "ZQLoadingView.h"
 
-const CGFloat TextFieldTag = 11111;
+const CGFloat oTextFieldTag = 33333;
 
-@interface ZQInsuranceView()<UITextFieldDelegate>
+@interface ZQOnlineAlertView()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *alertView;
 @property (nonatomic, strong) UIButton *bgViewBtn;
 
 @end
 
-@implementation ZQInsuranceView
+@implementation ZQOnlineAlertView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -26,7 +26,7 @@ const CGFloat TextFieldTag = 11111;
     if (self) {
         [self addSubview:self.bgViewBtn];
         [self addSubview:self.alertView];
-        NSArray *contenArr = @[@"姓  名",@"手机号",@"身份证"];
+        NSArray *contenArr = @[@"姓  名",@"手机号"];
         CGFloat width = CGRectGetWidth(_alertView.frame);
         CGFloat cellMargin = 20;
         CGFloat yMargin = 5.0;
@@ -50,7 +50,7 @@ const CGFloat TextFieldTag = 11111;
             textField.font = [UIFont systemFontOfSize:15];
             textField.textColor = [UIColor darkGrayColor];
             textField.returnKeyType = UIReturnKeyDone;
-            textField.tag = i+TextFieldTag;
+            textField.tag = i+oTextFieldTag;
             [_alertView addSubview:textField];
             currentHeight += (labelHeight+yMargin);
         }
@@ -70,23 +70,18 @@ const CGFloat TextFieldTag = 11111;
 - (void)commitBtnAction
 {
     if (self.handler) {
-        UITextField *field1 = [self.alertView viewWithTag:TextFieldTag];
-        UITextField *field2 = [self.alertView viewWithTag:TextFieldTag+1];
-        UITextField *field3 = [self.alertView viewWithTag:TextFieldTag+2];
-
-//        if (field1.text.length==0) {
-//            [ZQLoadingView showAlertHUD:@"请输入姓名" duration:1.5];
-//            return;
-//        }
-//        if (field2.text.length==0) {
-//            [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
-//            return;
-//        }
-//        if (field3.text.length==0) {
-//            [ZQLoadingView showAlertHUD:@"请输入身份证" duration:1.5];
-//            return;
-//        }
-        NSArray *array = @[field1.text,field2.text,field3.text];
+        UITextField *field1 = [self.alertView viewWithTag:oTextFieldTag];
+        UITextField *field2 = [self.alertView viewWithTag:oTextFieldTag+1];
+        
+        //        if (field1.text.length==0) {
+        //            [ZQLoadingView showAlertHUD:@"请输入姓名" duration:1.5];
+        //            return;
+        //        }
+        //        if (field2.text.length==0) {
+        //            [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
+        //            return;
+        //        }
+        NSArray *array = @[field1.text,field2.text];
         self.handler(array);
     }
     [self close];
@@ -136,19 +131,11 @@ const CGFloat TextFieldTag = 11111;
 #pragma mark -UITextFieldDelegate-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    CGPoint center = self.center;
-    center.y -=50;
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.alertView setCenter:center];
-    }];
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.alertView setCenter:self.center];
-    }];
     return YES;
 }
 
@@ -165,7 +152,7 @@ const CGFloat TextFieldTag = 11111;
 - (UIView *)alertView
 {
     if (!_alertView) {
-        _alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 200)];
+        _alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 160)];
         _alertView.center = self.center;
         _alertView.backgroundColor = [UIColor whiteColor];
         _alertView.layer.cornerRadius = 10;

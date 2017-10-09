@@ -77,7 +77,6 @@ const CGFloat ITextFieldTag = 222222;
 }
 - (void)commitBtnAction
 {
-    [self close];
     if (self.handler) {
         UITextField *field1 = [self.alertView viewWithTag:ITextFieldTag];
         UITextField *field2 = [self.alertView viewWithTag:ITextFieldTag+1];
@@ -97,6 +96,7 @@ const CGFloat ITextFieldTag = 222222;
         NSArray *array = @[field1.text,field2.text,field3.text];
         self.handler(array);
     }
+    [self close];
 }
 
 - (void)show
