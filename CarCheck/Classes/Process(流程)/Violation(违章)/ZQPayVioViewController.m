@@ -7,6 +7,7 @@
 //
 
 #import "ZQPayVioViewController.h"
+#import "YPayViewController.h"
 
 @interface ZQPayVioViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
@@ -28,6 +29,8 @@
 
 - (IBAction)sendAction:(id)sender {
     
+    YPayViewController *payVC = [[YPayViewController alloc] init];
+    [self.navigationController pushViewController:payVC animated:YES];
 }
 
 -(void)chooseImageAction {

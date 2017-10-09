@@ -18,6 +18,11 @@ PODS:
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
+  - Pingpp/Alipay (2.2.15):
+    - Pingpp/Core
+  - Pingpp/Core (2.2.15)
+  - Pingpp/Wx (2.2.15):
+    - Pingpp/Core
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
   - SDWebImage/Core (4.1.0)
@@ -28,6 +33,8 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJExtension
   - MJRefresh
+  - Pingpp/Alipay
+  - Pingpp/Wx
   - SDWebImage
 
 SPEC CHECKSUMS:
@@ -36,8 +43,9 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  Pingpp: 991c4b790ab5a0ab5afa7112f5ff7f163b917017
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
 
-PODFILE CHECKSUM: 5385a6416f8ceaaf95cbb5760f93c28b87430be9
+PODFILE CHECKSUM: a91cef4a2e57f18c2dae2c7373421b7e08c5967c
 
 COCOAPODS: 1.3.1

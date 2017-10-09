@@ -12,5 +12,7 @@ pod 'MJExtension'
 pod 'SDWebImage'
 pod 'MJRefresh'
 pod 'Masonry'
+pod 'Pingpp/Alipay'
+pod 'Pingpp/Wx'
 
 end

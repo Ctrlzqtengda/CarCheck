@@ -47,6 +47,18 @@
 		F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDDC1F7A470E00F4C50D /* YtabBarButton.m */; };
 		F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */; };
 		F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F061A5001F7B49B80039C9EC /* ZQProcessCell.m */; };
+		F07253781F8B7B1D00434C83 /* YPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253721F8B797000434C83 /* YPayViewController.m */; };
+		F07253791F8B7B2300434C83 /* YOrderSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253741F8B79C100434C83 /* YOrderSuccessView.m */; };
+		F072537A1F8B7B2A00434C83 /* YOrderSuccessHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253771F8B79C100434C83 /* YOrderSuccessHeadView.m */; };
+		F072538E1F8B7E3D00434C83 /* YAddNewCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F072538D1F8B7BFC00434C83 /* YAddNewCardCell.m */; };
+		F072538F1F8B7E4300434C83 /* YCheckCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253831F8B7BFB00434C83 /* YCheckCardCell.m */; };
+		F07253901F8B7E4C00434C83 /* YPayCardAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253821F8B7BFB00434C83 /* YPayCardAddCell.m */; };
+		F07253911F8B7E5200434C83 /* YPayCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F072537C1F8B7BFB00434C83 /* YPayCardCell.m */; };
+		F07253921F8B7E5F00434C83 /* YPayCardCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253861F8B7BFC00434C83 /* YPayCardCheckView.m */; };
+		F07253931F8B7E5F00434C83 /* YPayOtherHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253891F8B7BFC00434C83 /* YPayOtherHead.m */; };
+		F07253941F8B7E5F00434C83 /* YPayThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F072537E1F8B7BFB00434C83 /* YPayThreeCell.m */; };
+		F07253951F8B7E5F00434C83 /* YPayTitleHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253881F8B7BFC00434C83 /* YPayTitleHeadView.m */; };
+		F07253961F8B7E5F00434C83 /* YPayTypeChooseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253871F8B7BFC00434C83 /* YPayTypeChooseCell.m */; };
 		F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA11F7A694500468EC2 /* ZQHeaderViewScoll.m */; };
 		F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */; };
 		F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */; };
@@ -157,6 +169,30 @@
 		F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F061A4FF1F7B49B80039C9EC /* ZQProcessCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessCell.h; sourceTree = "<group>"; };
 		F061A5001F7B49B80039C9EC /* ZQProcessCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessCell.m; sourceTree = "<group>"; };
+		F07253711F8B797000434C83 /* YPayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayViewController.h; sourceTree = "<group>"; };
+		F07253721F8B797000434C83 /* YPayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayViewController.m; sourceTree = "<group>"; };
+		F07253741F8B79C100434C83 /* YOrderSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YOrderSuccessView.m; sourceTree = "<group>"; };
+		F07253751F8B79C100434C83 /* YOrderSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YOrderSuccessView.h; sourceTree = "<group>"; };
+		F07253761F8B79C100434C83 /* YOrderSuccessHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YOrderSuccessHeadView.h; sourceTree = "<group>"; };
+		F07253771F8B79C100434C83 /* YOrderSuccessHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YOrderSuccessHeadView.m; sourceTree = "<group>"; };
+		F072537C1F8B7BFB00434C83 /* YPayCardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayCardCell.m; sourceTree = "<group>"; };
+		F072537D1F8B7BFB00434C83 /* YPayCardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayCardCell.h; sourceTree = "<group>"; };
+		F072537E1F8B7BFB00434C83 /* YPayThreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayThreeCell.m; sourceTree = "<group>"; };
+		F072537F1F8B7BFB00434C83 /* YPayCardAddCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayCardAddCell.h; sourceTree = "<group>"; };
+		F07253801F8B7BFB00434C83 /* YPayThreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayThreeCell.h; sourceTree = "<group>"; };
+		F07253811F8B7BFB00434C83 /* YPayTypeChooseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayTypeChooseCell.h; sourceTree = "<group>"; };
+		F07253821F8B7BFB00434C83 /* YPayCardAddCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayCardAddCell.m; sourceTree = "<group>"; };
+		F07253831F8B7BFB00434C83 /* YCheckCardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YCheckCardCell.m; sourceTree = "<group>"; };
+		F07253841F8B7BFB00434C83 /* YPayCardCheckView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayCardCheckView.h; sourceTree = "<group>"; };
+		F07253851F8B7BFC00434C83 /* YPayTitleHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayTitleHeadView.h; sourceTree = "<group>"; };
+		F07253861F8B7BFC00434C83 /* YPayCardCheckView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayCardCheckView.m; sourceTree = "<group>"; };
+		F07253871F8B7BFC00434C83 /* YPayTypeChooseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayTypeChooseCell.m; sourceTree = "<group>"; };
+		F07253881F8B7BFC00434C83 /* YPayTitleHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayTitleHeadView.m; sourceTree = "<group>"; };
+		F07253891F8B7BFC00434C83 /* YPayOtherHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayOtherHead.m; sourceTree = "<group>"; };
+		F072538A1F8B7BFC00434C83 /* YCheckCardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YCheckCardCell.h; sourceTree = "<group>"; };
+		F072538B1F8B7BFC00434C83 /* YAddNewCardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YAddNewCardCell.h; sourceTree = "<group>"; };
+		F072538C1F8B7BFC00434C83 /* YPayOtherHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayOtherHead.h; sourceTree = "<group>"; };
+		F072538D1F8B7BFC00434C83 /* YAddNewCardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YAddNewCardCell.m; sourceTree = "<group>"; };
 		F07F1DA01F7A694500468EC2 /* ZQHeaderViewScoll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQHeaderViewScoll.h; sourceTree = "<group>"; };
 		F07F1DA11F7A694500468EC2 /* ZQHeaderViewScoll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQHeaderViewScoll.m; sourceTree = "<group>"; };
 		F07F1DA21F7A694500468EC2 /* ZQScrollPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQScrollPageView.h; sourceTree = "<group>"; };
@@ -414,6 +450,7 @@
 		F04ACDAB1F79E25800F4C50D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F07253701F8B794E00434C83 /* Pay(支付) */,
 				5EA0FEC51F8A3A5A005E882C /* 加载提示 */,
 				F04ACDAE1F79E30400F4C50D /* My(我的) */,
 				F04ACDAD1F79E2C800F4C50D /* Service(服务) */,
@@ -519,6 +556,53 @@
 				F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F07253701F8B794E00434C83 /* Pay(支付) */ = {
+			isa = PBXGroup;
+			children = (
+				F072537B1F8B7BE200434C83 /* VIews */,
+				F07253731F8B79A100434C83 /* PaySuccess(支付成功) */,
+				F07253711F8B797000434C83 /* YPayViewController.h */,
+				F07253721F8B797000434C83 /* YPayViewController.m */,
+			);
+			path = "Pay(支付)";
+			sourceTree = "<group>";
+		};
+		F07253731F8B79A100434C83 /* PaySuccess(支付成功) */ = {
+			isa = PBXGroup;
+			children = (
+				F07253761F8B79C100434C83 /* YOrderSuccessHeadView.h */,
+				F07253771F8B79C100434C83 /* YOrderSuccessHeadView.m */,
+				F07253751F8B79C100434C83 /* YOrderSuccessView.h */,
+				F07253741F8B79C100434C83 /* YOrderSuccessView.m */,
+			);
+			path = "PaySuccess(支付成功)";
+			sourceTree = "<group>";
+		};
+		F072537B1F8B7BE200434C83 /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				F072538B1F8B7BFC00434C83 /* YAddNewCardCell.h */,
+				F072538D1F8B7BFC00434C83 /* YAddNewCardCell.m */,
+				F072538A1F8B7BFC00434C83 /* YCheckCardCell.h */,
+				F07253831F8B7BFB00434C83 /* YCheckCardCell.m */,
+				F072537F1F8B7BFB00434C83 /* YPayCardAddCell.h */,
+				F07253821F8B7BFB00434C83 /* YPayCardAddCell.m */,
+				F072537D1F8B7BFB00434C83 /* YPayCardCell.h */,
+				F072537C1F8B7BFB00434C83 /* YPayCardCell.m */,
+				F07253841F8B7BFB00434C83 /* YPayCardCheckView.h */,
+				F07253861F8B7BFC00434C83 /* YPayCardCheckView.m */,
+				F072538C1F8B7BFC00434C83 /* YPayOtherHead.h */,
+				F07253891F8B7BFC00434C83 /* YPayOtherHead.m */,
+				F07253801F8B7BFB00434C83 /* YPayThreeCell.h */,
+				F072537E1F8B7BFB00434C83 /* YPayThreeCell.m */,
+				F07253851F8B7BFC00434C83 /* YPayTitleHeadView.h */,
+				F07253881F8B7BFC00434C83 /* YPayTitleHeadView.m */,
+				F07253811F8B7BFB00434C83 /* YPayTypeChooseCell.h */,
+				F07253871F8B7BFC00434C83 /* YPayTypeChooseCell.m */,
+			);
+			path = VIews;
 			sourceTree = "<group>";
 		};
 		F07F1D9F1F7A694500468EC2 /* Views */ = {
@@ -761,6 +845,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/Pingpp/lib/Channels/Alipay/AlipaySDK.bundle",
+				"${PODS_ROOT}/Pingpp/lib/Pingpp.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -778,6 +864,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F07253921F8B7E5F00434C83 /* YPayCardCheckView.m in Sources */,
+				F07253931F8B7E5F00434C83 /* YPayOtherHead.m in Sources */,
+				F07253941F8B7E5F00434C83 /* YPayThreeCell.m in Sources */,
+				F07253951F8B7E5F00434C83 /* YPayTitleHeadView.m in Sources */,
+				F07253961F8B7E5F00434C83 /* YPayTypeChooseCell.m in Sources */,
+				F07253911F8B7E5200434C83 /* YPayCardCell.m in Sources */,
+				F07253901F8B7E4C00434C83 /* YPayCardAddCell.m in Sources */,
+				F072538F1F8B7E4300434C83 /* YCheckCardCell.m in Sources */,
+				F072538E1F8B7E3D00434C83 /* YAddNewCardCell.m in Sources */,
+				F072537A1F8B7B2A00434C83 /* YOrderSuccessHeadView.m in Sources */,
+				F07253791F8B7B2300434C83 /* YOrderSuccessView.m in Sources */,
+				F07253781F8B7B1D00434C83 /* YPayViewController.m in Sources */,
 				5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */,
 				5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */,
 				5EA0FEE91F8B2761005E882C /* ZQMaintainViewController.m in Sources */,
@@ -831,9 +929,7 @@
 				F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */,
 				F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */,
 				F0F47F8F1F8B687F00DF54AC /* ZQProblemViewController.m in Sources */,
-
 				5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
