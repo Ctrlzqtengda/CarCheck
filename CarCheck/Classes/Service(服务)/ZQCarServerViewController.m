@@ -18,6 +18,7 @@
 #import "ZQSubTimeViewController.h"
 #import "ZQMaintainViewController.h" //车辆维修站
 #import "ZQOnlineSubViewController.h" //在线预约
+#import "ZQMyBookingViewController.h" //我的预约
 
 #import "ZQInsuranceView.h" //保险
 #import "ZQLoadingView.h"
@@ -211,9 +212,12 @@
             ZQAppointmentHeaderView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ZQAppointmentHeaderView" forIndexPath:indexPath];
             __weak __typeof(self) weakSelf = self;
             headView.handler = ^{
-                ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
-                [subVC setHidesBottomBarWhenPushed:YES];
-                [weakSelf.navigationController pushViewController:subVC animated:YES];
+                ZQMyBookingViewController *bookingVC = [[ZQMyBookingViewController alloc] init];
+                [bookingVC setHidesBottomBarWhenPushed:YES];
+                [weakSelf.navigationController pushViewController:bookingVC animated:YES];
+//                ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+//                [subVC setHidesBottomBarWhenPushed:YES];
+//                [weakSelf.navigationController pushViewController:subVC animated:YES];
             };
             reuseV = headView;
         }

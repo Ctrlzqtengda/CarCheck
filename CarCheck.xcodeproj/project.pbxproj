@@ -25,6 +25,8 @@
 		5EA0FEE51F8B2258005E882C /* ZQSuccessAlerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEE41F8B2258005E882C /* ZQSuccessAlerView.m */; };
 		5EA0FEE91F8B2761005E882C /* ZQMaintainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEE81F8B2761005E882C /* ZQMaintainViewController.m */; };
 		5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEB1F8B395B005E882C /* ZQOnlineAlertView.m */; };
+		5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */; };
+		5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
@@ -107,6 +109,10 @@
 		5EA0FEE81F8B2761005E882C /* ZQMaintainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMaintainViewController.m; sourceTree = "<group>"; };
 		5EA0FEEA1F8B395B005E882C /* ZQOnlineAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQOnlineAlertView.h; sourceTree = "<group>"; };
 		5EA0FEEB1F8B395B005E882C /* ZQOnlineAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQOnlineAlertView.m; sourceTree = "<group>"; };
+		5EA0FEEE1F8B3E83005E882C /* ZQMyBookingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyBookingViewController.h; sourceTree = "<group>"; };
+		5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBookingViewController.m; sourceTree = "<group>"; };
+		5EA0FEF21F8B3EB9005E882C /* ZQMyBooingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyBooingCell.h; sourceTree = "<group>"; };
+		5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBooingCell.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -319,6 +325,25 @@
 			path = "Maintain(车辆维修)";
 			sourceTree = "<group>";
 		};
+		5EA0FEED1F8B3E5F005E882C /* MyBooking(我的预约) */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEF11F8B3E8B005E882C /* Views */,
+				5EA0FEEE1F8B3E83005E882C /* ZQMyBookingViewController.h */,
+				5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */,
+			);
+			path = "MyBooking(我的预约)";
+			sourceTree = "<group>";
+		};
+		5EA0FEF11F8B3E8B005E882C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEF21F8B3EB9005E882C /* ZQMyBooingCell.h */,
+				5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +426,7 @@
 		F04ACDAE1F79E30400F4C50D /* My(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				5EA0FEED1F8B3E5F005E882C /* MyBooking(我的预约) */,
 				5EA0FECE1F8A6211005E882C /* Views */,
 				5EA0FECA1F8A60F8005E882C /* Models */,
 				F0F5482A1F8730AF00E76ACF /* LoginAndRegister */,
@@ -727,6 +753,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */,
+				5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */,
 				5EA0FEE91F8B2761005E882C /* ZQMaintainViewController.m in Sources */,
 				F0F47F931F8B6BDE00DF54AC /* UITextField+ZQTextField.m in Sources */,
 				5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */,
@@ -776,6 +803,9 @@
 				F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */,
 				F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */,
 				F0F47F8F1F8B687F00DF54AC /* ZQProblemViewController.m in Sources */,
+
+				5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
