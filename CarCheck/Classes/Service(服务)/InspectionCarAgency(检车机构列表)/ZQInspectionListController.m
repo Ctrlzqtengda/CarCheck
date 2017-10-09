@@ -120,7 +120,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
         [tableView reloadData];
-        
         // 拿到当前的上拉刷新控件，结束刷新状态
         [tableView.mj_footer endRefreshing];
     });
@@ -128,13 +127,15 @@
 - (void)addNavigationRightItem
 {
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
+    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
     [rightBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [rightBtn addTarget:self action:@selector(rightBtnFilterAction) forControlEvents:UIControlEventTouchUpInside];
-    rightBtn.backgroundColor = [UIColor redColor];
+//    rightBtn.backgroundColor = [UIColor redColor];
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBtnFilterAction)];
+    
     self.navigationItem.rightBarButtonItem = rightBarButton;
 }
 //右侧筛选按钮
