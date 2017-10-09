@@ -43,15 +43,18 @@
     BaseNavigationController *naviServer = [[BaseNavigationController alloc] initWithRootViewController:serverVC];
     
     ZQCarProcessViewController *progressVC = [[ZQCarProcessViewController alloc] init];
-    progressVC.title = @"流程";
+    progressVC.title = @"车检流程";
     BaseNavigationController *naviProgress = [[BaseNavigationController alloc] initWithRootViewController:progressVC];
     
-    NSArray *titleArr = @[@"流程",@"服务",@"我的"];
+    NSArray *titleArr = @[@"车检流程",@"服务",@"我的"];
+    NSArray *imgArray =@[@"111",@"222",@"333",@"111sel",@"222sel",@"my_sel"];
     tabBarVC.viewControllers = @[naviProgress,naviServer,naviMy];
     tabBarVC.selectIndex = 0;
     NSInteger i = 0;
     for (NSString *title in titleArr) {
         UITabBarItem *item = tabBarVC.tabBar.items[i];
+        item.image = [UIImage imageNamed:imgArray[i]];
+        item.selectedImage = [UIImage imageNamed:imgArray[i+3]];
         [item setTitle:title];
         i++;
     }

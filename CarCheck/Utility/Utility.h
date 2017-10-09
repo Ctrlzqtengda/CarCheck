@@ -13,21 +13,19 @@
 /**
  *  初始化是否显示引导图信息
  *
- *  @param dict
  */
 + (void)initStateForLeaddingView;
 
 /**
  *  是否显示过
  *
- *  @return
+ *  @return flag
  */
 + (BOOL )shouldShowLeadViewStateWithKey:(NSString *)leadView;
 
 /**
  *  更新状态
  *
- *  @return
  */
 +(void)updateStateForLeadView:(NSString *)leadView;
 /**
@@ -68,6 +66,18 @@
  *
  */
 + (NSString *)getUserName;
+
+/**
+ *  保存用户Id
+ *
+ */
+-(void)saveUserId:(NSString *)userId;
+
+/**
+ *  保存用户名
+ *
+ */
+-(void)saveUserName:(NSString *)userName;
 
 /**
  *  版本检测

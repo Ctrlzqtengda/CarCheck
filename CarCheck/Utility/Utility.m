@@ -39,9 +39,25 @@
 }
 
 +(BOOL )isLogin {
-    
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
-    
+}
+
+-(void)saveUserName:(NSString *)userName {
+    [[NSUserDefaults standardUserDefaults] setValue:userName forKey:@"userName"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)saveUserId:(NSString *)userId {
+    [[NSUserDefaults standardUserDefaults] setValue:userId forKey:@"userId"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSString *)getUserName {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"userName"];
+}
+
++ (NSString *)getUserID {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"userId"];
 }
 
 +(NSDictionary *)getUserInfoFromLocal

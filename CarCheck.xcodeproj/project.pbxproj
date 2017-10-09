@@ -30,6 +30,7 @@
 		F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */; };
 		F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */; };
 		F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */; };
+		F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */; };
 		F0F548191F8488D400E76ACF /* ZQViolationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548171F8488D400E76ACF /* ZQViolationViewController.m */; };
 		F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F548181F8488D400E76ACF /* ZQViolationViewController.xib */; };
 		F0F5481E1F8497A800E76ACF /* ZQPayVioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5481C1F8497A800E76ACF /* ZQPayVioViewController.m */; };
@@ -97,6 +98,12 @@
 		F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAppointmentHeaderView.m; sourceTree = "<group>"; };
 		F0C5ECB51F7B6024005F782D /* ZQProcessRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessRightCell.h; sourceTree = "<group>"; };
 		F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessRightCell.m; sourceTree = "<group>"; };
+		F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YshareChooseView.m; sourceTree = "<group>"; };
+		F0F47F721F8B11FC00DF54AC /* YshareChooseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YshareChooseView.h; sourceTree = "<group>"; };
+		F0F47F751F8B12C200DF54AC /* YFoundPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFoundPasswordViewController.h; sourceTree = "<group>"; };
+		F0F47F761F8B12C200DF54AC /* YFoundPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFoundPasswordViewController.m; sourceTree = "<group>"; };
+		F0F47F781F8B16D900DF54AC /* YResetPassViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YResetPassViewController.m; sourceTree = "<group>"; };
+		F0F47F791F8B16D900DF54AC /* YResetPassViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YResetPassViewController.h; sourceTree = "<group>"; };
 		F0F548161F8488D400E76ACF /* ZQViolationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQViolationViewController.h; sourceTree = "<group>"; };
 		F0F548171F8488D400E76ACF /* ZQViolationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQViolationViewController.m; sourceTree = "<group>"; };
 		F0F548181F8488D400E76ACF /* ZQViolationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQViolationViewController.xib; sourceTree = "<group>"; };
@@ -318,6 +325,25 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		F0F47F741F8B127B00DF54AC /* FindPwd(找回密码) */ = {
+			isa = PBXGroup;
+			children = (
+				F0F47F751F8B12C200DF54AC /* YFoundPasswordViewController.h */,
+				F0F47F761F8B12C200DF54AC /* YFoundPasswordViewController.m */,
+				F0F47F771F8B16B600DF54AC /* ResetPwd(重置密码) */,
+			);
+			path = "FindPwd(找回密码)";
+			sourceTree = "<group>";
+		};
+		F0F47F771F8B16B600DF54AC /* ResetPwd(重置密码) */ = {
+			isa = PBXGroup;
+			children = (
+				F0F47F791F8B16D900DF54AC /* YResetPassViewController.h */,
+				F0F47F781F8B16D900DF54AC /* YResetPassViewController.m */,
+			);
+			path = "ResetPwd(重置密码)";
+			sourceTree = "<group>";
+		};
 		F0F548151F8487C600E76ACF /* Violation(违章) */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +376,9 @@
 			children = (
 				F0F5482B1F8730E700E76ACF /* ZQLoginViewController.h */,
 				F0F5482C1F8730E700E76ACF /* ZQLoginViewController.m */,
+				F0F47F741F8B127B00DF54AC /* FindPwd(找回密码) */,
+				F0F47F721F8B11FC00DF54AC /* YshareChooseView.h */,
+				F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */,
 			);
 			path = LoginAndRegister;
 			sourceTree = "<group>";
@@ -530,6 +559,7 @@
 				F04ACDC11F7A391100F4C50D /* BaseTabBarViewController.m in Sources */,
 				F0F5483D1F87445E00E76ACF /* ZQTimeCollectionViewCell.m in Sources */,
 				F04ACDC71F7A3C7900F4C50D /* ZQCarServerViewController.m in Sources */,
+				F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
