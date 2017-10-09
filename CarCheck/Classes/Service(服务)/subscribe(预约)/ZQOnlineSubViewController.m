@@ -7,12 +7,17 @@
 //
 
 #import "ZQOnlineSubViewController.h"
-#import "ZQUpSubdataViewController.h"
+#import "ZQOnlineAlertView.h"
+#import "ZQSuccessAlerView.h"
+//#import "ZQUpSubdataViewController.h"
 
 @interface ZQOnlineSubViewController ()<UITableViewDelegate,UITableViewDataSource>{
     NSArray *_dataArray;
 }
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *onlineList;
 @end
 
 @implementation ZQOnlineSubViewController
@@ -26,35 +31,91 @@
 
 -(void)getData {
     
-    _dataArray = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_Id"];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    _dataArray = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_Id"];
+//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.onlineList = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
+    [self.view addSubview:self.tableView];
+    
 }
 
-#pragma mark UITableViewDelegate
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.onlineList.count;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return 1;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _dataArray.count;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.00001;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *headView = [[UIView alloc]init];
+    headView.backgroundColor = [UIColor clearColor];
+    return headView;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *headView = [[UIView alloc]init];
+    headView.backgroundColor = [UIColor clearColor];
+    return headView;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell_Id" forIndexPath:indexPath];
-    cell.textLabel.text = _dataArray[indexPath.row];
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"ZQOnLineCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor darkTextColor];
+    }
+    cell.textLabel.text = self.onlineList[indexPath.section];
     return cell;
 }
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ZQUpSubdataViewController *upVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-    [self.navigationController pushViewController:upVC animated:YES];
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section) {
+      
+        ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+        alerView.handler = ^(NSArray *contenArr)
+        {
+            [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSLog(@"上门接送车提交内容:%@",obj);
+            }];
+            //                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+            
+            [ZQSuccessAlerView showCommitSuccess];
+        };
+        [alerView show];
+    }
+}
+- (UITableView *)tableView
+{
+    if (!_tableView) {
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        tableView.backgroundColor = MainBgColor;
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView = tableView;
+    }
+    return _tableView;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -77,15 +77,26 @@ const CGFloat ITextFieldTag = 222222;
 }
 - (void)commitBtnAction
 {
-    [self close];
     if (self.handler) {
         UITextField *field1 = [self.alertView viewWithTag:ITextFieldTag];
-        UITextField *field2 = [self.alertView viewWithTag:ITextFieldTag];
-        UITextField *field3 = [self.alertView viewWithTag:ITextFieldTag];
-        
+        UITextField *field2 = [self.alertView viewWithTag:ITextFieldTag+1];
+        UITextField *field3 = [self.alertView viewWithTag:ITextFieldTag+2];
+        if (field1.text.length==0) {
+            [ZQLoadingView showAlertHUD:@"请输入检车机构" duration:1.5];
+            return;
+        }
+        if (field2.text.length==0) {
+            [ZQLoadingView showAlertHUD:@"请选择省" duration:1.5];
+            return;
+        }
+        if (field3.text.length==0) {
+            [ZQLoadingView showAlertHUD:@"请选择市" duration:1.5];
+            return;
+        }
         NSArray *array = @[field1.text,field2.text,field3.text];
         self.handler(array);
     }
+    [self close];
 }
 
 - (void)show

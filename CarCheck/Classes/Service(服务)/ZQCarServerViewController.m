@@ -16,11 +16,12 @@
 #import "ZQViolationViewController.h" //违章查询
 #import "ZQPayVioViewController.h"  //代缴罚款
 #import "ZQSubTimeViewController.h"
-#import "ZQOnlineSubViewController.h" // 在线预约
+#import "ZQMaintainViewController.h" //车辆维修站
+#import "ZQOnlineSubViewController.h" //在线预约
 
 #import "ZQInsuranceView.h" //保险
 #import "ZQLoadingView.h"
-
+#import "ZQSuccessAlerView.h" //保险成功提示
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
@@ -43,7 +44,7 @@
     [self getData];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
     self.mainView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
-    self.mainView.backgroundColor = [UIColor colorWithRed:235/255.0 green:246/255.0 blue:252/255.0 alpha:1];;
+    self.mainView.backgroundColor = MainBgColor;
     self.mainView.delegate = self;
     self.mainView.dataSource = self;
     [self.view addSubview:self.mainView];
@@ -120,9 +121,18 @@
                     [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                         NSLog(@"保险提交内容:%@",obj);
                     }];
-                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+//                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+                    
+                    [ZQSuccessAlerView showCommitSuccess];
                 };
                 [alerView show];
+                break;
+            }
+            case 3:
+            {
+                ZQMaintainViewController *vc = [[ZQMaintainViewController alloc] init];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
                 case 4:

@@ -24,6 +24,7 @@
 #define ZQLog(...)
 #endif
 
+#define MainBgColor [UIColor colorWithRed:235/255.0 green:246/255.0 blue:252/255.0 alpha:1]
 /**
  *  屏幕宽高
  */
