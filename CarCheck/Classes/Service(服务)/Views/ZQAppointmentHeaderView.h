@@ -10,4 +10,5 @@
 
 @interface ZQAppointmentHeaderView : UICollectionReusableView
 
+@property (nonatomic, copy) void (^handler)(void);
 @end

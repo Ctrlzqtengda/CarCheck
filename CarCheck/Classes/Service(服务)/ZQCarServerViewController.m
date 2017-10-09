@@ -11,6 +11,15 @@
 #import "ZQServerViewCell.h"
 #import "ZQAppointmentHeaderView.h"
 
+#import "ZQHtmlViewController.h"
+#import "ZQInspectionListController.h"
+#import "ZQViolationViewController.h" //违章查询
+#import "ZQPayVioViewController.h"  //代缴罚款
+#import "ZQSubTimeViewController.h"
+
+#import "ZQInsuranceView.h" //保险
+#import "ZQLoadingView.h"
+
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
     NSArray *_imagePpointArray;
@@ -84,6 +93,90 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.section==2) {
+        switch (indexPath.row) {
+            case 0:
+            {
+                ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+                break;
+            }
+            case 1:
+            {
+                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                [inspectionVC setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:inspectionVC animated:YES];
+                
+                break;
+            }
+            case 2:
+            {
+                ZQInsuranceView *alerView = [[ZQInsuranceView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+                alerView.handler = ^(NSArray *contenArr)
+                {
+                    [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSLog(@"保险提交内容:%@",obj);
+                    }];
+                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+                };
+                [alerView show];
+                break;
+            }
+                case 4:
+            {
+                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else if (indexPath.section==1)
+    {
+        switch (indexPath.row) {
+            case 0:
+            {
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"https://www.baidu.com"];
+                Vc.title = @"预约须知";
+                [Vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:Vc animated:YES];
+                break;
+            }
+            case 1:
+            {
+                break;
+            }
+            case 2:
+            {
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+                
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:phoneStr preferredStyle:UIAlertControllerStyleAlert];
+//                [alert addAction:[UIAlertAction actionWithTitle:@"呼叫" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//                    NSLog(@"点击了呼叫按钮10.2下");
+//                    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+//                    UIApplication * app = [UIApplication sharedApplication];
+//                    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+//                        [app openURL:[NSURL URLWithString:PhoneStr]];
+//                    }
+//                }]];
+//                [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//                    NSLog(@"点击了取消按钮");
+//                }]];
+//                [self presentViewController:alert animated:YES completion:nil];
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 #pragma mark headerAndFooter
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
@@ -102,7 +195,12 @@
         }else{
             // 轮播图
             ZQAppointmentHeaderView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ZQAppointmentHeaderView" forIndexPath:indexPath];
-            
+            __weak __typeof(self) weakSelf = self;
+            headView.handler = ^{
+                ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+                [subVC setHidesBottomBarWhenPushed:YES];
+                [weakSelf.navigationController pushViewController:subVC animated:YES];
+            };
             reuseV = headView;
         }
         

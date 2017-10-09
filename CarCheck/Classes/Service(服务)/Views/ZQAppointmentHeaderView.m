@@ -48,7 +48,9 @@
 
 -(void)tapAction:(UIGestureRecognizer *)gesture {
     
-    
+    if (self.handler) {
+        self.handler();
+    }
     
 }
 
