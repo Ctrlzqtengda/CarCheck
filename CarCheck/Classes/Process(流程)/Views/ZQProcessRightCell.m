@@ -33,12 +33,13 @@
 
 -(void)initViews {
     
-    CGFloat height = 30,btnWidth = 50;
+    CGFloat height = 40,btnWidth = 60;
     
     _imgBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, height, btnWidth, height + 10);
-    [_imgBtn setTitle:@"二" forState:(UIControlStateNormal)];
-    _imgBtn.backgroundColor = [UIColor redColor];
+//    [_imgBtn setTitle:@"二" forState:(UIControlStateNormal)];
+    [_imgBtn setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
+    [_imgBtn setBackgroundImage:[UIImage imageNamed:@"process_step"] forState:UIControlStateNormal];
     [self addSubview:_imgBtn];
     
     //    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, height, CGRectGetMinX(_imgBtn.frame) - 15, height)];
@@ -46,7 +47,9 @@
     //    [self addSubview:_titleLabel];
 }
 
--(void)setDataArray:(NSArray *)dataArray {
+-(void)writeDataWithArray:(NSArray *)dataArray color:(UIColor *)color title:(NSString *)title {
+    
+    [_imgBtn setTitle:title forState:(UIControlStateNormal)];
     
     _dataArray = dataArray;
     if (!_dataArray.count) {
@@ -58,12 +61,12 @@
             [btn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
         }
     }else {
-        CGFloat height = 30;
+        CGFloat height = 40;
         _btnArray = [NSMutableArray array];
         for (int i = 0; i < _dataArray.count; i ++) {
             UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
             titleBtn.frame = CGRectMake(CGRectGetMaxX(_imgBtn.frame), height*(i+1) + i*5, CGRectGetMinX(_imgBtn.frame) - 15, height);
-            titleBtn.backgroundColor = [UIColor greenColor];
+            titleBtn.backgroundColor = color;
             [titleBtn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
             titleBtn.tag = i+100;
             [titleBtn addTarget:self action:@selector(clickBtn:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -71,7 +74,35 @@
             [_btnArray addObject:titleBtn];
         }
     }
+    
 }
+
+//-(void)setDataArray:(NSArray *)dataArray {
+//
+//    _dataArray = dataArray;
+//    if (!_dataArray.count) {
+//        return;
+//    }
+//    if (_btnArray.count) {
+//        for (int i=0;i<_btnArray.count;i++) {
+//            UIButton *btn = _btnArray[i];
+//            [btn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
+//        }
+//    }else {
+//        CGFloat height = 30;
+//        _btnArray = [NSMutableArray array];
+//        for (int i = 0; i < _dataArray.count; i ++) {
+//            UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+//            titleBtn.frame = CGRectMake(CGRectGetMaxX(_imgBtn.frame), height*(i+1) + i*5, CGRectGetMinX(_imgBtn.frame) - 15, height);
+//            titleBtn.backgroundColor = [UIColor greenColor];
+//            [titleBtn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
+//            titleBtn.tag = i+100;
+//            [titleBtn addTarget:self action:@selector(clickBtn:) forControlEvents:(UIControlEventTouchUpInside)];
+//            [self addSubview:titleBtn];
+//            [_btnArray addObject:titleBtn];
+//        }
+//    }
+//}
 
 -(void)clickBtn:(UIButton *)sender {
     

@@ -18,6 +18,13 @@
 
 @property(nonatomic,strong)NSArray *dataArray;
 
+@property(strong,nonatomic)UIColor *color;
+
+@property(copy,nonatomic)NSString *title;
+
 @property(assign,nonatomic)id<ZQProcessRightCellDelegate> delegate;
+
+// 数据初始化
+-(void)writeDataWithArray:(NSArray *)dataArray color:(UIColor *)color title:(NSString *)title;
 
 @end

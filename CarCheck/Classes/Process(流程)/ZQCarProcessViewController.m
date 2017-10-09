@@ -16,6 +16,8 @@
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
     NSMutableArray *_dataArray;
+    NSMutableArray *_colorArray;
+    NSMutableArray *_stepArray;
     
 }
 
@@ -43,11 +45,24 @@
     // 注册
     [self.tableView registerClass:[ZQProcessCell class] forCellReuseIdentifier:@"ZQProcessCell"];
     [self.tableView registerClass:[ZQProcessRightCell class] forCellReuseIdentifier:@"ZQProcessRightCell"];
+    
+    // 背景图
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"process.png"]];
+    imgView.frame = CGRectMake(0, 0, KWidth, KHeight - 84 - 44);
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.tableView setBackgroundView:imgView];
 }
 
 -(void)getData {
     
     _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"检车预约",@"上门接送检车",@"电话预约检车"],@[@"常见问题"],@[@"平台介绍"], nil];
+    _stepArray = [NSMutableArray arrayWithObjects:@"一",@"二",@"三",@"四",@"五", nil];
+    _colorArray = [NSMutableArray array];
+    [_colorArray addObject:[UIColor colorWithRed:4/255.0 green:139/255.0 blue:254/255.0 alpha:1]];
+    [_colorArray addObject:[UIColor colorWithRed:143/255.0 green:130/255.0 blue:188/255.0 alpha:1]];
+    [_colorArray addObject:[UIColor colorWithRed:18/255.0 green:180/255.0 blue:177/255.0 alpha:1]];
+    [_colorArray addObject:[UIColor colorWithRed:255/255.0 green:107/255.0 blue:0/255.0 alpha:1]];
+    [_colorArray addObject:[UIColor colorWithRed:228/255.0 green:1/255.0 blue:127/255.0 alpha:1]];
     
 }
 #pragma mark 共有方法
@@ -107,7 +122,7 @@
             cell = [[ZQProcessCell alloc] init];
         }
         cell.delegate = self;
-        cell.dataArray = _dataArray[indexPath.row];
+        [cell writeDataWithArray:_dataArray[indexPath.row] color:_colorArray[indexPath.row] title:_stepArray[indexPath.row]];
         return cell;
     }else{
         
@@ -116,6 +131,7 @@
         if (cell == nil) {
             cell = [[ZQProcessRightCell alloc] init];
         }
+        [cell writeDataWithArray:_dataArray[indexPath.row] color:_colorArray[indexPath.row] title:_stepArray[indexPath.row]];
         cell.dataArray = _dataArray[indexPath.row];
         return cell;
     }
