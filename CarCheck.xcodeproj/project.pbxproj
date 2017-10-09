@@ -27,6 +27,8 @@
 		5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEB1F8B395B005E882C /* ZQOnlineAlertView.m */; };
 		5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */; };
 		5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */; };
+		5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */; };
+		5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD51F8B6743000AD168 /* FBTextView.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
@@ -111,6 +113,10 @@
 		5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBookingViewController.m; sourceTree = "<group>"; };
 		5EA0FEF21F8B3EB9005E882C /* ZQMyBooingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyBooingCell.h; sourceTree = "<group>"; };
 		5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBooingCell.m; sourceTree = "<group>"; };
+		5EEA2FD01F8B634A000AD168 /* ZQFeedBackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQFeedBackViewController.h; sourceTree = "<group>"; };
+		5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQFeedBackViewController.m; sourceTree = "<group>"; };
+		5EEA2FD41F8B6743000AD168 /* FBTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBTextView.h; sourceTree = "<group>"; };
+		5EEA2FD51F8B6743000AD168 /* FBTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBTextView.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,6 +344,25 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5EEA2FCF1F8B6324000AD168 /* Feedback(意见反馈) */ = {
+			isa = PBXGroup;
+			children = (
+				5EEA2FD31F8B66FC000AD168 /* Views */,
+				5EEA2FD01F8B634A000AD168 /* ZQFeedBackViewController.h */,
+				5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */,
+			);
+			path = "Feedback(意见反馈)";
+			sourceTree = "<group>";
+		};
+		5EEA2FD31F8B66FC000AD168 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5EEA2FD41F8B6743000AD168 /* FBTextView.h */,
+				5EEA2FD51F8B6743000AD168 /* FBTextView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +443,7 @@
 		F04ACDAE1F79E30400F4C50D /* My(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				5EEA2FCF1F8B6324000AD168 /* Feedback(意见反馈) */,
 				5EA0FEED1F8B3E5F005E882C /* MyBooking(我的预约) */,
 				5EA0FECE1F8A6211005E882C /* Views */,
 				5EA0FECA1F8A60F8005E882C /* Models */,
@@ -730,12 +756,14 @@
 				5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */,
 				5EA0FEE91F8B2761005E882C /* ZQMaintainViewController.m in Sources */,
 				5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */,
+				5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */,
 				5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */,
 				5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */,
 				5EA0FED71F8A67FE005E882C /* YSPersonalHeadCell.m in Sources */,
 				F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */,
 				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
 				5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */,
+				5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */,
 				F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */,
 				5EA0FEE21F8B0ABC005E882C /* ZQInsuranceView.m in Sources */,
 				F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */,

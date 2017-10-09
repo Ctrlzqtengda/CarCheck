@@ -14,6 +14,8 @@
 #import "YPersonOrderCell.h"
 #import "YPersonActionCell.h"
 
+#import "ZQFeedBackViewController.h" //意见反馈
+
 @interface ZQMyViewController()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,YSPersonalHeadCellDelegate,YPersonDetailHeadViewDelegate>
 
 @property (strong,nonatomic) UICollectionView *mainV;
@@ -264,8 +266,9 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
 //            YServiceCenterViewController *vc = [[YServiceCenterViewController alloc]init];
 //            [self.navigationController pushViewController:vc animated:YES];
         }else{
-//            YFeedBackViewController *vc = [[YFeedBackViewController alloc]init];
-//            [self.navigationController pushViewController:vc animated:YES];
+            ZQFeedBackViewController *vc = [[ZQFeedBackViewController alloc]init];
+            [vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }
