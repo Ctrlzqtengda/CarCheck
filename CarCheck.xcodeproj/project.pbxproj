@@ -15,6 +15,12 @@
 		5EA0FEC41F8A33CC005E882C /* ZQAreaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEC31F8A33CC005E882C /* ZQAreaModel.m */; };
 		5EA0FEC81F8A3A74005E882C /* ZQLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEC71F8A3A74005E882C /* ZQLoadingView.m */; };
 		5EA0FEC91F8A3FBB005E882C /* YPAddress.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */; };
+		5EA0FECD1F8A611F005E882C /* ZQPersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FECC1F8A611F005E882C /* ZQPersonModel.m */; };
+		5EA0FED71F8A67FE005E882C /* YSPersonalHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FECF1F8A6220005E882C /* YSPersonalHeadCell.m */; };
+		5EA0FEDA1F8A6905005E882C /* UdStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED91F8A6905005E882C /* UdStorage.m */; };
+		5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED21F8A625B005E882C /* YPersonDetailHeadView.m */; };
+		5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED51F8A6298005E882C /* YPersonActionCell.m */; };
+		5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED41F8A627A005E882C /* YPersonOrderCell.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
@@ -72,6 +78,18 @@
 		5EA0FEC31F8A33CC005E882C /* ZQAreaModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAreaModel.m; sourceTree = "<group>"; };
 		5EA0FEC61F8A3A74005E882C /* ZQLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQLoadingView.h; sourceTree = "<group>"; };
 		5EA0FEC71F8A3A74005E882C /* ZQLoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQLoadingView.m; sourceTree = "<group>"; };
+		5EA0FECB1F8A611F005E882C /* ZQPersonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQPersonModel.h; sourceTree = "<group>"; };
+		5EA0FECC1F8A611F005E882C /* ZQPersonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQPersonModel.m; sourceTree = "<group>"; };
+		5EA0FECF1F8A6220005E882C /* YSPersonalHeadCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSPersonalHeadCell.m; sourceTree = "<group>"; };
+		5EA0FED01F8A6221005E882C /* YSPersonalHeadCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSPersonalHeadCell.h; sourceTree = "<group>"; };
+		5EA0FED11F8A625B005E882C /* YPersonDetailHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPersonDetailHeadView.h; sourceTree = "<group>"; };
+		5EA0FED21F8A625B005E882C /* YPersonDetailHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPersonDetailHeadView.m; sourceTree = "<group>"; };
+		5EA0FED31F8A627A005E882C /* YPersonOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPersonOrderCell.h; sourceTree = "<group>"; };
+		5EA0FED41F8A627A005E882C /* YPersonOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPersonOrderCell.m; sourceTree = "<group>"; };
+		5EA0FED51F8A6298005E882C /* YPersonActionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPersonActionCell.m; sourceTree = "<group>"; };
+		5EA0FED61F8A6298005E882C /* YPersonActionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPersonActionCell.h; sourceTree = "<group>"; };
+		5EA0FED81F8A6905005E882C /* UdStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UdStorage.h; sourceTree = "<group>"; };
+		5EA0FED91F8A6905005E882C /* UdStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UdStorage.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +235,32 @@
 			path = "加载提示";
 			sourceTree = "<group>";
 		};
+		5EA0FECA1F8A60F8005E882C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FECB1F8A611F005E882C /* ZQPersonModel.h */,
+				5EA0FECC1F8A611F005E882C /* ZQPersonModel.m */,
+				5EA0FED81F8A6905005E882C /* UdStorage.h */,
+				5EA0FED91F8A6905005E882C /* UdStorage.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5EA0FECE1F8A6211005E882C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FED01F8A6221005E882C /* YSPersonalHeadCell.h */,
+				5EA0FECF1F8A6220005E882C /* YSPersonalHeadCell.m */,
+				5EA0FED11F8A625B005E882C /* YPersonDetailHeadView.h */,
+				5EA0FED21F8A625B005E882C /* YPersonDetailHeadView.m */,
+				5EA0FED31F8A627A005E882C /* YPersonOrderCell.h */,
+				5EA0FED41F8A627A005E882C /* YPersonOrderCell.m */,
+				5EA0FED61F8A6298005E882C /* YPersonActionCell.h */,
+				5EA0FED51F8A6298005E882C /* YPersonActionCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +339,8 @@
 		F04ACDAE1F79E30400F4C50D /* My(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				5EA0FECE1F8A6211005E882C /* Views */,
+				5EA0FECA1F8A60F8005E882C /* Models */,
 				F0F5482A1F8730AF00E76ACF /* LoginAndRegister */,
 				F04ACDC21F7A3C3F00F4C50D /* ZQMyViewController.h */,
 				F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */,
@@ -572,6 +618,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */,
+				5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */,
+				5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */,
+				5EA0FED71F8A67FE005E882C /* YSPersonalHeadCell.m in Sources */,
 				F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */,
 				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
 				5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */,
@@ -595,6 +645,7 @@
 				F04ACDCE1F7A3D2A00F4C50D /* BaseViewController.m in Sources */,
 				5EA0FEB61F8A1BFA005E882C /* ZQAlerInputView.m in Sources */,
 				F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */,
+				5EA0FECD1F8A611F005E882C /* ZQPersonModel.m in Sources */,
 				F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */,
 				F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */,
 				F0F548381F8735E800E76ACF /* ZQCollectionViewCell.m in Sources */,
@@ -602,6 +653,7 @@
 				F04ACDA41F79E20B00F4C50D /* main.m in Sources */,
 				F04ACDCA1F7A3C9700F4C50D /* ZQCarProcessViewController.m in Sources */,
 				F0F548311F87314F00E76ACF /* ZQSubTimeViewController.m in Sources */,
+				5EA0FEDA1F8A6905005E882C /* UdStorage.m in Sources */,
 				F04ACDC41F7A3C3F00F4C50D /* ZQMyViewController.m in Sources */,
 				F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */,
 				F04ACDC11F7A391100F4C50D /* BaseTabBarViewController.m in Sources */,

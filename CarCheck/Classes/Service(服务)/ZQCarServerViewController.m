@@ -13,6 +13,9 @@
 
 #import "ZQHtmlViewController.h"
 #import "ZQInspectionListController.h"
+#import "ZQViolationViewController.h" //违章查询
+#import "ZQPayVioViewController.h"  //代缴罚款
+#import "ZQSubTimeViewController.h"
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
@@ -91,6 +94,9 @@
         switch (indexPath.row) {
             case 0:
             {
+                ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
             case 1:
@@ -99,6 +105,13 @@
                 [inspectionVC setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:inspectionVC animated:YES];
                 
+                break;
+            }
+                case 4:
+            {
+                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
             default:
@@ -166,7 +179,12 @@
         }else{
             // 轮播图
             ZQAppointmentHeaderView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ZQAppointmentHeaderView" forIndexPath:indexPath];
-            
+            __weak __typeof(self) weakSelf = self;
+            headView.handler = ^{
+                ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+                [subVC setHidesBottomBarWhenPushed:YES];
+                [weakSelf.navigationController pushViewController:subVC animated:YES];
+            };
             reuseV = headView;
         }
         
