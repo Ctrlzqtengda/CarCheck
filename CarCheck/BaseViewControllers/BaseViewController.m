@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "ZQLoginViewController.h"
 
 
 @interface BaseViewController ()
@@ -18,6 +19,8 @@
  *  注册通知
  */
 -(void)registerNotification{
+    
+    
     
 }
 
@@ -61,6 +64,21 @@
     
 }
 
+// 检测登录
+-(void)checkLogin {
+    
+    if ([Utility isLogin]) {
+        
+    }else {
+        
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        [self.navigationController presentViewController:loginVC animated:YES completion:^{
+            
+        }];
+        
+    }
+    
+}
 
 /**
  *  返回  调用

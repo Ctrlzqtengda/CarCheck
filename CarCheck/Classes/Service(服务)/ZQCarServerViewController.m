@@ -16,9 +16,11 @@
 #import "ZQViolationViewController.h" //违章查询
 #import "ZQPayVioViewController.h"  //代缴罚款
 #import "ZQSubTimeViewController.h"
+#import "ZQOnlineSubViewController.h" // 在线预约
 
 #import "ZQInsuranceView.h" //保险
 #import "ZQLoadingView.h"
+
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
@@ -147,6 +149,8 @@
             }
             case 1:
             {
+                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
             case 2:

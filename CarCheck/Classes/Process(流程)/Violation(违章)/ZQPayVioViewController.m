@@ -8,7 +8,7 @@
 
 #import "ZQPayVioViewController.h"
 
-@interface ZQPayVioViewController ()
+@interface ZQPayVioViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 
 @property (weak, nonatomic) IBOutlet UITextField *driveCodeTf;
@@ -20,13 +20,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImageAction)];
+    [self.imgView addGestureRecognizer:tap];
+    self.imgView.userInteractionEnabled = YES;
     // Do any additional setup after loading the view from its nib.
 }
 
 - (IBAction)sendAction:(id)sender {
     
+}
+
+-(void)chooseImageAction {
+    
+    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+    //想要知道选择的图片
+    pickerVC.delegate = self;
+    //开启编辑状态
+    pickerVC.allowsEditing = YES;
+    [self presentViewController:pickerVC animated:YES completion:nil];
     
 }
+
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    [self.imgView setImage:info[UIImagePickerControllerOriginalImage]];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -33,7 +33,7 @@
 
 - (BaseTabBarViewController *)setupViews {
     
-    BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
+     BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
     ZQMyViewController *myVC = [[ZQMyViewController alloc] init];
     myVC.title = @"我的";
     BaseNavigationController *naviMy = [[BaseNavigationController alloc] initWithRootViewController:myVC];
