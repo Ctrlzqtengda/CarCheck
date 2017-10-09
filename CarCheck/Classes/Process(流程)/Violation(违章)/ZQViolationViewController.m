@@ -28,11 +28,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self setupViews];
+}
+
+-(void)setupViews {
+    
+    self.title = @"违章查询";
+    [self setRightViewWithTextField:self.provinceTf imageName:@"downArrow"];
+    [self setRightViewWithTextField:self.cityTf imageName:@"downArrow"];
+    [self setRightViewWithTextField:self.carProvinceTf imageName:@"downArrow"];
+    
+}
+
+-(void)setRightViewWithTextField:(UITextField *)textfield imageName:(NSString *)imageName {
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    imageView.contentMode = UIViewContentModeCenter;
+    textfield.rightView = imageView;
+    textfield.rightViewMode = UITextFieldViewModeAlways;
+    
 }
 
 - (IBAction)seachAction:(id)sender {
     
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == 101) {
+        
+    }
+    if (btn.tag == 102) {
+        
+    }
     
 }
 
