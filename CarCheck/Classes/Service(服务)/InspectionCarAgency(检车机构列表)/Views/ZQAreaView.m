@@ -22,7 +22,22 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor=HEXCOLOR(0xffffff);
         [self initView];
-        [self getProvinceDataFromLocalWithProvinceId:pId];
+        if (pId.integerValue == -1) {
+            NSArray *array = @[@"京",@"津",@"沪",@"渝",@"蒙",@"冀",@"新",@"辽",@"藏",@"宁",@"桂",@"黑",@"晋",@"青",@"鲁",@"京",@"港",@"澳",@"豫",@"苏",@"皖",@"闽",@"赣",@"湘",@"鄂",@"粤",@"琼",@"甘",@"陕",@"贵",@"云",@"川",];
+            NSMutableArray *muArr = [NSMutableArray arrayWithCapacity:0];
+            for (NSString *str in array) {
+                ZQAreaModel *model = [[ZQAreaModel alloc] init];
+                model.areaName = str;
+                model.areaId = @"-1";
+                [muArr addObject:model];
+            }
+            self.listArr = muArr;
+            [_areaPickerV reloadAllComponents];
+        }
+        else
+        {
+            [self getProvinceDataFromLocalWithProvinceId:pId];
+        }
     }
     return self;
 }
