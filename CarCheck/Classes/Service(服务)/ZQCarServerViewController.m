@@ -22,7 +22,6 @@
 
 #import "ZQInsuranceView.h" //保险
 #import "ZQLoadingView.h"
-
 #import "ZQSuccessAlerView.h" //保险成功提示
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
@@ -161,9 +160,8 @@
             }
             case 1:
             {
-                ZQOnlineSubViewController *Vc = [[ZQOnlineSubViewController alloc] init];
-                [Vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:Vc animated:YES];
+                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
             case 2:

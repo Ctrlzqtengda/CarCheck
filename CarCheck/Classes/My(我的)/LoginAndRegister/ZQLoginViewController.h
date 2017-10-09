@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZQLoginViewController : UIViewController
+@interface ZQLoginViewController : BaseViewController
 
 @end

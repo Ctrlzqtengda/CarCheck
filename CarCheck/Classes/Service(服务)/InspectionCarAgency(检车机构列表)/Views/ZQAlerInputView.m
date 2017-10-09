@@ -199,6 +199,7 @@ const CGFloat ITextFieldTag = 222222;
     };
     [self addSubview:_areaView];
 }
+
 - (UIButton *)bgViewBtn
 {
     if (!_bgViewBtn) {

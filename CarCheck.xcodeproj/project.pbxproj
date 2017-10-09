@@ -51,6 +51,8 @@
 		F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */; };
 		F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */; };
 		F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */; };
+		F0F47F7D1F8B290600DF54AC /* ZQUpSubdataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F7B1F8B290600DF54AC /* ZQUpSubdataViewController.m */; };
+		F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F47F7C1F8B290600DF54AC /* ZQUpSubdataViewController.xib */; };
 		F0F548191F8488D400E76ACF /* ZQViolationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F548171F8488D400E76ACF /* ZQViolationViewController.m */; };
 		F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F548181F8488D400E76ACF /* ZQViolationViewController.xib */; };
 		F0F5481E1F8497A800E76ACF /* ZQPayVioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F5481C1F8497A800E76ACF /* ZQPayVioViewController.m */; };
@@ -163,6 +165,9 @@
 		F0F47F761F8B12C200DF54AC /* YFoundPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YFoundPasswordViewController.m; sourceTree = "<group>"; };
 		F0F47F781F8B16D900DF54AC /* YResetPassViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YResetPassViewController.m; sourceTree = "<group>"; };
 		F0F47F791F8B16D900DF54AC /* YResetPassViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YResetPassViewController.h; sourceTree = "<group>"; };
+		F0F47F7A1F8B290600DF54AC /* ZQUpSubdataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQUpSubdataViewController.h; sourceTree = "<group>"; };
+		F0F47F7B1F8B290600DF54AC /* ZQUpSubdataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQUpSubdataViewController.m; sourceTree = "<group>"; };
+		F0F47F7C1F8B290600DF54AC /* ZQUpSubdataViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQUpSubdataViewController.xib; sourceTree = "<group>"; };
 		F0F548161F8488D400E76ACF /* ZQViolationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQViolationViewController.h; sourceTree = "<group>"; };
 		F0F548171F8488D400E76ACF /* ZQViolationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQViolationViewController.m; sourceTree = "<group>"; };
 		F0F548181F8488D400E76ACF /* ZQViolationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQViolationViewController.xib; sourceTree = "<group>"; };
@@ -549,6 +554,9 @@
 				F0F548411F87515C00E76ACF /* ZQOnlineSubViewController.h */,
 				F0F548421F87515C00E76ACF /* ZQOnlineSubViewController.m */,
 				F0F548431F87515C00E76ACF /* ZQOnlineSubViewController.xib */,
+				F0F47F7A1F8B290600DF54AC /* ZQUpSubdataViewController.h */,
+				F0F47F7B1F8B290600DF54AC /* ZQUpSubdataViewController.m */,
+				F0F47F7C1F8B290600DF54AC /* ZQUpSubdataViewController.xib */,
 				5EA0FEB01F8A0AB5005E882C /* ZQHtmlViewController.h */,
 				5EA0FEB11F8A0AB5005E882C /* ZQHtmlViewController.m */,
 			);
@@ -649,6 +657,7 @@
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
 				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
 				F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */,
+				F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */,
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
 				F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */,
 				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
@@ -739,6 +748,7 @@
 				5EA0FEE51F8B2258005E882C /* ZQSuccessAlerView.m in Sources */,
 				F04ACDD81F7A44A000F4C50D /* JKHttpClientTool.m in Sources */,
 				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
+				F0F47F7D1F8B290600DF54AC /* ZQUpSubdataViewController.m in Sources */,
 				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
 				F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */,
 				5EA0FEC41F8A33CC005E882C /* ZQAreaModel.m in Sources */,

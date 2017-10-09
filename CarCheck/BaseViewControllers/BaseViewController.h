@@ -13,4 +13,7 @@
 -(void)back;
 //-(void)more;
 -(void)allResignFirstResponder;
+// 检测登录
+-(void)checkLogin;
+
 @end

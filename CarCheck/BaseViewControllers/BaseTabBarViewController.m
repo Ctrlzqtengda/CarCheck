@@ -12,8 +12,9 @@
 #import "ZQCarProcessViewController.h"
 #import "YtabBarButton.h"
 #import "BaseNavigationController.h"
+#import "ZQMyViewController.h"
 
-@interface BaseTabBarViewController ()
+@interface BaseTabBarViewController ()<UITabBarControllerDelegate>
 
 /**主控制器个数*/
 @property (strong,nonatomic) NSMutableArray *itemsArr;
@@ -33,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.delegate = self;
 }
 
 - (void)initView {
@@ -49,7 +50,6 @@
     BaseNavigationController *navi = [[BaseNavigationController alloc]initWithRootViewController:vc];
     [self addChildViewController:navi];
 }
-
 
 - (void)chooseTabbar:(UIButton*)sender {
     BOOL go =YES;
@@ -70,6 +70,16 @@
         NSMutableArray *arr = [NSMutableArray array];
         [arr addObject:[NSString stringWithFormat:@"%ld",_selectIndex]];
 //        [[NSNotificationCenter defaultCenter]postNotificationName:YSTabBarChangeIndex object:arr userInfo:nil];
+    }
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    
+    BaseNavigationController *navi = (BaseNavigationController *)viewController;
+    
+    if ([ZQMyViewController class] == [navi.viewControllers[0] class]) {
+        ZQMyViewController *myVC = (ZQMyViewController *)navi.viewControllers[0];
+        [myVC checkLogin];
     }
 }
 

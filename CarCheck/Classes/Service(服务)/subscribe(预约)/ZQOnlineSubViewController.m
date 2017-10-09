@@ -9,12 +9,15 @@
 #import "ZQOnlineSubViewController.h"
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
+//#import "ZQUpSubdataViewController.h"
 
-@interface ZQOnlineSubViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ZQOnlineSubViewController ()<UITableViewDelegate,UITableViewDataSource>{
+    NSArray *_dataArray;
+}
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *onlineList;
-
 @end
 
 @implementation ZQOnlineSubViewController
@@ -22,9 +25,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"在线预约";
+    [self getData];
+    // Do any additional setup after loading the view from its nib.
+}
+
+-(void)getData {
+    
+//    _dataArray = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_Id"];
+//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.onlineList = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
     [self.view addSubview:self.tableView];
+    
 }
+
+
 
 #pragma mark - UITableViewDataSource
 
