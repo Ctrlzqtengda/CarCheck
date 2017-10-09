@@ -15,7 +15,6 @@
 #import <MJExtension.h>
 #import "JKHttpRequestService.h"
 #import "BaseViewController.h"
-
 #import "MJRefresh.h"
 
 #ifdef DEBUG
