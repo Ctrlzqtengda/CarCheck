@@ -15,5 +15,5 @@
 + (void)showProgressHUD:(NSString *)aString;
 + (void)hideProgressHUD;
 + (void)updateProgressHUD:(NSString*)progress;
-
++ (void)makeSuccessfulHudWithTips:(NSString *)tips parentView:(UIView *)view;
 @end

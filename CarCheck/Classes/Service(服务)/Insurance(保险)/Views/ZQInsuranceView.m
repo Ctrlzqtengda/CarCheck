@@ -1,27 +1,24 @@
 //
-//  ZQAlerInputView.m
+//  ZQInsuranceView.m
 //  CarCheck
 //
-//  Created by 岳宗申 on 2017/10/8.
+//  Created by 岳宗申 on 2017/10/9.
 //  Copyright © 2017年 zhangqiang. All rights reserved.
 //
 
-#import "ZQAlerInputView.h"
-#import "ZQAreaView.h"
+#import "ZQInsuranceView.h"
 #import "ZQLoadingView.h"
 
-const CGFloat ITextFieldTag = 222222;
+const CGFloat TextFieldTag = 11111;
 
-@interface ZQAlerInputView ()<UITextFieldDelegate>
+@interface ZQInsuranceView()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *alertView;
 @property (nonatomic, strong) UIButton *bgViewBtn;
-@property (nonatomic, strong) ZQAreaView *areaView;
-@property (nonatomic, strong) ZQAreaModel *provinceModel;
+
 @end
 
-@implementation ZQAlerInputView
-
+@implementation ZQInsuranceView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -29,11 +26,11 @@ const CGFloat ITextFieldTag = 222222;
     if (self) {
         [self addSubview:self.bgViewBtn];
         [self addSubview:self.alertView];
-        NSArray *contenArr = @[@"检车机构",@"选  择  省",@"选  择  市"];
+        NSArray *contenArr = @[@"姓  名",@"手机号",@"身份证"];
         CGFloat width = CGRectGetWidth(_alertView.frame);
         CGFloat cellMargin = 20;
         CGFloat yMargin = 5.0;
-        CGFloat labelWidth = 70;
+        CGFloat labelWidth = 60;
         CGFloat labelHeight = 30;
         CGFloat textFieldWidth = width-labelWidth-cellMargin*2;
         CGFloat currentHeight = 20;
@@ -53,14 +50,9 @@ const CGFloat ITextFieldTag = 222222;
             textField.font = [UIFont systemFontOfSize:15];
             textField.textColor = [UIColor darkGrayColor];
             textField.returnKeyType = UIReturnKeyDone;
-            textField.tag = i+ITextFieldTag;
+            textField.tag = i+TextFieldTag;
             [_alertView addSubview:textField];
             currentHeight += (labelHeight+yMargin);
-            if (i) {
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(textFieldWidth-13-10, 10, 13, 10)];
-                imageV.image = [UIImage imageNamed:@"downArrow"];
-                [textField addSubview:imageV];
-            }
         }
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(0,0,100, 30)];
@@ -79,10 +71,10 @@ const CGFloat ITextFieldTag = 222222;
 {
     [self close];
     if (self.handler) {
-        UITextField *field1 = [self.alertView viewWithTag:ITextFieldTag];
-        UITextField *field2 = [self.alertView viewWithTag:ITextFieldTag];
-        UITextField *field3 = [self.alertView viewWithTag:ITextFieldTag];
-        
+        UITextField *field1 = [self.alertView viewWithTag:TextFieldTag];
+        UITextField *field2 = [self.alertView viewWithTag:TextFieldTag];
+        UITextField *field3 = [self.alertView viewWithTag:TextFieldTag];
+
         NSArray *array = @[field1.text,field2.text,field3.text];
         self.handler(array);
     }
@@ -132,21 +124,6 @@ const CGFloat ITextFieldTag = 222222;
 #pragma mark -UITextFieldDelegate-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag==1+ITextFieldTag) {
-        [self showPickViewWithTextField:textField];
-        return NO;
-    }
-    if (textField.tag==2+ITextFieldTag) {
-        if (self.provinceModel) {
-             [self showPickViewWithTextField:textField];
-        }
-        else
-        {
-            [ZQLoadingView showAlertHUD:@"请选择省份" duration:SXLoadingTime];
-
-        }
-        return NO;
-    }
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -155,39 +132,6 @@ const CGFloat ITextFieldTag = 222222;
     return YES;
 }
 
-- (void)showPickViewWithTextField:(UITextField *)textField
-{
-    CGPoint center = self.center;
-    center.y -=50;
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.alertView setCenter:center];
-    }];
-    if (_areaView) {
-        [_areaView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [_areaView removeFromSuperview];
-        self.areaView = nil;
-    }
-    NSString *pId = nil;
-    if (self.provinceModel&&textField.tag==2+ITextFieldTag) {
-        pId = self.provinceModel.areaId;
-    }
-    __weak __typeof(self) weakSelf = self;
-    __weak UITextField *wTextField = textField;
-    _areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-230, __kWidth, 230) provinceId:pId];
-    _areaView.handler = ^(ZQAreaModel *areaModel)
-    {
-        [UIView animateWithDuration:0.3 animations:^{
-            [weakSelf.alertView setCenter:weakSelf.center];
-        }];
-        if (areaModel) {
-            wTextField.text = areaModel.areaName;
-            if (wTextField.tag==1+ITextFieldTag) {
-                weakSelf.provinceModel = areaModel;
-            }
-        }
-    };
-    [self addSubview:_areaView];
-}
 - (UIButton *)bgViewBtn
 {
     if (!_bgViewBtn) {

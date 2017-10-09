@@ -142,7 +142,9 @@
     ZQAlerInputView *alerView = [[ZQAlerInputView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
     alerView.handler = ^(NSArray *contenArr)
     {
-        
+        [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"车检机构内容筛选提交内容:%@",obj);
+        }];
     };
     [alerView show];
 }

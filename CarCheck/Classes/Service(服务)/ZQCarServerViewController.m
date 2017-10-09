@@ -17,6 +17,9 @@
 #import "ZQPayVioViewController.h"  //代缴罚款
 #import "ZQSubTimeViewController.h"
 
+#import "ZQInsuranceView.h" //保险
+#import "ZQLoadingView.h"
+
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
     NSArray *_imagePpointArray;
@@ -105,6 +108,19 @@
                 [inspectionVC setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:inspectionVC animated:YES];
                 
+                break;
+            }
+            case 2:
+            {
+                ZQInsuranceView *alerView = [[ZQInsuranceView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+                alerView.handler = ^(NSArray *contenArr)
+                {
+                    [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSLog(@"保险提交内容:%@",obj);
+                    }];
+                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+                };
+                [alerView show];
                 break;
             }
                 case 4:

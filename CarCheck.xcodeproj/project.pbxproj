@@ -21,6 +21,7 @@
 		5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED21F8A625B005E882C /* YPersonDetailHeadView.m */; };
 		5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED51F8A6298005E882C /* YPersonActionCell.m */; };
 		5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FED41F8A627A005E882C /* YPersonOrderCell.m */; };
+		5EA0FEE21F8B0ABC005E882C /* ZQInsuranceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEE11F8B0ABC005E882C /* ZQInsuranceView.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
@@ -90,6 +91,8 @@
 		5EA0FED61F8A6298005E882C /* YPersonActionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPersonActionCell.h; sourceTree = "<group>"; };
 		5EA0FED81F8A6905005E882C /* UdStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UdStorage.h; sourceTree = "<group>"; };
 		5EA0FED91F8A6905005E882C /* UdStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UdStorage.m; sourceTree = "<group>"; };
+		5EA0FEE01F8B0ABC005E882C /* ZQInsuranceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQInsuranceView.h; sourceTree = "<group>"; };
+		5EA0FEE11F8B0ABC005E882C /* ZQInsuranceView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQInsuranceView.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,6 +264,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5EA0FEDE1F8B0A83005E882C /* Insurance(保险) */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEDF1F8B0A9B005E882C /* Views */,
+			);
+			path = "Insurance(保险)";
+			sourceTree = "<group>";
+		};
+		5EA0FEDF1F8B0A9B005E882C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5EA0FEE01F8B0ABC005E882C /* ZQInsuranceView.h */,
+				5EA0FEE11F8B0ABC005E882C /* ZQInsuranceView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +347,7 @@
 		F04ACDAD1F79E2C800F4C50D /* Service(服务) */ = {
 			isa = PBXGroup;
 			children = (
+				5EA0FEDE1F8B0A83005E882C /* Insurance(保险) */,
 				5EA0FEA81F876701005E882C /* InspectionCarAgency(检车机构列表) */,
 				F0F548201F849D8E00E76ACF /* subscribe(预约) */,
 				F07F1D9F1F7A694500468EC2 /* Views */,
@@ -626,6 +647,7 @@
 				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
 				5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */,
 				F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */,
+				5EA0FEE21F8B0ABC005E882C /* ZQInsuranceView.m in Sources */,
 				F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */,
 				F0F548191F8488D400E76ACF /* ZQViolationViewController.m in Sources */,
 				F0F5481E1F8497A800E76ACF /* ZQPayVioViewController.m in Sources */,

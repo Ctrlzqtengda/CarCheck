@@ -27,7 +27,7 @@ static MBProgressHUD  *s_progressHUD = nil;
     }
     [_mainWindow() addSubview:progressHUD];
     progressHUD.animationType = MBProgressHUDAnimationZoom;
-    progressHUD.labelText = aString;
+    progressHUD.label.text = aString;
     
     progressHUD.removeFromSuperViewOnHide = YES;
     progressHUD.opacity = 0.7;
@@ -88,7 +88,26 @@ static MBProgressHUD  *s_progressHUD = nil;
 
 + (void)updateProgressHUD:(NSString*)progress {
     if (s_progressHUD) {
-        s_progressHUD.labelText = progress;
+        s_progressHUD.label.text = progress;
     }
+}
++ (void)makeSuccessfulHudWithTips:(NSString *)tips parentView:(UIView *)view
+{
+    [self hideProgressHUD];
+    for (id obj in _mainWindow().subviews) {
+        if ([obj isKindOfClass:[MBProgressHUD class]]) {
+            [obj removeFromSuperview];
+        }
+    }
+    MBProgressHUD *mbProgressHud = [[MBProgressHUD alloc] initWithView:_mainWindow()];
+    [_mainWindow() addSubview:mbProgressHud];
+//    mbProgressHud.dimBackground = NO;
+    mbProgressHud.animationType = MBProgressHUDAnimationZoomOut;
+    mbProgressHud.mode = MBProgressHUDModeCustomView;
+    mbProgressHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"doneRight"]];
+    mbProgressHud.label.text = tips;
+    [mbProgressHud show:YES];
+    [mbProgressHud hide:YES afterDelay:1.5];
+
 }
 @end
