@@ -35,29 +35,25 @@
     
      BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
     ZQMyViewController *myVC = [[ZQMyViewController alloc] init];
+    myVC.tabBarItem.image = [[UIImage imageNamed:@"333"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    myVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"my_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     myVC.title = @"我的";
     BaseNavigationController *naviMy = [[BaseNavigationController alloc] initWithRootViewController:myVC];
     
     ZQCarServerViewController *serverVC = [[ZQCarServerViewController alloc] init];
     serverVC.title = @"车检服务";
+    serverVC.tabBarItem.image = [[UIImage imageNamed:@"222"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    serverVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"222sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     BaseNavigationController *naviServer = [[BaseNavigationController alloc] initWithRootViewController:serverVC];
     
     ZQCarProcessViewController *progressVC = [[ZQCarProcessViewController alloc] init];
     progressVC.title = @"车检流程";
+    progressVC.tabBarItem.image = [[UIImage imageNamed:@"111"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    progressVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"111sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     BaseNavigationController *naviProgress = [[BaseNavigationController alloc] initWithRootViewController:progressVC];
-    
-    NSArray *titleArr = @[@"车检流程",@"服务",@"我的"];
-    NSArray *imgArray =@[@"111",@"222",@"333",@"111sel",@"222sel",@"my_sel"];
+
     tabBarVC.viewControllers = @[naviProgress,naviServer,naviMy];
     tabBarVC.selectIndex = 0;
-    NSInteger i = 0;
-    for (NSString *title in titleArr) {
-        UITabBarItem *item = tabBarVC.tabBar.items[i];
-        item.image = [UIImage imageNamed:imgArray[i]];
-        item.selectedImage = [UIImage imageNamed:imgArray[i+3]];
-        [item setTitle:title];
-        i++;
-    }
     return tabBarVC;
 }
 
