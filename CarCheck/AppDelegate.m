@@ -14,8 +14,10 @@
 #import "ZQCarServerViewController.h"
 #import "ZQCarProcessViewController.h"
 
-@interface AppDelegate ()
+#import "ZQLoginViewController.h"
+@interface AppDelegate ()<UITabBarControllerDelegate>
 
+@property (nonatomic, assign) NSUInteger sTabBarIndex;
 @end
 
 @implementation AppDelegate
@@ -51,13 +53,34 @@
     progressVC.tabBarItem.image = [[UIImage imageNamed:@"111"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     progressVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"111sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     BaseNavigationController *naviProgress = [[BaseNavigationController alloc] initWithRootViewController:progressVC];
+    tabBarVC.delegate = self;
 
     tabBarVC.viewControllers = @[naviProgress,naviServer,naviMy];
     tabBarVC.selectIndex = 0;
     return tabBarVC;
 }
 
-
+#pragma mark -tabBarDelegate-
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+//    self.sTabBarIndex = tabBarController.selectedIndex;
+    return YES;
+}
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    /*
+    if (tabBarController.selectedIndex == 2)
+    {
+        if (![Utility isLogin]) {
+            ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+            [tabBarController presentViewController:loginVC animated:YES completion:^{
+                
+            }];
+            tabBarController.selectedIndex = self.sTabBarIndex;
+        }
+    }
+*/
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
