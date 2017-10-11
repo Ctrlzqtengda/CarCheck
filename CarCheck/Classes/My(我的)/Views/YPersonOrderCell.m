@@ -29,7 +29,7 @@
 -(void)initView{
     UIImageView *lineIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 1)];
     [self addSubview:lineIV];
-    lineIV.backgroundColor =  __BackColor;
+    lineIV.backgroundColor =  MainBgColor;
 
     _logoIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth/5-20)/2, 15, 20, 20)];
     [self addSubview:_logoIV];

@@ -88,8 +88,8 @@
         _mainV = [[UICollectionView alloc]
                   initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight-50)
                   collectionViewLayout:flowLayout];
-        
-        _mainV.backgroundColor = __BackColor;
+//        _mainV.backgroundColor = __BackColor;
+        _mainV.backgroundColor = MainBgColor;
         _mainV.delegate = self;
         _mainV.dataSource = self;
 //        _mainV.bounces = NO;
