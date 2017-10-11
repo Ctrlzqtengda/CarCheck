@@ -68,7 +68,7 @@ __block __weak __typeof(&*self)weakSelf = self;
 #define OMImage(image)  [[UIImage imageNamed:(image)]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]//使用原生图片
 
 //主颜色
-#define __DefaultColor    HEXCOLOR(0xce0a14)//
+#define __DefaultColor    HEXCOLOR(0x05c2f8)//
 //金额颜色
 #define __MoneyColor      LH_RGBCOLOR(224, 40, 40)
 //账户背景色

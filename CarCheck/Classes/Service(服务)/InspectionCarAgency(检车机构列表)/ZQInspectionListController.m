@@ -31,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"检车机构";
     [self addNavigationRightItem];
@@ -51,7 +53,7 @@
     self.searchController.delegate= self;
     self.searchController.searchResultsUpdater = self;
 
-//    self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+    self.searchController.searchBar.barTintColor = [UIColor whiteColor];
 //    UIImageView *barImageView = [[[self.searchController.searchBar.subviews firstObject] subviews] firstObject];
 //    barImageView.layer.borderColor = [UIColor whiteColor].CGColor;
 //    barImageView.layer.borderWidth = 1;
@@ -65,7 +67,7 @@
     
     UITextField *searchTextField = (UITextField *)[[[self.searchController.searchBar.subviews firstObject] subviews] lastObject];
     searchTextField.backgroundColor = [UIColor colorWithRed:182.0/255 green:182.0/255 blue:182.0/255 alpha:0.3];
-//    
+//
 //    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:[UISearchBar class]]
 //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
 //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@"取消"];
@@ -73,9 +75,11 @@
 
     //位置
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, 44.0);
+//    [_searchController.searchBar sizeToFit];
+    
 //    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
         // 添加 searchbar 到 headerview
-//    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -159,15 +163,15 @@
 }
 #pragma mark - UITableViewDataSource
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
-{
-//    NSLog(@"viewForHeaderInSection--viewForHeaderInSection");
-//    UISearchBar *mySearchBar = [[UISearchBar alloc] init];
-//    [mySearchBar setShowsCancelButton:YES];
-//    mySearchBar.delegate = self;
-//    return mySearchBar;
-    return self.searchController.searchBar;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
+//{
+////    NSLog(@"viewForHeaderInSection--viewForHeaderInSection");
+////    UISearchBar *mySearchBar = [[UISearchBar alloc] init];
+////    [mySearchBar setShowsCancelButton:YES];
+////    mySearchBar.delegate = self;
+////    return mySearchBar;
+//    return self.searchController.searchBar;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

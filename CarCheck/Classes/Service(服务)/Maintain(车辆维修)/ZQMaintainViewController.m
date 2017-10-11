@@ -14,7 +14,7 @@
 #import "ZQAlerInputView.h"
 
 //UISearchResultsUpdating
-@interface ZQMaintainViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchBarDelegate>
+@interface ZQMaintainViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 
 {
     UISearchController *searchController;
@@ -33,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"车辆维修站";
     [self addNavigationRightItem];
@@ -48,12 +50,12 @@
     self.tableView.tableFooterView = view;
     
     //创建UISearchController
-    self.searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     //设置代理
     self.searchController.delegate= self;
     self.searchController.searchResultsUpdater = self;
     
-    //    self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+    self.searchController.searchBar.barTintColor = [UIColor whiteColor];
     //    UIImageView *barImageView = [[[self.searchController.searchBar.subviews firstObject] subviews] firstObject];
     //    barImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     //    barImageView.layer.borderWidth = 1;
@@ -61,11 +63,12 @@
     self.searchController.searchBar.tintColor =  [UIColor darkGrayColor];
     // 改变searchBar背景颜色
     self.searchController.searchBar.barTintColor =  [UIColor whiteColor];
+    self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
     // 取消searchBar上下边缘的分割线
     self.searchController.searchBar.backgroundImage = [[UIImage alloc] init];
     
     UITextField *searchTextField = (UITextField *)[[[self.searchController.searchBar.subviews firstObject] subviews] lastObject];
-    searchTextField.backgroundColor = [UIColor lightGrayColor];
+    searchTextField.backgroundColor = [UIColor colorWithRed:182.0/255 green:182.0/255 blue:182.0/255 alpha:0.3];
     //
     //    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:[UISearchBar class]]
     //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
@@ -73,9 +76,7 @@
     
     
     //位置
-    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-    // 添加 searchbar 到 headerview
-    //    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, 44.0);
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{

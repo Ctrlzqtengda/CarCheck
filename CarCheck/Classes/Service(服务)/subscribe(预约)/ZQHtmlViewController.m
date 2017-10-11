@@ -53,7 +53,7 @@
         else
         {
             [button setBackgroundColor:[UIColor blueColor]];
-            [button setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
             [button setTitle:@"导航到点" forState:UIControlStateNormal];
         }
         [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];

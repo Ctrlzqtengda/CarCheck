@@ -13,20 +13,20 @@
 
 @property (strong,nonatomic) UIImageView *backIV;
 /**VIP合约用户*/
-@property (strong,nonatomic) UIButton *vipBtn;
+//@property (strong,nonatomic) UIButton *vipBtn;
 /**标题*/
-@property (strong,nonatomic) UILabel *titleLb;
+//@property (strong,nonatomic) UILabel *titleLb;
 /**团购兑换*/
-@property (strong,nonatomic) UIButton *exchangeBtn;
+//@property (strong,nonatomic) UIButton *exchangeBtn;
 /**消息按钮*/
-@property (strong,nonatomic) UIButton *newsBtn;
+//@property (strong,nonatomic) UIButton *newsBtn;
 /**邀请有礼*/
-@property (strong,nonatomic) UIButton *welcomeBtn;
+//@property (strong,nonatomic) UIButton *welcomeBtn;
 /**设置*/
-@property (strong,nonatomic) UIButton *settingBtn;
+//@property (strong,nonatomic) UIButton *settingBtn;
 
-/**账户管理*/
-@property (strong,nonatomic) UIButton *userManagerBtn;
+///**账户管理*/
+//@property (strong,nonatomic) UIButton *userManagerBtn;
 /**用户名*/
 @property (strong,nonatomic) UILabel *nameLb;
 
@@ -45,13 +45,13 @@
 -(void)initView{
     [self addSubview:self.backIV];
 //    [self addSubview:self.vipBtn];
-    [self addSubview:self.titleLb];
+//    [self addSubview:self.titleLb];
 //    [self addSubview:self.exchangeBtn];
-    [self addSubview:self.newsBtn];
+//    [self addSubview:self.newsBtn];
 //    [self addSubview:self.welcomeBtn];
-    [self addSubview:self.settingBtn];
+//    [self addSubview:self.settingBtn];
     [self addSubview:self.headIV];
-    [self addSubview:self.userManagerBtn];
+//    [self addSubview:self.userManagerBtn];
     [self addSubview:self.nameLb];
 }
 
@@ -60,7 +60,8 @@
     if (!_backIV) {
         _backIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 187.5)];
         _backIV.contentMode = UIViewContentModeScaleAspectFill;
-        _backIV.image = MImage(@"bg");
+//        _backIV.image = MImage(@"bg");
+        _backIV.backgroundColor = MainBgColor;
     }
     return _backIV;
 }
@@ -76,16 +77,16 @@
 //    return _vipBtn;
 //}
 
--(UILabel *)titleLb{
-    if (!_titleLb) {
-        _titleLb = [[UILabel alloc]initWithFrame:CGRectMake((__kWidth-120)/2, 34, 120, 20)];
-        _titleLb.textAlignment = NSTextAlignmentCenter;
-        _titleLb.font = BFont(18);
-        _titleLb.textColor = [UIColor whiteColor];
-        _titleLb.text = @"个人中心";
-    }
-    return _titleLb;
-}
+//-(UILabel *)titleLb{
+//    if (!_titleLb) {
+//        _titleLb = [[UILabel alloc]initWithFrame:CGRectMake((__kWidth-120)/2, 34, 120, 20)];
+//        _titleLb.textAlignment = NSTextAlignmentCenter;
+//        _titleLb.font = BFont(18);
+//        _titleLb.textColor = [UIColor whiteColor];
+//        _titleLb.text = @"个人中心";
+//    }
+//    return _titleLb;
+//}
 
 //-(UIButton *)exchangeBtn{
 //    if (!_exchangeBtn) {
@@ -98,15 +99,15 @@
 //    return _exchangeBtn;
 //}
 
--(UIButton *)newsBtn{
-    if (!_newsBtn) {
-        _newsBtn  = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-35, 31, 25, 25)];
-        _newsBtn.titleLabel.font = MFont(15);
-        [_newsBtn setImage:MImage(@"head_news") forState:BtnNormal];
-        [_newsBtn addTarget:self action:@selector(chooseNews) forControlEvents:BtnTouchUpInside];
-    }
-    return _newsBtn;
-}
+//-(UIButton *)newsBtn{
+//    if (!_newsBtn) {
+//        _newsBtn  = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-35, 31, 25, 25)];
+//        _newsBtn.titleLabel.font = MFont(15);
+//        [_newsBtn setImage:MImage(@"head_news") forState:BtnNormal];
+//        [_newsBtn addTarget:self action:@selector(chooseNews) forControlEvents:BtnTouchUpInside];
+//    }
+//    return _newsBtn;
+//}
 //
 //-(UIButton *)welcomeBtn{
 //    if (!_welcomeBtn) {
@@ -123,19 +124,19 @@
 //}
 
 
--(UIButton *)settingBtn{
-    if (!_settingBtn) {
-        _settingBtn = [[UIButton alloc]initWithFrame:CGRectMake((__kWidth/2-45-30)/2, 92.5, 30, 30)];
-        _settingBtn.layer.cornerRadius = 15;
-        [_settingBtn setImage:MImage(@"my_setting") forState:BtnNormal];
-        [_settingBtn addTarget:self action:@selector(chooseSet) forControlEvents:BtnTouchUpInside];
-    }
-    return _settingBtn;
-}
+//-(UIButton *)settingBtn{
+//    if (!_settingBtn) {
+//        _settingBtn = [[UIButton alloc]initWithFrame:CGRectMake((__kWidth/2-45-30)/2, 92.5, 30, 30)];
+//        _settingBtn.layer.cornerRadius = 15;
+//        [_settingBtn setImage:MImage(@"my_setting") forState:BtnNormal];
+//        [_settingBtn addTarget:self action:@selector(chooseSet) forControlEvents:BtnTouchUpInside];
+//    }
+//    return _settingBtn;
+//}
 
 -(UIImageView *)headIV{
     if (!_headIV) {
-        _headIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-90)/2, 65, 90, 90)];
+        _headIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-90)/2,20, 90, 90)];
         _headIV.layer.cornerRadius = 45;
         _headIV.layer.borderColor = LH_RGBCOLOR(244, 150, 130).CGColor;
         _headIV.layer.borderWidth = 2.5;
@@ -149,28 +150,28 @@
     return _headIV;
 }
 
--(UIButton *)userManagerBtn{
-    if (!_userManagerBtn) {
-        _userManagerBtn = [[UIButton alloc]initWithFrame: CGRectMake(__kWidth-85, 92.5, 100, 30)];
-        _userManagerBtn.layer.cornerRadius = 15;
-        _userManagerBtn.backgroundColor = [UIColor whiteColor];
-        [_userManagerBtn setTitle:@"账户管理" forState:BtnNormal];
-        [_userManagerBtn setTitleColor:LH_RGBCOLOR(115, 115, 115) forState:BtnNormal];
-        [_userManagerBtn setImage:MImage(@"Account") forState:BtnNormal];
-        _userManagerBtn.titleLabel.font = MFont(14);
-        [_userManagerBtn addTarget:self action:@selector(chooseManager) forControlEvents:BtnTouchUpInside];
-        _userManagerBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0);
-        _userManagerBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 60);
-    }
-    return _userManagerBtn;
-}
+//-(UIButton *)userManagerBtn{
+//    if (!_userManagerBtn) {
+//        _userManagerBtn = [[UIButton alloc]initWithFrame: CGRectMake(__kWidth-85, 92.5, 100, 30)];
+//        _userManagerBtn.layer.cornerRadius = 15;
+//        _userManagerBtn.backgroundColor = [UIColor whiteColor];
+//        [_userManagerBtn setTitle:@"账户管理" forState:BtnNormal];
+//        [_userManagerBtn setTitleColor:LH_RGBCOLOR(115, 115, 115) forState:BtnNormal];
+//        [_userManagerBtn setImage:MImage(@"Account") forState:BtnNormal];
+//        _userManagerBtn.titleLabel.font = MFont(14);
+//        [_userManagerBtn addTarget:self action:@selector(chooseManager) forControlEvents:BtnTouchUpInside];
+//        _userManagerBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -6, 0, 0);
+//        _userManagerBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 60);
+//    }
+//    return _userManagerBtn;
+//}
 
 -(UILabel *)nameLb{
     if (!_nameLb) {
-        _nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectYH(_headIV)+5, __kWidth, 15)];
+        _nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectYH(_headIV)+10, __kWidth, 15)];
         _nameLb.textAlignment = NSTextAlignmentCenter;
-        _nameLb.textColor = [UIColor whiteColor];
-        _nameLb.font = MFont(13);
+        _nameLb.textColor = [UIColor darkGrayColor];
+        _nameLb.font = MFont(15);
     }
     return _nameLb;
 }

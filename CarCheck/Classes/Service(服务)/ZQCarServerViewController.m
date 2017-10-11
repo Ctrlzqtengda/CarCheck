@@ -14,15 +14,16 @@
 #import "ZQHtmlViewController.h"
 #import "ZQInspectionListController.h"
 #import "ZQViolationViewController.h" //违章查询
-#import "ZQPayVioViewController.h"  //代缴罚款
+#import "ZQPayVioViewController.h"    //代缴罚款
 #import "ZQSubTimeViewController.h"
-#import "ZQMaintainViewController.h" //车辆维修站
+#import "ZQMaintainViewController.h"  //车辆维修站
 #import "ZQOnlineSubViewController.h" //在线预约
 #import "ZQMyBookingViewController.h" //我的预约
+#import "ZQRechargeViewController.h"  //加油充值
 
-#import "ZQInsuranceView.h" //保险
+#import "ZQInsuranceView.h"           //保险
 #import "ZQLoadingView.h"
-#import "ZQSuccessAlerView.h" //保险成功提示
+#import "ZQSuccessAlerView.h"         //保险成功提示
 
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
@@ -131,6 +132,7 @@
             }
             case 3:
             {
+                //车辆维修站
                 ZQMaintainViewController *vc = [[ZQMaintainViewController alloc] init];
                 [vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -141,6 +143,28 @@
                 ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
                 [vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:vc animated:YES];
+                break;
+            }
+                case 5:
+            {
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"https://www.baidu.com"];
+                Vc.title = @"常见问题";
+                [Vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:Vc animated:YES];
+                break;
+            }
+            case 6:
+            {
+                //法律咨询
+                break;
+            }
+            case 7:
+            {
+               //加油充值
+                ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
+                [Vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:Vc animated:YES];
+
                 break;
             }
             default:
@@ -243,7 +267,13 @@
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake((__kWidth-5*2)/3.0, (__kWidth-5*2)/3.0);
+    if (indexPath.section==1) {
+        return CGSizeMake((__kWidth-5*2)/3.0, (__kWidth-5*2)/3.0);
+    }
+    else
+    {
+        return CGSizeMake((__kWidth-5*3)/4.0, (__kWidth-5*3)/4.0);
+    }
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{

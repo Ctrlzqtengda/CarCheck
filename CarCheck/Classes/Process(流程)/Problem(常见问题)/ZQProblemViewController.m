@@ -44,7 +44,7 @@
     for (int i = 0; i<2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(width*i,  CGRectGetHeight(self.view.bounds)-44,width, 44)];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:13];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
         if (i) {
@@ -54,7 +54,7 @@
         else
         {
             [button setBackgroundColor:[UIColor blueColor]];
-            [button setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
             [button setTitle:@"导航到点" forState:UIControlStateNormal];
         }
         [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];

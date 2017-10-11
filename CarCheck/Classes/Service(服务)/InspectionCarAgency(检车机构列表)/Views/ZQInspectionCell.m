@@ -127,8 +127,8 @@ const CGFloat cSpace =  8;
     if (!_navigationBtn) {
         _navigationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_navigationBtn setFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_phoneLabel.frame),(CGRectGetWidth(_addressLabel.frame)-10)/2, 30)];
-        _navigationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [_navigationBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
+        _navigationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+        [_navigationBtn setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
         [_navigationBtn setTitle:@"导航到点" forState:UIControlStateNormal];
         [_navigationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_navigationBtn setBackgroundColor:[UIColor blueColor]];

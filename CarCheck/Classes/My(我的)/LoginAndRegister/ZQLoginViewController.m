@@ -7,6 +7,7 @@
 //
 
 #import "ZQLoginViewController.h"
+#import "ZQRegisterViewController.h"
 #import "YshareChooseView.h"
 
 @interface  ZQLoginViewController()<UITextFieldDelegate,YshareChooseViewDelegate>
@@ -23,6 +24,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -47,15 +49,17 @@
     [NaviV addSubview:cancelBtn];
     cancelBtn.titleLabel.font = MFont(14);
     [cancelBtn setTitle:@"取消" forState:BtnNormal];
-    [cancelBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
+//    [cancelBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
+    [cancelBtn setTitleColor:[UIColor darkGrayColor] forState:BtnNormal];
     [cancelBtn addTarget:self action:@selector(back) forControlEvents:BtnTouchUpInside];
     
     UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake((__kWidth-150)/2, 32, 150, 20)];
     [NaviV addSubview:titleLb];
     titleLb.textAlignment =NSTextAlignmentCenter;
-    titleLb.font = BFont(16);
+    titleLb.font = BFont(18);
     titleLb.textColor = __DTextColor;
-    titleLb.text = [NSString stringWithFormat:@"CarCheck账户登录"];
+//    titleLb.text = [NSString stringWithFormat:@"CarCheck账户登录"];
+    titleLb.text = @"登陆";
 }
 
 - (void)initView{
@@ -66,39 +70,39 @@
     _backV.contentSize = CGSizeMake(__kWidth, 606);
     
     //main
-    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 95, 221, 49)];
+    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 75, 221, 28)];
     [_backV addSubview:loginIV];
-    loginIV.image =MImage(@"loginLogo12");
+    loginIV.image =MImage(@"CJWY");
     loginIV.contentMode = UIViewContentModeScaleAspectFit;
     
     NSArray *imageArr = @[@"login_user",@"login_password"];
     for (int i=0; i<2; i++) {
-        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 30+CGRectYH(loginIV)+70*i, __kWidth-60, 56)];
+        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 30+CGRectYH(loginIV)+60*i, __kWidth-60, 46)];
         [_backV addSubview:putV];
-        putV.backgroundColor = LH_RGBCOLOR(245, 245, 245);
+        putV.backgroundColor = MainBgColor;
         putV.layer.cornerRadius = 5;
         
         UIImageView *headIV = [[UIImageView alloc]init];
         [putV addSubview:headIV];
         headIV.image = MImage(imageArr[i]);
         
-        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(60, 18, __kWidth-140, 20)];
+        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(60, 13, __kWidth-140, 20)];
         [putV addSubview:inputTF];
         inputTF.font = MFont(14);
         inputTF.tag = i;
         inputTF.delegate = self;
         inputTF.textAlignment = NSTextAlignmentLeft;
         if (!i) {
-            headIV.frame = CGRectMake(17, 15, 23, 28);
+            headIV.frame = CGRectMake(11, 11, 24, 24);
             inputTF.placeholder = @"用户名";
         }else{
-            headIV.frame = CGRectMake(17, 15, 22, 26);
+            headIV.frame = CGRectMake(11, 11, 24, 24);
             inputTF.placeholder = @"请输入密码...";
             inputTF.secureTextEntry = YES;
         }
     }
     
-    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, CGRectYH(loginIV)+200, __kWidth-60, 56)];
+    UIButton *loginBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, CGRectYH(loginIV)+170, __kWidth-60, 56)];
     [_backV addSubview:loginBtn];
     loginBtn.backgroundColor = __DefaultColor;
     loginBtn.layer.cornerRadius = 28;
@@ -145,6 +149,12 @@
 #pragma mark ==登录==
 -(void)Login{
     NSLog(@"登录");
+    [Utility setLoginStates:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    _name = @"123";
+    _passWord = @"123";
+    return;
+    
     [self.view endEditing:YES];
     if (IsNilString(_name)||IsNilString(_passWord)) {
         return;
@@ -244,9 +254,8 @@
 
 #pragma mark ==注册==
 -(void)Logon{
-    NSLog(@"注册");
-//    YRegisterViewController *vc = [[YRegisterViewController alloc]init];
-//    [self.navigationController pushViewController:vc animated:YES];
+    ZQRegisterViewController *vc = [[ZQRegisterViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark ==YshareChooseViewDelegate==

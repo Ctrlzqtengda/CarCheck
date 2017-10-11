@@ -37,10 +37,21 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+    [self addNavigationRightItem];
     [self initView];
 
 }
-
+- (void)addNavigationRightItem
+{
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"退出登录" style:UIBarButtonItemStylePlain target:self action:@selector(logOutAction)];
+    self.navigationItem.rightBarButtonItem = rightBarItem;
+    self.navigationItem.rightBarButtonItem.tintColor = __DefaultColor;
+}
+- (void)logOutAction
+{
+    [Utility setLoginStates:NO];
+    self.tabBarController.selectedIndex = 0;
+}
 #pragma mark ==懒加载==
 - (NSArray *)orderTitleArr {
     if (!_orderTitleArr) {
@@ -128,12 +139,8 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
             cell = [[YSPersonalHeadCell alloc]init];
         }
         cell.delegate = self;
-        if (!IsNull(_model.nickName)&&!IsNilString(_model.nickName)) {
-            cell.userName = _model.nickName;;
-        }
-        //        if (!IsNull(_model.headImage)&&!IsNilString(_model.headImage)) {
-        //            cell.imageName = _model.headImage;
-        //        }
+//        cell.userName = _model.nickName;
+        cell.userName = @"用户名";
         [cell.headIV setImage:[UIImage imageNamed:@"user_head"]];
         //        cell.imageName = [UdStorage getObjectforKey:UserHead];
         cells = cell;
@@ -208,7 +215,7 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return CGSizeMake(__kWidth, 187.5);
+        return CGSizeMake(__kWidth, 150);
     }else if (indexPath.section==1){
         return CGSizeMake(__kWidth/5, 70);
     }else{
