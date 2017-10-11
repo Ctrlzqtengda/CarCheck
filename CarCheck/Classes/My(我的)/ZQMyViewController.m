@@ -183,7 +183,7 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
             if (!footer) {
                 footer = [[UICollectionReusableView alloc]init];
             }
-            footer.backgroundColor = __BackColor;
+            footer.backgroundColor = MainBgColor;
             reuseV =footer;
         }
     }
