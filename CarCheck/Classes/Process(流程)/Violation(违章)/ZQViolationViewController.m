@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *cardCodeTf;
 @property (weak, nonatomic) IBOutlet UITextField *driveCodeTf;
 @property (weak, nonatomic) IBOutlet UIButton *searchBtn2;
+@property (weak, nonatomic) IBOutlet UIScrollView *scollView;
 
 @property (nonatomic, strong) ZQAreaView *areaView;
 @property (nonatomic, strong) ZQAreaModel *provinceModel;
@@ -34,6 +35,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupViews];
+}
+
+-(void)viewDidLayoutSubviews {
+    self.scollView.contentSize = CGSizeMake(KWidth, 677);
 }
 
 -(void)setupViews {

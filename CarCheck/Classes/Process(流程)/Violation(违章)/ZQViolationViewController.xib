@@ -21,6 +21,7 @@
                 <outlet property="contentSizeWidth" destination="SnT-WJ-gzj" id="RNY-xq-Nfa"/>
                 <outlet property="driveCodeTf" destination="3FM-fu-jOl" id="Voh-Zf-gUy"/>
                 <outlet property="provinceTf" destination="jgo-5a-Klo" id="k01-B7-Tmu"/>
+                <outlet property="scollView" destination="5xb-O9-t8f" id="8Dm-mc-KG0"/>
                 <outlet property="searchBtn1" destination="ZUf-Dh-fR0" id="wzQ-c0-BA5"/>
                 <outlet property="searchBtn2" destination="8o8-yc-Z61" id="8s1-h7-MDc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
