@@ -11,6 +11,7 @@
 
 #import "ZQHtmlViewController.h"
 #import "ZQAlerInputView.h"
+#import "ZQUpSubdataViewController.h"
 
 @interface ZQInspectionListController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 {
@@ -128,7 +129,7 @@
 }
 - (void)addNavigationRightItem
 {
-    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"下一页" style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"下一页" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
     self.navigationItem.rightBarButtonItem = rightBarItem;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
     return;
@@ -219,7 +220,8 @@
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    
+    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+    [self.navigationController pushViewController:subVC animated:YES];
 }
 - (UITableView *)tableView
 {

@@ -9,6 +9,7 @@
 #import "ZQSubTimeViewController.h"
 #import "ZQCollectionViewCell.h"
 #import "ZQTimeCollectionViewCell.h"
+#import "ZQUpSubdataViewController.h"
 
 @interface ZQSubTimeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
     
@@ -30,6 +31,14 @@
     // Do any additional setup after loading the view from its nib.
 }
 #pragma mark私有方法
+
+- (IBAction)nextAction:(id)sender {
+    
+    ZQUpSubdataViewController *vc = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
 -(void)initViews {
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];

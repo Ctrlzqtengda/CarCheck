@@ -13,6 +13,9 @@
 #import "ZQPayVioViewController.h"
 #import "ZQSubTimeViewController.h"
 #import "ZQProblemViewController.h"
+#import "ZQOnlineAlertView.h"
+#import "ZQSuccessAlerView.h"
+#import "ZQInspectionListController.h"
 
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
@@ -66,6 +69,20 @@
     [_colorArray addObject:[UIColor colorWithRed:228/255.0 green:1/255.0 blue:127/255.0 alpha:1]];
     
 }
+
+-(void)showSubView {
+    ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+    alerView.handler = ^(NSArray *contenArr)
+    {
+        [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"上门接送车提交内容:%@",obj);
+        }];
+        //                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+        
+        [ZQSuccessAlerView showCommitSuccess];
+    };
+    [alerView show];
+}
 #pragma mark 共有方法
 
 #pragma mark ZQProcessCellDelegate
@@ -78,8 +95,20 @@
         }
             break;
         case 2:{
-            ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
-            [self.navigationController pushViewController:subVC animated:YES];
+            if (index == 0) {
+
+                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                [self.navigationController pushViewController:inspectionVC animated:YES];
+            }else if (index == 1){
+                [self showSubView];
+            }else if (index == 2){
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+            }
         }
             break;
         case 4:{
