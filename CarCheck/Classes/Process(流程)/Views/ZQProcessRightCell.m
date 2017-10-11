@@ -38,7 +38,10 @@
     _imgBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
     _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, height, btnWidth, height + 10);
 //    [_imgBtn setTitle:@"二" forState:(UIControlStateNormal)];
-    [_imgBtn setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
+//    [_imgBtn setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
+    [_imgBtn setTitleColor:[UIColor darkGrayColor] forState:(UIControlStateNormal)];
+    _imgBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    _imgBtn.titleEdgeInsets = UIEdgeInsetsMake(-6, 0, 6, 0);
     [_imgBtn setBackgroundImage:[UIImage imageNamed:@"process_step"] forState:UIControlStateNormal];
     [self addSubview:_imgBtn];
     

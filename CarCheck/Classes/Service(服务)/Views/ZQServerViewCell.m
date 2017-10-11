@@ -36,6 +36,7 @@
     CGFloat inset = 20;
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(inset, inset / 2.0, _width-inset*2, _width - inset * 2)];
 //    _imageView.backgroundColor = [UIColor redColor];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_imageView];
     
     self.label = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(_imageView.frame), _width - 10, 20)];

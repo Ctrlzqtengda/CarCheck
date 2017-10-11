@@ -60,7 +60,9 @@
 -(void)getData {
     
     _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"检车预约",@"上门接送检车",@"电话预约检车"],@[@"常见问题"],@[@"平台介绍"], nil];
-    _stepArray = [NSMutableArray arrayWithObjects:@"一",@"二",@"三",@"四",@"五", nil];
+//    _stepArray = [NSMutableArray arrayWithObjects:@"一",@"二",@"三",@"四",@"五", nil];
+    _stepArray = [NSMutableArray arrayWithObjects:@"第一步",@"第二步",@"第三步",@"第四部",@"了解", nil];
+
     _colorArray = [NSMutableArray array];
     [_colorArray addObject:[UIColor colorWithRed:4/255.0 green:139/255.0 blue:254/255.0 alpha:1]];
     [_colorArray addObject:[UIColor colorWithRed:143/255.0 green:130/255.0 blue:188/255.0 alpha:1]];
