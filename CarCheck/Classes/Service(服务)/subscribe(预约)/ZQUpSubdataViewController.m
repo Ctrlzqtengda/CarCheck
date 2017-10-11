@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *carFrontImg;
 @property (weak, nonatomic) IBOutlet UIImageView *carBackImg;
 @property (weak, nonatomic) IBOutlet UIImageView *insuranceImg;
+@property (weak, nonatomic) IBOutlet UIScrollView *scollView;
 
 @end
 
@@ -28,7 +29,11 @@
     [super viewDidLoad];
     self.title = @"上传预约资料";
     [self setupViews];
+    
     // Do any additional setup after loading the view from its nib.
+}
+-(void)viewDidLayoutSubviews {
+    self.scollView.contentSize = CGSizeMake(KWidth, 677);
 }
 
 - (IBAction)sendAction:(id)sender {

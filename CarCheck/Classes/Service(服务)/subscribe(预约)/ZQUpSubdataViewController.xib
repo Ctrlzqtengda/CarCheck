@@ -23,6 +23,7 @@
                 <outlet property="insuranceImg" destination="mdw-aG-gkd" id="bTe-I1-P2c"/>
                 <outlet property="nameTf" destination="ylW-fe-MnZ" id="gaM-DM-dLN"/>
                 <outlet property="phoneTf" destination="mky-Do-uZn" id="vId-Oa-Q2p"/>
+                <outlet property="scollView" destination="QUG-40-Tkc" id="Az5-EH-0T9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
