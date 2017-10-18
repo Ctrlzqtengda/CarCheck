@@ -7,7 +7,7 @@
 //
 
 #import "YResetPassViewController.h"
-#import "YSLoginViewController.h"
+#import "ZQLoginViewController.h"
 
 @interface YResetPassViewController ()<UITextFieldDelegate>
 
@@ -23,14 +23,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    YSTabbarViewController *tab = (YSTabbarViewController*)self.tabBarController;
-    tab.tabBarV.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-    YSTabbarViewController *tab = (YSTabbarViewController*)self.tabBarController;
-    tab.tabBarV.hidden = NO;
 }
 
 
@@ -50,7 +46,7 @@
     [NaviV addSubview:cancelBtn];
     cancelBtn.titleLabel.font = MFont(14);
     [cancelBtn setTitle:@"返回" forState:BtnNormal];
-    [cancelBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
+    [cancelBtn setTitleColor:[UIColor darkGrayColor] forState:BtnNormal];
     [cancelBtn addTarget:self action:@selector(back) forControlEvents:BtnTouchUpInside];
 
     UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake((__kWidth-120)/2, 32, 120, 20)];
@@ -62,30 +58,25 @@
 }
 
 -(void)initView{
-    UIImageView *lineIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, __kWidth, 1)];
-    [self.view addSubview:lineIV];
-    lineIV.backgroundColor = HEXCOLOR(0xcbcbcb);
-
     _backV = [[UIView alloc]initWithFrame:CGRectMake(0, 65, __kWidth, __kHeight-65)];
     [self.view addSubview:_backV];
     _backV.backgroundColor = [UIColor whiteColor];
 
     for (int i=0; i<2; i++) {
-        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 20+70*i, __kWidth-60, 56)];
+        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 20+70*i, __kWidth-60, 46)];
         [_backV addSubview:putV];
-        putV.backgroundColor =LH_RGBCOLOR(245, 245, 245);
+        putV.backgroundColor = MainBgColor;
         putV.layer.cornerRadius = 5;
 
-        UIImageView *headIV = [[UIImageView alloc]initWithFrame:CGRectMake(17, 15, 22, 26)];
+        UIImageView *headIV = [[UIImageView alloc]initWithFrame:CGRectMake(11, 11, 24, 24)];
         [putV addSubview:headIV];
         headIV.image = MImage(@"login_password");
 
-        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(60, 18, __kWidth-210, 20)];
+        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(60, 13, __kWidth-210, 20)];
         [putV addSubview:inputTF];
         inputTF.font = MFont(14);
         inputTF.tag = i+23;
         inputTF.delegate = self;
-        inputTF.textAlignment = NSTextAlignmentLeft;
 
         switch (i) {
             case 0:
@@ -102,7 +93,7 @@
         }
     }
 
-    UIButton *saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, 180, __kWidth-60, 56)];
+    UIButton *saveBtn = [[UIButton alloc]initWithFrame:CGRectMake(30, 180, __kWidth-60, 6)];
     [_backV addSubview:saveBtn];
     saveBtn.layer.cornerRadius =28;
     saveBtn.backgroundColor = __DefaultColor;
@@ -117,18 +108,18 @@
 
 - (void)sureSave{
     NSLog(@"确认");
-    [JKHttpRequestService POST:@"Register/resetPassword" withParameters:@{@"app_user_id":[UdStorage getObjectforKey:Userid],@"newPassword1":_passWord,@"newPassword2":_rePassWord} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            NSArray *vcs = self.navigationController.viewControllers;
-            for (UIViewController *vc in vcs) {
-                if ([vc isKindOfClass:[YSLoginViewController class]]) {
-                    [self.navigationController popToViewController:vc animated:YES];
-                }
-            }
-        }
-    } failure:^(NSError *error) {
-
-    } animated:YES];
+//    [JKHttpRequestService POST:@"Register/resetPassword" withParameters:@{@"app_user_id":[UdStorage getObjectforKey:Userid],@"newPassword1":_passWord,@"newPassword2":_rePassWord} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+//        if (succe) {
+//            NSArray *vcs = self.navigationController.viewControllers;
+//            for (UIViewController *vc in vcs) {
+//                if ([vc isKindOfClass:[ZQLoginViewController class]]) {
+//                    [self.navigationController popToViewController:vc animated:YES];
+//                }
+//            }
+//        }
+//    } failure:^(NSError *error) {
+//
+//    } animated:YES];
 
 
 

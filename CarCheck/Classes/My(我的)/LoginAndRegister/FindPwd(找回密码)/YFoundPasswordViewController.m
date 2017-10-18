@@ -7,8 +7,9 @@
 //
 
 #import "YFoundPasswordViewController.h"
-#import "YFoundEmailViewController.h"
+//#import "YFoundEmailViewController.h"
 #import "YResetPassViewController.h"
+#import "ZQLoadingView.h"
 
 @interface YFoundPasswordViewController ()<UITextFieldDelegate>
 
@@ -28,14 +29,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    YSTabbarViewController *tab = (YSTabbarViewController*)self.tabBarController;
-    tab.tabBarV.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-    YSTabbarViewController *tab = (YSTabbarViewController*)self.tabBarController;
-    tab.tabBarV.hidden = NO;
 }
 
 - (void)viewDidLoad {
@@ -52,9 +49,9 @@
 
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 29, 30, 25)];
     [NaviV addSubview:cancelBtn];
-    cancelBtn.titleLabel.font = MFont(14);
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [cancelBtn setTitle:@"返回" forState:BtnNormal];
-    [cancelBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
+    [cancelBtn setTitleColor:[UIColor darkGrayColor] forState:BtnNormal];
     [cancelBtn addTarget:self action:@selector(back) forControlEvents:BtnTouchUpInside];
 
     UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake((__kWidth-120)/2, 32, 120, 20)];
@@ -67,9 +64,9 @@
 
 
 -(void)initView{
-    UIImageView *lineIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, __kWidth, 1)];
-    [self.view addSubview:lineIV];
-    lineIV.backgroundColor = HEXCOLOR(0xcbcbcb);
+//    UIImageView *lineIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, __kWidth, 1)];
+//    [self.view addSubview:lineIV];
+//    lineIV.backgroundColor = HEXCOLOR(0xcbcbcb);
 
     _backV = [[UIView alloc]initWithFrame:CGRectMake(0, 65, __kWidth, __kHeight-65)];
     [self.view addSubview:_backV];
@@ -77,16 +74,16 @@
 
     NSArray *imageArr = @[@"login_phone",@"login_SMS",@"login_verification"];
     for (int i=0; i<3; i++) {
-        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 20+70*i, __kWidth-60, 56)];
+        UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 20+70*i, __kWidth-60, 46)];
         [_backV addSubview:putV];
-        putV.backgroundColor =LH_RGBCOLOR(245, 245, 245);
+        putV.backgroundColor = MainBgColor;
         putV.layer.cornerRadius = 5;
 
         UIImageView *headIV = [[UIImageView alloc]init];
         [putV addSubview:headIV];
         headIV.image= MImage(imageArr[i]);
 
-        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(60, 18, __kWidth-210, 20)];
+        UITextField *inputTF = [[UITextField alloc]initWithFrame:CGRectMake(50, 13, __kWidth-210, 20)];
         [putV addSubview:inputTF];
         inputTF.font = MFont(14);
         inputTF.tag = i+33;
@@ -96,14 +93,14 @@
         switch (i) {
             case 0:
             {
-                headIV.frame = CGRectMake(19, 16, 19, 26);
+                headIV.frame = CGRectMake(11, 11, 24, 24);
                 inputTF.placeholder = @"已验证手机";
             }
                 break;
             case 1:
             {
-                headIV.frame = CGRectMake(18, 20, 22, 17);
-                UIButton *codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-150, 1.5, 90, 53)];
+                headIV.frame = CGRectMake(11,11, 24, 24);
+                UIButton *codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-153, 3, 90, 40)];
                 [putV addSubview:codeBtn];
                 codeBtn.titleLabel.font = MFont(15);
                 codeBtn.layer.cornerRadius =5;
@@ -116,9 +113,9 @@
                 break;
             case 2:
             {
-                putV.frame = CGRectMake(30, 20+70*i, __kWidth-190, 56);
-                headIV.frame = CGRectMake(17, 17, 23, 24);
-                inputTF.frame = CGRectMake(60, 18, __kWidth-250, 20);
+                putV.frame = CGRectMake(30, 20+70*i, __kWidth-190, 46);
+                headIV.frame = CGRectMake(11, 11, 24, 24);
+                inputTF.frame = CGRectMake(50, 13, __kWidth-250, 20);
                 inputTF.placeholder = @"图片验证码";
 
                 _numIV = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectXW(putV)+5, 172, 81, 32)];
@@ -156,7 +153,7 @@
     if (!IsNilString(_mobile)) {
         [JKHttpRequestService POST:@"Register/short_message_send" withParameters:@{@"mobile":_mobile} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
             if (succe) {
-                [SXLoadingView showAlertHUD:@"发送成功" duration:1];
+                [ZQLoadingView showAlertHUD:@"发送成功" duration:1];
             }
         } failure:^(NSError *error) {
             
@@ -174,7 +171,7 @@
     NSLog(@"找回密码");
     [JKHttpRequestService POST:@"Register/find_pwd" withParameters:@{@"mobile":_mobile,@"verify":_picCode,@"code":_code} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
-            [UdStorage storageObject:jsonDic[@"data"] forKey:Userid];
+//            [UdStorage storageObject:jsonDic[@"data"] forKey:Userid];
             YResetPassViewController *vc =[[YResetPassViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
         }

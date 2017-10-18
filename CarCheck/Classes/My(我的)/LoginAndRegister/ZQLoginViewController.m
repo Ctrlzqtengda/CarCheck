@@ -8,6 +8,9 @@
 
 #import "ZQLoginViewController.h"
 #import "ZQRegisterViewController.h"
+#import "YFoundPasswordViewController.h"
+#import "ZQSmsLoginViewController.h"
+
 #import "YshareChooseView.h"
 
 @interface  ZQLoginViewController()<UITextFieldDelegate,YshareChooseViewDelegate>
@@ -241,13 +244,13 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"短信验证登陆" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"短信登录");
-//        YnoteLoginViewController *vc = [[YnoteLoginViewController alloc]init];
-//        [self.navigationController pushViewController:vc animated:YES];
+        ZQSmsLoginViewController *vc = [[ZQSmsLoginViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"找回密码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"找回密码");
-//        YFoundPasswordViewController *vc = [[YFoundPasswordViewController alloc]init];
-//        [self.navigationController pushViewController:vc animated:YES];
+        YFoundPasswordViewController *vc = [[YFoundPasswordViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
     }]];
     [self presentViewController:alert animated:YES completion:nil];
 }
