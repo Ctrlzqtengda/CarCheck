@@ -34,7 +34,7 @@
 -(void)setupData {
     
     _titleArray = @[@"头像:",@"性别:",@"注册日期:",@"个人说明:",@"充值:",@"清楚缓存:",@"意见反馈:",@"平台介绍:",@"APP分享:"];
-    _placeArray = @[@"头像:",@"男",@"2017-09-01",@"请输入:",@"",@"",@"",@"",@""];
+    _placeArray = @[@"男",@"2017-09-01",@"请输入"];
     _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
     
 }
@@ -42,7 +42,7 @@
 -(void)initViews {
     
     self.title = @"我的";
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KWidth, self.view.bounds.size.height - 50) style:(UITableViewStyleGrouped)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KWidth, self.view.bounds.size.height - 50) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -90,12 +90,48 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"cell_id1"];
+    cell.textLabel.textColor = [UIColor darkTextColor];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    switch (indexPath.row) {
+        case 0:
+            {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                UIImageView *_headIV = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, 40, 40)];
+                _headIV.layer.cornerRadius = 20;
+                _headIV.layer.borderColor = LH_RGBCOLOR(244, 150, 130).CGColor;
+                _headIV.layer.borderWidth = 1;
+                _headIV.image =MImage(@"user_head");
+                _headIV.clipsToBounds = YES;
+                _headIV.contentMode =UIViewContentModeScaleAspectFill;
+                cell.accessoryView = _headIV;
+            }
+            break;
+        case 1:
+        case 2:
+        case 3:
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.detailTextLabel.text = _placeArray[indexPath.row-1];
+        }
+            break;
+        default:
+             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+    }
+    cell.textLabel.text = _titleArray[indexPath.row];
+    return cell;
+    /*
     if (indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"cell_id1"];
+        cell.textLabel.text = _placeArray[indexPath.row];
         return cell;
     }else if ((indexPath.row == 1) || (indexPath.row == 2) || (indexPath.row == 3)){
         ZQVioUpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZQVioUpTableViewCell_id" forIndexPath:indexPath];
-        [cell setCellType:ZQVioUpCellType5 title:_titleArray[indexPath.row] placeText:_placeArray[indexPath.row]];
+        [cell setCellType:ZQVioUpCellType2 title:_titleArray[indexPath.row] placeText:_placeArray[indexPath.row]];
         
         return cell;
     }else{
@@ -103,12 +139,13 @@
         [cell setCellType:ZQVioUpCellType3 title:_titleArray[indexPath.row] placeText:_placeArray[indexPath.row]];
         return cell;
     }
+     */
 }
 // 设置表尾
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    
-    return nil;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//
+//    return nil;
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -123,14 +160,14 @@
     return 50;
 }
 
--(CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
-    if (section == 0) {
-        return 70.0;
-    }else{
-        return 0.1;
-    }
-}
+//-(CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//
+//    if (section == 0) {
+//        return 70.0;
+//    }else{
+//        return 0.1;
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
