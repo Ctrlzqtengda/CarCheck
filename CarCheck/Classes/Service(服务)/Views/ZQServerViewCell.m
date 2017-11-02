@@ -39,7 +39,7 @@
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_imageView];
     
-    self.label = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetMaxY(_imageView.frame), _width - 10, 20)];
+    self.label = [[UILabel alloc] initWithFrame:CGRectMake(1, CGRectGetMaxY(_imageView.frame), _width - 2, 20)];
     _label.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_label];
 }

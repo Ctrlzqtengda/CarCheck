@@ -33,6 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.birthdayStr = @"";
+    self.sexStr = @"";
+    self.descStr = @"";
     [self setupData];
     [self initViews];
     // Do any additional setup after loading the view from its nib.
@@ -52,6 +55,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KWidth, self.view.bounds.size.height - 50) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorColor = HEXCOLOR(0xeeeeee);
     [self.view addSubview:self.tableView];
     
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 80)];
@@ -91,7 +95,8 @@
     NSDate *coms = [NSDate dateWithTimeIntervalSince1970:[sender integerValue]];
     NSString *dates =[formatter stringFromDate:coms];
     //    _placeArray = dates;
-    _contentArray[2] = dates;
+//    _contentArray[2] = dates;
+    self.birthdayStr = dates;
     [self.tableView reloadData];
 }
 
@@ -134,7 +139,7 @@
         case 1:
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
-            if (self.sexStr) {
+            if (self.sexStr.length) {
                 cell.detailTextLabel.text = _sexStr;
             }
             else
@@ -146,11 +151,11 @@
         case 2:
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
-            if (self.birthdayStr) {
-                cell.detailTextLabel.text = _placeArray[indexPath.row-1];
+            if (self.birthdayStr.length) {
+                cell.detailTextLabel.text = _birthdayStr;
             }
             else{
-                cell.detailTextLabel.text = _birthdayStr;
+                cell.detailTextLabel.text = _placeArray[indexPath.row-1];
             }
         }
             break;
@@ -167,6 +172,9 @@
             textField.font = [UIFont systemFontOfSize:15];
             textField.textColor = [UIColor darkGrayColor];
             textField.returnKeyType = UIReturnKeyDone;
+            if (self.descStr.length) {
+                textField.text = _descStr;
+            }
             cell.accessoryView = textField;
         }
             break;
@@ -218,7 +226,6 @@
             }
             __weak __typeof(self) weakSelf = self;
             self.areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:@"-2"];
-            _areaView.backgroundColor = LH_RGBCOLOR(209,212,221);
             _areaView.handler = ^(ZQAreaModel *areaModel)
             {
                 if (areaModel) {
@@ -235,6 +242,9 @@
             if (self.areaView) {
                 [self.areaView removeFromSuperview];
                 self.areaView = nil;
+            }
+            if (self.datePickV) {
+                [self hiddenView];
             }
             [self.view addSubview:self.datePickV];
         }
@@ -294,6 +304,12 @@
 //    }
 //}
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    self.descStr = textField.text;
+    return YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

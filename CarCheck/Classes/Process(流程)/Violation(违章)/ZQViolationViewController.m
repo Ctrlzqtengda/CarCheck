@@ -95,7 +95,6 @@
     __weak __typeof(self) weakSelf = self;
     __weak UITextField *wTextField = textField;
     _areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:pId];
-    _areaView.backgroundColor = LH_RGBCOLOR(209,212,221);
     _areaView.handler = ^(ZQAreaModel *areaModel)
     {
         if (areaModel) {
