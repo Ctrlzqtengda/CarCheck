@@ -47,13 +47,27 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 80)];
+    UIButton *cannotBtn = [[UIButton alloc]initWithFrame:CGRectMake(40, 20, (__kWidth-80), 40)];
+    [footView addSubview:cannotBtn];
+    cannotBtn.titleLabel.font = BFont(15);
+    cannotBtn.layer.cornerRadius = 6;
+    [cannotBtn setTitle:@"退出登录" forState:BtnNormal];
+    [cannotBtn setTitleColor:[UIColor whiteColor] forState:BtnNormal];
+    [cannotBtn setBackgroundColor:__DefaultColor];
+    [cannotBtn addTarget:self action:@selector(logOutAction) forControlEvents:BtnTouchUpInside];
+    self.tableView.tableFooterView = footView;
     // 注册cell
     
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"ZQVioUpTableViewCell" bundle:nil] forCellReuseIdentifier:@"ZQVioUpTableViewCell_id"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"ZQVioUpTableViewCell" bundle:nil] forCellReuseIdentifier:@"ZQVioUpTableViewCell_id"];
 
 }
-
+- (void)logOutAction
+{
+    [Utility setLoginStates:NO];
+    self.tabBarController.selectedIndex = 0;
+}
 #pragma mark 私有方法
 -(YBuyingDatePicker *)datePickV{
     if (!_datePickV) {

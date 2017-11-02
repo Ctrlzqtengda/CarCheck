@@ -118,7 +118,7 @@
     [_backV addSubview:cannotBtn];
     cannotBtn.titleLabel.font = MFont(15);
     cannotBtn.backgroundColor = [UIColor clearColor];
-    [cannotBtn setTitle:@"无法登陆?" forState:BtnNormal];
+    [cannotBtn setTitle:@"无法登录?" forState:BtnNormal];
     [cannotBtn setTitleColor:__TextColor forState:BtnNormal];
     [cannotBtn addTarget:self action:@selector(cannotLogin) forControlEvents:BtnTouchUpInside];
     
