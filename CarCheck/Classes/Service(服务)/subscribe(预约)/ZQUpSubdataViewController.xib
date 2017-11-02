@@ -52,7 +52,10 @@
                                     <rect key="frame" x="78" y="20" width="247" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="1WJ-mZ-Ndy"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iev-af-JMn">
                                     <rect key="frame" x="10" y="70" width="60" height="35"/>
@@ -67,7 +70,10 @@
                                     <rect key="frame" x="78" y="70" width="247" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="xop-VK-3c5"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌号:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ocp-8z-R0j">
                                     <rect key="frame" x="10" y="120" width="60" height="35"/>
@@ -82,7 +88,10 @@
                                     <rect key="frame" x="78" y="120" width="247" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="fto-hj-UOT"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择车型:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FM0-6X-ceZ">
                                     <rect key="frame" x="20" y="170" width="200" height="25"/>
@@ -98,7 +107,10 @@
                                     <rect key="frame" x="40" y="210" width="285" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="W9F-VF-RUA"/>
+                                    </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传照片:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1E-1B-SED">
                                     <rect key="frame" x="20" y="265" width="200" height="25"/>
@@ -106,7 +118,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg" translatesAutoresizingMaskIntoConstraints="NO" id="Fju-x2-pGp">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhao" translatesAutoresizingMaskIntoConstraints="NO" id="Fju-x2-pGp">
                                     <rect key="frame" x="30" y="300" width="315" height="80"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="80" id="JXt-po-lpK"/>
@@ -139,7 +151,7 @@
                                         <constraint firstAttribute="width" secondItem="mdw-aG-gkd" secondAttribute="height" id="XKc-Bz-7Vj"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="省份证正面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-X7-Usi">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="身份证正面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-X7-Usi">
                                     <rect key="frame" x="30" y="499.5" width="71.5" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="alO-ao-tc9"/>
@@ -176,6 +188,11 @@
                                     <state key="normal" title="提交">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="sendAction:" destination="-1" eventType="touchUpInside" id="R83-Nl-CZR"/>
                                     </connections>
@@ -269,7 +286,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chooseImg" width="254" height="168"/>
         <image name="chooseImg2" width="66" height="66"/>
+        <image name="zhao" width="307" height="78"/>
     </resources>
 </document>

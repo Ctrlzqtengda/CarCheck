@@ -20,6 +20,7 @@
 #import "ZQOnlineSubViewController.h" //在线预约
 #import "ZQMyBookingViewController.h" //我的预约
 #import "ZQRechargeViewController.h"  //加油充值
+#import "ZQUpVioViewController.h"     //代缴罚款
 
 #import "ZQInsuranceView.h"           //保险
 #import "ZQLoadingView.h"
@@ -109,6 +110,7 @@
             }
             case 1:
             {
+                
                 ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
                 [inspectionVC setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:inspectionVC animated:YES];
@@ -140,7 +142,11 @@
             }
                 case 4:
             {
-                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+                // 代缴罚款
+//                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+//                [vc setHidesBottomBarWhenPushed:YES];
+//                [self.navigationController pushViewController:vc animated:YES];
+                ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
                 [vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:vc animated:YES];
                 break;
@@ -184,8 +190,12 @@
             }
             case 1:
             {
-                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-                [self.navigationController pushViewController:vc animated:YES];
+                // 在线预约
+//                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+//                [self.navigationController pushViewController:vc animated:YES];
+                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                [inspectionVC setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:inspectionVC animated:YES];
                 break;
             }
             case 2:
@@ -232,7 +242,7 @@
             }];
             reuseV = headView;
         }else{
-            // 轮播图
+            // 预约
             ZQAppointmentHeaderView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ZQAppointmentHeaderView" forIndexPath:indexPath];
             __weak __typeof(self) weakSelf = self;
             headView.handler = ^{

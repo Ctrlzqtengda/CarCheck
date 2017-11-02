@@ -58,7 +58,7 @@ const CGFloat cSpace =  8;
     NSString *addressStr = [NSString stringWithFormat:@"地址: %@",infoDict[@"address"]];
     NSRange range = [addressStr rangeOfString:@"地址:"];
     NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:addressStr];
-    [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:range];
+    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
     [self.addressLabel setAttributedText:attachStr];
     
    CGSize size = [addressStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
@@ -72,7 +72,7 @@ const CGFloat cSpace =  8;
     NSString *phoneStr = [NSString stringWithFormat:@"电话: %@",infoDict[@"phone"]];
     range = [phoneStr rangeOfString:@"电话:"];
     attachStr = [[NSMutableAttributedString alloc] initWithString:phoneStr];
-    [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:range];
+    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
     [self.phoneLabel setAttributedText:attachStr];
 }
 - (UIImageView *)imgV
@@ -90,7 +90,7 @@ const CGFloat cSpace =  8;
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, 10, __kWidth-CGRectGetMaxX(_imgV.frame)-cSpace*2-40, 20)];
         _titleLabel.font = [UIFont boldSystemFontOfSize:16];
-        _titleLabel.textColor = [UIColor cyanColor];
+        _titleLabel.textColor = [UIColor blackColor];
     }
     return _titleLabel;
 }
@@ -131,7 +131,7 @@ const CGFloat cSpace =  8;
         [_navigationBtn setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
         [_navigationBtn setTitle:@"导航到点" forState:UIControlStateNormal];
         [_navigationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_navigationBtn setBackgroundColor:[UIColor blueColor]];
+        [_navigationBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
         _navigationBtn.layer.cornerRadius = 4;
     }
     return _navigationBtn;
@@ -144,7 +144,7 @@ const CGFloat cSpace =  8;
         _bookingBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [_bookingBtn setTitle:@"立即预约" forState:UIControlStateNormal];
         [_bookingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_bookingBtn setBackgroundColor:[UIColor greenColor]];
+        [_bookingBtn setBackgroundColor:LH_RGBCOLOR(12,189,49)];
         _bookingBtn.layer.cornerRadius = 4;
     }
     return _bookingBtn;

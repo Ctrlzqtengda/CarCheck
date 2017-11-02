@@ -44,6 +44,9 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:titleLabel];
     
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.7, KWidth, 0.7)];
+    lineView.backgroundColor = HEXCOLOR(0xcccccc);
+    [self addSubview:lineView];
 }
 
 -(void)tapAction:(UIGestureRecognizer *)gesture {

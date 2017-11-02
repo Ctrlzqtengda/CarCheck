@@ -9,7 +9,7 @@
 #import "ZQOnlineSubViewController.h"
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
-//#import "ZQUpSubdataViewController.h"
+#import "ZQUpSubdataViewController.h"
 
 @interface ZQOnlineSubViewController ()<UITableViewDelegate,UITableViewDataSource>{
     NSArray *_dataArray;
@@ -101,6 +101,10 @@
             [ZQSuccessAlerView showCommitSuccess];
         };
         [alerView show];
+    }else{
+        ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+        [self.navigationController pushViewController:subVC animated:YES];
+
     }
 }
 - (UITableView *)tableView

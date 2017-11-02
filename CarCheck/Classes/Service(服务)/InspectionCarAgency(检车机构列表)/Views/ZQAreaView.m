@@ -20,7 +20,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame provinceId:(NSString *)pId{
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor=HEXCOLOR(0xffffff);
+//        self.backgroundColor=HEXCOLOR(0xffffff);
         [self initView];
         if (pId.integerValue == -1) {
             NSArray *array = @[@"京",@"津",@"沪",@"渝",@"蒙",@"冀",@"新",@"辽",@"藏",@"宁",@"桂",@"黑",@"晋",@"青",@"鲁",@"京",@"港",@"澳",@"豫",@"苏",@"皖",@"闽",@"赣",@"湘",@"鄂",@"粤",@"琼",@"甘",@"陕",@"贵",@"云",@"川",];
@@ -44,19 +44,24 @@
 - (void)initView{
     UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 40)];
     [self addSubview:headV];
-    headV.backgroundColor = [UIColor whiteColor];
+    headV.backgroundColor = LH_RGBCOLOR(240,241,243);
     
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 10, 40, 40)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 0.7)];
+    lineView.backgroundColor = [UIColor grayColor];
+    
+    [headV addSubview:lineView];
+    
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 40, 40)];
     [headV addSubview:cancelBtn];
-    cancelBtn.titleLabel.font = MFont(13);
+    cancelBtn.titleLabel.font = MFont(15);
     cancelBtn.backgroundColor =[UIColor clearColor];
     [cancelBtn setTitle:@"取消" forState:BtnNormal];
     [cancelBtn setTitleColor:LH_RGBCOLOR(0, 122, 255) forState:BtnNormal];
     [cancelBtn addTarget:self action:@selector(cancelAction) forControlEvents:BtnTouchUpInside];
     
-    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-60, 10, 40, 40)];
+    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-60, 0, 40, 40)];
     [headV addSubview:sureBtn];
-    sureBtn.titleLabel.font = MFont(13);
+    sureBtn.titleLabel.font = MFont(15);
     sureBtn.backgroundColor = [UIColor clearColor];
     [sureBtn setTitle:@"确定" forState:BtnNormal];
     [sureBtn setTitleColor:LH_RGBCOLOR(0, 122, 255) forState:BtnNormal];

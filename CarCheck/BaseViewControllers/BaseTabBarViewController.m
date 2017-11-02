@@ -13,6 +13,7 @@
 #import "YtabBarButton.h"
 #import "BaseNavigationController.h"
 #import "ZQMyViewController.h"
+#import "ZQMyTureViewController.h"
 
 @interface BaseTabBarViewController ()<UITabBarControllerDelegate>
 
@@ -21,7 +22,7 @@
 
 @property (strong,nonatomic) NSMutableArray *btnArr;
 
-@property(strong,nonatomic) ZQMyViewController *myVC;
+@property(strong,nonatomic) ZQMyTureViewController *myVC;
 
 @property(strong,nonatomic) ZQCarServerViewController *serverVC;
 
@@ -38,7 +39,7 @@
 }
 
 - (void)initView {
-    self.myVC = [[ZQMyViewController alloc]init];
+    self.myVC = [[ZQMyTureViewController alloc]init];
     [self creatItemVC:self.myVC];
     self.serverVC = [[ZQCarServerViewController alloc]init];
     [self creatItemVC:self.serverVC];
@@ -77,8 +78,8 @@
     
     BaseNavigationController *navi = (BaseNavigationController *)viewController;
     
-    if ([ZQMyViewController class] == [navi.viewControllers[0] class]) {
-        ZQMyViewController *myVC = (ZQMyViewController *)navi.viewControllers[0];
+    if ([ZQMyTureViewController class] == [navi.viewControllers[0] class]) {
+        ZQMyTureViewController *myVC = (ZQMyTureViewController *)navi.viewControllers[0];
         [myVC checkLogin];
     }
 }

@@ -10,6 +10,7 @@
 #import "ZQCollectionViewCell.h"
 #import "ZQTimeCollectionViewCell.h"
 #import "ZQUpSubdataViewController.h"
+#import "YPayViewController.h"
 
 @interface ZQSubTimeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
     
@@ -34,8 +35,10 @@
 
 - (IBAction)nextAction:(id)sender {
     
-    ZQUpSubdataViewController *vc = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-    [self.navigationController pushViewController:vc animated:YES];
+//    ZQUpSubdataViewController *vc = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//    [self.navigationController pushViewController:vc animated:YES];
+    YPayViewController *payVC = [[YPayViewController alloc] init];
+    [self.navigationController pushViewController:payVC animated:YES];
     
 }
 

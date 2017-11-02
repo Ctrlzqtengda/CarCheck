@@ -32,6 +32,7 @@
 		5EF2F48F1F8DF44F00120555 /* ZQRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */; };
 		5EF2F4921F8E01C400120555 /* ZQRechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F4911F8E01C400120555 /* ZQRechargeViewController.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
+		F01C16031FAAADF3003B169E /* ZQMyTureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01C16021FAAADF3003B169E /* ZQMyTureViewController.m */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
 		F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD981F79E20B00F4C50D /* ViewController.m */; };
 		F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F04ACD9D1F79E20B00F4C50D /* Assets.xcassets */; };
@@ -49,6 +50,9 @@
 		F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACDDC1F7A470E00F4C50D /* YtabBarButton.m */; };
 		F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */; };
 		F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F061A5001F7B49B80039C9EC /* ZQProcessCell.m */; };
+		F06AE67F1FA96A4D00599243 /* ZQChoosePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F06AE67E1FA96A4D00599243 /* ZQChoosePickerView.m */; };
+		F06AE6831FA9A17B00599243 /* ZQCarInsMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F06AE6811FA9A17B00599243 /* ZQCarInsMapViewController.m */; };
+		F06AE6841FA9A17B00599243 /* ZQCarInsMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F06AE6821FA9A17B00599243 /* ZQCarInsMapViewController.xib */; };
 		F07253781F8B7B1D00434C83 /* YPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253721F8B797000434C83 /* YPayViewController.m */; };
 		F07253791F8B7B2300434C83 /* YOrderSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253741F8B79C100434C83 /* YOrderSuccessView.m */; };
 		F072537A1F8B7B2A00434C83 /* YOrderSuccessHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07253771F8B79C100434C83 /* YOrderSuccessHeadView.m */; };
@@ -65,7 +69,13 @@
 		F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */; };
 		F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */; };
 		F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */; };
+		F082225D1FA86BFC00E41F30 /* YBuyingDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F082225C1FA86BFB00E41F30 /* YBuyingDatePicker.m */; };
 		F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */; };
+		F0CF423C1FA816CC000C5929 /* ZQUpVioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CF423A1FA816CC000C5929 /* ZQUpVioViewController.m */; };
+		F0CF42401FA817E4000C5929 /* YSureOrderBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CF423F1FA817E4000C5929 /* YSureOrderBottomView.m */; };
+		F0CF42441FA819C6000C5929 /* ZQVioUpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CF42421FA819C6000C5929 /* ZQVioUpTableViewCell.m */; };
+		F0CF42451FA819C6000C5929 /* ZQVioUpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0CF42431FA819C6000C5929 /* ZQVioUpTableViewCell.xib */; };
+		F0CF42481FA85792000C5929 /* ZQvioFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CF42471FA85792000C5929 /* ZQvioFooterView.m */; };
 		F0F47F731F8B11FC00DF54AC /* YshareChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */; };
 		F0F47F7D1F8B290600DF54AC /* ZQUpSubdataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F7B1F8B290600DF54AC /* ZQUpSubdataViewController.m */; };
 		F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F47F7C1F8B290600DF54AC /* ZQUpSubdataViewController.xib */; };
@@ -139,6 +149,8 @@
 		5EF2F4911F8E01C400120555 /* ZQRechargeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQRechargeViewController.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
+		F01C16011FAAADF3003B169E /* ZQMyTureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyTureViewController.h; sourceTree = "<group>"; };
+		F01C16021FAAADF3003B169E /* ZQMyTureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyTureViewController.m; sourceTree = "<group>"; };
 		F04ACD911F79E20B00F4C50D /* CarCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F04ACD941F79E20B00F4C50D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F04ACD951F79E20B00F4C50D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -175,6 +187,11 @@
 		F04ACDDE1F7A506700F4C50D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F061A4FF1F7B49B80039C9EC /* ZQProcessCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessCell.h; sourceTree = "<group>"; };
 		F061A5001F7B49B80039C9EC /* ZQProcessCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessCell.m; sourceTree = "<group>"; };
+		F06AE67D1FA96A4D00599243 /* ZQChoosePickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQChoosePickerView.h; sourceTree = "<group>"; };
+		F06AE67E1FA96A4D00599243 /* ZQChoosePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQChoosePickerView.m; sourceTree = "<group>"; };
+		F06AE6801FA9A17B00599243 /* ZQCarInsMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQCarInsMapViewController.h; sourceTree = "<group>"; };
+		F06AE6811FA9A17B00599243 /* ZQCarInsMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQCarInsMapViewController.m; sourceTree = "<group>"; };
+		F06AE6821FA9A17B00599243 /* ZQCarInsMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQCarInsMapViewController.xib; sourceTree = "<group>"; };
 		F07253711F8B797000434C83 /* YPayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPayViewController.h; sourceTree = "<group>"; };
 		F07253721F8B797000434C83 /* YPayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YPayViewController.m; sourceTree = "<group>"; };
 		F07253741F8B79C100434C83 /* YOrderSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YOrderSuccessView.m; sourceTree = "<group>"; };
@@ -207,8 +224,19 @@
 		F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQServerViewCell.m; sourceTree = "<group>"; };
 		F07F1DA91F7A72DF00468EC2 /* ZQAppointmentHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAppointmentHeaderView.h; sourceTree = "<group>"; };
 		F07F1DAA1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAppointmentHeaderView.m; sourceTree = "<group>"; };
+		F082225B1FA86BFB00E41F30 /* YBuyingDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YBuyingDatePicker.h; sourceTree = "<group>"; };
+		F082225C1FA86BFB00E41F30 /* YBuyingDatePicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YBuyingDatePicker.m; sourceTree = "<group>"; };
 		F0C5ECB51F7B6024005F782D /* ZQProcessRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProcessRightCell.h; sourceTree = "<group>"; };
 		F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProcessRightCell.m; sourceTree = "<group>"; };
+		F0CF42391FA816CC000C5929 /* ZQUpVioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQUpVioViewController.h; sourceTree = "<group>"; };
+		F0CF423A1FA816CC000C5929 /* ZQUpVioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQUpVioViewController.m; sourceTree = "<group>"; };
+		F0CF423E1FA817E3000C5929 /* YSureOrderBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSureOrderBottomView.h; sourceTree = "<group>"; };
+		F0CF423F1FA817E4000C5929 /* YSureOrderBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSureOrderBottomView.m; sourceTree = "<group>"; };
+		F0CF42411FA819C6000C5929 /* ZQVioUpTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQVioUpTableViewCell.h; sourceTree = "<group>"; };
+		F0CF42421FA819C6000C5929 /* ZQVioUpTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQVioUpTableViewCell.m; sourceTree = "<group>"; };
+		F0CF42431FA819C6000C5929 /* ZQVioUpTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZQVioUpTableViewCell.xib; sourceTree = "<group>"; };
+		F0CF42461FA85792000C5929 /* ZQvioFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQvioFooterView.h; sourceTree = "<group>"; };
+		F0CF42471FA85792000C5929 /* ZQvioFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQvioFooterView.m; sourceTree = "<group>"; };
 		F0F47F711F8B11FC00DF54AC /* YshareChooseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YshareChooseView.m; sourceTree = "<group>"; };
 		F0F47F721F8B11FC00DF54AC /* YshareChooseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YshareChooseView.h; sourceTree = "<group>"; };
 		F0F47F751F8B12C200DF54AC /* YFoundPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YFoundPasswordViewController.h; sourceTree = "<group>"; };
@@ -284,6 +312,9 @@
 				5EA0FEA91F876744005E882C /* Views */,
 				5EA0FEAA1F87677E005E882C /* ZQInspectionListController.h */,
 				5EA0FEAB1F87677E005E882C /* ZQInspectionListController.m */,
+				F06AE6801FA9A17B00599243 /* ZQCarInsMapViewController.h */,
+				F06AE6811FA9A17B00599243 /* ZQCarInsMapViewController.m */,
+				F06AE6821FA9A17B00599243 /* ZQCarInsMapViewController.xib */,
 			);
 			path = "InspectionCarAgency(检车机构列表)";
 			sourceTree = "<group>";
@@ -501,6 +532,8 @@
 				F0F5482A1F8730AF00E76ACF /* LoginAndRegister */,
 				F04ACDC21F7A3C3F00F4C50D /* ZQMyViewController.h */,
 				F04ACDC31F7A3C3F00F4C50D /* ZQMyViewController.m */,
+				F01C16011FAAADF3003B169E /* ZQMyTureViewController.h */,
+				F01C16021FAAADF3003B169E /* ZQMyTureViewController.m */,
 			);
 			path = "My(我的)";
 			sourceTree = "<group>";
@@ -556,10 +589,19 @@
 		F061A4FE1F7B43A20039C9EC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F082225B1FA86BFB00E41F30 /* YBuyingDatePicker.h */,
+				F082225C1FA86BFB00E41F30 /* YBuyingDatePicker.m */,
+				F0CF423E1FA817E3000C5929 /* YSureOrderBottomView.h */,
+				F0CF423F1FA817E4000C5929 /* YSureOrderBottomView.m */,
+				F0CF42461FA85792000C5929 /* ZQvioFooterView.h */,
+				F0CF42471FA85792000C5929 /* ZQvioFooterView.m */,
 				F061A4FF1F7B49B80039C9EC /* ZQProcessCell.h */,
 				F061A5001F7B49B80039C9EC /* ZQProcessCell.m */,
 				F0C5ECB51F7B6024005F782D /* ZQProcessRightCell.h */,
 				F0C5ECB61F7B6024005F782D /* ZQProcessRightCell.m */,
+				F0CF42411FA819C6000C5929 /* ZQVioUpTableViewCell.h */,
+				F0CF42421FA819C6000C5929 /* ZQVioUpTableViewCell.m */,
+				F0CF42431FA819C6000C5929 /* ZQVioUpTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -624,6 +666,8 @@
 				F07F1DA31F7A694500468EC2 /* ZQScrollPageView.m */,
 				F07F1DA61F7A69A600468EC2 /* ZQServerViewCell.h */,
 				F07F1DA71F7A69A600468EC2 /* ZQServerViewCell.m */,
+				F06AE67D1FA96A4D00599243 /* ZQChoosePickerView.h */,
+				F06AE67E1FA96A4D00599243 /* ZQChoosePickerView.m */,
 			);
 			name = Views;
 			path = "CarCheck/Classes/Service(服务)/Views";
@@ -684,6 +728,8 @@
 				F0F5481B1F8497A800E76ACF /* ZQPayVioViewController.h */,
 				F0F5481C1F8497A800E76ACF /* ZQPayVioViewController.m */,
 				F0F5481D1F8497A800E76ACF /* ZQPayVioViewController.xib */,
+				F0CF42391FA816CC000C5929 /* ZQUpVioViewController.h */,
+				F0CF423A1FA816CC000C5929 /* ZQUpVioViewController.m */,
 			);
 			path = "Violation(违章)";
 			sourceTree = "<group>";
@@ -799,6 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EA0FEC91F8A3FBB005E882C /* YPAddress.plist in Resources */,
+				F0CF42451FA819C6000C5929 /* ZQVioUpTableViewCell.xib in Resources */,
 				F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */,
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
 				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
@@ -807,6 +854,7 @@
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
 				F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */,
 				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
+				F06AE6841FA9A17B00599243 /* ZQCarInsMapViewController.xib in Resources */,
 				F0F548451F87515C00E76ACF /* ZQOnlineSubViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -854,6 +902,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/Pingpp/lib/Channels/Alipay/AlipaySDK.bundle",
 				"${PODS_ROOT}/Pingpp/lib/Pingpp.bundle",
@@ -874,6 +923,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F06AE67F1FA96A4D00599243 /* ZQChoosePickerView.m in Sources */,
 				F07253921F8B7E5F00434C83 /* YPayCardCheckView.m in Sources */,
 				F07253931F8B7E5F00434C83 /* YPayOtherHead.m in Sources */,
 				F07253941F8B7E5F00434C83 /* YPayThreeCell.m in Sources */,
@@ -889,16 +939,20 @@
 				5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */,
 				5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */,
 				5EA0FEE91F8B2761005E882C /* ZQMaintainViewController.m in Sources */,
+				F0CF42481FA85792000C5929 /* ZQvioFooterView.m in Sources */,
 				F0F47F931F8B6BDE00DF54AC /* UITextField+ZQTextField.m in Sources */,
 				5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */,
+				F082225D1FA86BFC00E41F30 /* YBuyingDatePicker.m in Sources */,
 				5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */,
 				5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */,
 				5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */,
 				5EA0FED71F8A67FE005E882C /* YSPersonalHeadCell.m in Sources */,
 				F07F1DA51F7A696600468EC2 /* ZQScrollPageView.m in Sources */,
+				F06AE6831FA9A17B00599243 /* ZQCarInsMapViewController.m in Sources */,
 				F07F1DA41F7A695F00468EC2 /* ZQHeaderViewScoll.m in Sources */,
 				5EA0FEBD1F8A304A005E882C /* ZQAreaView.m in Sources */,
 				5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */,
+				F0CF423C1FA816CC000C5929 /* ZQUpVioViewController.m in Sources */,
 				F061A5011F7B49B80039C9EC /* ZQProcessCell.m in Sources */,
 				5EA0FEE21F8B0ABC005E882C /* ZQInsuranceView.m in Sources */,
 				F07F1DA81F7A69A600468EC2 /* ZQServerViewCell.m in Sources */,
@@ -909,12 +963,14 @@
 				5EF2F48F1F8DF44F00120555 /* ZQRegisterViewController.m in Sources */,
 				5EA0FEAC1F87677E005E882C /* ZQInspectionListController.m in Sources */,
 				F0F548231F87278400E76ACF /* ZQTViewController.m in Sources */,
+				F0CF42441FA819C6000C5929 /* ZQVioUpTableViewCell.m in Sources */,
 				5EA0FEE51F8B2258005E882C /* ZQSuccessAlerView.m in Sources */,
 				F04ACDD81F7A44A000F4C50D /* JKHttpClientTool.m in Sources */,
 				F0C5ECB71F7B6024005F782D /* ZQProcessRightCell.m in Sources */,
 				F0F47F7D1F8B290600DF54AC /* ZQUpSubdataViewController.m in Sources */,
 				F07F1DAB1F7A72DF00468EC2 /* ZQAppointmentHeaderView.m in Sources */,
 				F0F548291F8727D200E76ACF /* ZQzqViewController.m in Sources */,
+				F01C16031FAAADF3003B169E /* ZQMyTureViewController.m in Sources */,
 				5EA0FEC41F8A33CC005E882C /* ZQAreaModel.m in Sources */,
 				F0F5482D1F8730E700E76ACF /* ZQLoginViewController.m in Sources */,
 				F0F548441F87515C00E76ACF /* ZQOnlineSubViewController.m in Sources */,
@@ -924,6 +980,7 @@
 				5EA0FEB61F8A1BFA005E882C /* ZQAlerInputView.m in Sources */,
 				F04ACDDD1F7A470F00F4C50D /* YtabBarButton.m in Sources */,
 				5EA0FECD1F8A611F005E882C /* ZQPersonModel.m in Sources */,
+				F0CF42401FA817E4000C5929 /* YSureOrderBottomView.m in Sources */,
 				F04ACDCD1F7A3D2300F4C50D /* BaseNavigationController.m in Sources */,
 				F04ACD991F79E20B00F4C50D /* ViewController.m in Sources */,
 				F0F548381F8735E800E76ACF /* ZQCollectionViewCell.m in Sources */,

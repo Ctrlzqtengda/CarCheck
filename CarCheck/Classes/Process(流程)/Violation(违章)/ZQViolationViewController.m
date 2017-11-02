@@ -44,6 +44,9 @@
 -(void)setupViews {
     
     self.title = @"违章查询";
+    self.searchBtn1.layer.cornerRadius = 5;
+    self.searchBtn2.layer.cornerRadius = 5;
+    
     [self setRightViewWithTextField:self.provinceTf imageName:@"downArrow"];
     [self setRightViewWithTextField:self.cityTf imageName:@"downArrow"];
     [self setRightViewWithTextField:self.carProvinceTf imageName:@"downArrow"];
@@ -90,6 +93,7 @@
     __weak __typeof(self) weakSelf = self;
     __weak UITextField *wTextField = textField;
     _areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:pId];
+    _areaView.backgroundColor = LH_RGBCOLOR(209,212,221);
     _areaView.handler = ^(ZQAreaModel *areaModel)
     {
         if (areaModel) {

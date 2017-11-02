@@ -13,8 +13,10 @@
 #import "ZQMyViewController.h"
 #import "ZQCarServerViewController.h"
 #import "ZQCarProcessViewController.h"
+#import "ZQMyTureViewController.h"
 
 #import "ZQLoginViewController.h"
+
 @interface AppDelegate ()<UITabBarControllerDelegate>
 
 @property (nonatomic, assign) NSUInteger sTabBarIndex;
@@ -36,7 +38,7 @@
 - (BaseTabBarViewController *)setupViews {
     
      BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
-    ZQMyViewController *myVC = [[ZQMyViewController alloc] init];
+    ZQMyTureViewController *myVC = [[ZQMyTureViewController alloc] init];
     myVC.tabBarItem.image = [[UIImage imageNamed:@"333"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     myVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"my_sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     myVC.title = @"我的";
