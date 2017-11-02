@@ -45,8 +45,9 @@
     
     self.title = @"违章查询";
     self.searchBtn1.layer.cornerRadius = 5;
-    self.searchBtn2.layer.cornerRadius = 5;
-    
+    self.carProvinceTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    self.carProvinceTf.keyboardType = UIKeyboardTypeASCIICapable;
+
     [self setRightViewWithTextField:self.provinceTf imageName:@"downArrow"];
     [self setRightViewWithTextField:self.cityTf imageName:@"downArrow"];
     [self setRightViewWithTextField:self.carProvinceTf imageName:@"downArrow"];
@@ -80,6 +81,7 @@
         [_areaView removeFromSuperview];
         self.areaView = nil;
     }
+    [self.view endEditing:YES];
     NSString *pId = nil;
     if ([textField isEqual:self.carProvinceTf]) {
         pId = @"-1"; //展示省的简称
@@ -124,6 +126,9 @@
         return NO;
     }
     if ([textField isEqual:self.carProvinceTf]) {
+        if (textField.text.length) {
+            return YES;
+        }
         [self showPickViewWithTextField:textField];
         return NO;
     }

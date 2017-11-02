@@ -31,6 +31,9 @@
 		5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD51F8B6743000AD168 /* FBTextView.m */; };
 		5EF2F48F1F8DF44F00120555 /* ZQRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */; };
 		5EF2F4921F8E01C400120555 /* ZQRechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F4911F8E01C400120555 /* ZQRechargeViewController.m */; };
+		5EF2F4931F8F3F3700120555 /* YFoundPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F761F8B12C200DF54AC /* YFoundPasswordViewController.m */; };
+		5EF2F4BD1F8F645500120555 /* YResetPassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0F47F781F8B16D900DF54AC /* YResetPassViewController.m */; };
+		5EF2F4C01F8F784000120555 /* ZQSmsLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F4BF1F8F784000120555 /* ZQSmsLoginViewController.m */; };
 		DDD0C5A440E25D5F0457A6C6 /* libPods-CarCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558AC1D618D338A7CDA08192 /* libPods-CarCheck.a */; };
 		F01C16031FAAADF3003B169E /* ZQMyTureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01C16021FAAADF3003B169E /* ZQMyTureViewController.m */; };
 		F04ACD961F79E20B00F4C50D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F04ACD951F79E20B00F4C50D /* AppDelegate.m */; };
@@ -147,6 +150,8 @@
 		5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQRegisterViewController.m; sourceTree = "<group>"; };
 		5EF2F4901F8E01C400120555 /* ZQRechargeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQRechargeViewController.h; sourceTree = "<group>"; };
 		5EF2F4911F8E01C400120555 /* ZQRechargeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQRechargeViewController.m; sourceTree = "<group>"; };
+		5EF2F4BE1F8F784000120555 /* ZQSmsLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQSmsLoginViewController.h; sourceTree = "<group>"; };
+		5EF2F4BF1F8F784000120555 /* ZQSmsLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQSmsLoginViewController.m; sourceTree = "<group>"; };
 		7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarCheck/Pods-CarCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F01C16011FAAADF3003B169E /* ZQMyTureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyTureViewController.h; sourceTree = "<group>"; };
@@ -758,6 +763,8 @@
 			children = (
 				F0F5482B1F8730E700E76ACF /* ZQLoginViewController.h */,
 				F0F5482C1F8730E700E76ACF /* ZQLoginViewController.m */,
+				5EF2F4BE1F8F784000120555 /* ZQSmsLoginViewController.h */,
+				5EF2F4BF1F8F784000120555 /* ZQSmsLoginViewController.m */,
 				5EF2F48D1F8DF44F00120555 /* ZQRegisterViewController.h */,
 				5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */,
 				F0F47F741F8B127B00DF54AC /* FindPwd(找回密码) */,
@@ -924,6 +931,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F06AE67F1FA96A4D00599243 /* ZQChoosePickerView.m in Sources */,
+				5EF2F4BD1F8F645500120555 /* YResetPassViewController.m in Sources */,
+				5EF2F4931F8F3F3700120555 /* YFoundPasswordViewController.m in Sources */,
+				5EF2F4C01F8F784000120555 /* ZQSmsLoginViewController.m in Sources */,
 				F07253921F8B7E5F00434C83 /* YPayCardCheckView.m in Sources */,
 				F07253931F8B7E5F00434C83 /* YPayOtherHead.m in Sources */,
 				F07253941F8B7E5F00434C83 /* YPayThreeCell.m in Sources */,

@@ -15,5 +15,6 @@ pod 'Masonry'
 pod 'Pingpp/Alipay'
 pod 'Pingpp/Wx'
 pod 'IQKeyboardManager'
+pod 'JPush'
 
 end

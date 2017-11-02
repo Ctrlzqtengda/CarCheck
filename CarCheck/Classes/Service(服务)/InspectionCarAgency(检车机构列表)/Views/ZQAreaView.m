@@ -32,6 +32,7 @@
                 [muArr addObject:model];
             }
             self.listArr = muArr;
+            self.selectedModel = self.listArr.firstObject;
             [_areaPickerV reloadAllComponents];
         }
         else
@@ -51,7 +52,10 @@
     
     [headV addSubview:lineView];
     
-    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 40, 40)];
+//    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 40, 40)];
+//    headV.backgroundColor = [UIColor lightGrayColor];
+    
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 40, 40)];
     [headV addSubview:cancelBtn];
     cancelBtn.titleLabel.font = MFont(15);
     cancelBtn.backgroundColor =[UIColor clearColor];
@@ -59,7 +63,8 @@
     [cancelBtn setTitleColor:LH_RGBCOLOR(0, 122, 255) forState:BtnNormal];
     [cancelBtn addTarget:self action:@selector(cancelAction) forControlEvents:BtnTouchUpInside];
     
-    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-60, 0, 40, 40)];
+//    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-60, 0, 40, 40)];
+    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-50, 0, 40, 40)];
     [headV addSubview:sureBtn];
     sureBtn.titleLabel.font = MFont(15);
     sureBtn.backgroundColor = [UIColor clearColor];
