@@ -14,5 +14,6 @@ pod 'MJRefresh'
 pod 'Masonry'
 pod 'Pingpp/Alipay'
 pod 'Pingpp/Wx'
+pod 'JPush'
 
 end
