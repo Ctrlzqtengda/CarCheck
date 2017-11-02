@@ -97,20 +97,19 @@
         }
             break;
         case 2:{
-            if (index == 0) {
-
-                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-                [self.navigationController pushViewController:inspectionVC animated:YES];
-            }else if (index == 1){
-                [self showSubView];
-            }else if (index == 2){
-                NSString *phoneStr = @"1888888888";
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+            ZQSubScType type;
+            if (index == 0){
+//                [self showSubView];
+                type = ZQSubScTypeDefailt;
+                
+            }else if(index == 1){
+                type = ZQSubScTypeVisit;
+            }else{
+                type = ZQSubScTypeCellPhone;
             }
+            ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+            inspectionVC.subType = type;
+            [self.navigationController pushViewController:inspectionVC animated:YES];
         }
             break;
         case 4:{

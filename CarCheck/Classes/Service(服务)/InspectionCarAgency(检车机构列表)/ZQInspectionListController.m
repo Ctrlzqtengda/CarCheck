@@ -14,6 +14,8 @@
 #import "ZQAlerInputView.h"
 #import "ZQUpSubdataViewController.h"
 #import "ZQOnlineSubViewController.h"
+#import "ZQOnlineAlertView.h"
+#import "ZQSuccessAlerView.h"
 
 @interface ZQInspectionListController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 {
@@ -135,7 +137,7 @@
 }
 - (void)addNavigationRightItem
 {
-    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"下一页" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
     self.navigationItem.rightBarButtonItem = rightBarItem;
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
     return;
@@ -226,11 +228,45 @@
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-    [self.navigationController pushViewController:vc animated:YES];
+    switch (self.subType) {
+            case ZQSubScTypeCellPhone:{
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+            }
+            break;
+            
+            case ZQSubScTypeVisit:{
+                [self showSubView];
+            }
+            break;
+        default:{
+            ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+    }
 //    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
 //    [self.navigationController pushViewController:subVC animated:YES];
 }
+
+-(void)showSubView {
+    ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+    alerView.handler = ^(NSArray *contenArr)
+    {
+        [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"上门接送车提交内容:%@",obj);
+        }];
+        //                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+        
+        [ZQSuccessAlerView showCommitSuccess];
+    };
+    [alerView show];
+}
+
 - (UITableView *)tableView
 {
     if (!_tableView) {

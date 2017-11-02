@@ -8,8 +8,14 @@
 
 #import "BaseViewController.h"
 
+typedef enum : NSUInteger {
+    ZQSubScTypeDefailt,
+    ZQSubScTypeCellPhone,
+    ZQSubScTypeVisit,
+} ZQSubScType;
+
 @interface ZQInspectionListController : BaseViewController
 
-
+@property(nonatomic,assign)ZQSubScType subType;
 
 @end
