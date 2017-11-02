@@ -163,7 +163,7 @@
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
             
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, KWidth-100, 30)];
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, KWidth-120, 30)];
 //            textField.borderStyle = UITextBorderStyleNone;
 //            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
             textField.textAlignment = NSTextAlignmentRight;
@@ -208,7 +208,13 @@
 //}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (self.datePickV) {
+        [self hiddenView];
+    }
+    if (self.areaView) {
+        [self.areaView removeFromSuperview];
+        self.areaView = nil;
+    }
     switch (indexPath.row) {
         case 0:
             {
@@ -217,13 +223,7 @@
             break;
         case 1:{
             //性别
-            if (self.datePickV) {
-                [self hiddenView];
-            }
-            if (self.areaView) {
-                [self.areaView removeFromSuperview];
-                self.areaView = nil;
-            }
+            [self.view endEditing:YES];
             __weak __typeof(self) weakSelf = self;
             self.areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:@"-2"];
             _areaView.handler = ^(ZQAreaModel *areaModel)
@@ -239,13 +239,7 @@
         case 2:
         {
             //注册日期
-            if (self.areaView) {
-                [self.areaView removeFromSuperview];
-                self.areaView = nil;
-            }
-            if (self.datePickV) {
-                [self hiddenView];
-            }
+            [self.view endEditing:YES];
             [self.view addSubview:self.datePickV];
         }
             break;
