@@ -10,6 +10,9 @@
 #import "YBuyingDatePicker.h"
 #import "ZQVioUpTableViewCell.h"
 
+#import "ZQFeedBackViewController.h"
+#import "ZQRechargeViewController.h"
+#import "ZQAreaView.h"
 
 @interface ZQMyTureViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,YBuyingDatePickerDelegate>{
     NSArray *_titleArray;
@@ -17,9 +20,13 @@
     NSMutableArray *_contentArray;
 }
 
-@property(strong,nonatomic)UITableView *tableView;
-@property (strong,nonatomic) YBuyingDatePicker *datePickV;
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) YBuyingDatePicker *datePickV;
+@property (strong, nonatomic) ZQAreaView *areaView;
 
+@property (copy, nonatomic) NSString *sexStr;
+@property (copy, nonatomic) NSString *birthdayStr;
+@property (copy, nonatomic) NSString *descStr;
 @end
 
 @implementation ZQMyTureViewController
@@ -91,7 +98,7 @@
 - (void)hiddenView {
     
     [self.datePickV removeFromSuperview];
-    
+    self.datePickV = nil;
 }
 
 #pragma mark UITableViewDataSource,UITableViewDelegate
@@ -125,11 +132,42 @@
             }
             break;
         case 1:
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            if (self.sexStr) {
+                cell.detailTextLabel.text = _sexStr;
+            }
+            else
+            {
+                cell.detailTextLabel.text = _placeArray[indexPath.row-1];
+            }
+        }
+            break;
         case 2:
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            if (self.birthdayStr) {
+                cell.detailTextLabel.text = _placeArray[indexPath.row-1];
+            }
+            else{
+                cell.detailTextLabel.text = _birthdayStr;
+            }
+        }
+            break;
         case 3:
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.detailTextLabel.text = _placeArray[indexPath.row-1];
+            
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, KWidth-100, 30)];
+//            textField.borderStyle = UITextBorderStyleNone;
+//            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            textField.textAlignment = NSTextAlignmentRight;
+            textField.placeholder = @"请输入";
+            textField.delegate = self;
+            textField.font = [UIFont systemFontOfSize:15];
+            textField.textColor = [UIColor darkGrayColor];
+            textField.returnKeyType = UIReturnKeyDone;
+            cell.accessoryView = textField;
         }
             break;
         default:
@@ -163,10 +201,83 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ((indexPath.section == 0) && (indexPath.row == 2) ) {
-        [self.view addSubview:self.datePickV];
+    switch (indexPath.row) {
+        case 0:
+            {
+                //修改头像
+            }
+            break;
+        case 1:{
+            //性别
+            if (self.datePickV) {
+                [self hiddenView];
+            }
+            if (self.areaView) {
+                [self.areaView removeFromSuperview];
+                self.areaView = nil;
+            }
+            __weak __typeof(self) weakSelf = self;
+            self.areaView = [[ZQAreaView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-230, __kWidth, 230) provinceId:@"-2"];
+            _areaView.backgroundColor = LH_RGBCOLOR(209,212,221);
+            _areaView.handler = ^(ZQAreaModel *areaModel)
+            {
+                if (areaModel) {
+                    weakSelf.sexStr = areaModel.areaName;
+                    [weakSelf.tableView reloadData];
+                }
+            };
+            [self.view addSubview:self.areaView];
+        }
+            break;
+        case 2:
+        {
+            //注册日期
+            if (self.areaView) {
+                [self.areaView removeFromSuperview];
+                self.areaView = nil;
+            }
+            [self.view addSubview:self.datePickV];
+        }
+            break;
+        case 3:
+        {
+            //个人说明
+        }
+            break;
+        case 4:
+        {
+            //充值
+            ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
+            [Vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:Vc animated:YES];
+        }
+            break;
+        case 5:
+        {
+            //清除缓存
+        }
+            break;
+        case 6:
+        {
+            //意见反馈
+            ZQFeedBackViewController *vc = [[ZQFeedBackViewController alloc]init];
+            [vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+            case 7:
+        {
+         //平台介绍
+        }
+            break;
+        case 8:
+        {
+            //APP分享
+        }
+            break;
+        default:
+            break;
     }
-    
 }
 
 // 样式

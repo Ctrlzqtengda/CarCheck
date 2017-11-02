@@ -72,6 +72,7 @@
         _dateTime = [NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]];
     }
     [self.delegate chooseDateTime:_dateTime];
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
 }
 
