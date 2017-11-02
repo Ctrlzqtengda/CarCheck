@@ -35,6 +35,20 @@
             self.selectedModel = self.listArr.firstObject;
             [_areaPickerV reloadAllComponents];
         }
+        else if (pId.integerValue == -2)
+        {
+            NSArray *array = @[@"男",@"女",@"保密"];
+            NSMutableArray *muArr = [NSMutableArray arrayWithCapacity:0];
+            for (NSString *str in array) {
+                ZQAreaModel *model = [[ZQAreaModel alloc] init];
+                model.areaName = str;
+                model.areaId = @"-2";
+                [muArr addObject:model];
+            }
+            self.listArr = muArr;
+            self.selectedModel = self.listArr.firstObject;
+            [_areaPickerV reloadAllComponents];
+        }
         else
         {
             [self getProvinceDataFromLocalWithProvinceId:pId];
@@ -45,10 +59,10 @@
 - (void)initView{
     UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 40)];
     [self addSubview:headV];
-    headV.backgroundColor = LH_RGBCOLOR(240,241,243);
+    headV.backgroundColor = [UIColor whiteColor];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 0.7)];
-    lineView.backgroundColor = [UIColor grayColor];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 1)];
+    lineView.backgroundColor = __DefaultColor;
     
     [headV addSubview:lineView];
     
