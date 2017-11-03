@@ -8,7 +8,7 @@
 
 #import "ZQMaintainViewController.h"
 
-#import "ZQInspectionCell.h"
+#import "ZQMaintainCell.h"
 
 #import "ZQHtmlViewController.h"
 #import "ZQAlerInputView.h"
@@ -187,21 +187,19 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"ZQInspectionCell";
-    ZQInspectionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *cellIdentifier = @"ZQMaintainCell";
+    ZQMaintainCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(!cell) {
-        cell = [[ZQInspectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[ZQMaintainCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         [cell.navigationBtn addTarget:self action:@selector(navigationBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.bookingBtn addTarget:self action:@selector(bookingBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     cell.navigationBtn.tag = indexPath.row;
-    cell.bookingBtn.tag = indexPath.row;
     cell.infoDict = self.agencyList[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [ZQInspectionCell inspectionCellHeight];
+    return [ZQMaintainCell MaintainCellHeight];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
