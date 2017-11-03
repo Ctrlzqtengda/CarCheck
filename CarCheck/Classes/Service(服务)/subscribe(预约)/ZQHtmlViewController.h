@@ -10,6 +10,5 @@
 
 @interface ZQHtmlViewController : BaseViewController
 
-- (id)initWithUrlString:(NSString *)urlString;
-
+- (id)initWithUrlString:(NSString *)urlString andShowBottom:(BOOL)isShow;
 @end

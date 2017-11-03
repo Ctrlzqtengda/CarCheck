@@ -12,10 +12,13 @@
 #import "ZQViolationViewController.h"
 #import "ZQPayVioViewController.h"
 #import "ZQSubTimeViewController.h"
-#import "ZQProblemViewController.h"
+//#import "ZQProblemViewController.h"
+#import "ZQHtmlViewController.h"
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
 #import "ZQInspectionListController.h"
+
+#import "ZQUpVioViewController.h"
 
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
@@ -113,8 +116,13 @@
         }
             break;
         case 4:{
-            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
-            [self.navigationController pushViewController:subVC animated:YES];
+//            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
+//            [self.navigationController pushViewController:subVC animated:YES];
+            
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+            Vc.title = @"平台介绍";
+            [Vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:Vc animated:YES];
         }
             
             break;
@@ -130,13 +138,20 @@
     NSLog(@"ZQProcessRightCellDelegate row=%ld index = %ld",(long)row,(long)index);
     switch (row) {
         case 1:{
-            ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+//            ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+//            [self.navigationController pushViewController:vc animated:YES];
+            ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
+            [vc setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 3:{
-            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
-            [self.navigationController pushViewController:subVC animated:YES];
+//            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
+//            [self.navigationController pushViewController:subVC animated:YES];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+            Vc.title = @"常见问题";
+            [Vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:Vc animated:YES];
         }
             
             break;

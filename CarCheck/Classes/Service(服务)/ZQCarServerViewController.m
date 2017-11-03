@@ -153,7 +153,7 @@
             }
                 case 5:
             {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"https://www.baidu.com"];
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
                 Vc.title = @"常见问题";
                 [Vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:Vc animated:YES];
@@ -162,14 +162,26 @@
             case 6:
             {
                 //法律咨询
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
                 break;
             }
             case 7:
             {
                //加油充值
-                ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
-                [Vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:Vc animated:YES];
+                NSString *phoneStr = @"1888888888";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+//                ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
+//                [Vc setHidesBottomBarWhenPushed:YES];
+//                [self.navigationController pushViewController:Vc animated:YES];
 
                 break;
             }
@@ -182,7 +194,7 @@
         switch (indexPath.row) {
             case 0:
             {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"https://www.baidu.com"];
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
                 Vc.title = @"预约须知";
                 [Vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:Vc animated:YES];

@@ -12,6 +12,7 @@
 
 #import "ZQFeedBackViewController.h"
 #import "ZQRechargeViewController.h"
+#import "ZQHtmlViewController.h"
 #import "ZQAreaView.h"
 
 @interface ZQMyTureViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,YBuyingDatePickerDelegate>{
@@ -272,6 +273,10 @@
             case 7:
         {
          //平台介绍
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+            Vc.title = @"平台介绍";
+            [Vc setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:Vc animated:YES];
         }
             break;
         case 8:

@@ -20,7 +20,9 @@
 
 - (instancetype)initWithFrame:(CGRect)frame provinceId:(NSString *)pId{
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor=HEXCOLOR(0xffffff);
+//        self.backgroundColor=HEXCOLOR(0xffffff);
+        self.backgroundColor = LH_RGBCOLOR(209,212,221);
+
         [self initView];
         if (pId.integerValue == -1) {
             NSArray *array = @[@"京",@"津",@"沪",@"渝",@"蒙",@"冀",@"新",@"辽",@"藏",@"宁",@"桂",@"黑",@"晋",@"青",@"鲁",@"京",@"港",@"澳",@"豫",@"苏",@"皖",@"闽",@"赣",@"湘",@"鄂",@"粤",@"琼",@"甘",@"陕",@"贵",@"云",@"川",];
@@ -53,6 +55,28 @@
         {
             [self getProvinceDataFromLocalWithProvinceId:pId];
         }
+//        self.layer.masksToBounds = YES;
+//        CALayer *capa = self.layer;
+//        [capa setShadowColor: [[UIColor blackColor] CGColor]];
+//        [capa setShadowOpacity:0.85f];
+//        [capa setShadowOffset: CGSizeMake(0.0f, 2.5f)];
+//        [capa setShadowRadius:2.0f];
+//        [capa setShouldRasterize:YES];
+//        
+//        
+//        //Round
+//        CGRect bounds = CGRectMake(0, -100, 450, 520);
+//        bounds.size.height += 20.0f;    //I'm reserving enough room for the shadow
+//        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:bounds
+//                                                      byRoundingCorners: (UIRectCornerBottomLeft | UIRectCornerBottomRight)
+//                                                            cornerRadii:CGSizeMake(8.0, 8.0)];
+//        
+//        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+//        maskLayer.frame = bounds;
+//        maskLayer.path = maskPath.CGPath;
+//        
+//        [capa addSublayer:maskLayer];
+//        capa.mask = maskLayer;
     }
     return self;
 }

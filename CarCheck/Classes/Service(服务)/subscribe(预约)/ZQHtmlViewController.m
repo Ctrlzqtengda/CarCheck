@@ -14,31 +14,43 @@
 @property (nonatomic, copy) NSString *urlString;
 @property (strong,nonatomic) UIProgressView *progressV;
 @property (strong,nonatomic) WKWebView *webView;
+@property (assign,nonatomic) BOOL isShow;
 @end
 
 @implementation ZQHtmlViewController
 
-- (id)initWithUrlString:(NSString *)urlString
+- (id)initWithUrlString:(NSString *)urlString andShowBottom:(BOOL)isShow
 {
     self = [super init];
     if (self) {
         self.urlString = urlString;
+        self.isShow = isShow;
     }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     CGRect rect = self.view.bounds;
-    if (![_urlString hasPrefix:@"https://"])
-    {
-        _urlString = @"https://www.baidu.com";
+    
+    //展示底部
+    if (_isShow) {
         rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-44);
         [self addBottomBtn];
     }
     [self.webView setFrame:rect];
     [self.view addSubview:self.webView];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]]];
-    
+    if ([_urlString hasPrefix:@"https://"])
+    {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]]];
+    }
+    else
+    {
+        NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
+        NSString *path = [mainBundleDirectory  stringByAppendingPathComponent:_urlString];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [self.webView loadRequest:request];
+    }
     [self.progressV setFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), 5)];
     [self.view addSubview:self.progressV];
     [self.view bringSubviewToFront:_progressV];
@@ -53,12 +65,12 @@
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
         if (i) {
-            [button setBackgroundColor:[UIColor greenColor]];
+            [button setBackgroundColor:LH_RGBCOLOR(12,189,49)];
             [button setTitle:@"立即预约" forState:UIControlStateNormal];
         }
         else
         {
-            [button setBackgroundColor:[UIColor blueColor]];
+            [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
             [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
             [button setTitle:@"导航到点" forState:UIControlStateNormal];
         }

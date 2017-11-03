@@ -137,12 +137,12 @@
 }
 - (void)addNavigationRightItem
 {
-//    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
-//    self.navigationItem.rightBarButtonItem = rightBarItem;
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
+    self.navigationItem.rightBarButtonItem = rightBarItem;
 //    self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
-//    return;
+    return;
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
+//    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
     [rightBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -177,10 +177,10 @@
 //    return self.searchController.searchBar;
 //}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 40;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 40;
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -215,7 +215,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"id"];
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agceny.html" andShowBottom:YES];
     Vc.title = @"检车站详情";
     [self.navigationController pushViewController:Vc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -48,12 +48,12 @@
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
         if (i) {
-            [button setBackgroundColor:[UIColor greenColor]];
+            [button setBackgroundColor:LH_RGBCOLOR(12,189,49)];
             [button setTitle:@"立即预约" forState:UIControlStateNormal];
         }
         else
         {
-            [button setBackgroundColor:[UIColor blueColor]];
+            [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
             [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
             [button setTitle:@"导航到点" forState:UIControlStateNormal];
         }

@@ -31,20 +31,23 @@
     
     self.btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:self.btn];
-    self.btn.layer.cornerRadius = 3;
+//    self.btn.layer.cornerRadius = 3;
+    [self.btn setImage:[UIImage imageNamed:@"unAgree"] forState:UIControlStateNormal];
+    [self.btn setImage:[UIImage imageNamed:@"agree"] forState:UIControlStateSelected];
     [self.btn addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
-    self.btn.backgroundColor = [UIColor redColor];
+//    self.btn.backgroundColor = [UIColor redColor];
     
     self.agreeLabel = [[UILabel alloc] init];
     self.agreeLabel.text = @"我已阅读并同意";
     self.agreeLabel.textColor = [UIColor lightGrayColor];
-    self.agreeLabel.font = [UIFont systemFontOfSize:15.0];
+    self.agreeLabel.font = [UIFont systemFontOfSize:13.0];
     [self addSubview:self.agreeLabel];
     
     self.protocolBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [self addSubview:self.protocolBtn];
     [self.protocolBtn addTarget:self action:@selector(clickKnowAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.protocolBtn setTitle:@"《车主无忧罚款代缴服务须知》" forState:(UIControlStateNormal)];
+    self.protocolBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [self.protocolBtn setTitle:@"《新概念检车罚款代缴服务须知》" forState:(UIControlStateNormal)];
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"订单合计";
@@ -54,8 +57,9 @@
     [self.btn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(self.contentView.mas_top).offset(15);
-        make.left.equalTo(self.contentView.mas_left).offset(20);
-        make.width.equalTo(@22);
+//        make.left.equalTo(self.contentView.mas_left).offset(20);
+        make.left.equalTo(self.contentView.mas_left).offset(8);
+        make.width.equalTo(@20);
         make.height.equalTo(self.btn.mas_width).offset(0);
         
     }];
@@ -63,8 +67,8 @@
     [self.agreeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(self.btn.mas_top).offset(0);
-        make.left.equalTo(self.btn.mas_right).offset(8);
-        make.width.equalTo(@110);
+        make.left.equalTo(self.btn.mas_right).offset(5);
+        make.width.equalTo(@95);
         make.height.equalTo(self.btn.mas_width).offset(0);
         
     }];
@@ -93,7 +97,7 @@
 
 // 是否同意按钮
 -(void)clickAction:(UIButton *)sender {
-    
+    sender.selected = !sender.selected;
     if ([self.delegate respondsToSelector:@selector(agreeAction:)]) {
         [self.delegate agreeAction:sender.selected];
     }
