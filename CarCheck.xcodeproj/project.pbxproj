@@ -30,6 +30,7 @@
 		5EDCC0EF1FAC4D90007789DC /* questions.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0EE1FAC4D8F007789DC /* questions.html */; };
 		5EDCC0F11FAC59E4007789DC /* agency.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F01FAC59E4007789DC /* agency.html */; };
 		5EDCC0F31FAC5C5A007789DC /* agency.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F21FAC5C59007789DC /* agency.png */; };
+		5EDCC0F61FAC8256007789DC /* ZQMaintainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F51FAC8256007789DC /* ZQMaintainCell.m */; };
 		5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */; };
 		5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD51F8B6743000AD168 /* FBTextView.m */; };
 		5EF2F48F1F8DF44F00120555 /* ZQRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */; };
@@ -148,6 +149,8 @@
 		5EDCC0EE1FAC4D8F007789DC /* questions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = questions.html; sourceTree = "<group>"; };
 		5EDCC0F01FAC59E4007789DC /* agency.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agency.html; sourceTree = "<group>"; };
 		5EDCC0F21FAC5C59007789DC /* agency.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agency.png; sourceTree = "<group>"; };
+		5EDCC0F41FAC8256007789DC /* ZQMaintainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMaintainCell.h; sourceTree = "<group>"; };
+		5EDCC0F51FAC8256007789DC /* ZQMaintainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMaintainCell.m; sourceTree = "<group>"; };
 		5EEA2FD01F8B634A000AD168 /* ZQFeedBackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQFeedBackViewController.h; sourceTree = "<group>"; };
 		5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQFeedBackViewController.m; sourceTree = "<group>"; };
 		5EEA2FD41F8B6743000AD168 /* FBTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBTextView.h; sourceTree = "<group>"; };
@@ -411,6 +414,8 @@
 			children = (
 				5EA0FEE71F8B2761005E882C /* ZQMaintainViewController.h */,
 				5EA0FEE81F8B2761005E882C /* ZQMaintainViewController.m */,
+				5EDCC0F41FAC8256007789DC /* ZQMaintainCell.h */,
+				5EDCC0F51FAC8256007789DC /* ZQMaintainCell.m */,
 			);
 			path = "Maintain(车辆维修)";
 			sourceTree = "<group>";
@@ -965,6 +970,7 @@
 				F0F47F931F8B6BDE00DF54AC /* UITextField+ZQTextField.m in Sources */,
 				5EA0FEDD1F8A6995005E882C /* YPersonOrderCell.m in Sources */,
 				F082225D1FA86BFC00E41F30 /* YBuyingDatePicker.m in Sources */,
+				5EDCC0F61FAC8256007789DC /* ZQMaintainCell.m in Sources */,
 				5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */,
 				5EA0FEDC1F8A6986005E882C /* YPersonActionCell.m in Sources */,
 				5EA0FEDB1F8A6979005E882C /* YPersonDetailHeadView.m in Sources */,
