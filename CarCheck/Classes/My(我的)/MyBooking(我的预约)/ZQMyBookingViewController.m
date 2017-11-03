@@ -9,6 +9,7 @@
 #import "ZQMyBookingViewController.h"
 #import "ZQMyBooingCell.h"
 
+#import "ZQHtmlViewController.h"
 @interface ZQMyBookingViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -99,12 +100,13 @@
     if(!cell) {
         cell = [[ZQMyBooingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.agencyDetailBtn addTarget:self action:@selector(agencyDetailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.endorseBtn addTarget:self action:@selector(endorseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
+    cell.agencyDetailBtn.tag = indexPath.row;
     cell.infoDict = self.bookingList[indexPath.row];
     return cell;
 }
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [ZQMyBooingCell myBooingCellHeight];
@@ -124,7 +126,18 @@
     return _tableView;
 }
 
-
+//机构详情
+- (void)agencyDetailBtnAction:(UIButton *)sender
+{
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"id"];
+    Vc.title = @"机构详情";
+    [self.navigationController pushViewController:Vc animated:YES];
+}
+//改签订单
+- (void)endorseBtnAction:(UIButton *)sender
+{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

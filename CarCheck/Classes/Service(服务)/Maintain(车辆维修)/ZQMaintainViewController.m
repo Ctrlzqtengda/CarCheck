@@ -13,6 +13,8 @@
 #import "ZQHtmlViewController.h"
 #import "ZQAlerInputView.h"
 
+#import <MapKit/MapKit.h>
+
 //UISearchResultsUpdating
 @interface ZQMaintainViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
 
@@ -77,7 +79,7 @@
     
     //位置
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, 44.0);
-    
+     self.tableView.tableHeaderView = self.searchController.searchBar;
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
@@ -154,15 +156,15 @@
 }
 #pragma mark - UITableViewDataSource
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
-{
-    //    NSLog(@"viewForHeaderInSection--viewForHeaderInSection");
-    //    UISearchBar *mySearchBar = [[UISearchBar alloc] init];
-    //    [mySearchBar setShowsCancelButton:YES];
-    //    mySearchBar.delegate = self;
-    //    return mySearchBar;
-    return self.searchController.searchBar;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
+//{
+//    //    NSLog(@"viewForHeaderInSection--viewForHeaderInSection");
+//    //    UISearchBar *mySearchBar = [[UISearchBar alloc] init];
+//    //    [mySearchBar setShowsCancelButton:YES];
+//    //    mySearchBar.delegate = self;
+//    //    return mySearchBar;
+//    return self.searchController.searchBar;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -208,12 +210,17 @@
 //导航
 - (void)navigationBtnAction:(UIButton *)sender
 {
-    
+    [self baiDuMap:nil];
 }
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    
+    NSString *phoneStr = @"1888888888";
+    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+    UIApplication * app = [UIApplication sharedApplication];
+    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+        [app openURL:[NSURL URLWithString:PhoneStr]];
+    }
 }
 - (UITableView *)tableView
 {
@@ -227,7 +234,116 @@
     }
     return _tableView;
 }
+//谓词搜索过滤
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    //    //修改"Cancle"退出字眼,这样修改,按钮一开始就直接出现,而不是搜索的时候再出现
+    //    searchController.searchBar.showsCancelButton = YES;
+    //    for(id sousuo in [searchController.searchBar subviews])
+    //    {
+    //
+    //        for (id zz in [sousuo subviews])
+    //        {
+    //
+    //            if([zz isKindOfClass:[UIButton class]]){
+    //                UIButton *btn = (UIButton *)zz;
+    //                [btn setTitle:@"搜索" forState:UIControlStateNormal];
+    //                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //            }
+    //
+    //
+    //        }
+    //    }
+    
+    NSLog(@"updateSearchResultsForSearchController");
+    NSString *searchString = [self.searchController.searchBar text];
+    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
+    if (self.searchListArry!= nil) {
+        [self.searchListArry removeAllObjects];
+    }
+    //过滤数据
+    //    self.searchListArry= [NSMutableArray arrayWithArray:[self.dataListArry filteredArrayUsingPredicate:preicate]];
+    //刷新表格
+    [self.tableView reloadData];
+}
+#pragma mark - UISearchControllerDelegate代理,可以省略,主要是为了验证打印的顺序
+//测试UISearchController的执行过程
 
+- (void)willPresentSearchController:(UISearchController *)searchController
+{
+    NSLog(@"willPresentSearchController");
+}
+
+- (void)didPresentSearchController:(UISearchController *)searchController
+{
+    NSLog(@"didPresentSearchController");
+#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
+    //    [self.view addSubview:self.searchController.searchBar];
+}
+
+- (void)willDismissSearchController:(UISearchController *)searchController
+{
+    NSLog(@"willDismissSearchController");
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController
+{
+    NSLog(@"didDismissSearchController");
+}
+
+- (void)presentSearchController:(UISearchController *)searchController
+{
+    NSLog(@"presentSearchController");
+}
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    
+    return YES;
+}
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    
+    
+}
+//跳转到百度地图
+- (void)baiDuMap:(id)sender {
+    
+    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]){
+        
+        NSString *urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=我的位置&destination=雍和宫&mode=driving&coord_type=gcj02"];
+        
+        NSCharacterSet *allowedCharacters = [NSCharacterSet URLQueryAllowedCharacterSet];
+        //
+        NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }else{
+        NSLog(@"您的iPhone未安装百度地图，请进行安装！");
+    }
+}
+
+//跳转到高德地图
+- (void)gaoDeMap:(id)sender {
+    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]){
+        //地理编码器
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        //我们假定一个终点坐标，上海嘉定伊宁路2000号报名大厅:121.229296,31.336956
+        [geocoder geocodeAddressString:@"天通苑" completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            for (CLPlacemark *placemark in placemarks){
+                //坐标（经纬度)
+                CLLocationCoordinate2D coordinate = placemark.location.coordinate;
+                
+                NSString *urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=%@&lat=%f&lon=%f&dev=0&style=2",@"mapNavigation",@"iosamap://",coordinate.latitude, coordinate.longitude];
+                
+                NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:urlString] invertedSet];
+                
+                NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            }
+        }];
+    }else{
+        NSLog(@"您的iPhone未安装高德地图，请进行安装！");
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -106,6 +106,7 @@
         [self.navigationController pushViewController:subVC animated:YES];
 
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (UITableView *)tableView
 {
