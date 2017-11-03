@@ -125,7 +125,7 @@ const CGFloat cCSpace =  8;
     if (!_navigationBtn) {
         CGFloat width = (CGRectGetWidth(_addressLabel.frame)-10)/2;
         _navigationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_navigationBtn setFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cCSpace+width+5, CGRectGetMaxY(_phoneLabel.frame),width, 30)];
+        [_navigationBtn setFrame:CGRectMake(CGRectGetMaxX(_addressLabel.frame)-width, CGRectGetMaxY(_phoneLabel.frame),width, 30)];
         _navigationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:13];
         [_navigationBtn setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
         [_navigationBtn setTitle:@"导航到点" forState:UIControlStateNormal];
