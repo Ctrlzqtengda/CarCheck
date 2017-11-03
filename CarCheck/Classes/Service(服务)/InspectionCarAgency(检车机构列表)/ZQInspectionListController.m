@@ -215,7 +215,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agceny.html" andShowBottom:YES];
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" andShowBottom:YES];
     Vc.title = @"检车站详情";
     [self.navigationController pushViewController:Vc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

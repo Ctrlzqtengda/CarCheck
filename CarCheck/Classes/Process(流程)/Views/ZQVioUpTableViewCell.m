@@ -23,8 +23,23 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseCarProvinceAction:)];
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseCarProvinceAction:)];
+    [self.imgView addGestureRecognizer:tap1];
+    self.imgView.userInteractionEnabled = YES;
+    [self.provinceCodeLabel addGestureRecognizer:tap2];
+    self.provinceCodeLabel.userInteractionEnabled = YES;
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     // Initialization code
+}
+
+-(void)chooseCarProvinceAction:(UITapGestureRecognizer *)gesture {
+    
+    if ([self.delegate respondsToSelector:@selector(showChooseView)]) {
+        [self.delegate showChooseView];
+    }
+    
 }
 
 -(void)setIsCarCode:(BOOL )isCarCode {
@@ -52,10 +67,11 @@
     self.contentTf.placeholder = palceText;
 }
 
--(void)setCellType:(ZqCellType )type title:(NSString *)title placeText:(NSString *)placeText {
+-(void)setCellType:(ZqCellType )type title:(NSString *)title placeText:(NSString *)placeText provinceCode:(NSString *)carProvince{
     
     self.title = title;
     self.palceText = placeText;
+    self.provinceCodeLabel.text = carProvince;
     switch (type) {
             // 车牌号
         case ZQVioUpCellType1:

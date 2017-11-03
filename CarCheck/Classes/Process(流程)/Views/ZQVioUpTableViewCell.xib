@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,15 +29,15 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iZR-nK-a9K">
-                        <rect key="frame" x="106" y="23" width="32" height="32"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carCode1" translatesAutoresizingMaskIntoConstraints="NO" id="iZR-nK-a9K">
+                        <rect key="frame" x="106" y="26.5" width="25" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="32" id="MoO-Qg-QfM"/>
-                            <constraint firstAttribute="width" constant="32" id="g2U-LW-2YP"/>
+                            <constraint firstAttribute="height" constant="25" id="MoO-Qg-QfM"/>
+                            <constraint firstAttribute="width" constant="25" id="g2U-LW-2YP"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="冀" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1e-iI-G7F">
-                        <rect key="frame" x="146" y="23" width="32" height="32"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="冀" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1e-iI-G7F">
+                        <rect key="frame" x="139" y="22.5" width="33" height="33"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -58,17 +58,17 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="iZR-nK-a9K" firstAttribute="leading" secondItem="Dy5-PX-zLn" secondAttribute="trailing" constant="8" id="0Bv-Xe-ke0"/>
-                    <constraint firstItem="O1e-iI-G7F" firstAttribute="height" secondItem="iZR-nK-a9K" secondAttribute="height" id="4Lj-VP-dhP"/>
+                    <constraint firstItem="O1e-iI-G7F" firstAttribute="height" secondItem="iZR-nK-a9K" secondAttribute="height" constant="8" id="4Lj-VP-dhP"/>
+                    <constraint firstItem="O1e-iI-G7F" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="74d-aA-RD7"/>
                     <constraint firstItem="O1e-iI-G7F" firstAttribute="leading" secondItem="iZR-nK-a9K" secondAttribute="trailing" constant="8" id="8my-sC-B9D"/>
                     <constraint firstItem="UDX-BI-xnP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Lh7-HS-qjc"/>
                     <constraint firstAttribute="trailing" secondItem="UDX-BI-xnP" secondAttribute="trailing" constant="15" id="OEK-GX-pB5"/>
                     <constraint firstItem="Dy5-PX-zLn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Viz-2B-Qmx"/>
-                    <constraint firstItem="O1e-iI-G7F" firstAttribute="width" secondItem="iZR-nK-a9K" secondAttribute="width" id="VuO-PE-38h"/>
+                    <constraint firstItem="O1e-iI-G7F" firstAttribute="width" secondItem="iZR-nK-a9K" secondAttribute="width" constant="8" id="VuO-PE-38h"/>
                     <constraint firstItem="iZR-nK-a9K" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Xtg-UR-sKJ"/>
                     <constraint firstItem="Dy5-PX-zLn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Z5D-HS-xXK"/>
                     <constraint firstItem="psZ-4H-0rs" firstAttribute="leading" secondItem="Dy5-PX-zLn" secondAttribute="trailing" constant="80" id="a5f-Es-qPV"/>
                     <constraint firstAttribute="trailingMargin" secondItem="psZ-4H-0rs" secondAttribute="trailing" constant="10" id="iUW-zC-7DX"/>
-                    <constraint firstItem="O1e-iI-G7F" firstAttribute="top" secondItem="iZR-nK-a9K" secondAttribute="top" id="ioe-qm-o5y"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Dy5-PX-zLn" secondAttribute="bottom" id="wSc-Ic-MUM"/>
                     <constraint firstItem="psZ-4H-0rs" firstAttribute="top" secondItem="Dy5-PX-zLn" secondAttribute="top" id="wb9-Y8-FDg"/>
                     <constraint firstItem="psZ-4H-0rs" firstAttribute="bottom" secondItem="Dy5-PX-zLn" secondAttribute="bottom" id="wi9-Lk-lqx"/>
@@ -88,6 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="carCode1" width="20" height="20"/>
         <image name="shouyejiantou" width="6" height="11"/>
     </resources>
 </document>

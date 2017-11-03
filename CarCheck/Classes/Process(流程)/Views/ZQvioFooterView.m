@@ -14,6 +14,7 @@
 @property(strong,nonatomic)UIButton *btn;
 @property(strong,nonatomic)UILabel *agreeLabel;
 @property(strong,nonatomic)UIButton *protocolBtn;
+@property(strong,nonatomic)UIImageView *imgView;
 
 @end
 
@@ -27,7 +28,30 @@
     return self;
 }
 
+-(void)setImage:(UIImage *)image {
+    
+    if (_image != image) {
+        _image = image;
+        self.imgView.image = _image;
+    }
+}
+
 -(void)initViews {
+    
+    UIView *backView = [[UIView alloc] init];
+    backView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:backView];
+    
+    UILabel *fineLabel = [[UILabel alloc] init];
+    fineLabel.text = @"上传罚款单照片";
+    [self addSubview:fineLabel];
+    
+    self.imgView = [[UIImageView alloc] init];
+    self.imgView.image = [UIImage imageNamed:@"chooseImg"];
+    [self addSubview:self.imgView];
+    self.imgView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImgAction:)];
+    [self.imgView addGestureRecognizer:tap];
     
     self.btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:self.btn];
@@ -54,9 +78,40 @@
     label.font = [UIFont systemFontOfSize:18.0];
     [self addSubview:label];
     
+    
+    [backView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.contentView).offset(0);
+        make.leading.equalTo(self.contentView).offset(0);
+        make.trailing.equalTo(self.contentView).offset(0);
+        make.height.equalTo(@230);
+        
+    }];
+    
+    [fineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.contentView).offset(15);
+        //        make.left.equalTo(self.contentView.mas_left).offset(20);
+        make.left.equalTo(self.contentView).offset(25);
+        make.width.equalTo(self.contentView);
+        make.height.equalTo(@25);
+        
+    }];
+    
+    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(fineLabel.mas_bottom).offset(15);
+        //        make.left.equalTo(self.contentView.mas_left).offset(20);
+//        make.left.equalTo(self.contentView.mas_left).offset(8);
+        make.centerX.equalTo(@0);
+        make.width.equalTo(@250);
+        make.height.equalTo(@150);
+        
+    }];
+    
     [self.btn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.top.equalTo(self.contentView.mas_top).offset(15);
+        make.top.equalTo(backView.mas_bottom).offset(15);
 //        make.left.equalTo(self.contentView.mas_left).offset(20);
         make.left.equalTo(self.contentView.mas_left).offset(8);
         make.width.equalTo(@20);
@@ -92,6 +147,7 @@
         
     }];
     
+    [self setNeedsUpdateConstraints];
 //    self.agreeLabel = [uila]
 }
 
@@ -100,6 +156,14 @@
     sender.selected = !sender.selected;
     if ([self.delegate respondsToSelector:@selector(agreeAction:)]) {
         [self.delegate agreeAction:sender.selected];
+    }
+}
+
+// 选择图片
+-(void)chooseImgAction:(NSNotification *)notice{
+    
+    if ([self.delegate respondsToSelector:@selector(chooseImageAction:)]) {
+        [self.delegate chooseImageAction:notice];
     }
     
 }
@@ -112,6 +176,7 @@
     }
     
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

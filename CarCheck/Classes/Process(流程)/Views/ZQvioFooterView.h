@@ -14,11 +14,14 @@
 -(void)agreeAction:(BOOL )isAgree;
 // 服务须知
 -(void)knowProtocolAction:(id )sender;
+// 选择图片
+-(void)chooseImageAction:(id )sender;
 
 @end
 
 @interface ZQvioFooterView : UITableViewHeaderFooterView
 
 @property(nonatomic,weak)id<ZQvioFooterViewDelegate> delegate;
+@property(strong,nonatomic)UIImage *image;
 
 @end

@@ -11,16 +11,21 @@
 #import "ZQvioFooterView.h"
 #import "YSureOrderBottomView.h"
 #import "YBuyingDatePicker.h"
+#import "ZQChoosePickerView.h"
 
-@interface ZQUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate>{
+@interface ZQUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZQVioUpTableViewCellDelegate>{
     NSArray *_titleArray;
     NSArray *_placeArray;
     NSMutableArray *_contentArray;
+    UIImage *_chooseImage;
+    NSArray *_pickerDataArray;
+    NSInteger _index;
 }
 
 @property(strong,nonatomic)UITableView *tableView;
 @property (strong,nonatomic) YSureOrderBottomView *bottomV;
 @property (strong,nonatomic) YBuyingDatePicker *datePickV;
+@property(strong,nonatomic) ZQChoosePickerView *pickView;
 
 @end
 
@@ -35,10 +40,22 @@
 
 -(void)setupData {
     
-    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期",@"上传照片"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
-    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请上传处罚决定书的照片"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
+    _index = 0;
+    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
+    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
     _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
     
+    
+    _pickerDataArray = @[@"京",@"冀",@"鄂"];
+    
+}
+
+-(ZQChoosePickerView *)pickView {
+    
+    if (_pickView == nil) {
+        _pickView = [[ZQChoosePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 200, KWidth, 200)];
+    }
+    return _pickView;
 }
 
 -(void)initViews {
@@ -84,9 +101,19 @@
 - (void)hiddenView {
     
     [self.datePickV removeFromSuperview];
-    
+    self.datePickV = nil;
 }
 
+#pragma mark ZQVioUpTableViewCellDelegate
+-(void)showChooseView {
+    
+    [self.pickView showWithDataArray:_pickerDataArray inView:self.view chooseBackBlock:^(NSInteger index) {
+        _index = index;
+        [self.tableView reloadData];
+//        self.carShapeTf.text = _pickerDataArray[index];
+    }];
+    
+}
 
 #pragma mark ZQvioFooterViewDelegate
 // 是否同意协议
@@ -95,6 +122,13 @@
 }
 // 服务须知
 -(void)knowProtocolAction:(id )sender{
+    
+}
+
+// 选择图片
+-(void)chooseImageAction:(id )sender {
+    
+    [self chooseImageAction];
     
 }
 
@@ -149,11 +183,11 @@
         type = ZQVioUpCellType4;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
-    
+    cell.delegate = self;
     NSString *title = _titleArray[indexPath.section][indexPath.row];
     NSString *palceText = _placeArray[indexPath.section][indexPath.row];
     cell.contentTf.tag = indexPath.row;
-    [cell setCellType:type title:title placeText:palceText];
+    [cell setCellType:type title:title placeText:palceText provinceCode:_pickerDataArray[_index]];
     return cell;
 }
 // 设置表尾
@@ -162,6 +196,9 @@
     ZQvioFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ZQvioFooterView_headerId"];
     if (!footerView) {
         
+    }
+    if (_chooseImage) {
+        footerView.image = _chooseImage;
     }
     footerView.delegate = self;
     if (section == 0) {
@@ -173,6 +210,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (self.datePickV) {
+        [self hiddenView];
+    }
     if ((indexPath.section == 0) && (indexPath.row == 2) ) {
         [self.view addSubview:self.datePickV];
     }
@@ -187,10 +227,31 @@
 -(CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     if (section == 0) {
-        return 70.0;
+        return 70.0 + 230;
     }else{
         return 0.1;
     }
+}
+
+-(void)chooseImageAction {
+    
+    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+    //想要知道选择的图片
+    pickerVC.delegate = self;
+    //开启编辑状态
+    pickerVC.allowsEditing = YES;
+    [self presentViewController:pickerVC animated:YES completion:nil];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+//    [self.imgView setImage:info[UIImagePickerControllerOriginalImage]];
+    _chooseImage = info[UIImagePickerControllerOriginalImage];
+    [self.tableView reloadData];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
