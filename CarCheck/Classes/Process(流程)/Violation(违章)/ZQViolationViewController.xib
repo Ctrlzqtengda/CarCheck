@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -105,11 +105,11 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUf-Dh-fR0">
-                                    <rect key="frame" x="87.5" y="210" width="200" height="50"/>
+                                    <rect key="frame" x="37.5" y="210" width="300" height="50"/>
                                     <color key="backgroundColor" red="0.069129817187786102" green="0.58537095785140991" blue="0.91349869966506958" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="i8Q-i0-j1s"/>
-                                        <constraint firstAttribute="width" constant="200" id="q6U-ZF-Odw"/>
+                                        <constraint firstAttribute="width" constant="300" id="q6U-ZF-Odw"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <state key="normal" title="查询">
@@ -157,11 +157,11 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8o8-yc-Z61">
-                                    <rect key="frame" x="87" y="455" width="200" height="50"/>
+                                    <rect key="frame" x="37" y="455" width="300" height="50"/>
                                     <color key="backgroundColor" red="0.069129817189999998" green="0.58537095790000004" blue="0.91349869969999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="Mzu-RP-Prc"/>
-                                        <constraint firstAttribute="width" constant="200" id="sLt-5x-2wG"/>
+                                        <constraint firstAttribute="width" constant="300" id="sLt-5x-2wG"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <state key="normal" title="查询">

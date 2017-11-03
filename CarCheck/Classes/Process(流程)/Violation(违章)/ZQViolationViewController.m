@@ -45,6 +45,7 @@
     
     self.title = @"违章查询";
     self.searchBtn1.layer.cornerRadius = 5;
+    self.searchBtn2.layer.cornerRadius = 5;
     self.carProvinceTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     self.carProvinceTf.keyboardType = UIKeyboardTypeASCIICapable;
 

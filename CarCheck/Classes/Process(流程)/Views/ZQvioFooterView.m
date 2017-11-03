@@ -123,23 +123,25 @@
         
         make.top.equalTo(self.btn.mas_top).offset(0);
         make.left.equalTo(self.btn.mas_right).offset(5);
-        make.width.equalTo(@95);
+        make.width.equalTo(@93);
         make.height.equalTo(self.btn.mas_width).offset(0);
         
     }];
     
+    
     [self.protocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(self.btn.mas_top).offset(0);
-        make.left.equalTo(self.agreeLabel.mas_right).offset(0);
-        make.right.equalTo(self.contentView.mas_right).offset(10);
+        make.left.equalTo(self.agreeLabel.mas_right).offset(-2);
+//        make.right.equalTo(self.contentView.mas_right).offset(10);
+        make.width.equalTo(@200);
         make.height.equalTo(self.btn.mas_width).offset(0);
         
     }];
     
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.btn.mas_left).offset(0);
+        make.left.equalTo(self.btn.mas_left).offset(15);
 //        make.top.equalTo(self.contentView.mas_bottomMargin).offset(0);
         make.top.equalTo(self.btn.mas_bottom).offset(15);
         make.right.equalTo(self.contentView.mas_right).offset(10);
