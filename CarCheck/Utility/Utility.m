@@ -110,4 +110,68 @@
 //    }];
 }
 
+//跳转到百度地图
++ (void)baiDuMap:(id)sender {
+    
+    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]){
+        
+        NSString *urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=我的位置&destination=雍和宫&mode=driving&coord_type=gcj02"];
+        
+        NSCharacterSet *allowedCharacters = [NSCharacterSet URLQueryAllowedCharacterSet];
+        //
+        NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }else{
+        NSLog(@"您的iPhone未安装百度地图，请进行安装！");
+    }
+}
+
+//跳转到高德地图
++ (void)gaoDeMap:(id)sender {
+    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]){
+        //地理编码器
+//        NSString *urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=mapNavigation&backScheme=iosamap://&dev=0&style=2"];
+        NSString *urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=mapNavigation&origin=我的位置&destination=雍和宫&dev=0&style=2"];
+        NSCharacterSet *allowedCharacters = [NSCharacterSet URLQueryAllowedCharacterSet];
+        //
+        NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        
+//        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//        //我们假定一个终点坐标，上海嘉定伊宁路2000号报名大厅:121.229296,31.336956
+//        [geocoder geocodeAddressString:@"天通苑" completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+//            for (CLPlacemark *placemark in placemarks){
+//                //坐标（经纬度)
+//                CLLocationCoordinate2D coordinate = placemark.location.coordinate;
+//
+//                NSString *urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=%@&lat=%f&lon=%f&dev=0&style=2",@"mapNavigation",@"iosamap://",coordinate.latitude, coordinate.longitude];
+//
+//                NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:urlString] invertedSet];
+//
+//                NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+//                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+//            }
+//        }];
+    }else{
+        NSLog(@"您的iPhone未安装高德地图，请进行安装！");
+    }
+}
+
+// 底部弹窗Actionsheet
++(void)showActionSheetWithTitle:(NSString *)title
+                   contentArray:(NSArray *)contentArray
+                     controller:(UIViewController *)controller
+                    chooseBlock:(void(^)(NSInteger index))block{
+    
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择地图" message:nil preferredStyle:(UIAlertControllerStyleActionSheet)];
+    for (int i = 0; i < contentArray.count; i ++ ) {
+        UIAlertAction *alertAction = [UIAlertAction actionWithTitle:contentArray[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            block(i);
+        }];
+        [alertVC addAction:alertAction];
+    }
+    [controller presentViewController:alertVC animated:YES completion:nil];
+}
+
 @end

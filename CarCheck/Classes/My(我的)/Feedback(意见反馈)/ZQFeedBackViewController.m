@@ -38,6 +38,8 @@
     _contactView = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label.frame), CGRectGetMinY(label.frame), CGRectGetWidth(self.view.frame)-KHWTintMargin-CGRectGetMaxX(label.frame), 30)];
     _contactView.backgroundColor = [UIColor whiteColor];
     _contactView.borderStyle = UITextBorderStyleRoundedRect;
+    
+    _contactView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
     _contactView.autocorrectionType = UITextAutocorrectionTypeNo;
     _contactView.returnKeyType = UIReturnKeyDone;
     _contactView.placeholder = @"请输入标题";
