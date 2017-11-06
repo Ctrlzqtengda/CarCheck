@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,6 +19,7 @@
                 <outlet property="carShapeTf" destination="icK-df-SOD" id="73R-5c-LnA"/>
                 <outlet property="contentSizeHeight" destination="dQa-r5-a9M" id="ioi-LD-gYw"/>
                 <outlet property="contentSizeWidth" destination="EdY-Uk-Zuo" id="GKk-Hh-xd2"/>
+                <outlet property="ensureBtn" destination="BRA-I8-XcG" id="zpB-Bg-fg6"/>
                 <outlet property="imageView" destination="Fju-x2-pGp" id="jdE-vX-NVy"/>
                 <outlet property="insuranceImg" destination="mdw-aG-gkd" id="bTe-I1-P2c"/>
                 <outlet property="nameTf" destination="ylW-fe-MnZ" id="gaM-DM-dLN"/>
@@ -32,7 +33,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUG-40-Tkc">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUG-40-Tkc">
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zm5-Qt-rqN">
@@ -179,7 +180,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRA-I8-XcG">
-                                    <rect key="frame" x="37" y="564.5" width="300" height="40"/>
+                                    <rect key="frame" x="37" y="544.5" width="300" height="40"/>
                                     <color key="backgroundColor" red="0.069129817189999998" green="0.58537095790000004" blue="0.91349869969999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="300" id="ASb-a8-tSi"/>
@@ -188,13 +189,8 @@
                                     <state key="normal" title="提交">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="5"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="sendAction:" destination="-1" eventType="touchUpInside" id="R83-Nl-CZR"/>
+                                        <action selector="sendAction:" destination="-1" eventType="touchUpInside" id="oEe-ku-ngh"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -216,7 +212,7 @@
                                 <constraint firstItem="Wt3-oQ-iZy" firstAttribute="top" secondItem="Ocp-8z-R0j" secondAttribute="top" id="Cn9-tG-y3R"/>
                                 <constraint firstItem="ylW-fe-MnZ" firstAttribute="height" secondItem="PPr-ld-TtC" secondAttribute="height" id="CqQ-Sh-LoD"/>
                                 <constraint firstItem="O1E-1B-SED" firstAttribute="leading" secondItem="FM0-6X-ceZ" secondAttribute="leading" id="D0n-hA-mtR"/>
-                                <constraint firstItem="BRA-I8-XcG" firstAttribute="top" secondItem="eun-rh-iox" secondAttribute="bottom" constant="40" id="DRf-hD-p6g"/>
+                                <constraint firstItem="BRA-I8-XcG" firstAttribute="top" secondItem="eun-rh-iox" secondAttribute="bottom" constant="20" id="DRf-hD-p6g"/>
                                 <constraint firstItem="O1E-1B-SED" firstAttribute="height" secondItem="FM0-6X-ceZ" secondAttribute="height" id="EaD-wn-4aS"/>
                                 <constraint firstAttribute="width" constant="375" id="EdY-Uk-Zuo"/>
                                 <constraint firstItem="ylW-fe-MnZ" firstAttribute="top" secondItem="PPr-ld-TtC" secondAttribute="top" id="Eg0-Lh-RZ5"/>
@@ -265,12 +261,10 @@
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="zm5-Qt-rqN" firstAttribute="centerX" secondItem="QUG-40-Tkc" secondAttribute="centerX" id="4Ay-gk-KRp"/>
-                        <constraint firstItem="zm5-Qt-rqN" firstAttribute="top" secondItem="QUG-40-Tkc" secondAttribute="top" id="EJQ-D1-fIi"/>
+                        <constraint firstAttribute="bottom" secondItem="zm5-Qt-rqN" secondAttribute="bottom" id="KJt-aY-j7I"/>
                         <constraint firstItem="zm5-Qt-rqN" firstAttribute="leading" secondItem="QUG-40-Tkc" secondAttribute="leading" id="TrC-Tr-inC"/>
-                        <constraint firstItem="zm5-Qt-rqN" firstAttribute="centerY" secondItem="QUG-40-Tkc" secondAttribute="centerY" id="WgU-9O-YMa"/>
                         <constraint firstAttribute="trailing" secondItem="zm5-Qt-rqN" secondAttribute="trailing" id="ZxJ-oy-k2r"/>
-                        <constraint firstAttribute="bottom" secondItem="zm5-Qt-rqN" secondAttribute="bottom" id="axF-ct-VeZ"/>
+                        <constraint firstItem="zm5-Qt-rqN" firstAttribute="top" secondItem="QUG-40-Tkc" secondAttribute="top" id="n0q-ub-nlK"/>
                     </constraints>
                 </scrollView>
             </subviews>

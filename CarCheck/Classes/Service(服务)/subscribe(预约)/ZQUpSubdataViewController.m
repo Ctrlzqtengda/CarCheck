@@ -10,6 +10,7 @@
 #import "ZQSubTimeViewController.h"
 #import "UITextField+ZQTextField.h"
 #import "ZQChoosePickerView.h"
+#import <Masonry.h>
 
 @interface ZQUpSubdataViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextFieldDelegate> {
     
@@ -28,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *carBackImg;
 @property (weak, nonatomic) IBOutlet UIImageView *insuranceImg;
 @property (weak, nonatomic) IBOutlet UIScrollView *scollView;
+@property (weak, nonatomic) IBOutlet UIButton *ensureBtn;
 @property(strong,nonatomic) ZQChoosePickerView *pickView;
 
 @end
@@ -39,7 +41,6 @@
     self.title = @"上传预约资料";
     [self setupData];
     [self setupViews];
-    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -51,9 +52,32 @@
     return _pickView;
 }
 
--(void)viewDidLayoutSubviews {
-    self.scollView.contentSize = CGSizeMake(KWidth, 677);
+-(void)viewWillLayoutSubviews {
+    self.contentSizeHeight.constant = 647;
+    self.contentSizeWidth.constant = KWidth;
+    self.scollView.contentSize = CGSizeMake(KWidth, 647);
 }
+
+
+- (CGSize)intrinsicContentSize {
+    return UILayoutFittingExpandedSize;
+}
+
+-(void)clickAction:(id)sender {
+    
+    
+    
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    for (UITouch *touch in touches) {
+        NSLog(@"--------%@",NSStringFromCGPoint([touch locationInView:self.scollView]));
+    }
+    NSLog(@"+++++++++%@",NSStringFromCGRect(self.ensureBtn.frame));
+    
+}
+
 
 - (IBAction)sendAction:(id)sender {
     
