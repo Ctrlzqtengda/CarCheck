@@ -31,6 +31,11 @@
 -(void)initViews {
     
     _index = 0;
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 1)];
+    lineView.backgroundColor = __DefaultColor;
+    
+    [self addSubview:lineView];
+    
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 5, 50, 20)];
     [self addSubview:cancelBtn];
     cancelBtn.titleLabel.font = MFont(15);
