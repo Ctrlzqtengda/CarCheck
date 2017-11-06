@@ -228,7 +228,7 @@
     [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
         if (index == 0) {
             [Utility baiDuMap:nil];
-        }else{
+        }else if(index == 1){
             [Utility gaoDeMap:nil];
         }
     }];
