@@ -1150,6 +1150,7 @@
 			baseConfigurationReference = 7B189598E8A45B95CB2B308C /* Pods-CarCheck.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WSKT7LS6EE;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -1168,6 +1169,7 @@
 			baseConfigurationReference = E1F62C1DA93C2085C8AA7824 /* Pods-CarCheck.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WSKT7LS6EE;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;

@@ -32,6 +32,7 @@
 //    BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
     self.window.rootViewController = [self setupViews];
     [self.window makeKeyAndVisible];
+    [NSThread sleepForTimeInterval:2];
     return YES;
 }
 
