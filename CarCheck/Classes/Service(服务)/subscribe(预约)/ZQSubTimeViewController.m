@@ -44,7 +44,10 @@
 
 -(void)initViews {
     
+    self.title = @"选择预约时间";
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
+    flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.collectionView.collectionViewLayout = flowLayout;
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.delegate = self;
@@ -67,9 +70,9 @@
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (collectionView == self.collectionView) {
-        return 5;
+        return 30;
     }else {
-        return 6;
+        return 4;
     }
 }
 
@@ -127,8 +130,8 @@
         width = (KWidth - 4*2 - 30) / 5.0;
         height = width * 0.8;
     }else {
-        width = (KWidth - 4*5 - 30) / 3.0;
-        height = width * 0.4;
+        width = (KWidth - 4*5 - 30) / 2.0;
+        height = width * 0.25;
     }
     
     return CGSizeMake(width, height);
@@ -136,7 +139,7 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (collectionView == self.collectionView) {
-        return CGSizeMake(KWidth, 15);
+        return CGSizeMake(0, 15);
     }else {
         return CGSizeMake(KWidth, 0);
     }
