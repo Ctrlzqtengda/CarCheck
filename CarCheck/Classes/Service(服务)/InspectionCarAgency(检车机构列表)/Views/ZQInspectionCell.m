@@ -11,12 +11,16 @@ const CGFloat cSpace =  8;
 #import "ZQInspectionCell.h"
 
 @interface ZQInspectionCell ()
-
+{
+    CGFloat labelWidth;
+}
 @property (nonatomic, strong) UIImageView *imgV;
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @property (nonatomic, strong) UILabel *distanceLabel;
+
+@property (nonatomic, strong) UILabel *phoneDesL;
 
 @property (nonatomic, strong) UILabel *addressLabel;
 
@@ -36,10 +40,17 @@ const CGFloat cSpace =  8;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        labelWidth = 36;
         [self.contentView addSubview:self.imgV];
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.distanceLabel];
         [self.contentView addSubview:self.addressLabel];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMinY(_addressLabel.frame), labelWidth, 15)];
+        label.font = [UIFont systemFontOfSize:14];
+        label.text = @"地址:";
+        label.textColor = LH_RGBCOLOR(17,149,232);
+        [self.contentView addSubview:label];
+        [self.contentView addSubview:self.phoneDesL];
         [self.contentView addSubview:self.phoneLabel];
         [self.contentView addSubview:self.navigationBtn];
         [self.contentView addSubview:self.bookingBtn];
@@ -48,32 +59,56 @@ const CGFloat cSpace =  8;
     return self;
 }
 
-
 - (void)setInfoDict:(NSDictionary *)infoDict
 {
     [self.imgV setImage:[UIImage imageNamed:infoDict[@"image"]]];
     [self.titleLabel setText:infoDict[@"name"]];
     [self.distanceLabel setText:infoDict[@"distance"]];
     
-    NSString *addressStr = [NSString stringWithFormat:@"地址: %@",infoDict[@"address"]];
-    NSRange range = [addressStr rangeOfString:@"地址:"];
-    NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:addressStr];
-    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
-    [self.addressLabel setAttributedText:attachStr];
-    
+//    NSString *addressStr = [NSString stringWithFormat:@"地址: %@",infoDict[@"address"]];
+//    NSRange range = [addressStr rangeOfString:@"地址:"];
+//    NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:addressStr];
+//    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
+//    [self.addressLabel setAttributedText:attachStr];
+    NSString *addressStr = infoDict[@"address"];
+    CGRect rect = self.addressLabel.frame;
    CGSize size = [addressStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
     if (size.width>CGRectGetWidth(self.addressLabel.frame)) {
-        [self.addressLabel sizeToFit];
+        rect.size.height = 34;
     }
     else
     {
-        self.addressLabel.font = [UIFont systemFontOfSize:14];
+        rect.size.height = 15;
     }
-    NSString *phoneStr = [NSString stringWithFormat:@"电话: %@",infoDict[@"phone"]];
-    range = [phoneStr rangeOfString:@"电话:"];
-    attachStr = [[NSMutableAttributedString alloc] initWithString:phoneStr];
-    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
-    [self.phoneLabel setAttributedText:attachStr];
+    self.addressLabel.frame = rect;
+    [self.addressLabel setText:addressStr];
+    
+    rect = self.phoneDesL.frame;
+    rect.origin.y = CGRectGetMaxY(self.addressLabel.frame);
+    self.phoneDesL.frame = rect;
+    
+    NSString *phoneStr = infoDict[@"phone"];
+    rect = self.phoneLabel.frame;
+    rect.origin.y = CGRectGetMinY(self.phoneDesL.frame);
+    size = [phoneStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    rect.size.height = size.height;
+    if (size.height>34) {
+        rect.size.height = 34;
+    }
+//    if (size.width>CGRectGetWidth(self.phoneLabel.frame)) {
+//        rect.size.height = 34;
+//    }
+//    else
+//    {
+//        rect.size.height = 15;
+//    }
+    self.phoneLabel.frame = rect;
+    [self.phoneLabel setText:phoneStr];
+//    NSString *phoneStr = [NSString stringWithFormat:@"电话: %@",infoDict[@"phone"]];
+//    range = [phoneStr rangeOfString:@"电话:"];
+//    attachStr = [[NSMutableAttributedString alloc] initWithString:phoneStr];
+//    [attachStr addAttribute:NSForegroundColorAttributeName value:LH_RGBCOLOR(17,149,232) range:range];
+//    [self.phoneLabel setAttributedText:attachStr];
 }
 - (UIImageView *)imgV
 {
@@ -107,18 +142,28 @@ const CGFloat cSpace =  8;
 - (UILabel *)addressLabel
 {
     if (!_addressLabel) {
-        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_titleLabel.frame), __kWidth-CGRectGetMaxX(_imgV.frame)-cSpace*2, 30)];
+        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace+labelWidth, CGRectGetMaxY(_titleLabel.frame)+2, __kWidth-CGRectGetMaxX(_imgV.frame)-cSpace*2-labelWidth, 34)];
         _addressLabel.font = [UIFont systemFontOfSize:14];
-        _addressLabel.numberOfLines = 0;
+        _addressLabel.numberOfLines = 2;
     }
     return _addressLabel;
+}
+- (UILabel *)phoneDesL
+{
+    if (!_phoneDesL) {
+        _phoneDesL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_addressLabel.frame), labelWidth, 15)];
+        _phoneDesL.font = [UIFont systemFontOfSize:14];
+        _phoneDesL.text = @"电话:";
+        _phoneDesL.textColor = LH_RGBCOLOR(17,149,232);
+    }
+    return _phoneDesL;
 }
 - (UILabel *)phoneLabel
 {
     if (!_phoneLabel) {
-        _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_addressLabel.frame), CGRectGetWidth(_addressLabel.frame), 40)];
+        _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_addressLabel.frame), CGRectGetMaxY(_addressLabel.frame), CGRectGetWidth(_addressLabel.frame), 34)];
         _phoneLabel.font = [UIFont systemFontOfSize:14];
-        _phoneLabel.numberOfLines = 0;
+        _phoneLabel.numberOfLines = 2;
     }
     return _phoneLabel;
 }
@@ -126,7 +171,7 @@ const CGFloat cSpace =  8;
 {
     if (!_navigationBtn) {
         _navigationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_navigationBtn setFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_phoneLabel.frame),(CGRectGetWidth(_addressLabel.frame)-10)/2, 30)];
+        [_navigationBtn setFrame:CGRectMake(CGRectGetMaxX(_imgV.frame)+cSpace, CGRectGetMaxY(_phoneLabel.frame),(CGRectGetWidth(_addressLabel.frame)-10+labelWidth)/2, 30)];
         _navigationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:13];
         [_navigationBtn setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
         [_navigationBtn setTitle:@"导航到点" forState:UIControlStateNormal];
@@ -140,7 +185,7 @@ const CGFloat cSpace =  8;
 {
     if (!_bookingBtn) {
         _bookingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_bookingBtn setFrame:CGRectMake(CGRectGetMaxX(_navigationBtn.frame)+5, CGRectGetMaxY(_phoneLabel.frame),CGRectGetWidth(_navigationBtn.frame), 30)];
+        [_bookingBtn setFrame:CGRectMake(CGRectGetMaxX(_navigationBtn.frame)+10, CGRectGetMaxY(_phoneLabel.frame),CGRectGetWidth(_navigationBtn.frame), 30)];
         _bookingBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [_bookingBtn setTitle:@"立即预约" forState:UIControlStateNormal];
         [_bookingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

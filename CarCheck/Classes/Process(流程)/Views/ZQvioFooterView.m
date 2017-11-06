@@ -43,7 +43,8 @@
     [self addSubview:backView];
     
     UILabel *fineLabel = [[UILabel alloc] init];
-    fineLabel.text = @"上传罚款单照片";
+//    fineLabel.text = @"上传罚款单照片";
+    fineLabel.text = @"上传处罚决定书";
     [self addSubview:fineLabel];
     
     self.imgView = [[UIImageView alloc] init];

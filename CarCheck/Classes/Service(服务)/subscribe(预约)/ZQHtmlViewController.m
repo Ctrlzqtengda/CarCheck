@@ -14,12 +14,12 @@
 @property (nonatomic, copy) NSString *urlString;
 @property (strong,nonatomic) UIProgressView *progressV;
 @property (strong,nonatomic) WKWebView *webView;
-@property (assign,nonatomic) BOOL isShow;
+@property (assign,nonatomic) NSInteger isShow;
 @end
 
 @implementation ZQHtmlViewController
 
-- (id)initWithUrlString:(NSString *)urlString andShowBottom:(BOOL)isShow
+- (id)initWithUrlString:(NSString *)urlString andShowBottom:(NSInteger)isShow
 {
     self = [super init];
     if (self) {
@@ -57,6 +57,19 @@
 }
 - (void)addBottomBtn
 {
+    if (_isShow==2) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-44,CGRectGetWidth(self.view.bounds), 44)];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.view addSubview:button];
+        [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
+        [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
+        [button setTitle:@"导航到点" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = 0;
+        return;
+    }
     CGFloat width = CGRectGetWidth(self.view.bounds)/2;
     for (int i = 0; i<2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -75,6 +88,7 @@
             [button setTitle:@"导航到点" forState:UIControlStateNormal];
         }
         [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = i;
     }
 }
 - (void)bottomBtnAction:(UIButton *)sender
