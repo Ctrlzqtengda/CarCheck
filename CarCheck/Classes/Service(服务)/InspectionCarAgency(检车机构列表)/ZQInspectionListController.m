@@ -220,10 +220,19 @@
     [self.navigationController pushViewController:Vc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 //导航
 - (void)navigationBtnAction:(UIButton *)sender
 {
-    [self baiDuMap:nil];
+    NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
+    [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
+        if (index == 0) {
+            [Utility baiDuMap:nil];
+        }else{
+            [Utility gaoDeMap:nil];
+        }
+    }];
+//    [Utility baiDuMap:nil];
 }
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
@@ -387,47 +396,6 @@
     }
 }
 */
-
-//跳转到百度地图
-- (void)baiDuMap:(id)sender {
-    
-    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]){
-        
-        NSString *urlString = [NSString stringWithFormat:@"baidumap://map/direction?origin=我的位置&destination=雍和宫&mode=driving&coord_type=gcj02"];
-        
-        NSCharacterSet *allowedCharacters = [NSCharacterSet URLQueryAllowedCharacterSet];
-        //
-        NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-    }else{
-        NSLog(@"您的iPhone未安装百度地图，请进行安装！");
-    }
-}
-
-//跳转到高德地图
-- (void)gaoDeMap:(id)sender {
-    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]){
-        //地理编码器
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-        //我们假定一个终点坐标，上海嘉定伊宁路2000号报名大厅:121.229296,31.336956
-        [geocoder geocodeAddressString:@"天通苑" completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-            for (CLPlacemark *placemark in placemarks){
-                //坐标（经纬度)
-                CLLocationCoordinate2D coordinate = placemark.location.coordinate;
-                
-                NSString *urlString = [NSString stringWithFormat:@"iosamap://navi?sourceApplication=%@&backScheme=%@&lat=%f&lon=%f&dev=0&style=2",@"mapNavigation",@"iosamap://",coordinate.latitude, coordinate.longitude];
-                
-                NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:urlString] invertedSet];
-                
-                NSString *url = [urlString stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-            }
-        }];
-    }else{
-        NSLog(@"您的iPhone未安装高德地图，请进行安装！");
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

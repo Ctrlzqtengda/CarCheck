@@ -36,6 +36,12 @@
 				<string>iosamap://</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -44,6 +50,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>baidumap</string>
+		<string>iosamap</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

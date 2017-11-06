@@ -86,4 +86,31 @@
  */
 +(void)checkNewVersion:(void(^)(BOOL hasNewVersion))versionCheckBlock;
 
+/**
+ *  打开百度地图
+ *
+ *  @param sender 默认为nil
+ */
++ (void)baiDuMap:(id)sender;
+
+/**
+ *  打开高德地图
+ *
+ *  @param sender 默认为nil
+ */
++ (void)gaoDeMap:(id)sender;
+
+/**
+ *  弹窗
+ *
+ *  @param title 标题
+ *  @param contentArray 内容项
+ *  @param controller 显示的控制器
+ *  @param block 选中回调
+ */
++(void)showActionSheetWithTitle:(NSString *)title
+                   contentArray:(NSArray *)contentArray
+                     controller:(UIViewController *)controller
+                    chooseBlock:(void(^)(NSInteger index))block;
+
 @end
