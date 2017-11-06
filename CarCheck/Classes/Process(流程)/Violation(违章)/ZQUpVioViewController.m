@@ -12,6 +12,7 @@
 #import "YSureOrderBottomView.h"
 #import "YBuyingDatePicker.h"
 #import "ZQChoosePickerView.h"
+#import "ZQHtmlViewController.h"
 
 @interface ZQUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZQVioUpTableViewCellDelegate>{
     NSArray *_titleArray;
@@ -41,8 +42,10 @@
 -(void)setupData {
     
     _index = 0;
-    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
-    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
+//    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
+//    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
+    _titleArray = @[@[@"罚单编号",@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
+    _placeArray = @[@[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
     _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
     
     
@@ -122,7 +125,9 @@
 }
 // 服务须知
 -(void)knowProtocolAction:(id )sender{
-    
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"forfeit.html" andShowBottom:NO];
+    Vc.title = @"罚款代缴服务须知";
+    [self.navigationController pushViewController:Vc animated:YES];
 }
 
 // 选择图片
@@ -172,12 +177,32 @@
     if (indexPath.section == 0) {
         cell.contentTf.delegate = self;
         cell.contentTf.text = _contentArray[indexPath.row];
-        if (indexPath.row == 0) {
-            type = ZQVioUpCellType1;
-        }else if(indexPath.row == 1){
-            type = ZQVioUpCellType2;
-        }else{
-            type = ZQVioUpCellType3;
+        switch (indexPath.row) {
+            case 0:
+                {
+                    type = ZQVioUpCellType2;
+                }
+                break;
+            case 1:
+            {
+                type = ZQVioUpCellType1;
+            }
+                break;
+            case 2:
+            {
+                type = ZQVioUpCellType2;
+            }
+                break;
+            case 3:
+            {
+                type = ZQVioUpCellType3;
+            }
+                break;
+            default:
+            {
+                type = ZQVioUpCellType2;
+            }
+                break;
         }
     }else{
         type = ZQVioUpCellType4;
@@ -189,6 +214,18 @@
     cell.contentTf.tag = indexPath.row;
     [cell setCellType:type title:title placeText:palceText provinceCode:_pickerDataArray[_index]];
     return cell;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 50)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(26, 10, __kWidth, 40)];
+        label.text = @"填写处罚决定书必要信息";
+        label.font = [UIFont systemFontOfSize:14.0];
+        [headerView addSubview:label];
+        return headerView;
+    }
+    return nil;
 }
 // 设置表尾
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -223,7 +260,13 @@
 -(CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;
 }
-
+-(CGFloat )tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section==0) {
+        return 50;
+    }
+    return 18;
+}
 -(CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     if (section == 0) {
