@@ -228,6 +228,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(26, 10, __kWidth, 40)];
         label.text = @"填写处罚决定书必要信息";
         label.font = [UIFont systemFontOfSize:14.0];
+        label.textColor = __TextColor;
         [headerView addSubview:label];
         return headerView;
     }

@@ -64,7 +64,7 @@
 
 -(void)setupData {
     
-    _pickerDataArray = @[@"大型车",@"中型车",@"小型车"];
+    _pickerDataArray = @[@"大型车 300元",@"中型车 200元",@"小型车 100元"];
     
 }
 
