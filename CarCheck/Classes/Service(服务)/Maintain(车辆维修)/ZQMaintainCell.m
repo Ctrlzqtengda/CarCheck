@@ -39,6 +39,7 @@ const CGFloat cCSpace =  8;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         labelWidth = 36;
         [self.contentView addSubview:self.imgV];
         [self.contentView addSubview:self.titleLabel];
