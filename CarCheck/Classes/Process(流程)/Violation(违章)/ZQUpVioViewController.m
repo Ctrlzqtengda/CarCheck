@@ -44,9 +44,12 @@
     _index = 0;
 //    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
 //    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
-    _titleArray = @[@[@"罚单编号",@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
-    _placeArray = @[@[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
-    _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
+//    手机号码：“请输入办理进度通知的手机号码”
+//    验证码：“请输入手机验证码”获取验证码
+//
+    _titleArray = @[@[@"罚单编号",@"车牌号码",@"处罚金额",@"处罚日期",@"手机号码",@"验证码"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
+    _placeArray = @[@[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请输入办理进度通知的手机号码",@"请输入验证码"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
+    _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
     
     _pickerDataArray = @[@"京",@"冀",@"鄂"];
@@ -97,7 +100,7 @@
     NSDate *coms = [NSDate dateWithTimeIntervalSince1970:[sender integerValue]];
     NSString *dates =[formatter stringFromDate:coms];
 //    _placeArray = dates;
-    _contentArray[2] = dates;
+    _contentArray[3] = dates;
     [self.tableView reloadData];
 }
 
@@ -178,24 +181,27 @@
         cell.contentTf.delegate = self;
         cell.contentTf.text = _contentArray[indexPath.row];
         switch (indexPath.row) {
-            case 0:
-                {
-                    type = ZQVioUpCellType2;
-                }
-                break;
             case 1:
             {
                 type = ZQVioUpCellType1;
             }
-                break;
-            case 2:
-            {
-                type = ZQVioUpCellType2;
-            }
-                break;
+             break;
             case 3:
             {
                 type = ZQVioUpCellType3;
+            }
+                break;
+            case 5:
+            {
+                type = ZQVioUpCellType2;
+                UIButton *codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 85, 40)];
+                codeBtn.titleLabel.font = MFont(15);
+                codeBtn.layer.cornerRadius =5;
+                codeBtn.backgroundColor = [UIColor whiteColor];
+                [codeBtn setTitle:@"获取验证码" forState:BtnNormal];
+                [codeBtn setTitleColor:__TextColor forState:BtnNormal];
+                [codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+                cell.accessoryView = codeBtn;
             }
                 break;
             default:
@@ -250,7 +256,7 @@
     if (self.datePickV) {
         [self hiddenView];
     }
-    if ((indexPath.section == 0) && (indexPath.row == 2) ) {
+    if ((indexPath.section == 0) && (indexPath.row == 3) ) {
         [self.view addSubview:self.datePickV];
     }
     
@@ -296,7 +302,11 @@
         
     }];
 }
-
+//获取验证码
+- (void)getCode
+{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
