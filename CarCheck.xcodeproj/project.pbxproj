@@ -28,6 +28,7 @@
 		5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */; };
 		5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */; };
 		5EACB3B11FB0099C00A3E88C /* forfeit.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EACB3B01FB0099B00A3E88C /* forfeit.html */; };
+		5EACB3B31FB0326A00A3E88C /* reservationNotice.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EACB3B21FB0326A00A3E88C /* reservationNotice.html */; };
 		5EDCC0EF1FAC4D90007789DC /* questions.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0EE1FAC4D8F007789DC /* questions.html */; };
 		5EDCC0F11FAC59E4007789DC /* agency.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F01FAC59E4007789DC /* agency.html */; };
 		5EDCC0F31FAC5C5A007789DC /* agency.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F21FAC5C59007789DC /* agency.png */; };
@@ -148,6 +149,7 @@
 		5EA0FEF21F8B3EB9005E882C /* ZQMyBooingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyBooingCell.h; sourceTree = "<group>"; };
 		5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBooingCell.m; sourceTree = "<group>"; };
 		5EACB3B01FB0099B00A3E88C /* forfeit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = forfeit.html; sourceTree = "<group>"; };
+		5EACB3B21FB0326A00A3E88C /* reservationNotice.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = reservationNotice.html; sourceTree = "<group>"; };
 		5EDCC0EE1FAC4D8F007789DC /* questions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = questions.html; sourceTree = "<group>"; };
 		5EDCC0F01FAC59E4007789DC /* agency.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agency.html; sourceTree = "<group>"; };
 		5EDCC0F21FAC5C59007789DC /* agency.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agency.png; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 				5EDCC0F01FAC59E4007789DC /* agency.html */,
 				5EDCC0EE1FAC4D8F007789DC /* questions.html */,
 				5EACB3B01FB0099B00A3E88C /* forfeit.html */,
+				5EACB3B21FB0326A00A3E88C /* reservationNotice.html */,
 				5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */,
 				F04ACD931F79E20B00F4C50D /* CarCheck */,
 				F04ACD921F79E20B00F4C50D /* Products */,
@@ -875,6 +878,7 @@
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
 				5EDCC0EF1FAC4D90007789DC /* questions.html in Resources */,
 				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
+				5EACB3B31FB0326A00A3E88C /* reservationNotice.html in Resources */,
 				F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */,
 				F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */,
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,

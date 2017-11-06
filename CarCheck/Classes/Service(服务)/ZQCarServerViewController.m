@@ -196,7 +196,7 @@
         switch (indexPath.row) {
             case 0:
             {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"reservationNotice.html" andShowBottom:NO];
                 Vc.title = @"预约须知";
                 [Vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:Vc animated:YES];
