@@ -82,17 +82,17 @@
 }
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    if (tabBarController.selectedIndex == 2)
-    {
-        if (![Utility isLogin]) {
-            ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
-             BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
-            [tabBarController presentViewController:loginNa animated:YES completion:^{
-                
-            }];
-            tabBarController.selectedIndex = self.sTabBarIndex;
-        }
-    }
+//    if (tabBarController.selectedIndex == 2)
+//    {
+//        if (![Utility isLogin]) {
+//            ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+//             BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+//            [tabBarController presentViewController:loginNa animated:YES completion:^{
+//
+//            }];
+//            tabBarController.selectedIndex = self.sTabBarIndex;
+//        }
+//    }
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -36,17 +36,19 @@
         _tableView.estimatedSectionHeaderHeight = 10;
         _tableView.estimatedSectionFooterHeight = 0;
         
-        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 80)];
-        _tableView.tableFooterView = footView;
-        UIButton *_putBtn = [[UIButton alloc]initWithFrame:CGRectMake(30,20, CGRectGetWidth(self.view.frame)-60, 40)];
-        _putBtn.backgroundColor = __DefaultColor;
-        _putBtn.titleLabel.font = MFont(18);
-        [_putBtn setTitle:@"退出登录" forState:BtnNormal];
-        [_putBtn setTitleColor:[UIColor whiteColor] forState:BtnNormal];
-        [_putBtn.layer setCornerRadius:6];
-//        [_putBtn.layer setMasksToBounds:YES];
-        [_putBtn addTarget:self action:@selector(logoutAction) forControlEvents:BtnTouchUpInside];
-        [footView addSubview:_putBtn];
+        if ([Utility isLogin]) {
+            UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 80)];
+            _tableView.tableFooterView = footView;
+            UIButton *_putBtn = [[UIButton alloc]initWithFrame:CGRectMake(20,20, CGRectGetWidth(self.view.frame)-40, 40)];
+            _putBtn.backgroundColor = __DefaultColor;
+            _putBtn.titleLabel.font = MFont(18);
+            [_putBtn setTitle:@"退出登录" forState:BtnNormal];
+            [_putBtn setTitleColor:[UIColor whiteColor] forState:BtnNormal];
+            [_putBtn.layer setCornerRadius:6];
+            //        [_putBtn.layer setMasksToBounds:YES];
+            [_putBtn addTarget:self action:@selector(logoutAction) forControlEvents:BtnTouchUpInside];
+            [footView addSubview:_putBtn];
+        }
     }
     return _tableView;
 }

@@ -11,6 +11,7 @@
 #import "ZQMessageViewController.h"
 #import "ZQMyOrderViewController.h"
 #import "ZQMyMoneyViewController.h"
+#import "ZQLoginViewController.h"
 
 static CGFloat kImageOriginHight = 200.f;
 @interface ZQNewMyViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -102,6 +103,15 @@ static CGFloat kImageOriginHight = 200.f;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (![Utility isLogin]&&indexPath.section!=3&&indexPath.section!=2)
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        [self.navigationController presentViewController:loginVC animated:YES completion:^{
+            
+        }];
+        return;
+    }
     switch (indexPath.section) {
         case 0:
             {
@@ -160,7 +170,6 @@ static CGFloat kImageOriginHight = 200.f;
         default:
             break;
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 // 样式
@@ -292,7 +301,7 @@ static CGFloat kImageOriginHight = 200.f;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    expandZoomImageView.frame = CGRectMake(0, 0, _tableView.frame.size.width, kImageOriginHight);
+    expandZoomImageView.frame = CGRectMake(0, -20, _tableView.frame.size.width, kImageOriginHight+20);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([Utility isLogin]) {
         [_phoneLabel setText:@"188888888888"];
@@ -306,12 +315,12 @@ static CGFloat kImageOriginHight = 200.f;
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden{
+//    return YES;
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
