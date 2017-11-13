@@ -68,10 +68,14 @@
         CGFloat height = 40;
         _btnArray = [NSMutableArray array];
         for (int i = 0; i < _dataArray.count; i ++) {
+            NSString *titleStr = _dataArray[i];
             UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
             titleBtn.frame = CGRectMake(15, height*(i+1) + i*5, CGRectGetMinX(_imgBtn.frame) - 15, height);
             titleBtn.backgroundColor = color;
-            [titleBtn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
+            [titleBtn setTitle:titleStr forState:(UIControlStateNormal)];
+            if (titleStr.length>6) {
+                 [titleBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            }
             titleBtn.tag = i+100;
             [titleBtn addTarget:self action:@selector(clickBtn:) forControlEvents:(UIControlEventTouchUpInside)];
             [self addSubview:titleBtn];

@@ -273,7 +273,7 @@
             case 7:
         {
          //平台介绍
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"platformIntroduction.html" andShowBottom:NO];
             Vc.title = @"平台介绍";
             [Vc setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:Vc animated:YES];

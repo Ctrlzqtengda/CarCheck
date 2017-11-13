@@ -10,9 +10,13 @@
 #import <MapKit/MapKit.h>
 #import <WebKit/WebKit.h>
 #import "ZQOnlineSubViewController.h"
+#import "ZQUpSubdataViewController.h"
 
 @interface ZQHtmlViewController ()<WKNavigationDelegate,WKUIDelegate>
-
+{
+    CGFloat bottomHeight;
+    BOOL isAgree;
+}
 @property (nonatomic, copy) NSString *urlString;
 @property (strong,nonatomic) UIProgressView *progressV;
 @property (strong,nonatomic) WKWebView *webView;
@@ -36,7 +40,8 @@
     
     //展示底部
     if (_isShow) {
-        rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-44);
+        bottomHeight = 44;
+        rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-bottomHeight);
         [self addBottomBtn];
     }
     [self.webView setFrame:rect];
@@ -59,23 +64,61 @@
 }
 - (void)addBottomBtn
 {
-    if (_isShow==2) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-44,CGRectGetWidth(self.view.bounds), 44)];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.view addSubview:button];
-        [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
-        [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
-        [button setTitle:@"导航到点" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = 0;
-        return;
+    switch (_isShow) {
+        case 2:
+            {
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                [button setFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight,CGRectGetWidth(self.view.bounds), bottomHeight)];
+                button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [self.view addSubview:button];
+                [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
+                [button setImage:[UIImage imageNamed:@"naviIcon"] forState:UIControlStateNormal];
+                [button setTitle:@"导航到点" forState:UIControlStateNormal];
+                [button addTarget:self action:@selector(bottomBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+                button.tag = 0;
+                return;
+            }
+            break;
+        case 3:
+        {
+//            是否同意按钮
+            UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight,CGRectGetWidth(self.view.bounds), bottomHeight)];
+            bottomV.backgroundColor = MainBgColor;
+            [self.view addSubview:bottomV];
+            
+            CGFloat width = CGRectGetWidth(self.view.bounds)/2;
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setFrame:CGRectMake(12, 0, bottomHeight, bottomHeight)];
+            [button setImage:[UIImage imageNamed:@"unAgree"] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:@"agree"] forState:UIControlStateSelected];
+            [button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+            [bottomV addSubview:button];
+            UILabel *agreeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 12, width-60, 20)];
+            agreeLabel.text = @"阅读并同意";
+            agreeLabel.textColor = [UIColor lightGrayColor];
+            agreeLabel.font = [UIFont systemFontOfSize:13.0];
+            [bottomV addSubview:agreeLabel];
+            
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setFrame:CGRectMake(CGRectGetMaxX(agreeLabel.frame),0,width, bottomHeight)];
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
+            [button setTitle:@"下一步" forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(nextBtnAction) forControlEvents:UIControlEventTouchUpInside];
+            [bottomV addSubview:button];
+
+            return;
+        }
+            break;
+        default:
+            break;
     }
     CGFloat width = CGRectGetWidth(self.view.bounds)/2;
     for (int i = 0; i<2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(width*i,  CGRectGetHeight(self.view.bounds)-44,width, 44)];
+        [button setFrame:CGRectMake(width*i,  CGRectGetHeight(self.view.bounds)-bottomHeight,width, bottomHeight)];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
@@ -114,6 +157,38 @@
         }];
 //        导航到店
 //        [self baiDuMap:nil];
+    }
+}
+- (void)clickAction:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    [UdStorage storageAgreeReservationNotice:sender.selected forKey:self.urlString];
+    isAgree = sender.selected;
+//    if (sender.selected) {
+//        [self dismissViewControllerAnimated:YES completion:^{
+//        }];
+//    }
+}
+- (void)nextBtnAction
+{
+    if (!isAgree) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请您仔细阅读并同意相关须知 !" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    if ([self.classString isEqualToString:@"ZQUpSubdataViewController"]) {
+        ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+        subVC.serviceCharge = 150.0;
+        [self.navigationController pushViewController:subVC animated:YES];
+    }
+    else
+    {
+        UIViewController *Vc = [[NSClassFromString(self.classString) alloc] init];
+        [self.navigationController pushViewController:Vc animated:YES];
+        
     }
 }
 // 页面开始加载时调用

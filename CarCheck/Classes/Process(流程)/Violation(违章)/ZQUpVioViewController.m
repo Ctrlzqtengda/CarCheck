@@ -21,6 +21,7 @@
     UIImage *_chooseImage;
     NSArray *_pickerDataArray;
     NSInteger _index;
+    NSString *desString;
 }
 
 @property(strong,nonatomic)UITableView *tableView;
@@ -34,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    desString = @"该服务适用于已开具《公安交通管理简易程序处罚决定书》的违章，若没有该罚单，请先到交通管理部门领取处罚决定书，然后填写下面的信息即可在线缴纳罚款";
     [self setupData];
     [self initViews];
     // Do any additional setup after loading the view from its nib.
@@ -52,7 +54,7 @@
     _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"", nil];
     
     
-    _pickerDataArray = @[@"京",@"冀",@"鄂"];
+    _pickerDataArray = @[@"冀",@"鲁",@"鄂"];
     
 }
 
@@ -224,10 +226,20 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, 50)];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(26, 10, __kWidth, 40)];
+        CGFloat width = __kWidth-40;
+        UIFont *font = [UIFont systemFontOfSize:14.0];
+       CGSize size = [desString boundingRectWithSize:CGSizeMake(width, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size;
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, size.height+50)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(26, 10, width, size.height+10)];
+        label.text = desString;
+        label.font = font;
+        label.numberOfLines = 0;
+        label.textColor = __TextColor;
+        [headerView addSubview:label];
+
+        label = [[UILabel alloc] initWithFrame:CGRectMake(26, CGRectGetMaxY(label.frame), width, 30)];
         label.text = @"填写处罚决定书必要信息";
-        label.font = [UIFont systemFontOfSize:14.0];
+        label.font = font;
         label.textColor = __TextColor;
         [headerView addSubview:label];
         return headerView;
@@ -270,7 +282,10 @@
 -(CGFloat )tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        return 50;
+        CGFloat width = __kWidth-40;
+        UIFont *font = [UIFont systemFontOfSize:14.0];
+        CGSize size = [desString boundingRectWithSize:CGSizeMake(width, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size;
+        return size.height+50;
     }
     return 18;
 }

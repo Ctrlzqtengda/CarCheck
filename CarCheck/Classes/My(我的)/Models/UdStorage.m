@@ -20,4 +20,25 @@
     NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
     return [ud objectForKey:key];
 }
+//是否已同意预约须知协议
++(void)storageAgreeReservationNotice:(BOOL)agree forKey:(NSString*)key
+{
+    NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
+    [ud setBool:agree forKey:key];
+    [ud synchronize];
+}
++(BOOL)isAgreeReservationNoticeForKey:(NSString*)key
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
+}
++(NSMutableArray *)getMessageModelWithArray:(NSArray *)array
+{
+    NSMutableArray *mutArray = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in array) {
+        ZQMessageModel *model = [[ZQMessageModel alloc] init];
+        [model setValuesForKeysWithDictionary:dic];
+        [mutArray addObject:model];
+    }
+    return mutArray;
+}
 @end

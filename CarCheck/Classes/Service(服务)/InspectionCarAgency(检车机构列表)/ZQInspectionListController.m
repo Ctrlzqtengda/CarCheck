@@ -239,7 +239,7 @@
 {
     switch (self.subType) {
             case ZQSubScTypeCellPhone:{
-                NSString *phoneStr = @"1888888888";
+                NSString *phoneStr = @"4008769838";
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -396,6 +396,17 @@
     }
 }
 */
+
+-(void)back{
+    UIViewController *htmlVc = self.navigationController.viewControllers[1];
+    if ([htmlVc isKindOfClass:[ZQHtmlViewController class]]) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

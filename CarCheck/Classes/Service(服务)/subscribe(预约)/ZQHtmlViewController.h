@@ -11,4 +11,5 @@
 @interface ZQHtmlViewController : BaseViewController
 
 - (id)initWithUrlString:(NSString *)urlString andShowBottom:(NSInteger)isShow;
+@property (nonatomic, copy) NSString *classString;
 @end

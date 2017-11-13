@@ -20,6 +20,7 @@
 
 @property(weak,nonatomic)IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *timeCollView;
+@property (weak, nonatomic) IBOutlet UILabel *costMoneyLabel;
 
 
 @end
@@ -30,6 +31,13 @@
     [super viewDidLoad];
     [self initViews];
     // Do any additional setup after loading the view from its nib.
+    if (self.serviceChargeMoney>0) {
+     [self.costMoneyLabel setText:[NSString stringWithFormat:@"检车费用: %@ 上门服务费: %.0f元\n 合计金额: 600元",self.costMoney,self.serviceChargeMoney]];
+    }
+    else
+    {
+        [self.costMoneyLabel setText:[NSString stringWithFormat:@"检车费用: %@ 服务费: 300元\n 合计金额: 600元",self.costMoney]];
+    }
 }
 #pragma mark私有方法
 

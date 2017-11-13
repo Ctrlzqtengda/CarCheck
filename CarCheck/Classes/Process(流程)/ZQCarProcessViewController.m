@@ -20,6 +20,11 @@
 
 #import "ZQUpVioViewController.h"
 
+#import "BaseNavigationController.h"
+
+#import "ZQUpSubdataViewController.h"
+
+#import "ZQNewCarCheckController.h" //新车
 @interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
     
     NSMutableArray *_dataArray;
@@ -62,7 +67,12 @@
 
 -(void)getData {
     
-    _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"检车预约",@"上门接送检车",@"电话预约检车"],@[@"常见问题"],@[@"平台介绍"], nil];
+//    _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"检车预约",@"上门接送检车",@"电话预约检车"],@[@"常见问题"],@[@"平台介绍"], nil];
+//    _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"机动车在线预约检车",@"上门接送预约检车",@"电话预约检车",@"新车免检预约服务"],@[@"常见问题"],@[@"平台介绍"], nil];
+    
+    _dataArray = [NSMutableArray arrayWithObjects:@[@"违章查询"],@[@"代缴违章罚款"],@[@"在线预约检车",@"上门接送检车",@"电话预约检车",@"新车免检服务"],@[@"常见问题"],@[@"平台介绍"], nil];
+
+    
 //    _stepArray = [NSMutableArray arrayWithObjects:@"一",@"二",@"三",@"四",@"五", nil];
     _stepArray = [NSMutableArray arrayWithObjects:@"第一步",@"第二步",@"第三步",@"第四部",@"了解", nil];
 
@@ -95,31 +105,97 @@
     NSLog(@"ZQProcessCellDelegate row=%ld index = %ld",(long)row,(long)index);
     switch (row) {
         case 0:{
+//            违章查询
             ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 2:{
-            ZQSubScType type;
-            if (index == 0){
-//                [self showSubView];
-                type = ZQSubScTypeDefailt;
-                
-            }else if(index == 1){
-                type = ZQSubScTypeVisit;
-            }else{
-                type = ZQSubScTypeCellPhone;
+            switch (index) {
+                case 0:
+                {
+                    //机动车在线预约检车
+                    ZQSubScType type = ZQSubScTypeDefailt;
+                    NSString *htmlStr = @"reservationNotice3.html";
+                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                        ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                        inspectionVC.subType = type;
+                        [self.navigationController pushViewController:inspectionVC animated:YES];
+                    }
+                    else
+                    {
+                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                        Vc.title = @"预约须知";
+                        Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+                        [Vc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:Vc animated:YES];
+                    }
+                }
+                    break;
+                case 1:
+                {
+//                    type = ZQSubScTypeVisit;
+                    NSString *htmlStr = @"reservationNotice2.html";
+                    if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                        Vc.title = @"机动车上门接送检车须知";
+                        Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                        [Vc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:Vc animated:YES];
+                        return;
+                    }
+                    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+                    subVC.serviceCharge = 150.0;
+                    [subVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:subVC animated:YES];
+                    return;
+                }
+                    break;
+                case 2:
+                {
+//                    type = ZQSubScTypeCellPhone;
+                    NSString *phoneStr = @"4008769838";
+                    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                    UIApplication * app = [UIApplication sharedApplication];
+                    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                        [app openURL:[NSURL URLWithString:PhoneStr]];
+                    }
+                    return;
+                }
+                    break;
+                case 3:
+                {
+                    NSString *htmlStr = @"NewCarNotice.html";
+                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                        ZQNewCarCheckController *newCarVC = [[ZQNewCarCheckController alloc] init];
+                        [newCarVC setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:newCarVC animated:YES];
+                    }
+                    else
+                    {
+                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                        Vc.title = @"新车免检预约服务须知";
+                        Vc.classString = NSStringFromClass([ZQNewCarCheckController class]);
+                        [Vc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:Vc animated:YES];
+                    }
+                    return;
+                }
+                    break;
+                default:
+                    break;
             }
-            ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-            inspectionVC.subType = type;
-            [self.navigationController pushViewController:inspectionVC animated:YES];
+//
+//            ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+//            inspectionVC.subType = type;
+//            [self.navigationController pushViewController:inspectionVC animated:YES];
         }
             break;
         case 4:{
 //            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
 //            [self.navigationController pushViewController:subVC animated:YES];
             
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"platformIntroduction.html" andShowBottom:NO];
             Vc.title = @"平台介绍";
             [Vc setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:Vc animated:YES];
@@ -200,7 +276,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *tmpArray = _dataArray[indexPath.row];
-    return 30 * (2 + tmpArray.count) + 5 * (tmpArray.count - 1);
+    return 35 * (2 + tmpArray.count) + 5 * (tmpArray.count - 1);
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

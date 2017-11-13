@@ -26,6 +26,7 @@
 #import "ZQLoadingView.h"
 #import "ZQSuccessAlerView.h"         //保险成功提示
 
+#import "BaseNavigationController.h"
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
     NSArray *_imagePpointArray;
@@ -137,9 +138,15 @@
             case 3:
             {
                 //车辆维修站
-                ZQMaintainViewController *vc = [[ZQMaintainViewController alloc] init];
-                [vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:vc animated:YES];
+                NSString *phoneStr = @"4008769838";
+                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+                UIApplication * app = [UIApplication sharedApplication];
+                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                    [app openURL:[NSURL URLWithString:PhoneStr]];
+                }
+//                ZQMaintainViewController *vc = [[ZQMaintainViewController alloc] init];
+//                [vc setHidesBottomBarWhenPushed:YES];
+//                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
                 case 4:
@@ -164,7 +171,7 @@
             case 6:
             {
                 //法律咨询
-                NSString *phoneStr = @"1888888888";
+                NSString *phoneStr = @"4008769838";
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -175,7 +182,7 @@
             case 7:
             {
                //加油充值
-                NSString *phoneStr = @"1888888888";
+                NSString *phoneStr = @"4008769838";
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -207,14 +214,25 @@
                 // 在线预约
 //                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
 //                [self.navigationController pushViewController:vc animated:YES];
-                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-                [inspectionVC setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:inspectionVC animated:YES];
+                NSString *htmlStr = @"reservationNotice3.html";
+                if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                    [inspectionVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:inspectionVC animated:YES];
+                }
+                else
+                {
+                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                    Vc.title = @"预约须知";
+                    Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+                    [Vc setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:Vc animated:YES];
+                }
                 break;
             }
             case 2:
             {
-                NSString *phoneStr = @"1888888888";
+                NSString *phoneStr = @"4008769838";
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {

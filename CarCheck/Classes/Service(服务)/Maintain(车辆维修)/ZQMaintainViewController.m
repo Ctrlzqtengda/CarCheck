@@ -135,7 +135,7 @@
 {
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnFilterAction)];
     self.navigationItem.rightBarButtonItem = rightBarItem;
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
+//    self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
     return;
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
@@ -224,7 +224,7 @@
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    NSString *phoneStr = @"1888888888";
+    NSString *phoneStr = @"4008769838";
     NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
     UIApplication * app = [UIApplication sharedApplication];
     if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZQMessageModel.h"
 
 @interface UdStorage : NSObject
 
@@ -14,4 +15,10 @@
 +(void)storageObject:(id)object forKey:(NSString*)key;
 
 +(id)getObjectforKey:(NSString*)key;
+
+//是否已同意预约须知协议
++(void)storageAgreeReservationNotice:(BOOL)agree forKey:(NSString*)key;
++(BOOL)isAgreeReservationNoticeForKey:(NSString*)key;
+
++(NSMutableArray *)getMessageModelWithArray:(NSArray *)array;
 @end

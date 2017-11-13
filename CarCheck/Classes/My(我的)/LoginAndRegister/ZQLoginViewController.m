@@ -13,6 +13,8 @@
 
 #import "YshareChooseView.h"
 
+#import "JPUSHService.h"
+
 @interface  ZQLoginViewController()<UITextFieldDelegate,YshareChooseViewDelegate>
 
 @property (strong,nonatomic) UIScrollView *backV;
@@ -156,6 +158,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     _name = @"123";
     _passWord = @"123";
+//    给推送注册别名
+//    [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+//        
+//    } seq:5];
     return;
     
     [self.view endEditing:YES];

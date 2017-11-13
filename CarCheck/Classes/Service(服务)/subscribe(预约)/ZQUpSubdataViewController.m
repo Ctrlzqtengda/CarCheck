@@ -10,6 +10,7 @@
 #import "ZQSubTimeViewController.h"
 #import "UITextField+ZQTextField.h"
 #import "ZQChoosePickerView.h"
+#import "ZQHtmlViewController.h"
 #import <Masonry.h>
 
 @interface ZQUpSubdataViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextFieldDelegate> {
@@ -80,8 +81,17 @@
 
 
 - (IBAction)sendAction:(id)sender {
-    
+    NSString *moneyStr = @"0";
+    if (self.carShapeTf.text) {
+        if (self.carShapeTf.text.length) {
+            moneyStr = [[self.carShapeTf.text componentsSeparatedByString:@"车"] lastObject];
+        }
+    }
     ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+    subVC.costMoney = moneyStr;
+    if (self.serviceCharge>0) {
+        subVC.serviceChargeMoney = _serviceCharge;
+    }
     [self.navigationController pushViewController:subVC animated:YES];
     
 }
@@ -163,6 +173,17 @@
     
     return [textField resignFirstResponder];
     
+}
+
+-(void)back{
+    UIViewController *htmlVc = self.navigationController.viewControllers[1];
+    if ([htmlVc isKindOfClass:[ZQHtmlViewController class]]) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

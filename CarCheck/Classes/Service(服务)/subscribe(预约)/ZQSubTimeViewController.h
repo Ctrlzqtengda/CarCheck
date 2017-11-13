@@ -10,4 +10,6 @@
 
 @interface ZQSubTimeViewController : BaseViewController
 
+@property (nonatomic, copy) NSString *costMoney;
+@property (nonatomic, assign) CGFloat serviceChargeMoney;
 @end

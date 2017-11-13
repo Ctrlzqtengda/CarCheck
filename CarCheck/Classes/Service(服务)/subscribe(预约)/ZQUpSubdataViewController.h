@@ -10,4 +10,5 @@
 
 @interface ZQUpSubdataViewController : BaseViewController
 
+@property (assign,nonatomic) CGFloat serviceCharge;
 @end
