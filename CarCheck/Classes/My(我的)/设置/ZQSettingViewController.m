@@ -11,6 +11,9 @@
 #import "ZQAboutUsViewController.h"
 #import "JPUSHService.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+
 @interface ZQSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_titleArray;
@@ -86,6 +89,11 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.textLabel.text = _titleArray[indexPath.section][indexPath.row];
+    if (indexPath.row==0&&indexPath.section==0) {
+        [cell.detailTextLabel setTextColor:[UIColor brownColor]];
+//        [cell.detailTextLabel setTextColor:LH_RGBCOLOR(17,149,232)];
+        [cell.detailTextLabel setText:@"奖励50积分"];
+    }
     return cell;
 }
 
@@ -97,6 +105,7 @@
                 case 0:
                 {
                     //分享
+                    [self shareAction];
                 }
                     break;
                 case 1:{
@@ -138,6 +147,56 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.001;
+}
+
+- (void)shareAction
+{
+//     （注意：图片必须要在Xcode左边目录里面，名称必须要传正确，如果要分享网络图片，可以这样传iamge参数 images:@[@"http://mob.com/Assets/images/logo.png?v=20150320"]）
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"icon29"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"分享内容" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"分享标题" type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
+        [ShareSDK showShareActionSheet:nil items:nil shareParams:shareParams onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+            switch (state) {
+                case SSDKResponseStateSuccess:
+                {
+                    [ZQLoadingView showAlertHUD:@"分享成功" duration:SXLoadingTime];
+                    [self requestShareData];
+                    break;
+                }
+                case SSDKResponseStateFail:
+                {
+                    [ZQLoadingView showAlertHUD:@"分享失败" duration:SXLoadingTime];
+
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
+}
+
+- (void)requestShareData
+{
+    NSString *urlStr = [NSString stringWithFormat:@"daf/update_share/u_id/%@",[Utility getUserID]];
+    
+    //我的消息接口
+//    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+//            __strong typeof(self) strongSelf = weakSelf;
+//            if (strongSelf)
+//            {
+//
+//            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:NO];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

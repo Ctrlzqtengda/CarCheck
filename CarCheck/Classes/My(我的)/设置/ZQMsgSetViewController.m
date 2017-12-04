@@ -120,7 +120,7 @@
 {
     if (_isNoti) {
         sender.on = !sender.on;
-        [UdStorage storageAgreeReservationNotice:sender.on forKey:@"NotiSound"];
+        [Utility storageAgreeReservationNotice:sender.on forKey:@"NotiSound"];
     }
     else
     {

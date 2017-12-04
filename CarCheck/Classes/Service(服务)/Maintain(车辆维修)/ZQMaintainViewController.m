@@ -215,9 +215,9 @@
     NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
     [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
         if (index == 0) {
-            [Utility baiDuMap:nil];
+//            [Utility baiDuMap:nil];
         }else if(index == 1){
-            [Utility gaoDeMap:nil];
+//            [Utility gaoDeMap:nil];
         }
     }];
 }

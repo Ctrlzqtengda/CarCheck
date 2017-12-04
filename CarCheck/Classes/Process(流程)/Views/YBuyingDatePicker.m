@@ -53,6 +53,12 @@
     [self addSubview:_datePicker];
     [_datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
 }
+- (void)setLimitDate:(BOOL)limitDate
+{
+    if (limitDate) {
+        _datePicker.maximumDate = [NSDate date];
+    }
+}
 - (void)dateChanged:(id)sender
 {    _datePicker = (UIDatePicker *)sender;
     NSDateFormatter *formatter =[[NSDateFormatter alloc]init];

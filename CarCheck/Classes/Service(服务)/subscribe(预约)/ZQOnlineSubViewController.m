@@ -10,6 +10,8 @@
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
 #import "ZQUpSubdataViewController.h"
+#import "ZQInspectionListController.h"
+#import "ZQHtmlViewController.h"
 
 @interface ZQOnlineSubViewController ()<UITableViewDelegate,UITableViewDataSource>{
     NSArray *_dataArray;
@@ -34,7 +36,7 @@
 //    _dataArray = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
 //    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_Id"];
 //    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.onlineList = @[@"自行开车到检车机构上线检测",@"上门接送检车"];
+    self.onlineList = @[@"自行上线检车",@"上门接送检车"];
     [self.view addSubview:self.tableView];
     
 }
@@ -88,22 +90,57 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.pageType) {
+        if (indexPath.section) {
+            NSString *htmlStr = @"reservationNotice2.html";
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+            Vc.title = @"机动车上门接送检车须知";
+            Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            [self.navigationController pushViewController:Vc animated:YES];
+        }
+        else
+        {
+            NSString *htmlStr = @"reservationNotice3.html";
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+            Vc.title = @"预约须知";
+            Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            [self.navigationController pushViewController:Vc animated:YES];
+        }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+//        ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//        [self.navigationController pushViewController:subVC animated:YES];
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        return;
+    }
     if (indexPath.section) {
       
-        ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
-        alerView.handler = ^(NSArray *contenArr)
-        {
-            [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSLog(@"上门接送车提交内容:%@",obj);
-            }];
-            //                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
-            
-            [ZQSuccessAlerView showCommitSuccess];
-        };
-        [alerView show];
+//        ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+//        alerView.handler = ^(NSArray *contenArr)
+//        {
+//            [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                NSLog(@"上门接送车提交内容:%@",obj);
+//            }];
+//            //                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+//
+//            [ZQSuccessAlerView showCommitSuccess];
+//        };
+//        [alerView show];
+        
+        ZQSubScType type = ZQSubScTypeVisit;
+        ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+        inspectionVC.subType = type;
+        [self.navigationController pushViewController:inspectionVC animated:YES];
     }else{
-        ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-        [self.navigationController pushViewController:subVC animated:YES];
+//        ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//        [self.navigationController pushViewController:subVC animated:YES];
+        
+        ZQSubScType type = ZQSubScTypeDefailt;
+        ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+        inspectionVC.subType = type;
+        [self.navigationController pushViewController:inspectionVC animated:YES];
 
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

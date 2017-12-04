@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ZQOrderModel.h"
+
 @interface ZQMyBooingCell : UITableViewCell
 
-@property (nonatomic, strong) NSDictionary *infoDict;
+@property (nonatomic, strong) ZQOrderModel *orderModel;
 
 @property (nonatomic, strong) UIButton *agencyDetailBtn;
 @property (nonatomic, strong) UIButton *endorseBtn;

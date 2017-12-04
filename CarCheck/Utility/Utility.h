@@ -36,19 +36,17 @@
 +(NSDictionary *)getUserInfoFromLocal;
 
 /**
- *  存储用户信息
- *
- *  @param dict 用户信息
- */
-+(void)saveUserInfo:(NSDictionary *)dict;
-
-/**
  *  设置登录状态
  *
  *  @param isLogin 是否登录
  */
 +(void)setLoginStates:(BOOL )isLogin;
-
+/**
+ *  登录后保存用户信息
+ *
+ *
+ */
++(void)saveUserInfo:(NSDictionary *)dict;
 /**
  *  登录状态
  *
@@ -66,19 +64,26 @@
  *
  */
 + (NSString *)getUserName;
-
 /**
- *  保存用户Id
+ *  获取是否是vip会员
  *
  */
--(void)saveUserId:(NSString *)userId;
-
++(NSInteger)getIs_vip;
 /**
- *  保存用户名
+ *  获取用户手机
  *
  */
--(void)saveUserName:(NSString *)userName;
-
++(NSString *)getUserPhone;
+/**
+ *  获取头像Data
+ *
+ */
+//+(NSData *)getUserHeadData;
+/**
+ *  获取头像Url
+ *
+ */
++(NSString *)getUserHeadUrl;
 /**
  *  版本检测
  *
@@ -89,16 +94,14 @@
 /**
  *  打开百度地图
  *
- *  @param sender 默认为nil
  */
-+ (void)baiDuMap:(id)sender;
++ (void)baiDuMapWithLongitude:(double)lon latitude:(double)lat;
 
 /**
  *  打开高德地图
  *
- *  @param sender 默认为nil
  */
-+ (void)gaoDeMap:(id)sender;
++ (void)gaoDeMapWithLongitude:(double)lon latitude:(double)lat;
 
 /**
  *  弹窗
@@ -112,5 +115,39 @@
                    contentArray:(NSArray *)contentArray
                      controller:(UIViewController *)controller
                     chooseBlock:(void(^)(NSInteger index))block;
+//保存获取数据
++(void)storageObject:(id)object forKey:(NSString*)key;
++(id)getObjectforKey:(NSString*)key;
++(void)storageBool:(BOOL)object forKey:(NSString*)key;
++(void)storageInteger:(NSInteger)object forKey:(NSString*)key;
+//是否已同意预约须知协议
++(void)storageAgreeReservationNotice:(BOOL)agree forKey:(NSString*)key;
++(BOOL)isAgreeReservationNoticeForKey:(NSString*)key;
+
+//请求的url进行编码
++ (NSString *)percentEncodingWithUrl:(NSString *)url;
+
+//所有省份简称
++ (NSArray *)getProvinceShortNum;
+
+
+/**
+ *  获取上门服务费
+ *
+ */
++(NSString *)getDoorToDoorOutlay;
+/**
+ *  获取新车免检服务费
+ *
+ */
++(NSString *)getNewCarServiceOutlay;
+
+//保存费用
++(void)saveServiceMoneyWithArray:(NSArray*)array;
+
+//经纬度
++(double)getLongitude;
++(double)getLatitude;
++(void)saveLongitude:(double)lon Latitude:(double)lat;
 
 @end

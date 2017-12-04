@@ -30,9 +30,12 @@ static MBProgressHUD  *s_progressHUD = nil;
     progressHUD.label.text = aString;
     
     progressHUD.removeFromSuperViewOnHide = YES;
-    progressHUD.opacity = 0.7;
-    [progressHUD show:NO];
-    [progressHUD hide:YES afterDelay:duration];
+    progressHUD.bezelView.opaque = NO;
+    [progressHUD showAnimated:YES];
+    [progressHUD hideAnimated:YES afterDelay:duration];
+//    progressHUD.opacity = 0.7;
+//    [progressHUD show:NO];
+//    [progressHUD hide:YES afterDelay:duration];
 }
 
 + (void)showProgressHUD:(NSString *)aString {
@@ -42,7 +45,8 @@ static MBProgressHUD  *s_progressHUD = nil;
             s_progressHUD = [[MBProgressHUD alloc] initWithView:_mainWindow()];
         });
     }else{
-        [s_progressHUD hide:NO];
+//        [s_progressHUD hide:NO];
+        [s_progressHUD hideAnimated:NO];
     }
     for (id obj in _mainWindow().subviews) {
         if ([obj isKindOfClass:[MBProgressHUD class]]) {
@@ -53,13 +57,16 @@ static MBProgressHUD  *s_progressHUD = nil;
     s_progressHUD.removeFromSuperViewOnHide = YES;
     s_progressHUD.animationType = MBProgressHUDAnimationZoom;
     if ([aString length]>0) {
-        s_progressHUD.labelText = aString;
+//        s_progressHUD.labelText = aString;
+        s_progressHUD.label.text = aString;
     }
-    else s_progressHUD.labelText = nil;
-    
-    s_progressHUD.opacity = 0.7;
-    [s_progressHUD show:YES];
-    
+//    else s_progressHUD.labelText = nil;
+    else s_progressHUD.label.text = nil;
+
+//    s_progressHUD.opacity = 0.7;
+//    [s_progressHUD show:YES];
+    s_progressHUD.bezelView.opaque = NO;
+    [s_progressHUD showAnimated:YES];
 }
 
 + (void)showAlertHUD:(NSString *)aString duration:(CGFloat)duration {
@@ -72,17 +79,23 @@ static MBProgressHUD  *s_progressHUD = nil;
     MBProgressHUD *progressHUD = [[MBProgressHUD alloc] initWithView:_mainWindow()];
     [_mainWindow() addSubview:progressHUD];
     progressHUD.animationType = MBProgressHUDAnimationZoom;
-    progressHUD.labelText =aString;
+    progressHUD.label.text = aString;
+    progressHUD.label.numberOfLines = 0;
+//    progressHUD.labelText =aString;
     progressHUD.removeFromSuperViewOnHide = YES;
-    progressHUD.opacity = 0.7;
+//    progressHUD.opacity = 0.7;
+    progressHUD.bezelView.opaque = NO;
     progressHUD.mode = MBProgressHUDModeText;
-    [progressHUD show:NO];
-    [progressHUD hide:YES afterDelay:duration];
+//    [progressHUD show:NO];
+    [progressHUD showAnimated:YES];
+    [progressHUD hideAnimated:YES afterDelay:duration];
+//    [progressHUD hide:YES afterDelay:duration];
 }
 
 + (void)hideProgressHUD {
     if (s_progressHUD) {
-        [s_progressHUD hide:YES];
+//        [s_progressHUD hide:YES];
+        [s_progressHUD hideAnimated:YES];
     }
 }
 
@@ -106,8 +119,10 @@ static MBProgressHUD  *s_progressHUD = nil;
     mbProgressHud.mode = MBProgressHUDModeCustomView;
     mbProgressHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"doneRight"]];
     mbProgressHud.label.text = tips;
-    [mbProgressHud show:YES];
-    [mbProgressHud hide:YES afterDelay:1.5];
+    [mbProgressHud showAnimated:YES];
+    [mbProgressHud hideAnimated:YES afterDelay:1.5];
+//    [mbProgressHud show:YES];
+//    [mbProgressHud hide:YES afterDelay:1.5];
 
 }
 @end

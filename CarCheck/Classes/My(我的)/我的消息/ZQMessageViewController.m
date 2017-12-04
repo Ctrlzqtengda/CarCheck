@@ -10,6 +10,7 @@
 #import "ZQMessageCell.h"
 #import "ZQNoDataView.h"
 
+#import "NSDictionary+propertyCode.h"
 @interface ZQMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong,nonatomic) UITableView *tableView;
@@ -25,21 +26,51 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"消息中心";
-    NSArray *array = @[@{@"title":@"系统消息",@"imageName":@"appIcon",@"content":@"您有一个优惠券待领取",@"time":@"昨天"},@{@"title":@"订单消息",@"imageName":@"appIcon",@"content":@"你的车检订单111111支付成功",@"time":@"昨天"}];
-    self.contentArr = [UdStorage getMessageModelWithArray:array];
     [self.view addSubview:self.tableView];
- 
-    if (self.contentArr.count) {
-        [self.tableView setHidden:NO];
-        [self.noDataView removeFromSuperview];
-        self.noDataView = nil;
-    }
-    else
-    {
-        [self.tableView setHidden:YES];
-        [self.view addSubview:self.noDataView];
-        self.noDataView.noOrderLabel.text = @"您当前无消息";
-    }
+    [self getMessageListData];
+}
+- (void)getMessageListData
+{
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_news/u_id/%@",[Utility getUserID]];
+
+    //我的消息接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        NSDictionary *dic = array[0];
+                        [dic createProperty];
+                        strongSelf.contentArr = [ZQMessageModel mj_objectArrayWithKeyValuesArray:array];
+                        [self.tableView setHidden:NO];
+                        [self.noDataView removeFromSuperview];
+                        self.noDataView = nil;
+                    }
+                    else
+                    {
+                        [strongSelf.contentArr removeAllObjects];
+                        [self.tableView setHidden:YES];
+                        [self.view addSubview:self.noDataView];
+                        self.noDataView.noOrderLabel.text = @"您当前无消息";
+                    }
+                    [strongSelf.tableView reloadData];
+                    [strongSelf.tableView.mj_header endRefreshing];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [strongSelf.contentArr removeAllObjects];
+            [strongSelf.tableView reloadData];
+            [strongSelf.tableView.mj_header endRefreshing];
+        }
+    } animated:YES];
 }
 - (UITableView *)tableView
 {

@@ -51,6 +51,8 @@
     self.imgView.image = [UIImage imageNamed:@"chooseImg"];
     [self addSubview:self.imgView];
     self.imgView.userInteractionEnabled = YES;
+    self.imgView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imgView.layer.masksToBounds = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImgAction:)];
     [self.imgView addGestureRecognizer:tap];
     

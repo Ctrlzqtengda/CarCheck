@@ -25,7 +25,16 @@
 #import "ZQUpSubdataViewController.h"
 
 #import "ZQNewCarCheckController.h" //新车
-@interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate>{
+
+#import "ZQLoginViewController.h"
+
+#import <AMapLocationKit/AMapLocationKit.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
+
+#define DefaultLocationTimeout 10
+#define DefaultReGeocodeTimeout 5
+
+@interface ZQCarProcessViewController()<UITableViewDelegate,UITableViewDataSource,ZQProcessRightCellDelegate,ZQProcessCellDelegate,AMapLocationManagerDelegate>{
     
     NSMutableArray *_dataArray;
     NSMutableArray *_colorArray;
@@ -35,6 +44,9 @@
 
 @property(strong,nonatomic)UITableView *tableView;
 
+@property (nonatomic, strong) AMapLocationManager *locationManager;
+
+@property (nonatomic, copy) AMapLocatingCompletionBlock completionBlock;
 @end
 
 @implementation ZQCarProcessViewController
@@ -42,8 +54,116 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     [self initViews];
+    
+    [AMapServices sharedServices].apiKey = @"38213c630c734efe09f2259bd241cfd2";
+
+    [self initCompleteBlock];
+    
+    [self configLocationManager];
+    
+    [self locAction];
+}
+#pragma mark - Action Handle
+
+- (void)configLocationManager
+{
+    self.locationManager = [[AMapLocationManager alloc] init];
+    
+    [self.locationManager setDelegate:self];
+    
+    //设置期望定位精度
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    
+    //设置不允许系统暂停定位
+    [self.locationManager setPausesLocationUpdatesAutomatically:NO];
+    
+    //设置允许在后台定位
+//    [self.locationManager setAllowsBackgroundLocationUpdates:YES];
+    
+    //设置定位超时时间
+    [self.locationManager setLocationTimeout:DefaultLocationTimeout];
+    
+    //设置逆地理超时时间
+    //    [self.locationManager setReGeocodeTimeout:DefaultReGeocodeTimeout];
 }
 
+- (void)cleanUpAction
+{
+    //停止定位
+    [self.locationManager stopUpdatingLocation];
+    
+    [self.locationManager setDelegate:nil];
+}
+
+//- (void)reGeocodeAction
+//{
+//    //进行单次带逆地理定位请求
+//    [self.locationManager requestLocationWithReGeocode:YES completionBlock:self.completionBlock];
+//}
+
+- (void)locAction
+{
+    //进行单次定位请求
+    [self.locationManager requestLocationWithReGeocode:NO completionBlock:self.completionBlock];
+}
+#pragma mark - Initialization
+
+- (void)initCompleteBlock
+{
+    //    __weak ZQInspectionListController *weakSelf = self;
+    self.completionBlock = ^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error)
+    {
+        if (error != nil && error.code == AMapLocationErrorLocateFailed)
+        {
+            //定位错误：此时location和regeocode没有返回值，不进行annotation的添加
+            NSLog(@"定位错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else if (error != nil
+                 && (error.code == AMapLocationErrorReGeocodeFailed
+                     || error.code == AMapLocationErrorTimeOut
+                     || error.code == AMapLocationErrorCannotFindHost
+                     || error.code == AMapLocationErrorBadURL
+                     || error.code == AMapLocationErrorNotConnectedToInternet
+                     || error.code == AMapLocationErrorCannotConnectToHost))
+        {
+            //逆地理错误：在带逆地理的单次定位中，逆地理过程可能发生错误，此时location有返回值，regeocode无返回值，进行annotation的添加
+            NSLog(@"逆地理错误:{%ld - %@};", (long)error.code, error.localizedDescription);
+        }
+        else if (error != nil && error.code == AMapLocationErrorRiskOfFakeLocation)
+        {
+            //存在虚拟定位的风险：此时location和regeocode没有返回值，不进行annotation的添加
+            NSLog(@"存在虚拟定位的风险:{%ld - %@};", (long)error.code, error.localizedDescription);
+            return;
+        }
+        else
+        {
+            //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
+        }
+        
+        //修改label显示内容
+        if (regeocode)
+        {
+            NSLog(@"定位显示的内容:%@",[NSString stringWithFormat:@"%@ \n %@-%@-%.2fm", regeocode.formattedAddress,regeocode.citycode, regeocode.adcode, location.horizontalAccuracy]);
+        }
+        else
+        {
+            NSLog(@"定位成功经纬度内容:%@",[NSString stringWithFormat:@"lat:%f;lon:%f \n accuracy:%.2fm", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy]);
+            [Utility saveLongitude:location.coordinate.latitude Latitude:location.coordinate.longitude];
+        }
+    };
+}
+
+#pragma mark -AMapLocationManagerDelegate-
+/**
+ *  @brief 当定位发生错误时，会调用代理的此方法。
+ *  @param manager 定位 AMapLocationManager 类。
+ *  @param error 返回的错误，参考 CLError 。
+ */
+- (void)amapLocationManager:(AMapLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"定位失败:error:%@",[error description]);
+}
 #pragma mark 私有方法
 -(void)initViews {
     
@@ -103,6 +223,15 @@
 #pragma mark ZQProcessCellDelegate
 -(void)selectAtRow:(NSInteger)row index:(NSInteger)index {
     NSLog(@"ZQProcessCellDelegate row=%ld index = %ld",(long)row,(long)index);
+    if (![Utility isLogin])
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
+            
+        }];
+        return;
+    }
     switch (row) {
         case 0:{
 //            违章查询
@@ -116,38 +245,45 @@
                 {
                     //机动车在线预约检车
                     ZQSubScType type = ZQSubScTypeDefailt;
-                    NSString *htmlStr = @"reservationNotice3.html";
-                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                    NSString *htmlStr = @"reservationNotice3.html";
+//                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
                         ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
                         inspectionVC.subType = type;
+                        [inspectionVC setHidesBottomBarWhenPushed:YES];
                         [self.navigationController pushViewController:inspectionVC animated:YES];
-                    }
-                    else
-                    {
-                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-                        Vc.title = @"预约须知";
-                        Vc.classString = NSStringFromClass([ZQInspectionListController class]);
-                        [Vc setHidesBottomBarWhenPushed:YES];
-                        [self.navigationController pushViewController:Vc animated:YES];
-                    }
+//                    }
+//                    else
+//                    {
+//                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//                        Vc.title = @"预约须知";
+//                        Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+//                        [Vc setHidesBottomBarWhenPushed:YES];
+//                        [self.navigationController pushViewController:Vc animated:YES];
+//                    }
                 }
                     break;
                 case 1:
                 {
-//                    type = ZQSubScTypeVisit;
-                    NSString *htmlStr = @"reservationNotice2.html";
-                    if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-                        Vc.title = @"机动车上门接送检车须知";
-                        Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
-                        [Vc setHidesBottomBarWhenPushed:YES];
-                        [self.navigationController pushViewController:Vc animated:YES];
-                        return;
-                    }
-                    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-                    subVC.serviceCharge = 150.0;
-                    [subVC setHidesBottomBarWhenPushed:YES];
-                    [self.navigationController pushViewController:subVC animated:YES];
+                    ZQSubScType type = ZQSubScTypeVisit;
+                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                    inspectionVC.subType = type;
+                    [inspectionVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:inspectionVC animated:YES];
+                    
+                    
+//                    NSString *htmlStr = @"reservationNotice2.html";
+//                    if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//                        Vc.title = @"机动车上门接送检车须知";
+//                        Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+//                        [Vc setHidesBottomBarWhenPushed:YES];
+//                        [self.navigationController pushViewController:Vc animated:YES];
+//                        return;
+//                    }
+//                    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//                    subVC.serviceCharge = 150.0;
+//                    [subVC setHidesBottomBarWhenPushed:YES];
+//                    [self.navigationController pushViewController:subVC animated:YES];
                     return;
                 }
                     break;
@@ -166,19 +302,19 @@
                 case 3:
                 {
                     NSString *htmlStr = @"NewCarNotice.html";
-                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-                        ZQNewCarCheckController *newCarVC = [[ZQNewCarCheckController alloc] init];
-                        [newCarVC setHidesBottomBarWhenPushed:YES];
-                        [self.navigationController pushViewController:newCarVC animated:YES];
-                    }
-                    else
-                    {
+//                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                        ZQNewCarCheckController *newCarVC = [[ZQNewCarCheckController alloc] init];
+//                        [newCarVC setHidesBottomBarWhenPushed:YES];
+//                        [self.navigationController pushViewController:newCarVC animated:YES];
+//                    }
+//                    else
+//                    {
                         ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
                         Vc.title = @"新车免检预约服务须知";
                         Vc.classString = NSStringFromClass([ZQNewCarCheckController class]);
                         [Vc setHidesBottomBarWhenPushed:YES];
                         [self.navigationController pushViewController:Vc animated:YES];
-                    }
+//                    }
                     return;
                 }
                     break;

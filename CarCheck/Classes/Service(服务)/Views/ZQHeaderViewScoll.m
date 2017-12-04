@@ -31,18 +31,20 @@
 
 -(void)setImageStrArray:(NSArray *)imageStrArray {
     _imageStrArray = imageStrArray;
-    if (!_imageArray.count) {
-        _imageArray = [NSMutableArray array];
-        for (NSString *imgStr in _imageStrArray) {
+//    if (!_imageArray.count) {
+//        _imageArray = [NSMutableArray array];
+//        for (NSString *imgStr in _imageStrArray) {
 //            UIImage *image = [UIImage imageNamed:imgStr];
-            UIImage *image = [UIImage imageNamed:@"adp.png"];
-            [_imageArray addObject:image];
-        }
-    }
+////            UIImage *image = [UIImage imageNamed:@"adp.png"];
+//            [_imageArray addObject:image];
+//        }
+//    }
 }
 
 -(void)startWithBlock:(ClickBlock)block {
-    [_adScrollV playWithImageArray:_imageArray TimeInterval:5.0 clickImage:block];
+    [_adScrollV playWithImageArray:_imageStrArray TimeInterval:5.0 clickImage:block];
+
+//    [_adScrollV playWithImageArray:_imageArray TimeInterval:5.0 clickImage:block];
 }
 
 -(ZQScrollPageView *)adScrollV {

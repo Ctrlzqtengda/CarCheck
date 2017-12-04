@@ -33,4 +33,5 @@
     const int DEFAULT_SPACING = 6.0f;
     [self centerImageAndTitle:DEFAULT_SPACING];
 }
+
 @end

@@ -6,6 +6,21 @@
 //  Copyright © 2017年 zhangqiang. All rights reserved.
 //
 
+#define HXKey @"1183170116178800#youshengshops"
+//QQ
+#define QQID @"1105952274"
+#define QQKEY @"kl3qSJiZvpcmWCDT"
+//微信
+#define WXID @"wx8836bea9c40b21ce"
+#define WXSecret @"a0a15e02a15068886a5637e15ddee70c"
+
+//微博
+#define WbID @"3311610802"
+#define WbSecret @"99e2a78d92b237bfcbb20dee9f3ea9a0"
+//极光
+#define JPKey @"527dae4e9bf59947e7e77304"
+#define JPSecret @"f7c189dc704d83cdb042add9"
+
 #import "AppDelegate.h"
 #import "BaseNavigationController.h"
 #import "BaseTabBarViewController.h"
@@ -28,6 +43,17 @@
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <AdSupport/AdSupport.h>
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+//腾讯开放平台（对应QQ和QQ空间）SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+//微信SDK头文件
+#import "WXApi.h"
+//新浪微博SDK头文件<
+#import "WeiboSDK.h"
+//支付
+#import "Pingpp.h"
 
 @interface AppDelegate ()<UITabBarControllerDelegate,JPUSHRegisterDelegate>
 
@@ -42,11 +68,96 @@
     self.window.backgroundColor = [UIColor whiteColor];
 //    BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
     self.window.rootViewController = [self setupViews];
+    
     [self.window makeKeyAndVisible];
 //    [NSThread sleepForTimeInterval:2];
+    
+//    @param activePlatforms
+//    使用的分享平台集合
+//    @param importHandler (onImport)
+//    导入回调处理，当某个平台的功能需要依赖原平台提供的SDK支持时，需要在此方法中对原平台SDK进行导入操作
+//    @param configurationHandler (onConfiguration)
+//    配置回调处理，在此方法中根据设置的platformType来填充应用配置信息
+    
+    [ShareSDK registerActivePlatforms:@[
+                                        @(SSDKPlatformTypeSinaWeibo),
+                                        @(SSDKPlatformTypeWechat),
+                                        @(SSDKPlatformTypeQQ),
+                                        ]
+    onImport:^(SSDKPlatformType platformType)
+     {
+         switch (platformType)
+         {
+             case SSDKPlatformTypeWechat:
+                 [ShareSDKConnector connectWeChat:[WXApi class]];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                 break;
+             case SSDKPlatformTypeSinaWeibo:
+                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                 break;
+             default:
+                 break;
+         }
+     }
+    onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
+     {
+         
+         switch (platformType)
+         {
+////             http://www.sharesdk.cn“
+//             authType:SSDKAuthTypeBoth
+             case SSDKPlatformTypeSinaWeibo:
+                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+                 [appInfo SSDKSetupSinaWeiboByAppKey:WbID appSecret:WbSecret redirectUri:@"http://www.sharesdk.cn" authType:SSDKAuthTypeBoth];
+//                 [appInfo SSDKSetupSinaWeiboByAppKey:@""
+//                                           appSecret:@""
+//                                         redirectUri:@""];
+                 break;
+             case SSDKPlatformTypeWechat:
+                 [appInfo SSDKSetupWeChatByAppId:WXID
+                                       appSecret:WXSecret];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [appInfo SSDKSetupQQByAppId:QQID
+                                      appKey:QQKEY
+                                    authType:SSDKAuthTypeBoth];
+                 break;
+            default:
+                   break;
+                   }
+                   }];
+//     */
+    
+    // ping++支付
+//    [Pingpp setDebugMode:NO];
+    
+    [self getServiceMoney];
     return YES;
 }
 
+//获取费用接口
+- (void)getServiceMoney
+{
+    //费用接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:@"daf/get_service_money" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        [Utility saveServiceMoneyWithArray:array];
+                    }
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+    } animated:NO];
+}
 - (BaseTabBarViewController *)setupViews {
     
      BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
@@ -57,13 +168,13 @@
     BaseNavigationController *naviMy = [[BaseNavigationController alloc] initWithRootViewController:myVC];
     
     ZQCarServerViewController *serverVC = [[ZQCarServerViewController alloc] init];
-    serverVC.title = @"车检服务";
+    serverVC.title = @"车辆服务";
     serverVC.tabBarItem.image = [[UIImage imageNamed:@"222"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     serverVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"222sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     BaseNavigationController *naviServer = [[BaseNavigationController alloc] initWithRootViewController:serverVC];
     
     ZQCarProcessViewController *progressVC = [[ZQCarProcessViewController alloc] init];
-    progressVC.title = @"车检流程";
+    progressVC.title = @"检车流程";
     progressVC.tabBarItem.image = [[UIImage imageNamed:@"111"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     progressVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"111sel"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     BaseNavigationController *naviProgress = [[BaseNavigationController alloc] initWithRootViewController:progressVC];
@@ -189,7 +300,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     } else {
         // Fallback on earlier versions
     }
-    if ([UdStorage isAgreeReservationNoticeForKey:@"NotiSound"]) {
+    if ([Utility isAgreeReservationNoticeForKey:@"NotiSound"]) {
         [[ZQJkPushTool sharedInstanceForSound] zQPlay];
     }
 //    if (_isRound) {
@@ -236,5 +347,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService handleRemoteNotification:userInfo];
 //    completionHandler(UIBackgroundFetchResultNewData);
 }
-
+//支付Pingpp
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary *)options {
+    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
+    return canHandleURL;
+}
 @end

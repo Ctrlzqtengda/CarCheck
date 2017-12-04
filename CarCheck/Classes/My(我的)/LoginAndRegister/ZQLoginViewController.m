@@ -27,7 +27,7 @@
 
 @implementation ZQLoginViewController
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.hidden = YES;
 }
@@ -39,6 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _name = @"";
+    _passWord = @"";
     [self initView];
     [self getNavis];
 }
@@ -78,6 +80,7 @@
     UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 75, 221, 28)];
     [_backV addSubview:loginIV];
     loginIV.image =MImage(@"CJWY");
+//    loginIV.image = MImage(@"appIcon");
     loginIV.contentMode = UIViewContentModeScaleAspectFit;
     
     NSArray *imageArr = @[@"login_user",@"login_password"];
@@ -99,7 +102,7 @@
         inputTF.textAlignment = NSTextAlignmentLeft;
         if (!i) {
             headIV.frame = CGRectMake(11, 11, 24, 24);
-            inputTF.placeholder = @"用户名";
+            inputTF.placeholder = @"手机号";
         }else{
             headIV.frame = CGRectMake(11, 11, 24, 24);
             inputTF.placeholder = @"请输入密码...";
@@ -128,7 +131,7 @@
     [_backV addSubview:lineIV];
     lineIV.backgroundColor = __BackColor;
     
-    UIButton *logonBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth/2+20, CGRectYH(loginBtn)+10, (__kWidth-80)/2, 20)];
+    UIButton *logonBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth/2+20, CGRectYH(loginBtn), (__kWidth-80)/2, 40)];
     [_backV addSubview:logonBtn];
     logonBtn .titleLabel.font = MFont(15);
     logonBtn.backgroundColor =[UIColor clearColor];
@@ -153,61 +156,35 @@
 
 #pragma mark ==登录==
 -(void)Login{
-    NSLog(@"登录");
-    [Utility setLoginStates:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    _name = @"123";
-    _passWord = @"123";
-//    给推送注册别名
-//    [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
-//        
-//    } seq:5];
-    return;
-    
     [self.view endEditing:YES];
-    if (IsNilString(_name)||IsNilString(_passWord)) {
+    if (!_name.length) {
+        [ZQLoadingView showAlertHUD:@"请输入您的手机号" duration:2.0];
         return;
     }
+    if (!_passWord.length) {
+        [ZQLoadingView showAlertHUD:@"请输入密码" duration:2.0];
+        return;
+    }
+    //登录接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/my_Login/phone/%@/password/%@",_name,_passWord];
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:_name forKey:@"user_name"];
-    [dict setObject:_passWord forKey:@"password"];
-//    NSString *common_param = [YSParseTool jsonDict:dict];
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param setObject:@"User" forKey:@"controller"];
-    [param setObject:@"login" forKey:@"method"];
-//    [param setObject:common_param forKey:@"common_param"];
-    
-//    __weak typeof(self) weakSelf = self;
-//    [JKHttpRequestService POST:@"?" withParameters:param success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-//        if (succe) {
-//            NSDictionary *dic = jsonDic[@"data"];
-//            NSString *name =dic[@"mobile"];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                [Utility saveUserInfo:jsonDic];
+            }
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+            //    给推送注册别名
+//            [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
 //
-//            NSString *message = jsonDic[@"message"];
-//            if ([message isEqualToString:@"登录成功"]) {
-//                [weakSelf getUserinfo];
-//                NSString *token = dic[@"niu_reponse"];
-//                [UdStorage storageObject:token forKey:UserToken];
-//                [self dismissViewControllerAnimated:YES completion:nil];
-//            }else{
-//                [SXLoadingView showAlertHUD:[dic valueForKey:@"message"] duration:SXLoadingTime];
-//            }
-//
-//            EMError *error = nil;
-//            //            [[EaseMob sharedInstance].chatManager loginWithUsername:name password:name error:&error];
-//            //            if (!error.errorCode) {
-//            //                NSLog(@"登录成功");
-//            //                [UdStorage storageObject:_name forKey:UserName];
-//            //                [self dismissViewControllerAnimated:YES completion:nil];
-//            //            }else{
-//            //                NSLog(@"%@%ld",error.description,(long)error.errorCode);
-//            //            }
-//        }
-//    } failure:^(NSError *error) {
-//
-//    } animated:YES];
+//            } seq:5];
+        }
+    } failure:^(NSError *error) {
+
+    } animated:YES];
 }
 
 -(void)getUserinfo {

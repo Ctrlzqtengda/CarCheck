@@ -8,7 +8,6 @@
 
 #import "ZQInspectionListController.h"
 #import "ZQInspectionCell.h"
-#import <MapKit/MapKit.h>
 
 #import "ZQHtmlViewController.h"
 #import "ZQAlerInputView.h"
@@ -17,7 +16,10 @@
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
 
-@interface ZQInspectionListController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchControllerDelegate,UISearchResultsUpdating,UISearchBarDelegate>
+//#import <MapKit/MapKit.h>
+#import "NSDictionary+propertyCode.h"
+//UISearchControllerDelegate,UISearchResultsUpdating,
+@interface ZQInspectionListController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {
     UISearchController *searchController;
 }
@@ -27,6 +29,8 @@
 @property (nonatomic, strong) NSMutableArray *agencyList;
 
 @property (nonatomic, strong) NSMutableArray *searchListArry;
+
+@property (nonatomic, strong) NSArray *siftArray; //筛选的条件
 @end
 
 @implementation ZQInspectionListController
@@ -54,9 +58,9 @@
     //创建UISearchController
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     //设置代理
-    self.searchController.delegate= self;
-    self.searchController.searchResultsUpdater = self;
-
+//    self.searchController.delegate= self;
+//    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
     self.searchController.searchBar.barTintColor = [UIColor whiteColor];
 //    UIImageView *barImageView = [[[self.searchController.searchBar.subviews firstObject] subviews] firstObject];
 //    barImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -86,43 +90,130 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [weakSelf loadMoreData];
-    }];
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        [weakSelf loadMoreData];
+//    }];
 }
 
 - (void)getAgencyListData
 {
+//    o_product经度  o_range维度
+    NSString *urlStr = nil;
+    if (self.siftArray) {
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude]];
+    }
+    else
+    {
+//        /o_product/%@/o_range/%@/o_name/%@/province/%@/city/%@
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f",[Utility getUserID],[Utility getLongitude],[Utility getLatitude]];
+    }
+    //检车机构接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        strongSelf.agencyList = [ZQInspectionModel mj_objectArrayWithKeyValuesArray:array];
+                    }
+                    else
+                    {
+                        [strongSelf.agencyList removeAllObjects];
+                    }
+                    [strongSelf.tableView reloadData];
+                    [strongSelf.tableView.mj_header endRefreshing];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [strongSelf.agencyList removeAllObjects];
+            [strongSelf.tableView reloadData];
+            [strongSelf.tableView.mj_header endRefreshing];
+        }
+    } animated:YES];
+    /*
     __weak __typeof(self) weakSelf = self;
     __weak UITableView *tableView = self.tableView;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
         if (weakSelf.agencyList.count) {
             [weakSelf.agencyList removeAllObjects];
-            [weakSelf.agencyList addObject:@{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"0592-5979816\n18120732580"}];
+//            [weakSelf.agencyList addObject:@{@"image":@"agency",@"name":@"柏乡县宏泰机动车检测有限公司",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"13932100437"}];
+             [weakSelf.agencyList addObject:@{@"image":@"agency",@"name":@"柏乡县宏泰机动车检测有限公司",@"address":@"柏乡县县城东",@"phone":@"13932100437",@"distance":@"2.3km",@"linkman":@"王小虎",@"isUse":@YES}];
         }
         else
         {
-            weakSelf.agencyList = [NSMutableArray arrayWithObject:@{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"0592-5979816\n18120732580"}];
+//            weakSelf.agencyList = [NSMutableArray arrayWithObject:@{@"image":@"agency",@"name":@"柏乡县宏泰机动车检测有限公司",@"address":@"柏乡县县城东",@"phone":@"13932100437"}];
+            weakSelf.agencyList = [NSMutableArray arrayWithCapacity:0];
+
         }
-        for (int i = 0; i<5; i++) {
-            NSDictionary *dic = @{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"0592-5979816\n18120732580"};
-            [self.agencyList addObject:dic];
-        }
-        if (weakSelf.agencyList.count<3) {
-            [tableView.mj_footer endRefreshingWithNoMoreData];
-        }
+        NSDictionary *dic = @{@"image":@"agency",@"name":@"柏乡县宏泰机动车检测有限公司",@"address":@"柏乡县县城东",@"phone":@"13932100437",@"distance":@"2.3km",@"linkman":@"王小虎",@"isUse":@YES};
+        [self.agencyList addObject:dic];
+        dic = @{@"image":@"agency",@"name":@"霸州市永盛机动车检测有限公司",@"address":@"廊坊市霸州市南孟镇西粉营村",@"phone":@"13831691118",@"distance":@"2.3km",@"linkman":@"王小虎",@"isUse":@NO};
+        [self.agencyList addObject:dic];
+        dic = @{@"image":@"agency",@"name":@"保定和安汽车检测技术服务有限公司",@"address":@"保定高开区创业路368号",@"phone":@"13588373703",@"distance":@"2.3km",@"linkman":@"王小虎",@"isUse":@NO};
+        [self.agencyList addObject:dic];
+
+//        for (int i = 0; i<5; i++) {
+//            NSDictionary *dic = @{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"0592-5979816\n18120732580"};
+//            [self.agencyList addObject:dic];
+//        }
+//        if (weakSelf.agencyList.count<3) {
+//            [tableView.mj_footer endRefreshingWithNoMoreData];
+//        }
         [tableView reloadData];
         
         // 拿到当前的下拉刷新控件，结束刷新状态
         [tableView.mj_header endRefreshing];
     });
+     */
 }
+- (void)getAgencyListDataWithText:(NSString *)text
+{
+    //    o_product经度  o_range维度
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/o_product/%f/o_range/%f",[Utility getUserID],text,[Utility getLongitude],[Utility getLatitude]];
+    //检车机构接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        strongSelf.agencyList = [ZQInspectionModel mj_objectArrayWithKeyValuesArray:array];
+                    }
+                    else
+                    {
+                        [strongSelf.agencyList removeAllObjects];
+                    }
+                    [strongSelf.tableView reloadData];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [strongSelf.agencyList removeAllObjects];
+            [strongSelf.tableView reloadData];
+            [strongSelf.tableView.mj_header endRefreshing];
+        }
+    } animated:YES];
+}
+
 - (void)loadMoreData
 {
     // 1.添加假数据
     for (int i = 0; i<5; i++) {
-        NSDictionary *dic = @{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"0592-5979816\n18120732580"};
+        NSDictionary *dic = @{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"18120732580",@"linkman":@"王小虎"};
         [self.agencyList addObject:dic];
     }
     
@@ -134,6 +225,8 @@
         // 拿到当前的上拉刷新控件，结束刷新状态
         [tableView.mj_footer endRefreshing];
     });
+    //            [tableView.mj_footer endRefreshingWithNoMoreData];
+
 }
 - (void)addNavigationRightItem
 {
@@ -141,6 +234,7 @@
     self.navigationItem.rightBarButtonItem = rightBarItem;
 //    self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
     return;
+    /*
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [rightBtn setImage:[UIImage imageNamed:@"shouyeyuyue"] forState:UIControlStateNormal];
     [rightBtn setTitle:@"筛选" forState:UIControlStateNormal];
@@ -152,16 +246,21 @@
 //    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"筛选" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBtnFilterAction)];
     
     self.navigationItem.rightBarButtonItem = rightBarButton;
+     */
 }
 //右侧筛选按钮
 - (void)rightBtnFilterAction
 {
     ZQAlerInputView *alerView = [[ZQAlerInputView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+    __weak typeof(self) weakSelf = self;
     alerView.handler = ^(NSArray *contenArr)
     {
-        [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(@"车检机构内容筛选提交内容:%@",obj);
-        }];
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            strongSelf.siftArray = contenArr;
+            [strongSelf getAgencyListData];
+        }
     };
     [alerView show];
 }
@@ -203,7 +302,7 @@
     }
     cell.navigationBtn.tag = indexPath.row;
     cell.bookingBtn.tag = indexPath.row;
-    cell.infoDict = self.agencyList[indexPath.row];
+    cell.inspectionModel = self.agencyList[indexPath.row];
     return cell;
 }
 
@@ -215,28 +314,67 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" andShowBottom:YES];
-    Vc.title = @"检车站详情";
-    [self.navigationController pushViewController:Vc animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    ZQInspectionModel *model = nil;
+//    if (self.searchController.active) {
+//      model = self.searchListArry[indexPath.row];
+//    }
+//    else
+//    {
+        model = self.agencyList[indexPath.row];
+//    }
+    if (model.type.integerValue == 1) {
+        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" testId:model.o_id andShowBottom:YES];
+        Vc.title = @"检车站详情";
+        Vc.dSubType = self.subType;
+        [self.navigationController pushViewController:Vc animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
+    [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待！" duration:2.0];
 }
 
 //导航
 - (void)navigationBtnAction:(UIButton *)sender
 {
-    NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
-    [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
-        if (index == 0) {
-            [Utility baiDuMap:nil];
-        }else if(index == 1){
-            [Utility gaoDeMap:nil];
-        }
-    }];
+    ZQInspectionModel *model = nil;
+//    if (self.searchController.active) {
+//        model = self.searchListArry[sender.tag];
+//    }
+//    else
+//    {
+        model = self.agencyList[sender.tag];
+//    }
+    if (model.type.integerValue == 1)
+    {
+        NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
+        [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
+            if (index == 0) {
+                [Utility baiDuMapWithLongitude:model.o_product.doubleValue latitude:model.o_range.doubleValue];
+            }else if(index == 1){
+                [Utility gaoDeMapWithLongitude:model.o_product.doubleValue latitude:model.o_range.doubleValue];
+            }
+        }];
+        return;
+    }
+    [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待！" duration:2.0];
 //    [Utility baiDuMap:nil];
 }
-//预约
+//立即预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
+    ZQInspectionModel *model = nil;
+//    if (self.searchController.active) {
+//        model = self.searchListArry[sender.tag];
+//    }
+//    else
+//    {
+        model = self.agencyList[sender.tag];
+//    }
+    if (model.type.integerValue != 1)
+    {
+        [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待！" duration:2.0];
+        return;
+    }
     switch (self.subType) {
             case ZQSubScTypeCellPhone:{
                 NSString *phoneStr = @"4008769838";
@@ -249,19 +387,55 @@
             break;
             
             case ZQSubScTypeVisit:{
-                [self showSubView];
+//                [self showSubView];
+                NSString *htmlStr = @"reservationNotice2.html";
+//                if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+                    Vc.title = @"机动车上门接送检车须知";
+                    Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+                    Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                    [self.navigationController pushViewController:Vc animated:YES];
+                    return;
+//                }
+//                ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//                subVC.serviceCharge = 150.0;
+//                [subVC setHidesBottomBarWhenPushed:YES];
+//                [self.navigationController pushViewController:subVC animated:YES];
+
             }
             break;
-        default:{
-            ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-            [self.navigationController pushViewController:vc animated:YES];
+        case ZQSubScTypeDefailt:
+        {
+            NSString *htmlStr = @"reservationNotice3.html";
+//            if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//                [self.navigationController pushViewController:subVC animated:YES];
+//            }
+//            else
+//            {
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+                Vc.title = @"预约须知";
+                Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                [self.navigationController pushViewController:Vc animated:YES];
+//            }
+            break;
         }
+        case ZQSubScTypeNone:
+        {
+            ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+            vc.pageType = 1;
+            vc.o_testing_id = @"1";
+            [self.navigationController pushViewController:vc animated:YES];
+            break;
+        }
+        default:{}
             break;
     }
 //    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
 //    [self.navigationController pushViewController:subVC animated:YES];
 }
 
+/*
 -(void)showSubView {
     ZQOnlineAlertView *alerView = [[ZQOnlineAlertView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
     alerView.handler = ^(NSArray *contenArr)
@@ -275,11 +449,11 @@
     };
     [alerView show];
 }
-
+*/
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)-64)];
         tableView.backgroundColor = [UIColor colorWithRed:0xf0/255.0 green:0xf1/255.0 blue:0xf4/255.0 alpha:1.0];
         tableView.dataSource = self;
         tableView.delegate = self;
@@ -311,15 +485,16 @@
     //    }
     
     NSLog(@"updateSearchResultsForSearchController");
-    NSString *searchString = [self.searchController.searchBar text];
-    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
-    if (self.searchListArry!= nil) {
-        [self.searchListArry removeAllObjects];
-    }
+//    NSString *searchString = [self.searchController.searchBar text];
+//    [self getAgencyListDataWithText:searchString];
+//    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
+//    if (self.searchListArry!= nil) {
+//        [self.searchListArry removeAllObjects];
+//    }
     //过滤数据
 //    self.searchListArry= [NSMutableArray arrayWithArray:[self.dataListArry filteredArrayUsingPredicate:preicate]];
     //刷新表格
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 #pragma mark - UISearchControllerDelegate代理,可以省略,主要是为了验证打印的顺序
 //测试UISearchController的执行过程
@@ -332,7 +507,7 @@
 - (void)didPresentSearchController:(UISearchController *)searchController
 {
     NSLog(@"didPresentSearchController");
-#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
+//#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
     //    [self.view addSubview:self.searchController.searchBar];
 }
 
@@ -358,6 +533,10 @@
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     
     
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self getAgencyListDataWithText:searchBar.text];
 }
 /*
 - (void)addDestinationTableView
@@ -397,16 +576,16 @@
 }
 */
 
--(void)back{
-    UIViewController *htmlVc = self.navigationController.viewControllers[1];
-    if ([htmlVc isKindOfClass:[ZQHtmlViewController class]]) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
+//-(void)back{
+//    UIViewController *htmlVc = self.navigationController.viewControllers[1];
+//    if ([htmlVc isKindOfClass:[ZQHtmlViewController class]]) {
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }
+//    else
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

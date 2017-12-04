@@ -21,6 +21,9 @@
 @property (strong,nonatomic) UIProgressView *progressV;
 @property (strong,nonatomic) WKWebView *webView;
 @property (assign,nonatomic) NSInteger isShow;
+
+@property (nonatomic, copy) NSString *testing_id; //检测机构id
+
 @end
 
 @implementation ZQHtmlViewController
@@ -34,15 +37,30 @@
     }
     return self;
 }
+- (id)initWithUrlString:(NSString *)urlString testId:(NSString *)t_id andShowBottom:(NSInteger)isShow
+{
+    self = [super init];
+    if (self) {
+        self.urlString = urlString;
+        self.isShow = isShow;
+        self.testing_id = t_id;
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     CGRect rect = self.view.bounds;
     
     //展示底部
     if (_isShow) {
         bottomHeight = 44;
-        rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-bottomHeight);
+        rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-bottomHeight-64);
         [self addBottomBtn];
+    }
+    else
+    {
+        rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.bounds)-64);
     }
     [self.webView setFrame:rect];
     [self.view addSubview:self.webView];
@@ -58,7 +76,7 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.webView loadRequest:request];
     }
-    [self.progressV setFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), 5)];
+    [self.progressV setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 5)];
     [self.view addSubview:self.progressV];
     [self.view bringSubviewToFront:_progressV];
 }
@@ -68,7 +86,7 @@
         case 2:
             {
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                [button setFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight,CGRectGetWidth(self.view.bounds), bottomHeight)];
+                [button setFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight-64,CGRectGetWidth(self.view.bounds), bottomHeight)];
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [self.view addSubview:button];
@@ -83,7 +101,7 @@
         case 3:
         {
 //            是否同意按钮
-            UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight,CGRectGetWidth(self.view.bounds), bottomHeight)];
+            UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(0,  CGRectGetHeight(self.view.bounds)-bottomHeight-64,CGRectGetWidth(self.view.bounds), bottomHeight)];
             bottomV.backgroundColor = MainBgColor;
             [self.view addSubview:bottomV];
             
@@ -94,6 +112,9 @@
             [button setImage:[UIImage imageNamed:@"agree"] forState:UIControlStateSelected];
             [button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
             [bottomV addSubview:button];
+            isAgree = [Utility isAgreeReservationNoticeForKey:_urlString];
+            [button setSelected:isAgree];
+            
             UILabel *agreeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 12, width-60, 20)];
             agreeLabel.text = @"阅读并同意";
             agreeLabel.textColor = [UIColor lightGrayColor];
@@ -118,7 +139,7 @@
     CGFloat width = CGRectGetWidth(self.view.bounds)/2;
     for (int i = 0; i<2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(width*i,  CGRectGetHeight(self.view.bounds)-bottomHeight,width, bottomHeight)];
+        [button setFrame:CGRectMake(width*i,  CGRectGetHeight(self.view.bounds)-bottomHeight-64,width, bottomHeight)];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.view addSubview:button];
@@ -142,17 +163,45 @@
     NSLog(@"%ld",(long)sender.tag);
     if (sender.tag) {
 //        立即预约
-        ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-        [self.navigationController pushViewController:vc animated:YES];
+//        ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+//        [self.navigationController pushViewController:vc animated:YES];
+        
+        if (self.dSubType == 2) {
+            NSString *htmlStr = @"reservationNotice2.html";
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+            Vc.title = @"机动车上门接送检车须知";
+            Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            [self.navigationController pushViewController:Vc animated:YES];
+            return;
+        }
+        else if (self.dSubType == 0)
+        {
+            NSString *htmlStr = @"reservationNotice3.html";
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+            Vc.title = @"预约须知";
+            Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            [self.navigationController pushViewController:Vc animated:YES];
+            return;
+        }
+        else
+       {
+           ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+           vc.pageType = 1;
+           [self.navigationController pushViewController:vc animated:YES];
+           return;
+//           ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+//           [self.navigationController pushViewController:subVC animated:YES];
+      }
     }
     else
     {
         NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
         [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
             if (index == 0) {
-                [Utility baiDuMap:nil];
+                [Utility baiDuMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
             }else if(index == 1){
-                [Utility gaoDeMap:nil];
+                [Utility gaoDeMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
             }
         }];
 //        导航到店
@@ -162,7 +211,7 @@
 - (void)clickAction:(UIButton *)sender
 {
     sender.selected = !sender.selected;
-    [UdStorage storageAgreeReservationNotice:sender.selected forKey:self.urlString];
+    [Utility storageAgreeReservationNotice:sender.selected forKey:self.urlString];
     isAgree = sender.selected;
 //    if (sender.selected) {
 //        [self dismissViewControllerAnimated:YES completion:^{
@@ -172,7 +221,7 @@
 - (void)nextBtnAction
 {
     if (!isAgree) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请您仔细阅读并同意相关须知 !" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请先阅读并同意相关须知 !" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
         }]];
@@ -181,7 +230,17 @@
     }
     if ([self.classString isEqualToString:@"ZQUpSubdataViewController"]) {
         ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-        subVC.serviceCharge = 150.0;
+        if (self.charge>0) {
+            subVC.serviceCharge = self.charge;
+        }
+        if (self.dSubType == 2)  {
+            subVC.bookingType = 2;
+        }
+        else if (self.dSubType == 0)
+        {
+            subVC.bookingType = 1;
+        }
+        subVC.b_testing_id = self.testing_id;
         [self.navigationController pushViewController:subVC animated:YES];
     }
     else

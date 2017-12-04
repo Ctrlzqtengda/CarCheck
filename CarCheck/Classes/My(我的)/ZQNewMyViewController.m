@@ -10,8 +10,14 @@
 #import "ZQSettingViewController.h"
 #import "ZQMessageViewController.h"
 #import "ZQMyOrderViewController.h"
+#import "ZQNewCarOrderViewController.h"
+#import "ZQSubstituteOrderController.h"
 #import "ZQMyMoneyViewController.h"
 #import "ZQLoginViewController.h"
+//#import "ZQNewVIPViewController.h"
+#import "ZQBuyVipViewController.h"
+#import "BaseNavigationController.h"
+#import "UIButton+WebCache.h"
 
 static CGFloat kImageOriginHight = 200.f;
 @interface ZQNewMyViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -29,13 +35,22 @@ static CGFloat kImageOriginHight = 200.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _titleArray = @[@[@{@"title":@"我的订单",@"image":@"myOrder"},@{@"title":@"VIP服务",@"image":@"vipServer"},@{@"title":@"我的钱包",@"image":@"myMoney"}],@[@{@"title":@"我的消息",@"image":@"myMessage"}],@[@{@"title":@"客服电话",@"image":@"customerService"}],@[@{@"title":@"设置",@"image":@"mySetting"}]];
+    _titleArray = @[@[@{@"title":@"预约订单",@"image":@"myOrder"},@{@"title":@"新车免检预约订单",@"image":@"myOrder"},@{@"title":@"代缴罚款订单",@"image":@"myOrder"},@{@"title":@"VIP服务",@"image":@"vipServer"},@{@"title":@"我的钱包",@"image":@"myMoney"}],@[@{@"title":@"我的消息",@"image":@"myMessage"}],@[@{@"title":@"客服电话",@"image":@"customerService"}],@[@{@"title":@"设置",@"image":@"mySetting"}]];
   
     [self.view addSubview:self.tableView];
 }
 //更换头像
 - (void)headBtnAction
-{return;
+{
+    if (![Utility isLogin])
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
+            
+        }];
+        return;
+    }
     UIAlertController *actionSheetController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -91,7 +106,7 @@ static CGFloat kImageOriginHight = 200.f;
     NSDictionary *dic = _titleArray[indexPath.section][indexPath.row];
     cell.imageView.image = [UIImage imageNamed:dic[@"image"]];
     cell.textLabel.text = dic[@"title"];
-    if (indexPath.section==0&&indexPath.row==1) {
+    if (indexPath.section==0&&indexPath.row==3) {
         cell.detailTextLabel.textColor = LH_RGBCOLOR(17,149,232);
         cell.detailTextLabel.text = @"开通VIP独享全年减免";
     }
@@ -107,7 +122,8 @@ static CGFloat kImageOriginHight = 200.f;
     if (![Utility isLogin]&&indexPath.section!=3&&indexPath.section!=2)
     {
         ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
-        [self.navigationController presentViewController:loginVC animated:YES completion:^{
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
             
         }];
         return;
@@ -124,11 +140,33 @@ static CGFloat kImageOriginHight = 200.f;
                         [self.navigationController pushViewController:myOrderVc animated:YES];
                     }
                         break;
-                    case 1:{
-                        //VIP服务
+                    case 1:
+                    {
+                        //新车免检预约订单
+                        ZQNewCarOrderViewController *myOrderVc = [[ZQNewCarOrderViewController alloc] init];
+                        [myOrderVc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:myOrderVc animated:YES];
                     }
                         break;
                     case 2:
+                    {
+                        //代缴罚款订单
+                        ZQSubstituteOrderController *myOrderVc = [[ZQSubstituteOrderController alloc] init];
+                        [myOrderVc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:myOrderVc animated:YES];
+                    }
+                        break;
+                    case 3:{
+                        //VIP服务
+                        //                        ZQNewVIPViewController *myVipVc = [[ZQNewVIPViewController alloc] initWithNibName:@"ZQNewVIPViewController" bundle:nil];
+                        //                        [myVipVc setHidesBottomBarWhenPushed:YES];
+                        //                        [self.navigationController pushViewController:myVipVc animated:YES];
+                        ZQBuyVipViewController *myMoneyVc = [[ZQBuyVipViewController alloc] init];
+                        [myMoneyVc setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:myMoneyVc animated:YES];
+                    }
+                        break;
+                    case 4:
                     {
                         //我的钱包
                         ZQMyMoneyViewController *myMoneyVc = [[ZQMyMoneyViewController alloc] init];
@@ -211,11 +249,32 @@ static CGFloat kImageOriginHight = 200.f;
 #pragma mark - 上传头像
 -(void)saveImage:(UIImage*)headImage withName:(NSString*)imageName{
     NSData *imageData = UIImageJPEGRepresentation(headImage, 0.5);
-    [UdStorage storageObject:imageData forKey:@"UserHead"];
+//    [Utility storageObject:imageData forKey:@"UserHead"];
     
-    [self modifyUserHeadimgWith:headImage];
+    [self modifyUserHeadimgWith:imageData];
 }
--(void)modifyUserHeadimgWith:(UIImage *)image{
+-(void)modifyUserHeadimgWith:(NSData *)image{
+    
+    //修改头像接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/update_head/u_id/%@",[Utility getUserID]];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr Params:nil NSData:image key:@"head" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSString *headUrl = jsonDic[@"head"];
+                if ([headUrl isKindOfClass:[NSString class]]) {
+                    if (headUrl.length) {
+                        [Utility storageObject:headUrl forKey:@"userHeadUrl"];
+                        return ;
+                    }
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:YES];
     //    http://b2b2c.sztd123.com/api?controller=User&method=ModifyUserHeadimg1&callback=uploadImg&common_param=%7B%22uid%22:293,%22user_headimg%22:%22upload%2Favator%2F1508737708.jpg%22%7D
     
 //    NSData *data =UIImageJPEGRepresentation(image, 0.3);
@@ -280,14 +339,6 @@ static CGFloat kImageOriginHight = 200.f;
         _headBtn.layer.cornerRadius = 40;
         _headBtn.layer.borderColor = [UIColor whiteColor].CGColor;
         _headBtn.layer.borderWidth = 2.5;
-        if ([[UdStorage getObjectforKey:@"UserHead"] isKindOfClass:[NSData class]]) {
-            [_headBtn setBackgroundImage:[UIImage imageWithData:[UdStorage getObjectforKey:@"UserHead"]] forState:UIControlStateNormal];
-        }
-        else
-        {
-            [_headBtn setBackgroundImage:MImage(@"user_head") forState:UIControlStateNormal];
-        }
-//        [_headBtn setImage:MImage(@"user_head") forState:UIControlStateNormal];
         _headBtn.clipsToBounds = YES;
         [_headBtn addTarget:self action:@selector(headBtnAction) forControlEvents:UIControlEventTouchUpInside];
         [headView addSubview:_headBtn];
@@ -303,14 +354,21 @@ static CGFloat kImageOriginHight = 200.f;
     [super viewWillAppear:animated];
     expandZoomImageView.frame = CGRectMake(0, -20, _tableView.frame.size.width, kImageOriginHight+20);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    if ([Utility isLogin]) {
-        [_phoneLabel setText:@"188888888888"];
-    }
-    else
-    {
-        [_phoneLabel setText:@"未登录"];
-        [_headBtn setBackgroundImage:MImage(@"user_head") forState:UIControlStateNormal];
-    }
+    
+    [_phoneLabel setText:[Utility getUserName]];
+     [_headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.30.87/car%@",[Utility getUserHeadUrl]]] forState:UIControlStateNormal placeholderImage:MImage(@"user_head")];
+//    if ([Utility isLogin]) {
+//
+//    }
+//    else
+//    {
+//        [_phoneLabel setText:@"未登录"];
+//        [_headBtn setBackgroundImage:MImage(@"user_head") forState:UIControlStateNormal];
+//    }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UILabel *totalMoneyL;
 @property (strong, nonatomic) UILabel *usableL;
 @property (strong, nonatomic) UILabel *pendingReturnL;
+@property (copy, nonatomic) NSString *integral;
 @end
 
 @implementation ZQMyMoneyViewController
@@ -24,17 +25,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的钱包";
-    
+    self.integral = @"0";
     [self.view addSubview:self.tableView];
     [self configTableHeadView];
     [self cofigTableHeadBottomView];
+    
+    [self getMyMoney];
 }
-- (void)viewDidAppear:(BOOL)animated
+- (void)getMyMoney
 {
-    [self.totalMoneyL setText:@"0"];
-    [self.usableL setText:@"0"];
-    [self.pendingReturnL setText:@"0"];
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_uid_money/u_id/%@",[Utility getUserID]];
+    
+    //我的消息接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        NSDictionary *dic = array[0];
+                        [strongSelf.totalMoneyL setText:dic[@"total_assets"]];
+                        [strongSelf.usableL setText:dic[@"balance"]];
+                        [strongSelf.pendingReturnL setText:dic[@"wait_balance"]];
+                        NSString *integral = dic[@"integral"];
+                        if (integral.integerValue>0) {
+                            strongSelf.integral = integral;
+                        }
+                    }
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+       
+    } animated:YES];
 }
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [self.totalMoneyL setText:@"0"];
+//    [self.usableL setText:@"0"];
+//    [self.pendingReturnL setText:@"0"];
+//}
 
 //钱包充值
 - (void)walletRechargeBtnAction
@@ -57,19 +90,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"walletMoney"];
+//    if (!cell) {
+//        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"walletMone"];
+//        cell.textLabel.textColor = [UIColor darkTextColor];
+//        cell.textLabel.font = [UIFont systemFontOfSize:15];
+//        cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+//        cell.detailTextLabel.textColor = [UIColor brownColor];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    }
+//    cell.imageView.image = [UIImage imageNamed:@"icon29"];
+//    cell.textLabel.text = @"套餐充值";
+//    cell.detailTextLabel.text = @"低至88折，更有高频返现";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"walletMoney"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"walletMone"];
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"walletMone"];
         cell.textLabel.textColor = [UIColor darkTextColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
         cell.detailTextLabel.textColor = [UIColor brownColor];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.imageView.image = [UIImage imageNamed:@"icon29"];
-    cell.textLabel.text = @"套餐充值";
-    cell.detailTextLabel.text = @"低至88折，更有高频返现";
+    cell.textLabel.text = @"我的积分";
+    cell.detailTextLabel.text = self.integral;
     return cell;
 }
 
@@ -90,7 +135,7 @@
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 286)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 286-50)];
         headView.backgroundColor = [UIColor whiteColor];
         [_tableView setTableHeaderView:headView];
         
@@ -168,19 +213,19 @@
     [button addTarget:self action:@selector(walletDetailsBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [bottomV addSubview:button];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, CGRectGetMaxY(bottomV.frame)+10, CGRectGetWidth(bottomV.frame), 20)];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setTextColor:[UIColor darkTextColor]];
-    [label setFont:[UIFont systemFontOfSize:15]];
-    label.text = @"热门活动";
-    [self.tableView.tableHeaderView addSubview:label];
-    
-    label = [[UILabel alloc] initWithFrame:CGRectMake(12, CGRectGetMaxY(label.frame), CGRectGetWidth(label.frame), 20)];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setTextColor:__TextColor];
-    [label setFont:[UIFont systemFontOfSize:13]];
-    label.text = @"您感兴趣的活动";
-    [self.tableView.tableHeaderView addSubview:label];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, CGRectGetMaxY(bottomV.frame)+10, CGRectGetWidth(bottomV.frame), 20)];
+//    [label setTextAlignment:NSTextAlignmentCenter];
+//    [label setTextColor:[UIColor darkTextColor]];
+//    [label setFont:[UIFont systemFontOfSize:15]];
+//    label.text = @"热门活动";
+//    [self.tableView.tableHeaderView addSubview:label];
+//
+//    label = [[UILabel alloc] initWithFrame:CGRectMake(12, CGRectGetMaxY(label.frame), CGRectGetWidth(label.frame), 20)];
+//    [label setTextAlignment:NSTextAlignmentCenter];
+//    [label setTextColor:__TextColor];
+//    [label setFont:[UIFont systemFontOfSize:13]];
+//    label.text = @"您感兴趣的活动";
+//    [self.tableView.tableHeaderView addSubview:label];
 }
 
 - (UILabel *)totalMoneyL

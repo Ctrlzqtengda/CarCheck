@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ZQBlock)(NSInteger index);
+typedef void(^ZQBlock)(NSString *seletedStr);
 
 @interface ZQChoosePickerView : UIView
 
 // 显示pickView
 -(void)showWithDataArray:(NSArray *)dataArray inView:(UIView *)view chooseBackBlock:(ZQBlock )block;
-
 @end

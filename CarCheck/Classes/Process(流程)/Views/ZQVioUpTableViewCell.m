@@ -8,7 +8,7 @@
 
 #import "ZQVioUpTableViewCell.h"
 
-@interface ZQVioUpTableViewCell()
+@interface ZQVioUpTableViewCell()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
@@ -75,15 +75,19 @@
     switch (type) {
             // 车牌号
         case ZQVioUpCellType1:
+        {
             self.imgView.hidden = NO;
             self.provinceCodeLabel.hidden = NO;
             self.leftInset.constant = 80.0;
             self.contentTf.enabled = YES;
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
+            self.contentTf.textAlignment = NSTextAlignmentLeft;
             break;
+        }
             // 能输入，字在左边
         case ZQVioUpCellType2:
+        {
             self.leftInset.constant = 8.0;
             self.imgView.hidden = YES;
             self.provinceCodeLabel.hidden = YES;
@@ -91,18 +95,23 @@
             self.contentTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
+            self.contentTf.textAlignment = NSTextAlignmentLeft;
             break;
             // 不能输入
+        }
         case ZQVioUpCellType3:
+        {
             self.leftInset.constant = 8.0;
             self.imgView.hidden = YES;
             self.provinceCodeLabel.hidden = YES;
             self.contentTf.enabled = NO;
             self.tfRightInset.constant = 48;
             self.rightImgView.hidden = NO;
+            self.contentTf.textAlignment = NSTextAlignmentLeft;
             break;
-            
+        }
         case ZQVioUpCellType4:
+        {
             // 第二分组
             self.leftInset.constant = 8.0;
             self.imgView.hidden = YES;
@@ -113,8 +122,10 @@
             self.contentTf.enabled = NO;
             self.contentTf.textAlignment = NSTextAlignmentRight;
             break;
+        }
             // 能输入,字在右边
         case ZQVioUpCellType5:
+        {
             self.leftInset.constant = 8.0;
             self.imgView.hidden = YES;
             self.provinceCodeLabel.hidden = YES;
@@ -124,6 +135,7 @@
             self.rightImgView.hidden = YES;
             self.contentTf.textAlignment = NSTextAlignmentRight;
             break;
+        }
         default:
             break;
     }

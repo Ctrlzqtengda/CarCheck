@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -110,11 +110,14 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhao" translatesAutoresizingMaskIntoConstraints="NO" id="Fju-x2-pGp">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zhao" translatesAutoresizingMaskIntoConstraints="NO" id="Fju-x2-pGp">
                                     <rect key="frame" x="30" y="300" width="315" height="80"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="80" id="JXt-po-lpK"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="行驶本" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7R3-ov-o7o">
                                     <rect key="frame" x="30" y="388" width="315" height="25"/>
@@ -125,30 +128,39 @@
                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="S2h-WP-h9Y">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="S2h-WP-h9Y">
                                     <rect key="frame" x="30" y="423" width="71.5" height="71.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="S2h-WP-h9Y" secondAttribute="height" id="z4r-8x-ElL"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="mWW-r9-eYa">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="mWW-r9-eYa">
                                     <rect key="frame" x="151.5" y="423" width="72" height="71.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="mWW-r9-eYa" secondAttribute="height" id="uun-R1-zxR"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="mdw-aG-gkd">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImg2" translatesAutoresizingMaskIntoConstraints="NO" id="mdw-aG-gkd">
                                     <rect key="frame" x="273.5" y="423" width="71.5" height="71.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="mdw-aG-gkd" secondAttribute="height" id="XKc-Bz-7Vj"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="身份证正面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-X7-Usi">
                                     <rect key="frame" x="30" y="499.5" width="71.5" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="alO-ao-tc9"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -157,7 +169,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="QBt-kv-KiB"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -166,7 +178,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="twe-Mq-uwp"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -177,9 +189,14 @@
                                         <constraint firstAttribute="width" constant="300" id="ASb-a8-tSi"/>
                                         <constraint firstAttribute="height" constant="40" id="EjV-rx-FaN"/>
                                     </constraints>
-                                    <state key="normal" title="提交">
+                                    <state key="normal" title="下一步">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="sendAction:" destination="-1" eventType="touchUpInside" id="oEe-ku-ngh"/>
                                     </connections>

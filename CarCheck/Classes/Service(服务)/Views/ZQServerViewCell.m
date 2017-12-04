@@ -54,6 +54,8 @@
     _label.text = str;
     _label.font = [UIFont systemFontOfSize:15];
     if (imgStr.length) {
+        CGFloat inset = 26;
+        [self.imageView  setFrame:CGRectMake(inset, inset / 2.0, _width-inset*2, _width - inset * 2)];
         [_imageView setImage:[UIImage imageNamed:imgStr]];
     }
 }

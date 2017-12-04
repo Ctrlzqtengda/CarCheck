@@ -10,11 +10,9 @@
 #define _____RestAPI_h
 #import <UIKit/UIKit.h>
 
-//#define BaseAPI                 @"http://192.168.16.139:8080/onepage/"  // 龙龙
+//#define BaseAPI                 @"http://192.168.16.147:8080/onepage/"  // 公司服务器
 
-#define BaseAPI                 @"http://192.168.16.147:8080/onepage/"  // 公司服务器
-
-//#define BaseAPI                 @"http://192.168.16.124:8080/znweb/"    // 赵楠
+#define BaseAPI                 @"http://192.168.30.87/car/index.php/api/"    // 赵楠
 
 #define kUpdateDataBaseToHost   @"vote3/test/update.do"
 

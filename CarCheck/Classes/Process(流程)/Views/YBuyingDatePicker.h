@@ -10,7 +10,7 @@
 
 @protocol YBuyingDatePickerDelegate <NSObject>
 
--(void)chooseDateTime:(NSString*)sender;
+- (void)chooseDateTime:(NSString*)sender;
 
 - (void)hiddenView;
 
@@ -20,4 +20,5 @@
 
 @property (weak,nonatomic) id<YBuyingDatePickerDelegate>delegate;
 
+@property (assign,nonatomic) BOOL limitDate;
 @end

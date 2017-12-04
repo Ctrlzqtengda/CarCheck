@@ -104,7 +104,7 @@
         [cell.endorseBtn addTarget:self action:@selector(endorseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     cell.agencyDetailBtn.tag = indexPath.row;
-    cell.infoDict = self.bookingList[indexPath.row];
+    cell.orderModel = self.bookingList[indexPath.row];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -23,16 +23,25 @@
 #import "ZQUpVioViewController.h"     //代缴罚款
 
 #import "ZQInsuranceView.h"           //保险
+#import "ZQInsuranceVController.h"    //保险服务
 #import "ZQLoadingView.h"
 #import "ZQSuccessAlerView.h"         //保险成功提示
 
 #import "BaseNavigationController.h"
+#import "ZQLoginViewController.h"
+
+#import "ZQBannerModel.h"
+
 @interface ZQCarServerViewController()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSArray *_dataArray;
     NSArray *_imagePpointArray;
     NSArray *_appointArray;
 }
-@property(strong,nonatomic) UICollectionView *mainView;
+@property (strong, nonatomic) UICollectionView *mainView;
+@property (strong, nonatomic) NSMutableArray *bannerArray;
+//@property (strong, nonatomic) NSArray *imageArray;
+
+@property (strong, nonatomic) ZQHeaderViewScoll *aheadView;
 @end
 
 @implementation ZQCarServerViewController
@@ -40,9 +49,54 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self initViews];
-    
+    [self getBannerData];
 }
 
+- (void)getBannerData
+{
+    //收支明细接口
+    
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:@"daf/get_banner" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (succe) {
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    strongSelf.bannerArray = [ZQBannerModel mj_objectArrayWithKeyValuesArray:array];
+                    NSMutableArray *muArray = [NSMutableArray arrayWithCapacity:0];
+                    for (ZQBannerModel *model in strongSelf.bannerArray) {
+                        [muArray addObject:model.b_path];
+                        NSLog(@"model.b_path = %@",model.b_path);
+                    }
+//                    strongSelf.imageArray = muArray;
+//                    [strongSelf.mainView reloadData];
+                    strongSelf.aheadView.imageStrArray = muArray;
+                    [strongSelf.aheadView startWithBlock:^(NSInteger index) {
+                        
+                    }];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:NO];
+    
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+//    if (!self.aheadView.imageStrArray) {
+//       
+//    }
+//    else
+//    {
+//        if (self.aheadView.imageStrArray.count==0) {
+//            
+//        }
+//    }
+}
 - (void)initViews {
     
     [self getData];
@@ -101,7 +155,15 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (![Utility isLogin])
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
+            
+        }];
+        return;
+    }
     if (indexPath.section==2) {
         switch (indexPath.row) {
             case 0:
@@ -115,6 +177,7 @@
             {
                 
                 ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                inspectionVC.subType = ZQSubScTypeNone;
                 [inspectionVC setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:inspectionVC animated:YES];
                 
@@ -122,17 +185,20 @@
             }
             case 2:
             {
-                ZQInsuranceView *alerView = [[ZQInsuranceView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
-                alerView.handler = ^(NSArray *contenArr)
-                {
-                    [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        NSLog(@"保险提交内容:%@",obj);
-                    }];
-//                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
-                    
-                    [ZQSuccessAlerView showCommitSuccess];
-                };
-                [alerView show];
+                ZQInsuranceVController *insuranceVc = [[ZQInsuranceVController alloc] init];
+                [insuranceVc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:insuranceVc animated:YES];
+//                ZQInsuranceView *alerView = [[ZQInsuranceView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight)];
+//                alerView.handler = ^(NSArray *contenArr)
+//                {
+//                    [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                        NSLog(@"保险提交内容:%@",obj);
+//                    }];
+////                    [ZQLoadingView makeSuccessfulHudWithTips:@"上传完成" parentView:nil];
+//
+//                    [ZQSuccessAlerView showCommitSuccess];
+//                };
+//                [alerView show];
                 break;
             }
             case 3:
@@ -212,22 +278,23 @@
             case 1:
             {
                 // 在线预约
-//                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-//                [self.navigationController pushViewController:vc animated:YES];
-                NSString *htmlStr = @"reservationNotice3.html";
-                if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-                    [inspectionVC setHidesBottomBarWhenPushed:YES];
-                    [self.navigationController pushViewController:inspectionVC animated:YES];
-                }
-                else
-                {
-                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-                    Vc.title = @"预约须知";
-                    Vc.classString = NSStringFromClass([ZQInspectionListController class]);
-                    [Vc setHidesBottomBarWhenPushed:YES];
-                    [self.navigationController pushViewController:Vc animated:YES];
-                }
+                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+//                NSString *htmlStr = @"reservationNotice3.html";
+//                if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+//                    [inspectionVC setHidesBottomBarWhenPushed:YES];
+//                    [self.navigationController pushViewController:inspectionVC animated:YES];
+//                }
+//                else
+//                {
+//                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//                    Vc.title = @"预约须知";
+//                    Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+//                    [Vc setHidesBottomBarWhenPushed:YES];
+//                    [self.navigationController pushViewController:Vc animated:YES];
+//                }
                 break;
             }
             case 2:
@@ -267,14 +334,14 @@
         if (indexPath.section == 0) {
             // 轮播图
             ZQHeaderViewScoll *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ScrollPageView" forIndexPath:indexPath];
-            headView.imageStrArray = @[@"adp",@"adp",@",adp"];
-            headView.backgroundColor = [UIColor redColor];
-            [headView startWithBlock:^(NSInteger index) {
-                
-            }];
+//            headView.imageStrArray = @[@"ada",@"adb",@"adc",@"adp"];
+//            headView.imageStrArray = strongSelf.imageArray;
+            headView.backgroundColor = MainBgColor;
+            self.aheadView = headView;
             reuseV = headView;
         }else{
             // 预约
+            /*
             ZQAppointmentHeaderView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ZQAppointmentHeaderView" forIndexPath:indexPath];
             __weak __typeof(self) weakSelf = self;
             headView.handler = ^{
@@ -285,6 +352,9 @@
 //                [subVC setHidesBottomBarWhenPushed:YES];
 //                [weakSelf.navigationController pushViewController:subVC animated:YES];
             };
+            reuseV = headView;
+             */
+            UICollectionReusableView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"defaultHeaderView" forIndexPath:indexPath];
             reuseV = headView;
         }
         
@@ -322,9 +392,10 @@
     if (section == 0) {
         return CGSizeMake(__kWidth, 150);
     }else if(section == 1){
-        return CGSizeMake(__kWidth, 40);
+//        return CGSizeMake(__kWidth, 40);
+        return CGSizeMake(0, 0);
     }else{
-        return CGSizeMake(__kWidth, 0);
+        return CGSizeMake(0, 0);
     }
 }
 

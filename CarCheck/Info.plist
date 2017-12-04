@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -44,9 +39,44 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>WXShare</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>wx8836bea9c40b21ce</string>
+			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>WBShare</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb3311610802</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>QQShare</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>QQ41EB7E12</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>tencent</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tencent1105952274</string>
+			</array>
+		</dict>
+		<dict/>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -56,17 +86,34 @@
 	<array>
 		<string>baidumap</string>
 		<string>iosamap</string>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>mqq</string>
+		<string>sinaweibo</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>请去设置打开定位服务</string>
-	<key>NSCameraUsageDescription</key>
-	<string>App需要您的同意,才能访问相机</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App需要您的同意,才能访问相册</string>
+	<key>MOBAppSecret</key>
+	<string>5ababf2f6dd0dd9787f9c4b466f56191</string>
+	<key>MOBAppkey</key>
+	<string>21c7b29502b30</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>App需要您的同意,才能访问日历</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App需要您的同意,才能访问相机</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>'新概念检车' 需要获取你当前的位置</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>'新概念检车' 需要获取你当前的位置</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>'新概念检车' 需要获取你当前的位置</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App需要您的同意,才能访问相册</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

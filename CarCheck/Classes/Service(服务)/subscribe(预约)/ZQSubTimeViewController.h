@@ -11,5 +11,7 @@
 @interface ZQSubTimeViewController : BaseViewController
 
 @property (nonatomic, copy) NSString *costMoney;
+@property (nonatomic, copy) NSString *requestUrl;
+@property (nonatomic, strong) NSArray *uploadImageArr;
 @property (nonatomic, assign) CGFloat serviceChargeMoney;
 @end

@@ -9,6 +9,7 @@
 #import "ZQWalletDetailController.h"
 #import "ZQNoDataView.h"
 #import "ZQOrderTypeChooseView.h"
+#import "ZQWalletDetailModel.h"
 
 @interface ZQWalletDetailController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -34,8 +35,33 @@
     _status =@"";
     _page = 1;
     [self.view addSubview:self.tableView];
-    [self addSegment];
-    [self segmentAction:ZQAllDataView];
+    [self requestWalletDataType];
+//    [self addSegment];
+//    [self segmentAction:ZQAllDataView];
+}
+- (void)requestWalletDataType
+{
+    //收支明细接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_money_detailed/u_id/%@",[Utility getUserID]];
+    
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (succe) {
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    strongSelf.dataArr = [ZQWalletDetailModel mj_objectArrayWithKeyValuesArray:array];
+                    [strongSelf.tableView reloadData];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+    
+    } animated:YES];
+    
+    
 }
 - (void)requestWalletDataWithType
 {
@@ -169,19 +195,54 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"walletDetails"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleValue1) reuseIdentifier:@"walletDetails"];
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"walletDetails"];
         cell.textLabel.textColor = [UIColor darkTextColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        UILabel *priceL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+        priceL.font = [UIFont systemFontOfSize:13];
+        priceL.textColor = [UIColor lightGrayColor];
+        priceL.textAlignment = NSTextAlignmentRight;
+        cell.accessoryView = priceL;
+//        [cell.contentView addSubview:priceL];
+//        priceL.tag = 11111;
     }
-    cell.textLabel.text = self.dataArr[indexPath.row][@"title"];
-    cell.detailTextLabel.text = self.dataArr[indexPath.row][@"money"];
+    cell.imageView.image = [UIImage imageNamed:@"icon29"];
+    ZQWalletDetailModel *model = self.dataArr[indexPath.row];
+    switch (model.type.integerValue) {
+        case 1:
+            cell.textLabel.text = @"自行上线检车";
+        break;
+        case 2:
+            cell.textLabel.text = @"上门接送检车";
+            break;
+        case 3:
+            cell.textLabel.text = @"新车免检服务";
+            break;
+        default:
+            break;
+    }
+    NSString *moneyStr = [NSString stringWithFormat:@"金额: ￥%@",model.x_my];
+    NSRange range = [moneyStr rangeOfString:[NSString stringWithFormat:@"￥%@",model.x_my]];
+    NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
+    [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+    [cell.detailTextLabel setAttributedText:attachStr];
+
+    UILabel *label = (UILabel *)cell.accessoryView;
+    if ([model.time isKindOfClass:[NSString class]]) {
+        label.text = model.time;
+    }
+    else
+    {
+        label.text = @"2017-11-12";
+    }
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 60;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -192,7 +253,8 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KWidth, self.view.bounds.size.height-40) style:(UITableViewStyleGrouped)];
+//        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KWidth, self.view.bounds.size.height-40) style:(UITableViewStyleGrouped)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KWidth, self.view.bounds.size.height) style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);

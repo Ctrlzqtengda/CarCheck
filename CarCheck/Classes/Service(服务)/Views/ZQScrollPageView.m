@@ -7,6 +7,7 @@
 //
 
 #import "ZQScrollPageView.h"
+#import "UIImageView+WebCache.h"
 
 @interface ZQScrollPageView()<UIScrollViewDelegate>{
     ClickBlock _clickBlock;
@@ -103,23 +104,27 @@
 
 - (void)setImages {
     if (_currenIndex == 0) {
-        
-        self.frontImgView.image = [_imageArray lastObject];
-        self.lastImgView.image = _imageArray[_currenIndex + 1];
+        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.lastObject] placeholderImage:[UIImage imageNamed:@"adp"]];
+         [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+//        self.frontImgView.image = [_imageArray lastObject];
+//        self.lastImgView.image = _imageArray[_currenIndex + 1];
         
     }else if(_currenIndex == _imageArray.count - 1){
-        
-        self.frontImgView.image = _imageArray[_currenIndex - 1];
-        self.lastImgView.image = [_imageArray firstObject];
+        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+        [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.firstObject] placeholderImage:[UIImage imageNamed:@"adp"]];
+//        self.frontImgView.image = _imageArray[_currenIndex - 1];
+//        self.lastImgView.image = [_imageArray firstObject];
         
     }else{
-        
-        self.frontImgView.image = _imageArray[_currenIndex - 1];
-        self.lastImgView.image = _imageArray[_currenIndex + 1];
+        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+        [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+//        self.frontImgView.image = _imageArray[_currenIndex - 1];
+//        self.lastImgView.image = _imageArray[_currenIndex + 1];
         
     }
-    
-    self.midImgView.image = _imageArray[_currenIndex];
+    [self.self.midImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex]] placeholderImage:[UIImage imageNamed:@"adp"]];
+
+//    self.midImgView.image = _imageArray[_currenIndex];
 }
 
 - (void)setupScrollPageView {

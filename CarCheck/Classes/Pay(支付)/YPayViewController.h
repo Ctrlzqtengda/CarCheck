@@ -13,11 +13,11 @@
 /**支付json*/
 @property (strong,nonatomic) NSDictionary *payJson;
 /**订单id*/
-@property (strong,nonatomic) NSString *orderId;
+@property (copy,nonatomic) NSString *orderId;
 /**金额*/
-@property (strong,nonatomic) NSString *payMoney;
+@property (copy, nonatomic) NSString *payMoney;
 /**订单名称*/
-@property (strong,nonatomic) NSString *orderName;
+@property (copy,nonatomic) NSString *orderName;
 
 //@property (strong,nonatomic) YAddressModel *addressModel;
 

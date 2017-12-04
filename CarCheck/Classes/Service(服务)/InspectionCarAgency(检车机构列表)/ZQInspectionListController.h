@@ -12,6 +12,7 @@ typedef enum : NSUInteger {
     ZQSubScTypeDefailt,
     ZQSubScTypeCellPhone,
     ZQSubScTypeVisit,
+    ZQSubScTypeNone,
 } ZQSubScType;
 
 @interface ZQInspectionListController : BaseViewController

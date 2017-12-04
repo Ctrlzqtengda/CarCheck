@@ -19,6 +19,8 @@
 #import "ZQLoadingView.h"
 #import "UdStorage.h"
 
+#import "ZQParseTool.h"
+
 #ifdef DEBUG
 #define ZQLog(...) NSLog(__VA_ARGS__)
 #else

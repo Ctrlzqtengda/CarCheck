@@ -46,10 +46,11 @@
 }
 
 -(void)setMoney:(NSString *)money{
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@元",money]];
-    [attr addAttribute:NSFontAttributeName value:MFont(17) range:NSMakeRange(0, attr.length-4)];
-    [attr addAttribute:NSFontAttributeName value:MFont(15) range:NSMakeRange(attr.length-4, 4)];
-    _moneyLb.attributedText = attr;
+//    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@元",money]];
+//    [attr addAttribute:NSFontAttributeName value:MFont(17) range:NSMakeRange(0, attr.length-4)];
+//    [attr addAttribute:NSFontAttributeName value:MFont(15) range:NSMakeRange(attr.length-4, 4)];
+//    _moneyLb.attributedText = attr;
+    [_moneyLb setText:[NSString stringWithFormat:@"%@元",money]];
 }
 
 @end

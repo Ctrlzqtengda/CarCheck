@@ -9,13 +9,13 @@
 #import "BaseViewController.h"
 typedef enum
 {
-    ZQInProcessOrdersView = 0,   //处理中
+    ZQAllOrdersView = 0,        //全部
+    ZQInProcessOrdersView,      //处理中
     ZQSucessOrdersView,         //已成功
     ZQRevocationOrdersView,     //已撤销
-    ZQAllOrdersView,            //全部
 } ZQOrderViewType;
 
 @interface ZQMyOrderViewController : BaseViewController
 
-@property (nonatomic, assign) ZQOrderViewType currentViewType;
+@property (nonatomic, assign) ZQOrderViewType currentViewType; 
 @end

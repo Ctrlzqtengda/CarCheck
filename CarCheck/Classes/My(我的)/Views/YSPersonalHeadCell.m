@@ -141,9 +141,9 @@
         _headIV.layer.borderColor = LH_RGBCOLOR(244, 150, 130).CGColor;
         _headIV.layer.borderWidth = 2.5;
         _headIV.image =MImage(@"user_head");
-        NSData *imageData = [UdStorage getObjectforKey:@""];
+//        NSData *imageData = [Utility getObjectforKey:@""];
 //        [self setImageName:[UIImage imageWithData:imageData]];
-        _headIV.image = [UIImage imageWithData:imageData];
+//        _headIV.image = [UIImage imageWithData:imageData];
         _headIV.clipsToBounds = YES;
         _headIV.contentMode =UIViewContentModeScaleAspectFill;
     }

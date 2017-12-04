@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZQOrderModel.h"
+#import "ZQNewCarOrderModel.h"
 
 @interface ZQOrderCell : UITableViewCell
 
-@property (nonatomic, strong) ZQOrderModel *orderModel;
++ (CGFloat)OrderCellHeight;
+@property (nonatomic, strong) ZQNewCarOrderModel *orderModel;
 @end

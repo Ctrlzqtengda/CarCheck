@@ -10,11 +10,11 @@
 
 @interface ZQChoosePickerView()<UIPickerViewDelegate,UIPickerViewDataSource>{
     
-    NSMutableArray *_dataArray;
     ZQBlock _myBlock;
     NSInteger _index;
 }
-@property(strong,nonatomic)UIPickerView *pickView;
+@property (strong, nonatomic) UIPickerView *pickView;
+@property (strong, nonatomic) NSMutableArray *dataArray;
 @end
 
 @implementation ZQChoosePickerView
@@ -30,7 +30,6 @@
 
 -(void)initViews {
     
-    _index = 0;
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 1)];
     lineView.backgroundColor = __DefaultColor;
     
@@ -58,13 +57,12 @@
 }
 
 -(void)showWithDataArray:(NSArray *)dataArray inView:(UIView *)view chooseBackBlock:(ZQBlock )block {
-    
+    _index = 0;
     _dataArray = [NSMutableArray arrayWithArray:dataArray];
     [self.pickView reloadAllComponents];
     _myBlock = block;
     [view addSubview:self];
 }
-
 #pragma mark UIPickerViewDelegate,UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     
@@ -90,12 +88,14 @@
 
 #pragma mark ==取消==
 -(void)chooseCanel{
-    _myBlock(0);
+    _myBlock(nil);
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
 }
 #pragma mark ==确认==
 -(void)chooseSure{
-    _myBlock(_index);
+    _myBlock(_dataArray[_index]);
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
 }
 /*

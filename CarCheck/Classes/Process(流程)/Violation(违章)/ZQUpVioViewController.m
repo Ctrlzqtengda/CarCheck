@@ -13,37 +13,44 @@
 #import "YBuyingDatePicker.h"
 #import "ZQChoosePickerView.h"
 #import "ZQHtmlViewController.h"
+#import "YPayViewController.h"
 
 @interface ZQUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZQVioUpTableViewCellDelegate>{
-    NSArray *_titleArray;
-    NSArray *_placeArray;
+    NSArray        *_titleArray;
+    NSArray        *_placeArray;
     NSMutableArray *_contentArray;
-    UIImage *_chooseImage;
-    NSArray *_pickerDataArray;
-    NSInteger _index;
-    NSString *desString;
+    UIImage        *_chooseImage;
+    NSString       *desString;
+    
+    BOOL           isAgreeServer;    //是否同意协议
+    BOOL           isVerifyCode;    //验证码是否正确
 }
 
-@property(strong,nonatomic)UITableView *tableView;
-@property (strong,nonatomic) YSureOrderBottomView *bottomV;
-@property (strong,nonatomic) YBuyingDatePicker *datePickV;
-@property(strong,nonatomic) ZQChoosePickerView *pickView;
-
+@property (strong, nonatomic) UITableView          *tableView;
+@property (strong, nonatomic) YSureOrderBottomView *bottomV;
+@property (strong, nonatomic) YBuyingDatePicker    *datePickV;
+@property (strong, nonatomic) ZQChoosePickerView   *pickView;
+@property (copy,   nonatomic) NSString             *shortNumString;   //简称
+@property (copy,   nonatomic) NSString             *overdueFine;      //滞纳金
+@property (copy,   nonatomic) NSString             *veriyCode;        //验证码
 @end
 
 @implementation ZQUpVioViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"代缴罚款";
+    self.shortNumString = @"冀";
+    self.overdueFine = @"";
+    isAgreeServer = NO;
+    self.veriyCode = @"123456";
     desString = @"该服务适用于已开具《公安交通管理简易程序处罚决定书》的违章，若没有该罚单，请先到交通管理部门领取处罚决定书，然后填写下面的信息即可在线缴纳罚款";
     [self setupData];
     [self initViews];
-    // Do any additional setup after loading the view from its nib.
 }
 
 -(void)setupData {
-    
-    _index = 0;
 //    _titleArray = @[@[@"车牌号码",@"处罚金额",@"处罚日期"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
 //    _placeArray = @[@[@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
 //    手机号码：“请输入办理进度通知的手机号码”
@@ -51,11 +58,8 @@
 //
     _titleArray = @[@[@"罚单编号",@"车牌号码",@"处罚金额",@"处罚日期",@"手机号码",@"验证码"],@[@"处罚金额",@"滞纳金",@"服务费",@""]];
     _placeArray = @[@[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请输入办理进度通知的手机号码",@"请输入验证码"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
-    _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"",@"",@"", nil];
-    
-    
-    _pickerDataArray = @[@"冀",@"鲁",@"鄂"];
-    
+//    _placeArray = @[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请输入办理进度通知的手机号码",@"请输入验证码"];
+    _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"", nil];
 }
 
 -(ZQChoosePickerView *)pickView {
@@ -68,7 +72,6 @@
 
 -(void)initViews {
     
-    self.title = @"代缴罚款";
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KWidth, self.view.bounds.size.height - 50) style:(UITableViewStyleGrouped)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -86,15 +89,6 @@
     _bottomV.total = [NSString stringWithFormat:@"%.2f",[@"0" floatValue]+[@"0" floatValue]];
 }
 
-#pragma mark 私有方法
--(YBuyingDatePicker *)datePickV{
-    if (!_datePickV) {
-        _datePickV = [[YBuyingDatePicker alloc]initWithFrame:CGRectMake(0, __kHeight-260, __kWidth, 260)];
-        _datePickV.delegate = self;
-    }
-    return _datePickV;
-}
-
 #pragma mark ==YBuyingDatePickerDelegate==
 -(void)chooseDateTime:(NSString *)sender{
     NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
@@ -103,7 +97,24 @@
     NSString *dates =[formatter stringFromDate:coms];
 //    _placeArray = dates;
     _contentArray[3] = dates;
+    NSString *money = _contentArray[2];
+    if (money.floatValue>0) {
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay
+                                                   fromDate:coms
+                                                     toDate:[NSDate date]
+                                                    options:0];
+        NSInteger cDays = [components day];
+        CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
+        if (overdueFineMoney>money.floatValue) {
+          self.overdueFine = money;
+        }
+        else
+        {
+           self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+        }
+    }
     [self.tableView reloadData];
+    _bottomV.total = [NSString stringWithFormat:@"%.2f",money.floatValue+self.overdueFine.floatValue];
 }
 
 - (void)hiddenView {
@@ -114,19 +125,27 @@
 
 #pragma mark ZQVioUpTableViewCellDelegate
 -(void)showChooseView {
-    
-    [self.pickView showWithDataArray:_pickerDataArray inView:self.view chooseBackBlock:^(NSInteger index) {
-        _index = index;
-        [self.tableView reloadData];
-//        self.carShapeTf.text = _pickerDataArray[index];
+    if (_pickView) {
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+    }
+    __weak typeof(self) weakSelf = self;
+    [self.pickView showWithDataArray:[Utility getProvinceShortNum] inView:self.view chooseBackBlock:^(NSString *selectedStr) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            if (selectedStr) {
+                strongSelf.shortNumString = selectedStr;
+                [strongSelf.tableView reloadData];
+            }
+        }
     }];
     
 }
 
 #pragma mark ZQvioFooterViewDelegate
 // 是否同意协议
--(void)agreeAction:(BOOL )isAgree{
-    
+-(void)agreeAction:(BOOL)isAgree{
+    isAgreeServer = isAgree;
 }
 // 服务须知
 -(void)knowProtocolAction:(id )sender{
@@ -145,23 +164,138 @@
 #pragma mark YSureOrderBottomViewDelegate
 // 提交订单
 -(void)putOrder {
-    
-    
-    
+    if (!isAgreeServer) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请先阅读并同意相关须知 !" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    NSString *ticketNumStr = [_contentArray[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (ticketNumStr.length != 16) {
+        [ZQLoadingView showAlertHUD:@"请输入16位罚单编号" duration:SXLoadingTime];
+        return;
+    }
+    NSString *carCodeStr = [_contentArray[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!carCodeStr.length) {
+        [ZQLoadingView showAlertHUD:@"请输入车牌号码" duration:SXLoadingTime];
+        return;
+    }
+    carCodeStr = [NSString stringWithFormat:@"%@%@",self.shortNumString,carCodeStr];
+    NSString *punishMoneyStr = [_contentArray[2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!punishMoneyStr.length) {
+        [ZQLoadingView showAlertHUD:@"请输入处罚金额" duration:SXLoadingTime];
+        return;
+    }
+    NSString *punishDateStr = [_contentArray[3] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!punishDateStr.length) {
+        [ZQLoadingView showAlertHUD:@"请选择处罚日期" duration:SXLoadingTime];
+        return;
+    }
+    NSString *phoneStr = [_contentArray[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!phoneStr.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
+        return;
+    }
+    NSString *codeStr = [_contentArray[5] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!codeStr.length) {
+        [ZQLoadingView showAlertHUD:@"请输入验证码" duration:SXLoadingTime];
+        return;
+    }
+    else
+    {
+        if (!isVerifyCode) {
+            [ZQLoadingView showAlertHUD:@"请输入正确的验证码" duration:SXLoadingTime];
+            return;
+        }
+    }
+    if (!_chooseImage) {
+        [ZQLoadingView showAlertHUD:@"请上传处罚决定书" duration:SXLoadingTime];
+        return;
+    }
+    //代缴罚款接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/payment_of_fines/u_id/%@/ticket_number/%@/car_card/%@/fine_money/%@/fine_date/%@/phone/%@",[Utility getUserID],ticketNumStr,carCodeStr,punishMoneyStr,punishDateStr,phoneStr];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr Params:nil NSData:UIImageJPEGRepresentation(_chooseImage, 0.5) key:@"pic_path" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                YPayViewController *payVC = [[YPayViewController alloc] init];
+                payVC.payMoney = [NSString stringWithFormat:@"%@",jsonDic[@"total"]];
+                [strongSelf.navigationController pushViewController:payVC animated:YES];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:YES];
 }
-
+//获取验证码
+- (void)getCode
+{
+    NSString *phoneStr = [_contentArray[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!phoneStr.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
+        return;
+    }
+     NSString *urlStr = [NSString stringWithFormat:@"daf/get_code/u_id/%@/code/%@",[Utility getUserID],phoneStr];
+//    获取验证码接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                strongSelf.veriyCode = @"123456";
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:YES];
+}
 #pragma mark UITextFieldDelegate
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    
-    _contentArray[textField.tag] = textField.text;
-//    self.tableView.reloadData;
-    
-}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     return [textField resignFirstResponder];
-    
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    _contentArray[textField.tag] = textField.text;
+    if (textField.tag == 5) {
+        isVerifyCode = [self.veriyCode isEqualToString:textField.text];
+        if (!isVerifyCode) {
+            [ZQLoadingView showAlertHUD:@"验证码错误" duration:SXLoadingTime];
+            return YES;
+        }
+    }
+    if (textField.tag==2) {
+        NSString *dateStr = _contentArray[3];
+        NSDate *date = nil;
+        if (dateStr.length) {
+            NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            date = [formatter dateFromString:dateStr];
+            NSString *money = _contentArray[2];
+            if (money.floatValue>0) {
+                NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay
+                                                                               fromDate:date
+                                                                                 toDate:[NSDate date]
+                                                                                options:0];
+                NSInteger cDays = [components day];
+                CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
+                if (overdueFineMoney>money.floatValue) {
+                self.overdueFine = money;
+                }
+                else
+                {
+                self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+                }
+            }
+            _bottomV.total = [NSString stringWithFormat:@"%.2f",money.floatValue+ self.overdueFine.floatValue];
+        }
+    }
+    return YES;
 }
 
 #pragma mark UITableViewDataSource,UITableViewDelegate
@@ -175,9 +309,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ZQVioUpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZQVioUpTableViewCell_id" forIndexPath:indexPath];
-    if (cell == nil) {
-        
-    }
+    cell.accessoryView = nil;
     ZqCellType type;
     if (indexPath.section == 0) {
         cell.contentTf.delegate = self;
@@ -212,15 +344,48 @@
             }
                 break;
         }
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }else{
         type = ZQVioUpCellType4;
+        switch (indexPath.row) {
+            case 0:
+            {
+                NSString *str = _contentArray[2];
+                if (str.length) {
+                    cell.contentTf.text = [NSString stringWithFormat:@"￥%@",str];
+                }
+            }
+                break;
+            case 1:
+            {
+                if ([self.overdueFine floatValue]) {
+                    cell.contentTf.text = [NSString stringWithFormat:@"￥%@",self.overdueFine];
+                }
+            }
+                break;
+            case 2:
+            {
+                cell.contentTf.text = @"￥0";
+            }
+                break;
+            case 3:
+            {
+                NSString *str = _contentArray[2];
+                if (str.length) {
+                    cell.contentTf.text = [NSString stringWithFormat:@"￥%.2f",str.floatValue+ self.overdueFine.floatValue];
+                }
+            }
+                break;
+            default:
+                break;
+        }
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     cell.delegate = self;
     NSString *title = _titleArray[indexPath.section][indexPath.row];
     NSString *palceText = _placeArray[indexPath.section][indexPath.row];
     cell.contentTf.tag = indexPath.row;
-    [cell setCellType:type title:title placeText:palceText provinceCode:_pickerDataArray[_index]];
+    [cell setCellType:type title:title placeText:palceText provinceCode:self.shortNumString];
     return cell;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -270,6 +435,7 @@
         [self hiddenView];
     }
     if ((indexPath.section == 0) && (indexPath.row == 3) ) {
+        [self.view endEditing:YES];
         [self.view addSubview:self.datePickV];
     }
     
@@ -318,10 +484,15 @@
         
     }];
 }
-//获取验证码
-- (void)getCode
-{
-    
+
+#pragma mark 私有方法
+-(YBuyingDatePicker *)datePickV{
+    if (!_datePickV) {
+        _datePickV = [[YBuyingDatePicker alloc]initWithFrame:CGRectMake(0, __kHeight-260, __kWidth, 260)];
+        _datePickV.limitDate = YES;
+        _datePickV.delegate = self;
+    }
+    return _datePickV;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

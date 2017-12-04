@@ -53,16 +53,28 @@
     return self;
 }
 
-
-- (void)setInfoDict:(NSDictionary *)infoDict
+- (void)setOrderModel:(ZQOrderModel *)orderModel
 {
-    [self.bookingTitleL setText:[NSString stringWithFormat:@"预约项目: %@",infoDict[@"name"]]];
-    [self.bookingTimeL setText:[NSString stringWithFormat:@"预约时间: %@",infoDict[@"time"]]];
-    [self.contactL setText:[NSString stringWithFormat:@"联  系  人: %@",infoDict[@"contact"]]];
-    [self.phoneL setText:[NSString stringWithFormat:@"联系电话: %@",infoDict[@"phone"]]];
+    if ([_orderModel isEqual:orderModel]) {
+        return;
+    }
+    _orderModel = orderModel;
+    if (_orderModel.type.integerValue==1) {
+        [self.bookingTitleL setText:[NSString stringWithFormat:@"预约项目: %@",@"自行上线检车"]];
+    }
+    else
+    {
+        [self.bookingTitleL setText:[NSString stringWithFormat:@"预约项目: %@",@"上门接送检车"]];
+    }
+    [self.bookingTimeL setText:[NSString stringWithFormat:@"预约时间: %@",_orderModel.u_date]];
+    [self.contactL setText:[NSString stringWithFormat:@"联  系  人: %@",_orderModel.u_name]];
+    [self.phoneL setText:[NSString stringWithFormat:@"联系电话: %@",_orderModel.u_phone]];
     
-    NSString *moneyStr = [NSString stringWithFormat:@"预付金额: %@",infoDict[@"money"]];
-    NSRange range = [moneyStr rangeOfString:infoDict[@"money"]];
+    if (!_orderModel.pay_money) {
+        _orderModel.pay_money = @"0";
+    }
+    NSString *moneyStr = [NSString stringWithFormat:@"预付金额: ￥%@",_orderModel.pay_money];
+    NSRange range = [moneyStr rangeOfString:[NSString stringWithFormat:@"￥%@",_orderModel.pay_money]];
     NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
     [self.prepaidAmountL setAttributedText:attachStr];
@@ -140,7 +152,7 @@
         _agencyDetailBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [_agencyDetailBtn setTitle:@"机构详情" forState:UIControlStateNormal];
         [_agencyDetailBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_agencyDetailBtn setBackgroundColor:[UIColor blueColor]];
+        [_agencyDetailBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
         _agencyDetailBtn.layer.cornerRadius = 6;
     }
     return _agencyDetailBtn;
@@ -153,7 +165,7 @@
         _endorseBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [_endorseBtn setTitle:@"改签订单" forState:UIControlStateNormal];
         [_endorseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_endorseBtn setBackgroundColor:[UIColor blueColor]];
+        [_endorseBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
         _endorseBtn.layer.cornerRadius = 6;
     }
     return _endorseBtn;

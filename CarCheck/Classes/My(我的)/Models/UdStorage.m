@@ -7,30 +7,22 @@
 //
 
 #import "UdStorage.h"
+#import "ZQOrderModel.h"
 
 @implementation UdStorage
 
-+(void)storageObject:(id)object forKey:(NSString*)key{
-    NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
-    [ud setObject:object forKey:key];
-    [ud synchronize];
-}
-
-+(id)getObjectforKey:(NSString*)key{
-    NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
-    return [ud objectForKey:key];
-}
-//是否已同意预约须知协议
-+(void)storageAgreeReservationNotice:(BOOL)agree forKey:(NSString*)key
+//订单列表
++(NSMutableArray *)getOrderModelWithArray:(NSArray *)array
 {
-    NSUserDefaults *ud=[NSUserDefaults standardUserDefaults];
-    [ud setBool:agree forKey:key];
-    [ud synchronize];
+    NSMutableArray *mutArray = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in array) {
+        ZQOrderModel *model = [[ZQOrderModel alloc] init];
+        [model setValuesForKeysWithDictionary:dic];
+        [mutArray addObject:model];
+    }
+    return mutArray;
 }
-+(BOOL)isAgreeReservationNoticeForKey:(NSString*)key
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
-}
+//消息列表
 +(NSMutableArray *)getMessageModelWithArray:(NSArray *)array
 {
     NSMutableArray *mutArray = [NSMutableArray arrayWithCapacity:0];

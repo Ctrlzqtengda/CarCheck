@@ -10,7 +10,10 @@
 #import "ZQLoadingView.h"
 
 @interface ZQRegisterViewController ()<UITextFieldDelegate>
-
+{
+    int  temp;
+    BOOL rIsVerify;
+}
 @property (strong,nonatomic) UIScrollView *backV;
 
 @property (strong,nonatomic) NSString *mobile;//手机
@@ -19,13 +22,17 @@
 
 @property (strong,nonatomic) NSString *verify;//验证码
 
+@property (strong,nonatomic) NSTimer *tempTimer;
+
+@property (strong,nonatomic) UIButton *codeBtn;
 @end
 
 @implementation ZQRegisterViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    temp = 60;
+    rIsVerify = NO;
     [self getNavis];
     [self initView];
 }
@@ -71,6 +78,7 @@
         putV.backgroundColor= MainBgColor;
 
         UIImageView *headIV = [[UIImageView alloc] initWithFrame:CGRectMake(11, 11, 24, 24)];
+        headIV.contentMode = UIViewContentModeScaleAspectFit;
         [putV addSubview:headIV];
         headIV.image =MImage(imageArr[i]);
         
@@ -87,13 +95,13 @@
             }
                 break;
             case 1:{
-                UIButton *codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-148, 3, 85, 40)];
-                [putV addSubview:codeBtn];
-                codeBtn.titleLabel.font = MFont(15);
-                codeBtn.backgroundColor = [UIColor whiteColor];
-                [codeBtn setTitle:@"获取验证码" forState:BtnNormal];
-                [codeBtn setTitleColor:__TextColor forState:BtnNormal];
-                [codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+                self.codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-148, 3, 85, 40)];
+                _codeBtn.titleLabel.font = MFont(13);
+                _codeBtn.backgroundColor = [UIColor whiteColor];
+                [_codeBtn setTitle:@"获取验证码" forState:BtnNormal];
+                [_codeBtn setTitleColor:__TextColor forState:BtnNormal];
+                [_codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+                [putV addSubview:_codeBtn];
                 inputTF.placeholder = @"请输入验证码";
             }
                 break;
@@ -126,77 +134,78 @@
 
 #pragma mark ==注册==
 -(void)regiSter{
-    NSLog(@"注册");
-    [self.navigationController popViewControllerAnimated:YES];
-//    [self.view endEditing:YES];
-//    WK(weakSelf)
-//    __typeof(&*weakSelf) strongSelf = weakSelf;
-//
-//    NSString *user_name = _name;
-//    NSString *password = _passWord;
-//    NSString *email = _email;
-//    NSString *mobile = _mobile;
-//    NSString *verify = _verify;
-//    NSString *re_password = _re_password;
-//    NSString *recommend_tel = _referralCode;
-//
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    [dict setObject:user_name forKey:@"user_name"];
-//    [dict setObject:password forKey:@"password"];
-//    [dict setObject:email forKey:@"email"];
-//    [dict setObject:mobile forKey:@"mobile"];
-//    [dict setObject:verify forKey:@"verify"];
-//    [dict setObject:re_password forKey:@"re_password"];
-//    [dict setObject:recommend_tel forKey:@"recommend_tel"];
-//
-//    NSString *common_param = [YSParseTool jsonDict:dict];
-//    NSString *method = @"registerMember";
-//    NSString *controller = @"Member";
-//
-//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-//    [param setObject:common_param forKey:@"common_param"];
-//    [param setObject:method forKey:@"method"];
-//    [param setObject:controller forKey:@"controller"];
-//
-//    [JKHttpRequestService POST:@"?" withParameters:param success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-//        if (succe) {
-//            EMError *error = nil;
-//            [[EaseMob sharedInstance].chatManager registerNewAccount:weakSelf.mobile password:weakSelf.mobile error:&error];
-//            if (!error.errorCode) {
-//                NSLog(@"注册成功");
-//                [strongSelf.navigationController popViewControllerAnimated:YES];
-//            }else{
-//                NSLog(@"%@%ld",error.description,(long)error.errorCode);
-//            }
-//        }
-//    } failure:^(NSError *error) {
-//
-//    } animated:YES];
+    
+    if (!_mobile) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
+        return;
+    }
+//    if (!rIsVerify) {
+//        [ZQLoadingView showAlertHUD:@"请输入正确的验证码" duration:1.5];
+//        return;
+//    }
+    if (!_passWord) {
+        [ZQLoadingView showAlertHUD:@"请输入密码" duration:1.5];
+        return;
+    }
+    //注册接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/my_userInsert/phone/%@/password/%@",_mobile,_passWord];
+    __weak __typeof(self)weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf.navigationController popViewControllerAnimated:YES];
+                //保存用户名
+//                [UdStorage storageObject:strongSelf.mobile forKey:@"User_phone"];
+            }
+        }
+    } failure:^(NSError *error) {
+
+    } animated:YES];
     
 }
 
 
 #pragma mark ==获取验证码==
 -(void)getCode{
-    NSLog(@"获取验证码");
-//    [self.view endEditing:YES];
-//    if (IsNilString(_name)||IsNilString(_mobile)) {
-//        return;
-//    }
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html",nil];
-//
-//
-//    NSString *urlStr = @"http://api.shopsn.net/Register/re_send_msg";
-//    [manager POST:urlStr parameters:@{@"user_name":_name,@"mobile":_mobile} progress:^(NSProgress * _Nonnull uploadProgress) {
-//        //
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@",responseObject);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error);
-//    }];
+    if (self.tempTimer) {
+        [ZQLoadingView showAlertHUD:@"请稍后获取" duration:2];
+        return;
+    }
+    if (_mobile.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:2];
+        return;
+    }
+     NSString *urlStr = [NSString stringWithFormat:@"http://qishou.sztd123.com/index.php/Api/User/Verificationcode?phone=%@",_mobile];
+    __weak __typeof(self)weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf) {
+                strongSelf.verify = jsonDic[@"msg"][@"code"];
+                //            [strongSelf.codeBtn setBackgroundColor:[UIColor colorWithRed:0xbb/255.0 green:0xbb/255.0 blue:0xbb/255.0 alpha:1.0]];
+                strongSelf.tempTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(numTiming:) userInfo:nil repeats:YES];
+            }
+        }
+    } failure:^(NSError *error) {
+        [ZQLoadingView showAlertHUD:@"请求失败" duration:2.0];
+
+    } animated:YES];
+}
+- (void)numTiming:(NSTimer *)sTimer
+{
+    if (temp == 0) {
+        [sTimer invalidate];
+        self.tempTimer = nil;
+        temp = 60;
+        [_codeBtn setUserInteractionEnabled:YES];
+//        [_codeBtn setBackgroundColor:[UIColor colorWithRed:0x41/255.0 green:0xc9/255.0 blue:0xdc/255.0 alpha:1.0]];
+        [_codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_codeBtn setTitle:[NSString stringWithFormat:@"%d秒后重发",temp--] forState:UIControlStateNormal];
+    }
 }
 #pragma mark ==UITextFiledDelegate==
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -222,8 +231,10 @@
         }
         case 1:
         {
-            _verify = textField.text;
-
+            rIsVerify = [_verify isEqualToString:textField.text];
+            if (!rIsVerify) {
+                [ZQLoadingView showAlertHUD:@"验证码输入错误" duration:2.5];
+            }
         }
             break;
         case 2:
@@ -258,7 +269,14 @@
     return  UIStatusBarStyleDefault;
 }
 
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.tempTimer) {
+        [self.tempTimer invalidate];
+        self.tempTimer = nil;
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

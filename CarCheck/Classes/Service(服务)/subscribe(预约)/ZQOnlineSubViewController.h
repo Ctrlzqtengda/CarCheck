@@ -10,4 +10,7 @@
 
 @interface ZQOnlineSubViewController : BaseViewController
 
+@property (nonatomic,assign) NSInteger pageType;
+@property (nonatomic,copy) NSString *o_testing_id;
+
 @end

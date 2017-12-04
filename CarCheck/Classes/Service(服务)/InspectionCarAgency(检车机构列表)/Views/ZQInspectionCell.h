@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ZQInspectionModel.h"
 @interface ZQInspectionCell : UITableViewCell
 
-@property (nonatomic, strong) NSDictionary *infoDict;
+//@property (nonatomic, strong) NSDictionary *infoDict;
+@property (nonatomic, strong) ZQInspectionModel *inspectionModel;
 
 @property (nonatomic, strong) UIButton *navigationBtn;
 @property (nonatomic, strong) UIButton *bookingBtn;

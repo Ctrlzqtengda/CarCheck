@@ -103,7 +103,7 @@ __block __weak __typeof(&*self)weakSelf = self;
 
 
 //提示信息显示 时间
-#define  SXLoadingTime 1.5
+#define  SXLoadingTime 2.0
 #define DidLoadFailure @"加载失败"
 #define DidLoadSuccess @"加载成功"
 #define LoadComplete @"已经加载完了"

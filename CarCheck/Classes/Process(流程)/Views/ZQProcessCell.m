@@ -65,12 +65,12 @@
             [btn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
         }
     }else {
-        CGFloat height = 40;
+        CGFloat height = 34;
         _btnArray = [NSMutableArray array];
         for (int i = 0; i < _dataArray.count; i ++) {
             NSString *titleStr = _dataArray[i];
             UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            titleBtn.frame = CGRectMake(15, height*(i+1) + i*5, CGRectGetMinX(_imgBtn.frame) - 15, height);
+            titleBtn.frame = CGRectMake(10, height*(i+1) + i*5+8, CGRectGetMinX(_imgBtn.frame) - 10, height);
             titleBtn.backgroundColor = color;
             [titleBtn setTitle:titleStr forState:(UIControlStateNormal)];
             if (titleStr.length>6) {
