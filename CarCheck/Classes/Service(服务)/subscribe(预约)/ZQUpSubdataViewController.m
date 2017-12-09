@@ -131,7 +131,7 @@
         }
     }
     //上传预约资料接口
-    NSString *urlStr = [NSString stringWithFormat:@"daf/file_upload/u_id/%@/u_name/%@/u_phone/%@/u_car_card/%@/u_car_type/%@/testing_id/%@/type/%ld/inspection_fee/%@/service_charge/%f",[Utility getUserID],carOwner,phoneStr,carCodeStr,carShapeStr,self.b_testing_id,(long)self.bookingType,moneyStr,_serviceCharge];
+    NSString *urlStr = [NSString stringWithFormat:@"daf/file_upload/u_id/%@/u_name/%@/u_phone/%@/u_car_card/%@/u_car_type/%@/testing_id/%@/type/%ld/inspection_fee/%@/service_charge/%.0f",[Utility getUserID],carOwner,phoneStr,carCodeStr,carShapeStr,self.b_testing_id,(long)self.bookingType,moneyStr,_serviceCharge];
     NSArray *imageArr = @[UIImageJPEGRepresentation(licenseImage, 0.5),UIImageJPEGRepresentation(frontImage, 0.5),UIImageJPEGRepresentation(backImage, 0.5),UIImageJPEGRepresentation(insuranceImg, 0.5)];
     ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
     subVC.requestUrl = urlStr;
@@ -146,6 +146,7 @@
 
 -(void)setupViews {
     
+    self.carCodeTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
     imageView.image = [UIImage imageNamed:@"down2"];
     self.carShapeTf.rightView = imageView;
@@ -164,7 +165,7 @@
     self.carFrontImg.userInteractionEnabled = YES;
     self.carBackImg.userInteractionEnabled = YES;
     self.insuranceImg.userInteractionEnabled = YES;
-    
+    self.carCodeTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 }
 
 #pragma mark 私有方法

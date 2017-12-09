@@ -71,7 +71,7 @@
     
     UIButton *phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame),CGRectGetMinY(label.frame),120, 30)];
     phoneBtn.titleLabel.font = MFont(18);
-    [phoneBtn setTitle:@"4008769838" forState:BtnNormal];
+    [phoneBtn setTitle:[Utility getServerPhone] forState:BtnNormal];
     [phoneBtn setTitleColor:__DefaultColor forState:BtnNormal];
 //    [phoneBtn setTitleColor:[UIColor blueColor] forState:BtnNormal];
     [phoneBtn addTarget:self action:@selector(phoneBtnAction) forControlEvents:BtnTouchUpInside];
@@ -81,7 +81,17 @@
     UIButton *_putBtn = [[UIButton alloc]initWithFrame:CGRectMake(0,CGRectGetHeight(self.view.frame)-50, CGRectGetWidth(self.view.frame), 50)];
     _putBtn.backgroundColor = __DefaultColor;
     _putBtn.titleLabel.font = MFont(18);
-    [_putBtn setTitle:[NSString stringWithFormat:@"提交订单 (服务费: %@元)",[Utility getNewCarServiceOutlay]] forState:BtnNormal];
+    
+    if ([Utility getIs_vip]) {
+        NSString *title = [NSString stringWithFormat:@"提交订单 (服务费: %@元)",[Utility getNewCarServiceOutlay_VIP]];
+        UIImage * image=[UIImage imageNamed:@"VIP_logo"];
+        [_putBtn setImage:image forState:UIControlStateNormal];
+        [_putBtn setTitle:title forState:BtnNormal];
+    }
+    else
+    {
+        [_putBtn setTitle:[NSString stringWithFormat:@"提交订单 (服务费: %@元)",[Utility getNewCarServiceOutlay]] forState:BtnNormal];
+    }
     [_putBtn setTitleColor:[UIColor whiteColor] forState:BtnNormal];
     [_putBtn addTarget:self action:@selector(commitInformation) forControlEvents:BtnTouchUpInside];
     [self.view addSubview:_putBtn];
@@ -119,7 +129,10 @@
             if (strongSelf)
             {
                 YPayViewController *payVC = [[YPayViewController alloc] init];
-                payVC.payMoney = @"30";
+//                payVC.payMoney = [Utility getNewCarServiceOutlay];
+                payVC.payMoney = jsonDic[@"money"];
+                payVC.orderNo = jsonDic[@"order_no"];
+                payVC.aPayType = ZQPayNewCarView;
                 [strongSelf.navigationController pushViewController:payVC animated:YES];
             }
         }
@@ -129,7 +142,7 @@
 }
 - (void)phoneBtnAction
 {
-    NSString *phoneStr = @"4008769838";
+    NSString *phoneStr = [Utility getServerPhone];
     NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
     UIApplication * app = [UIApplication sharedApplication];
     if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {

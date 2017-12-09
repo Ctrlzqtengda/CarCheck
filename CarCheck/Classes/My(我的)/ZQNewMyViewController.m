@@ -189,7 +189,7 @@ static CGFloat kImageOriginHight = 200.f;
         case 2:
         {
             //客服电话
-            NSString *phoneStr = @"4008769838";
+            NSString *phoneStr = [Utility getServerPhone];
             NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
             UIApplication * app = [UIApplication sharedApplication];
             if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -232,7 +232,6 @@ static CGFloat kImageOriginHight = 200.f;
     {
         image = [self scaleImage:info[UIImagePickerControllerOriginalImage] toScale:0.5];
     }
-    [self.headBtn setBackgroundImage:image forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:nil];
     //保存图片进入沙盒中
     [self saveImage:image withName:@"headImage"];
@@ -266,6 +265,7 @@ static CGFloat kImageOriginHight = 200.f;
                 NSString *headUrl = jsonDic[@"head"];
                 if ([headUrl isKindOfClass:[NSString class]]) {
                     if (headUrl.length) {
+                        [strongSelf.headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ImageBaseAPI,headUrl]] forState:UIControlStateNormal placeholderImage:MImage(@"user_head")];
                         [Utility storageObject:headUrl forKey:@"userHeadUrl"];
                         return ;
                     }
@@ -356,7 +356,7 @@ static CGFloat kImageOriginHight = 200.f;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     [_phoneLabel setText:[Utility getUserName]];
-     [_headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.30.87/car%@",[Utility getUserHeadUrl]]] forState:UIControlStateNormal placeholderImage:MImage(@"user_head")];
+     [_headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ImageBaseAPI,[Utility getUserHeadUrl]]] forState:UIControlStateNormal placeholderImage:MImage(@"user_head")];
 //    if ([Utility isLogin]) {
 //
 //    }

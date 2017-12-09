@@ -36,7 +36,7 @@
 //    _logoIV = [[UIImageView alloc]initWithFrame:CGRectMake(10, 16, 0, 0)];
     [self addSubview:_logoIV];
     
-    _titleLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+14, 22, 110, 15)];
+    _titleLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+14, 22, 210, 15)];
     [self addSubview:_titleLb];
     _titleLb.textAlignment = NSTextAlignmentLeft;
     _titleLb.textColor = __DTextColor;

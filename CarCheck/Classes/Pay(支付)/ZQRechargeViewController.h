@@ -11,4 +11,5 @@
 @interface ZQRechargeViewController : BaseViewController
 
 @property (nonatomic,copy) void(^rechargeSuccess)(void);
+
 @end

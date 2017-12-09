@@ -34,7 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"我的订单";
+//    self.title = @"我的订单";
+    self.title = @"预约订单";
     _currentViewType = ZQInProcessOrdersView;
     _page = 1;
     [self.view addSubview:self.tableView];
@@ -81,81 +82,53 @@
         case ZQInProcessOrdersView:
         {
             if (array.count) {
-//                self.inProcessList = [UdStorage getOrderModelWithArray:array];
                 self.inProcessList = [ZQOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_inProcessList];
             }
             else
             {
                 [self.inProcessList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无正在处理的订单";
+                [self noDataShowText:@"您无正在处理的订单"];
             }
-            self.dataArr = _inProcessList;
-            [self.tableView reloadData];
         }
             break;
         case ZQSucessOrdersView:
         {
             if (array.count) {
-//                self.successList = [UdStorage getOrderModelWithArray:array];
                 self.successList = [ZQOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_successList];
             }
             else
             {
                 [self.successList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您暂时还无已完成订单";
+                [self noDataShowText:@"您暂时还无已完成订单"];
             }
-            self.dataArr = _successList;
-            [self.tableView reloadData];
         }
             break;
         case ZQRevocationOrdersView:
         {
             if (array.count) {
-//                self.revocationList = [UdStorage getOrderModelWithArray:array];
                 self.revocationList = [ZQOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_revocationList];
             }
             else
             {
                 [self.revocationList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无撤销订单";
+                [self noDataShowText:@"您无撤销订单"];
             }
-            self.dataArr = _revocationList;
-            [self.tableView reloadData];
         }
             break;
         case ZQAllOrdersView:
         {
             if (array.count) {
-//                self.allOrdersList = [UdStorage getOrderModelWithArray:array];
                 self.allOrdersList = [ZQOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_allOrdersList];
             }
             else
             {
                 [self.allOrdersList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无订单记录";
+                [self noDataShowText:@"您无订单记录"];
             }
-            self.dataArr = _allOrdersList;
-            [self.tableView reloadData];
         }
             break;
         default:
@@ -209,8 +182,7 @@
             }
             else
             {
-                self.dataArr = _inProcessList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_inProcessList];
             }
         }
             break;
@@ -223,8 +195,7 @@
             }
             else
             {
-                self.dataArr = _successList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_successList];
             }
         }
             break;
@@ -237,8 +208,7 @@
             }
             else
             {
-                self.dataArr = _revocationList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_revocationList];
             }
         }
             break;
@@ -251,14 +221,29 @@
             }
             else
             {
-                self.dataArr = _allOrdersList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_allOrdersList];
             }
         }
             break;
         default:
             break;
     }
+}
+- (void)reloadDataWithArray:(NSMutableArray *)mArray
+{
+    [self.noDataView removeFromSuperview];
+    self.noDataView = nil;
+    [self.tableView setHidden:NO];
+    self.dataArr = mArray;
+    [self.tableView reloadData];
+}
+- (void)noDataShowText:(NSString *)str
+{
+    [self.tableView setHidden:YES];
+    [self.view addSubview:self.noDataView];
+    self.noDataView.noOrderLabel.text = str;
+//    [self.dataArr removeAllObjects];
+    [self.tableView reloadData];
 }
 #pragma mark ==UITableViewDelegate==
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -295,7 +280,7 @@
     ZQOrderModel *model = self.dataArr[sender.tag];
     ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" testId:model.testing_id andShowBottom:YES];
     Vc.title = @"检车站详情";
-    Vc.dSubType = 1;
+    Vc.dSubType = model.type.integerValue;
     [self.navigationController pushViewController:Vc animated:YES];
 }
 //改签订单

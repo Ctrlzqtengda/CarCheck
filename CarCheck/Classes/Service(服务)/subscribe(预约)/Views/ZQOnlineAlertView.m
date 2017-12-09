@@ -59,7 +59,7 @@ const CGFloat oTextFieldTag = 33333;
         [button setCenter:CGPointMake(CGRectGetWidth(_alertView.frame)/2, currentHeight+30)];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor blueColor]];
+        [button setBackgroundColor:LH_RGBCOLOR(17,149,232)];
         [button setTitle:@"提  交" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(commitBtnAction) forControlEvents:UIControlEventTouchUpInside];
         button.layer.cornerRadius = 4;

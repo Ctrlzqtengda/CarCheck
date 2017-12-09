@@ -104,27 +104,50 @@
 
 - (void)setImages {
     if (_currenIndex == 0) {
-        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.lastObject] placeholderImage:[UIImage imageNamed:@"adp"]];
-         [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
-//        self.frontImgView.image = [_imageArray lastObject];
-//        self.lastImgView.image = _imageArray[_currenIndex + 1];
-        
+        NSString *str = _imageArray.lastObject;
+        if ([str isKindOfClass:[NSString class]]) {
+            [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.lastObject] placeholderImage:[UIImage imageNamed:@"adp"]];
+            [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+        }
+        else
+        {
+            self.frontImgView.image = [_imageArray lastObject];
+            self.lastImgView.image = _imageArray[_currenIndex + 1];
+        }
     }else if(_currenIndex == _imageArray.count - 1){
-        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
-        [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.firstObject] placeholderImage:[UIImage imageNamed:@"adp"]];
-//        self.frontImgView.image = _imageArray[_currenIndex - 1];
-//        self.lastImgView.image = [_imageArray firstObject];
-        
+        NSString *str = _imageArray.firstObject;
+        if ([str isKindOfClass:[NSString class]])
+        {
+            [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+            [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray.firstObject] placeholderImage:[UIImage imageNamed:@"adp"]];
+        }
+        else
+        {
+            self.frontImgView.image = _imageArray[_currenIndex - 1];
+            self.lastImgView.image = [_imageArray firstObject];
+        }
     }else{
-        [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
-        [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
-//        self.frontImgView.image = _imageArray[_currenIndex - 1];
-//        self.lastImgView.image = _imageArray[_currenIndex + 1];
-        
+        NSString *str = _imageArray[_currenIndex - 1];
+        if ([str isKindOfClass:[NSString class]])
+        {
+            [self.frontImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex - 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+            [self.lastImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex + 1]] placeholderImage:[UIImage imageNamed:@"adp"]];
+        }
+        else
+        {
+            self.frontImgView.image = _imageArray[_currenIndex - 1];
+            self.lastImgView.image = _imageArray[_currenIndex + 1];
+        }
     }
-    [self.self.midImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex]] placeholderImage:[UIImage imageNamed:@"adp"]];
-
-//    self.midImgView.image = _imageArray[_currenIndex];
+    NSString *str = _imageArray[_currenIndex];
+    if ([str isKindOfClass:[NSString class]])
+    {
+        [self.midImgView sd_setImageWithURL:[NSURL URLWithString:_imageArray[_currenIndex]] placeholderImage:[UIImage imageNamed:@"adp"]];
+    }
+    else
+    {
+        self.midImgView.image = _imageArray[_currenIndex];
+    }
 }
 
 - (void)setupScrollPageView {
@@ -174,7 +197,7 @@
 }
 
 - (void)tapImageView:(UIGestureRecognizer *)gesture {
-    _clickBlock(_currenIndex);
+//    _clickBlock(_currenIndex);
 }
 
 /*

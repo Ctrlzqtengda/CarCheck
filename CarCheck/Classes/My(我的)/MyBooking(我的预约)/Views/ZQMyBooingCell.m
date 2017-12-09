@@ -30,7 +30,8 @@
 
 + (CGFloat)myBooingCellHeight
 {
-    return 207;
+//    return 207;
+    return 207-70;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -40,7 +41,7 @@
         xMagin = 10;
         labelWidth = __kWidth - 2*xMagin;
         [self.contentView addSubview:self.bgView];
-        [self.contentView addSubview:self.btnBgView];
+//        [self.contentView addSubview:self.btnBgView];
         [self.bgView addSubview:self.bookingTitleL];
         [self.bgView addSubview:self.bookingTimeL];
         [self.bgView addSubview:self.contactL];
@@ -66,7 +67,7 @@
     {
         [self.bookingTitleL setText:[NSString stringWithFormat:@"预约项目: %@",@"上门接送检车"]];
     }
-    [self.bookingTimeL setText:[NSString stringWithFormat:@"预约时间: %@",_orderModel.u_date]];
+    [self.bookingTimeL setText:[NSString stringWithFormat:@"预约时间: %@ %@",_orderModel.u_date,_orderModel.phase]];
     [self.contactL setText:[NSString stringWithFormat:@"联  系  人: %@",_orderModel.u_name]];
     [self.phoneL setText:[NSString stringWithFormat:@"联系电话: %@",_orderModel.u_phone]];
     

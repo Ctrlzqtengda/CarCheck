@@ -224,7 +224,7 @@
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    NSString *phoneStr = @"4008769838";
+    NSString *phoneStr = [Utility getServerPhone];
     NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
     UIApplication * app = [UIApplication sharedApplication];
     if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {

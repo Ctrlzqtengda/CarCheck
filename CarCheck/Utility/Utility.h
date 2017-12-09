@@ -141,9 +141,23 @@
  *
  */
 +(NSString *)getNewCarServiceOutlay;
-
+/**
+ *  获取新车免检VIP服务费
+ *
+ */
++(NSString *)getNewCarServiceOutlay_VIP;
+/**
+ *  获取上门VIP服务费
+ *
+ */
++(NSString *)getDoorToDoorOutlay_VIP;
 //保存费用
 +(void)saveServiceMoneyWithArray:(NSArray*)array;
+/**
+ *  获取服务电话
+ *
+ */
++(NSString *)getServerPhone;
 
 //经纬度
 +(double)getLongitude;

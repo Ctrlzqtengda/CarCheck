@@ -45,8 +45,8 @@
     //         [self getSuceessView];
     //         return;
     //    }
-    [_tableV reloadData];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPayStatus:) name:YSOrderPayStatus object:nil];
+//    [_tableV reloadData];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPayStatus:) name:@"" object:nil];
 }
 
 
@@ -54,8 +54,9 @@
     [super viewDidLoad];
     self.title = @"充值";
     _chooseIndex = 1;
-    [self initView];
     [self getData];
+
+    [self initView];
 }
 
 - (void)initView{
@@ -108,7 +109,10 @@
     [textField resignFirstResponder];
     return YES;
 }
-
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    self.payMoney = textField.text;
+    return YES;
+}
 #pragma mark ==UITableViewDelegate==
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -140,32 +144,80 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_payMoney.floatValue>0) {
-        if (indexPath.row==0) {
-            
-            //            [SXLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
-            return;
-            [Pingpp createPayment:nil appURLScheme:nil withCompletion:^(NSString *result, PingppError *error) {
-                
-            }];
-        }else if(indexPath.row==1){
-            [Pingpp createPayment:nil appURLScheme:nil withCompletion:^(NSString *result, PingppError *error) {
-                
-            }];
-            //            [JKPayTool payOrderWxOrderId:_orderId title:_orderName price:_payMoney complete:^{
-            //                 NSLog(@"微信");
-            //            }];
-            //            [JKPayTool payOrderWxOrderId:_orderId title:_orderName price:_payMoney complete:^{
-            //                NSLog(@"微信");
-            //            } controller:self];
+    
+    [self.view endEditing:YES];
+    switch (indexPath.row) {
+        case 0:
+            {
+                [ZQLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
+            }
+            break;
+        case 1:
+        {
+            [self requestWeiChatPay];
         }
-    }else{
-        //        [SXLoadingView showAlertHUD:@"已支付成功" duration:SXLoadingTime];
+            break;
+        case 2:
+        {
+            [self requestWallet_vip_orderPay];
+        }
+            break;
+        default:
+            break;
     }
 }
 
-
-
+- (void)requestWeiChatPay
+{
+    if (_payMoney.floatValue > 0) {
+        NSString *urlStr = [NSString stringWithFormat:@"daf/wx_order/u_id/%@/money/%@",[Utility getUserID],_payMoney];
+        __weak typeof(self) weakSelf = self;
+        [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
+                    NSLog(@"微信支付结果:%@",result);
+                    if (error) {
+                        //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
+                        //                    [strongSelf getPayStatus:nil];
+                        [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
+                    }
+                    else
+                    {
+                        [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+                    }
+                }];
+            }
+        } failure:^(NSError *error) {
+        } animated:YES];
+    }
+    else
+    {
+        [ZQLoadingView showAlertHUD:@"请填写金额" duration:SXLoadingTime];
+    }
+}
+- (void)requestWallet_vip_orderPay
+{
+    if (_payMoney.floatValue>0) {
+        NSString *urlStr = [NSString stringWithFormat:@"daf/wx_order/u_id/%@/money/%@",[Utility getUserID],_payMoney];
+//        __weak typeof(self) weakSelf = self;
+        [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+//                    if (succe) {
+//                        __strong typeof(self) strongSelf = weakSelf;
+//                        if (strongSelf)
+//                        {
+//                            strongSelf.rechargeSuccess();
+//                        }
+//                    }
+        } failure:^(NSError *error) {
+        } animated:YES];
+    }
+    else
+    {
+        [ZQLoadingView showAlertHUD:@"请填写金额" duration:SXLoadingTime];
+    }
+}
 -(void)getSuceessView{
 //    _isPaySuccess = YES;
     [self.view addSubview:self.successV];

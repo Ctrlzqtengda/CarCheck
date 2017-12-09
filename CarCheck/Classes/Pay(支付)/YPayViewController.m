@@ -42,9 +42,9 @@
 @implementation YPayViewController
 
 -(void)getData{
-    _imageArr = @[@"Payment_zfb",@"Payment_wx"];
-    _titleArr = @[@"支付宝支付",@"微信支付"];
-    _detailArr = @[@"支付宝安全支付",@"微信安全支付"];
+    _imageArr = @[@"Payment_zfb",@"Payment_wx",@"Payment_wx"];
+    _titleArr = @[@"支付宝支付",@"微信支付",@"钱包支付"];
+    _detailArr = @[@"支付宝安全支付",@"微信安全支付",@"钱包安全支付"];
 //    if (IsNilString(_payMoney)||_payMoney.floatValue ==0) {
 //        _payMoney = @"0.00";
 //         [self getSuceessView];
@@ -123,32 +123,161 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_payMoney.floatValue>0) {
-        if (indexPath.row==0) {
-            
-//            [SXLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
-            return;
-            [Pingpp createPayment:nil appURLScheme:nil withCompletion:^(NSString *result, PingppError *error) {
-                
-            }];
-        }else if(indexPath.row==1){
-            [Pingpp createPayment:nil appURLScheme:nil withCompletion:^(NSString *result, PingppError *error) {
-                
-            }];
-//            [JKPayTool payOrderWxOrderId:_orderId title:_orderName price:_payMoney complete:^{
-//                 NSLog(@"微信");
-//            }];
-//            [JKPayTool payOrderWxOrderId:_orderId title:_orderName price:_payMoney complete:^{
-//                NSLog(@"微信");
-//            } controller:self];
+    switch (indexPath.row) {
+        case 0:
+            [ZQLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
+            break;
+       case 1:
+        {
+             [self requestWeiChatPay];
         }
-    }else{
-//        [SXLoadingView showAlertHUD:@"已支付成功" duration:SXLoadingTime];
+            break;
+        case 2:
+        {
+            [self requestWallet_vip_orderPay];
+        }
+            break;
+        default:
+            break;
     }
 }
 
+- (void)requestWeiChatPay
+{
+    NSString *urlStr = nil;
+    switch (self.aPayType) {
+        case ZQPayVIPView:
+        {
+        urlStr = [NSString stringWithFormat:@"daf/wx_vip_order/u_id/%@/channel/wx",[Utility getUserID]];
+        }
+            break;
+        case ZQPayNewCarView:
+        {
+            if (self.orderNo.length) {
+                urlStr = [NSString stringWithFormat:@"daf/n_bespeak_order/u_id/%@/channel/wx/order_no/%@",[Utility getUserID],self.orderNo];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:@"没有订单号" duration:SXLoadingTime];
+            }
+        }
+            break;
+        case ZQPayAFineView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wx_vip_order/u_id/%@/channel/wx",[Utility getUserID]];
+        }
+            break;
+        case ZQPayBookingView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/upload_order/u_id/%@/channel/wx/order_no/%@",[Utility getUserID],self.orderNo];
+        }
+            break;
+        default:
+            break;
+    }
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
+                NSLog(@"YpayVC微信支付结果:%@",result);
+                if (error) {
+                    //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
+                    //                        [strongSelf getPayStatus:nil];
+                    [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
+                }
+                else
+                {
+                    [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+                }
+            }];
+        }
+    } failure:^(NSError *error) {
+    } animated:YES];
+}
+- (void)requestAliPayData
+{
+    //    NSString *urlStr = [NSString stringWithFormat:@"daf/get_service_money/u_id/orderNum/%@/channel/wx/",[Utility getUserID],@"",@""];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:@"daf/get_service_money" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        [Utility saveServiceMoneyWithArray:array];
+                    }
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+    } animated:NO];
+}
+- (void)requestWallet_vip_orderPay
+{
+    NSString *urlStr = nil;
+    switch (self.aPayType) {
+        case ZQPayVIPView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wallet_vip_order/u_id/%@",[Utility getUserID]];
+        }
+            break;
+        case ZQPayNewCarView:
+        {
+            if (self.orderNo.length) {
+                urlStr = [NSString stringWithFormat:@"daf/wallet_n_bespeak_order/u_id/%@/order_no/%@",[Utility getUserID],self.orderNo];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:@"没有订单号" duration:SXLoadingTime];
+                return;
+            }
+        }
+            break;
+        case ZQPayAFineView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wallet_vip_order/u_id/%@",[Utility getUserID]];
+        }
+            break;
+        case ZQPayBookingView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wallet_bespeak_order/u_id/%@/order_no/%@",[Utility getUserID],self.orderNo];
+        }
+            break;
+        default:
+            break;
+    }
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                if (strongSelf.aPayType==ZQPayVIPView) {
+                    [Utility storageInteger:2 forKey:@"is_vip"];
+                    if (strongSelf.paySuccess) {
+                        strongSelf.paySuccess();
+                    }
+                    [strongSelf performSelector:@selector(backAction) withObject:nil afterDelay:2.6];
+                }
+                [strongSelf performSelector:@selector(backRootVcAction) withObject:nil afterDelay:2.6];
+            }
+        }
+    } failure:^(NSError *error) {
+    } animated:YES];
+}
 
-
+- (void)backAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+- (void)backRootVcAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 -(void)getSuceessView{
     _isPaySuccess = YES;
     [self.view addSubview:self.successV];

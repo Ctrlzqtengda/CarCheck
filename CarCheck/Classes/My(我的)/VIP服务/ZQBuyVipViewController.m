@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"VIP会员服务";
-    [self getData];
+    [self getDataAnimated:YES];
     [self initViews];
 }
 - (void)initViews {
@@ -77,7 +77,19 @@
 {
     if (isAgreen) {
         YPayViewController *payVC = [[YPayViewController alloc] init];
-        payVC.payMoney = @"99";
+        payVC.payMoney = self.aVipModel.current_price;
+        payVC.aPayType = ZQPayVIPView;
+        __weak typeof(self) weakSelf = self;
+        payVC.paySuccess = ^{
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                 [strongSelf.putBtn setTitle:@"VIP到期日:" forState:BtnNormal];
+                 [strongSelf.putBtn setUserInteractionEnabled:NO];
+                [strongSelf getDataAnimated:NO];
+                [strongSelf.mainView reloadData];
+            }
+        };
         [self.navigationController pushViewController:payVC animated:YES];
     }
     else
@@ -89,13 +101,13 @@
         [self presentViewController:alert animated:YES completion:nil];
     }
 }
--(void)getData {
+-(void)getDataAnimated:(BOOL)animate {
     //    _dataArray = @[@{@"title":@"违章查询",@"subtitle":@"weizhang"},@{@"title":@"检车机构",@"subtitle":@"jianche"},@{@"title":@"保险服务",@"subtitle":@"baoxian"},@{@"title":@"车辆维修",@"subtitle":@"weixiu"},@{@"title":@"代缴罚款",@"subtitle":@"fakuan"},@{@"title":@"常见问题",@"subtitle":@"wenti"},@{@"title":@"法律咨询",@"subtitle":@"falv"},@{@"title":@"加油充值",@"subtitle":@"jiayou"}];
     //VIP会员接口
-//    NSString *urlStr = [NSString stringWithFormat:@"daf/get_vip_member"];
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_vip_member/u_id/%@",[Utility getUserID]];
     _dataArray = @[@{@"title":@"机动车年检\n全年免费代办",@"price":@"价值69元",@"image":@"myMoney"},@{@"title":@"保险服务\n全年免费代办",@"price":@"价值50元",@"image":@"myMoney"},@{@"title":@"代缴罚款\n全年免费代办",@"price":@"价值30元",@"image":@"myMoney"},@{@"title":@"年检代办\n全年免费代办",@"price":@"价值50元",@"image":@"myMoney"},@{@"title":@"法律援助\n全年免费代办",@"price":@"价值100元",@"image":@"myMoney"},@{@"title":@"头等舱服务\n全年免费代办",@"price":@"价值99元",@"image":@"myMoney"}];
     __weak typeof(self) weakSelf = self;
-    [JKHttpRequestService POST:@"daf/get_vip_member" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
             __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
@@ -104,15 +116,17 @@
                 if ([dic isKindOfClass:[NSDictionary class]]) {
                     strongSelf.aVipModel = [ZQVIPModel mj_objectWithKeyValues:dic];
                     [strongSelf.aheadView configBuyCardViewWithModel:strongSelf.aVipModel];
-                    [strongSelf.putBtn setTitle:[NSString stringWithFormat:@"VIP到期日: %@",strongSelf.aVipModel.expire] forState:BtnNormal];
-//                    [strongSelf.mainView reloadData];
+                    if (strongSelf.aVipModel.is_vip.integerValue == 2) {
+                         [strongSelf.putBtn setTitle:[NSString stringWithFormat:@"VIP到期日: %@",strongSelf.aVipModel.expire] forState:BtnNormal];
+//                         [strongSelf.mainView reloadData];
+                    }
 
                 }
             }
         }
     } failure:^(NSError *error) {
         
-    } animated:YES];
+    } animated:animate];
 }
 
 #pragma mark UICollectionViewDelegate

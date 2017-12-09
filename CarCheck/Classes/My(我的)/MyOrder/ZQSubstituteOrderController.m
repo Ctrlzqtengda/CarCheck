@@ -84,76 +84,52 @@
         {
             if (array.count) {
                 self.inProcessList = [ZQSubstituteOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_inProcessList];
             }
             else
             {
                 [self.inProcessList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无正在处理的订单";
+                [self noDataShowText:@"您无正在处理的订单"];
             }
-            self.dataArr = _inProcessList;
-            [self.tableView reloadData];
         }
             break;
         case ZQSubSucessOrdersView:
         {
             if (array.count) {
                 self.successList = [ZQSubstituteOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_successList];
             }
             else
             {
                 [self.successList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您暂时还无已完成订单";
+                [self noDataShowText:@"您暂时还无已完成订单"];
             }
-            self.dataArr = _successList;
-            [self.tableView reloadData];
         }
             break;
         case ZQSubRevocationOrdersView:
         {
             if (array.count) {
                 self.revocationList = [ZQSubstituteOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_revocationList];
             }
             else
             {
                 [self.revocationList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无撤销订单";
+               [self noDataShowText:@"您无撤销订单"];
             }
-            self.dataArr = _revocationList;
-            [self.tableView reloadData];
         }
             break;
         case ZQSubAllOrdersView:
         {
             if (array.count) {
                 self.allOrdersList = [ZQSubstituteOrderModel mj_objectArrayWithKeyValuesArray:array];
-                [self.tableView setHidden:NO];
-                [self.noDataView removeFromSuperview];
-                self.noDataView = nil;
+                [self reloadDataWithArray:_allOrdersList];
             }
             else
             {
                 [self.allOrdersList removeAllObjects];
-                [self.tableView setHidden:YES];
-                [self.view addSubview:self.noDataView];
-                self.noDataView.noOrderLabel.text = @"您无订单记录";
+                [self noDataShowText:@"您无订单记录"];
             }
-            self.dataArr = _allOrdersList;
-            [self.tableView reloadData];
         }
             break;
         default:
@@ -207,8 +183,7 @@
             }
             else
             {
-                self.dataArr = _inProcessList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_inProcessList];
             }
         }
             break;
@@ -221,8 +196,7 @@
             }
             else
             {
-                self.dataArr = _successList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_successList];
             }
         }
             break;
@@ -235,8 +209,7 @@
             }
             else
             {
-                self.dataArr = _revocationList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_revocationList];
             }
         }
             break;
@@ -249,14 +222,29 @@
             }
             else
             {
-                self.dataArr = _allOrdersList;
-                [self.tableView reloadData];
+                [self reloadDataWithArray:_allOrdersList];
             }
         }
             break;
         default:
             break;
     }
+}
+- (void)reloadDataWithArray:(NSMutableArray *)mArray
+{
+    [self.noDataView removeFromSuperview];
+    self.noDataView = nil;
+    [self.tableView setHidden:NO];
+    self.dataArr = mArray;
+    [self.tableView reloadData];
+}
+- (void)noDataShowText:(NSString *)str
+{
+    [self.tableView setHidden:YES];
+    [self.view addSubview:self.noDataView];
+    self.noDataView.noOrderLabel.text = str;
+//    [self.dataArr removeAllObjects];
+    [self.tableView reloadData];
 }
 #pragma mark ==UITableViewDelegate==
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -12,6 +12,8 @@
 #import "ZQOnlineSubViewController.h"
 #import "ZQUpSubdataViewController.h"
 
+#import "GPSNaviViewController.h"
+
 @interface ZQHtmlViewController ()<WKNavigationDelegate,WKUIDelegate>
 {
     CGFloat bottomHeight;
@@ -70,15 +72,40 @@
     }
     else
     {
-        NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
-        NSString *path = [mainBundleDirectory  stringByAppendingPathComponent:_urlString];
-        NSURL *url = [NSURL fileURLWithPath:path];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:request];
+        if ([_urlString hasPrefix:@"agency"]) {
+            [self requestInstitutionDetailData];
+        }
+        else{
+            
+            NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
+            NSString *path = [mainBundleDirectory stringByAppendingPathComponent:_urlString];
+            NSURL *url = [NSURL fileURLWithPath:path];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            [self.webView loadRequest:request];
+        }
     }
     [self.progressV setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 5)];
     [self.view addSubview:self.progressV];
     [self.view bringSubviewToFront:_progressV];
+}
+- (void)requestInstitutionDetailData
+{
+    //机构详情接口
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism_text/o_id/%@",self.testing_id];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSString *jsonStr = jsonDic[@"res"];
+                if ([jsonStr isKindOfClass:[NSString class]]) {
+                    [strongSelf.webView loadHTMLString:jsonStr baseURL:nil];
+                }
+            }
+        }
+    } failure:^(NSError *error) {
+    } animated:NO];
 }
 - (void)addBottomBtn
 {
@@ -170,8 +197,15 @@
             NSString *htmlStr = @"reservationNotice2.html";
             ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
             Vc.title = @"机动车上门接送检车须知";
-            Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            if ([Utility getIs_vip]) {
+                Vc.charge = [Utility getDoorToDoorOutlay_VIP].floatValue;
+            }
+            else
+            {
+                Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            }
             Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            Vc.dSubType = self.dSubType;
             [self.navigationController pushViewController:Vc animated:YES];
             return;
         }
@@ -196,14 +230,33 @@
     }
     else
     {
-        NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
-        [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
-            if (index == 0) {
-                [Utility baiDuMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
-            }else if(index == 1){
-                [Utility gaoDeMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
+        if (self.inModel.type.integerValue == 1)
+        {
+            if (!self.inModel.o_range || !self.inModel.o_product) {
+                [ZQLoadingView showAlertHUD:@"此机构暂没有位置数据!" duration:SXLoadingTime];
+                return;
             }
-        }];
+            if (![Utility getLatitude]) {
+                [ZQLoadingView showAlertHUD:@"没有当前位置数据!" duration:SXLoadingTime];
+                return;
+            }
+            GPSNaviViewController *nav = [[GPSNaviViewController alloc] init];
+            
+            nav.startPoint = [AMapNaviPoint locationWithLatitude:[Utility getLatitude] longitude:[Utility getLongitude]];
+            nav.endPoint = [AMapNaviPoint locationWithLatitude:self.inModel.o_range.doubleValue longitude:self.inModel.o_product.doubleValue];
+            [self.navigationController pushViewController:nav animated:YES];
+            return;
+        }
+        [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待!" duration:SXLoadingTime];
+        
+//        NSArray *array = @[@"百度地图",@"高德地图",@"取消"];
+//        [Utility showActionSheetWithTitle:@"选择地图" contentArray:array controller:self chooseBlock:^(NSInteger index) {
+//            if (index == 0) {
+//                [Utility baiDuMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
+//            }else if(index == 1){
+//                [Utility gaoDeMapWithLongitude:self.inModel.o_product.doubleValue latitude:self.inModel.o_range.doubleValue];
+//            }
+//        }];
 //        导航到店
 //        [self baiDuMap:nil];
     }
@@ -218,6 +271,7 @@
 //        }];
 //    }
 }
+//下一步
 - (void)nextBtnAction
 {
     if (!isAgree) {
@@ -316,7 +370,7 @@
 - (UIProgressView *)progressV {
     if (!_progressV) {
         _progressV = [[UIProgressView alloc] init];
-        _progressV.backgroundColor = [UIColor blueColor];
+        _progressV.backgroundColor = LH_RGBCOLOR(17,149,232);
     }
     return _progressV;
 }

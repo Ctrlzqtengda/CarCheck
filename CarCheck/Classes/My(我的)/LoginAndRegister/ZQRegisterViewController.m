@@ -66,9 +66,10 @@
     _backV.contentSize = CGSizeMake(__kWidth, 667+70);
     
     //main
-    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-173)/2, 74, 173, 28)];
+    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-60)/2, 74, 60, 60)];
     [_backV addSubview:loginIV];
-    loginIV.image =MImage(@"CJWY");
+//    loginIV.image =MImage(@"CJWY");
+    loginIV.image = MImage(@"appIcon");
     loginIV.contentMode = UIViewContentModeScaleAspectFit;
     
     NSArray *imageArr =@[@"login_user",@"login_phone",@"login_password"];
@@ -107,6 +108,7 @@
                 break;
             case 2:{
                 inputTF.placeholder = @"请输入您的密码";
+                inputTF.secureTextEntry = YES;
                 break;
             }
             default:
@@ -134,15 +136,15 @@
 
 #pragma mark ==注册==
 -(void)regiSter{
-    
+    [self.view endEditing:YES];
     if (!_mobile) {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
         return;
     }
-//    if (!rIsVerify) {
-//        [ZQLoadingView showAlertHUD:@"请输入正确的验证码" duration:1.5];
-//        return;
-//    }
+    if (!rIsVerify) {
+        [ZQLoadingView showAlertHUD:@"请输入正确的验证码" duration:1.5];
+        return;
+    }
     if (!_passWord) {
         [ZQLoadingView showAlertHUD:@"请输入密码" duration:1.5];
         return;
@@ -168,23 +170,30 @@
 
 #pragma mark ==获取验证码==
 -(void)getCode{
+    [self.view endEditing:YES];
     if (self.tempTimer) {
-        [ZQLoadingView showAlertHUD:@"请稍后获取" duration:2];
+        [ZQLoadingView showAlertHUD:@"请稍后获取" duration:SXLoadingTime];
         return;
     }
-    if (_mobile.length) {
-        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:2];
+    if (!_mobile.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
         return;
     }
-     NSString *urlStr = [NSString stringWithFormat:@"http://qishou.sztd123.com/index.php/Api/User/Verificationcode?phone=%@",_mobile];
+
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_phone_code/phone/%@",_mobile];
     __weak __typeof(self)weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
-            if (strongSelf) {
-                strongSelf.verify = jsonDic[@"msg"][@"code"];
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            NSInteger code = [jsonDic[@"code"] integerValue];
+            if (code != 400) {
+                strongSelf.verify = [NSString stringWithFormat:@"%@",jsonDic[@"code"]];
                 //            [strongSelf.codeBtn setBackgroundColor:[UIColor colorWithRed:0xbb/255.0 green:0xbb/255.0 blue:0xbb/255.0 alpha:1.0]];
-                strongSelf.tempTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(numTiming:) userInfo:nil repeats:YES];
+                strongSelf.tempTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:strongSelf selector:@selector(numTiming:) userInfo:nil repeats:YES];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:jsonDic[@"statusmsg"] duration:SXLoadingTime];
             }
         }
     } failure:^(NSError *error) {

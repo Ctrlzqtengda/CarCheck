@@ -83,6 +83,8 @@
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
             self.contentTf.textAlignment = NSTextAlignmentLeft;
+            self.contentTf.keyboardType = UIKeyboardTypeASCIICapable;
+            self.contentTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
         }
             // 能输入，字在左边
@@ -96,6 +98,7 @@
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
             self.contentTf.textAlignment = NSTextAlignmentLeft;
+            self.contentTf.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
             // 不能输入
         }
@@ -108,6 +111,7 @@
             self.tfRightInset.constant = 48;
             self.rightImgView.hidden = NO;
             self.contentTf.textAlignment = NSTextAlignmentLeft;
+            self.contentTf.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
         }
         case ZQVioUpCellType4:
@@ -121,6 +125,8 @@
             self.rightImgView.hidden = YES;
             self.contentTf.enabled = NO;
             self.contentTf.textAlignment = NSTextAlignmentRight;
+            self.contentTf.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+            self.contentTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
         }
             // 能输入,字在右边
@@ -134,6 +140,7 @@
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
             self.contentTf.textAlignment = NSTextAlignmentRight;
+            self.contentTf.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
         }
         default:

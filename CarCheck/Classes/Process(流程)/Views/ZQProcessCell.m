@@ -37,7 +37,7 @@
     CGFloat height = 40,btnWidth = 60;
     
     _imgBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, height, btnWidth, height + 10);
+    _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, 10, btnWidth, height + 10);
 //    [_imgBtn setTitle:@"一" forState:(UIControlStateNormal)];
 //    [_imgBtn setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
     [_imgBtn setTitleColor:[UIColor darkGrayColor] forState:(UIControlStateNormal)];
@@ -70,7 +70,8 @@
         for (int i = 0; i < _dataArray.count; i ++) {
             NSString *titleStr = _dataArray[i];
             UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            titleBtn.frame = CGRectMake(10, height*(i+1) + i*5+8, CGRectGetMinX(_imgBtn.frame) - 10, height);
+//            titleBtn.frame = CGRectMake(10, height*(i+1) + i*5+8, CGRectGetMinX(_imgBtn.frame) - 10, height);
+            titleBtn.frame = CGRectMake(10, (height+5)*i+12, CGRectGetMinX(_imgBtn.frame) - 10, height);
             titleBtn.backgroundColor = color;
             [titleBtn setTitle:titleStr forState:(UIControlStateNormal)];
             if (titleStr.length>6) {

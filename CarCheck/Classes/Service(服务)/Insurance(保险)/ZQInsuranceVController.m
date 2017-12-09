@@ -72,7 +72,7 @@
     
     UIButton *phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame),CGRectGetMinY(label.frame),120, 30)];
     phoneBtn.titleLabel.font = MFont(18);
-    [phoneBtn setTitle:@"4008769838" forState:BtnNormal];
+    [phoneBtn setTitle:[Utility getServerPhone] forState:BtnNormal];
     [phoneBtn setTitleColor:LH_RGBCOLOR(17,149,232) forState:BtnNormal];
 //    [phoneBtn setTitleColor:[UIColor blueColor] forState:BtnNormal];
     [phoneBtn addTarget:self action:@selector(phoneBtnAction) forControlEvents:BtnTouchUpInside];
@@ -126,7 +126,7 @@
 }
 - (void)phoneBtnAction
 {
-    NSString *phoneStr = @"4008769838";
+    NSString *phoneStr = [Utility getServerPhone];
     NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
     UIApplication * app = [UIApplication sharedApplication];
     if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {

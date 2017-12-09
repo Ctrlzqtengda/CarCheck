@@ -22,4 +22,5 @@ pod 'mob_sharesdk/ShareSDKPlatforms/QQ'
 pod 'mob_sharesdk/ShareSDKPlatforms/SinaWeibo'
 pod 'mob_sharesdk/ShareSDKPlatforms/WeChat'
 pod 'AMapLocation-NO-IDFA'
+pod 'AMapNavi-NO-IDFA'
 end

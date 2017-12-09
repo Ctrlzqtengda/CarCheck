@@ -10,27 +10,28 @@
 #define _____RestAPI_h
 #import <UIKit/UIKit.h>
 
-//#define BaseAPI                 @"http://192.168.16.147:8080/onepage/"  // 公司服务器
+#define BaseAPI                 @"http://cjlm.sztd123.com/index.php/api/"  // 公司服务器
+#define ImageBaseAPI            @"http://cjlm.sztd123.com"  // 公司服务器
 
-#define BaseAPI                 @"http://192.168.30.87/car/index.php/api/"    // 赵楠
+//#define BaseAPI                 @"http://192.168.30.87/car/index.php/api/"    // 赵楠
 
-#define kUpdateDataBaseToHost   @"vote3/test/update.do"
-
-#define kHostUrlString          @"appinfo/list.do"
-
-#define kProductListAPI         @"appinfo/plist"
-
-#define kGoodsListAPI           @"appinfo/slist"       // 购物列表
-
-#define kLoginAPI               @"appuser/login"       // 登录
-
-#define SnsLoginUrlAPI          @"user_login2.action"  // 第三方登录
-
-#define kRegisteAPI             @"appuser/reg"         //注册
-
-#define kCollectAPI             @"appmyfavorite/save"  //收藏
-
-#define kCollectionListAPI      @"appmyfavorite/findPersonalList"  //收藏列表
+//#define kUpdateDataBaseToHost   @"vote3/test/update.do"
+//
+//#define kHostUrlString          @"appinfo/list.do"
+//
+//#define kProductListAPI         @"appinfo/plist"
+//
+//#define kGoodsListAPI           @"appinfo/slist"       // 购物列表
+//
+//#define kLoginAPI               @"appuser/login"       // 登录
+//
+//#define SnsLoginUrlAPI          @"user_login2.action"  // 第三方登录
+//
+//#define kRegisteAPI             @"appuser/reg"         //注册
+//
+//#define kCollectAPI             @"appmyfavorite/save"  //收藏
+//
+//#define kCollectionListAPI      @"appmyfavorite/findPersonalList"  //收藏列表
 
 
 //   常量

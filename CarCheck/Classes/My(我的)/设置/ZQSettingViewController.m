@@ -156,7 +156,7 @@
     NSArray* imageArray = @[[UIImage imageNamed:@"icon29"]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:@"分享内容" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"分享标题" type:SSDKContentTypeAuto];
+        [shareParams SSDKSetupShareParamsByText:@"新概念检车联盟" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"新概念检车联盟" type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
         //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
         [ShareSDK showShareActionSheet:nil items:nil shareParams:shareParams onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
@@ -183,7 +183,7 @@
 - (void)requestShareData
 {
     NSString *urlStr = [NSString stringWithFormat:@"daf/update_share/u_id/%@",[Utility getUserID]];
-    
+    NSLog(@"分享回调接口:%@",urlStr);
     //我的消息接口
 //    __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {

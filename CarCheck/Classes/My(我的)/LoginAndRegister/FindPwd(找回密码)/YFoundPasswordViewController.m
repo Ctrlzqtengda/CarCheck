@@ -12,16 +12,23 @@
 #import "ZQLoadingView.h"
 
 @interface YFoundPasswordViewController ()<UITextFieldDelegate>
+{
+    BOOL isRight;
+    NSInteger temp;
+}
+@property (strong, nonatomic) UIView *backV;
 
-@property (strong,nonatomic) UIView *backV;
+@property (strong, nonatomic) NSString *mobile;
 
-@property (strong,nonatomic) NSString *mobile;
+@property (strong, nonatomic) NSString *code;
 
-@property (strong,nonatomic) NSString *code;
+@property (strong, nonatomic) NSString *picCode;
 
-@property (strong,nonatomic) NSString *picCode;
+@property (strong, nonatomic) UIImageView *numIV;
 
-@property (strong,nonatomic) UIImageView *numIV;
+@property (strong, nonatomic) NSTimer *temTimer;
+
+@property (strong, nonatomic) UIButton *codeBtn;
 @end
 
 @implementation YFoundPasswordViewController
@@ -31,12 +38,18 @@
     [super viewWillAppear:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.temTimer) {
+        [self.temTimer invalidate];
+        self.temTimer = nil;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    temp = 60;
     [self initView];
     [self getNavis];
 }
@@ -72,7 +85,7 @@
     [self.view addSubview:_backV];
     _backV.backgroundColor = [UIColor whiteColor];
 
-    NSArray *imageArr = @[@"login_phone",@"login_SMS",@"login_verification"];
+    NSArray *imageArr = @[@"login_user",@"login_phone",@"login_password"];
     for (int i=0; i<3; i++) {
         UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 20+70*i, __kWidth-60, 46)];
         [_backV addSubview:putV];
@@ -80,6 +93,7 @@
         putV.layer.cornerRadius = 5;
 
         UIImageView *headIV = [[UIImageView alloc]init];
+        headIV.contentMode = UIViewContentModeScaleAspectFit;
         [putV addSubview:headIV];
         headIV.image= MImage(imageArr[i]);
 
@@ -108,26 +122,29 @@
                 [codeBtn setTitle:@"获取验证码" forState:BtnNormal];
                 [codeBtn setTitleColor:__TextColor forState:BtnNormal];
                 [codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+                self.codeBtn = codeBtn;
                 inputTF.placeholder = @"短信验证码";
             }
                 break;
             case 2:
             {
-                putV.frame = CGRectMake(30, 20+70*i, __kWidth-190, 46);
+//                putV.frame = CGRectMake(30, 20+70*i, __kWidth-190, 46);
                 headIV.frame = CGRectMake(11, 11, 24, 24);
-                inputTF.frame = CGRectMake(50, 13, __kWidth-250, 20);
-                inputTF.placeholder = @"图片验证码";
+//                inputTF.frame = CGRectMake(50, 13, __kWidth-250, 20);
+//                inputTF.placeholder = @"图片验证码";
+                inputTF.placeholder = @"请输入新密码";
+                inputTF.secureTextEntry = YES;
 
-                _numIV = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectXW(putV)+5, 172, 81, 32)];
-                [_backV addSubview:_numIV];
-                _numIV.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://api.yisu.cn/Home/Register/verify"]]];
-
-                UIButton *changeBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectXW(_numIV), 172, 50, 32)];
-                [_backV addSubview:changeBtn];
-                changeBtn.titleLabel.font = MFont(14);
-                [changeBtn setTitle:@"换一张" forState:BtnNormal];
-                [changeBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
-                [changeBtn addTarget:self action:@selector(change) forControlEvents:BtnTouchUpInside];
+//                _numIV = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectXW(putV)+5, 172, 81, 32)];
+//                [_backV addSubview:_numIV];
+//                _numIV.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://api.yisu.cn/Home/Register/verify"]]];
+//
+//                UIButton *changeBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectXW(_numIV), 172, 50, 32)];
+//                [_backV addSubview:changeBtn];
+//                changeBtn.titleLabel.font = MFont(14);
+//                [changeBtn setTitle:@"换一张" forState:BtnNormal];
+//                [changeBtn setTitleColor:LH_RGBCOLOR(153, 153, 153) forState:BtnNormal];
+//                [changeBtn addTarget:self action:@selector(change) forControlEvents:BtnTouchUpInside];
             }
                 break;
 
@@ -150,16 +167,45 @@
 -(void)getCode{
     NSLog(@"获取验证码");
     [self.view endEditing:YES];
-    if (!IsNilString(_mobile)) {
-        [JKHttpRequestService POST:@"Register/short_message_send" withParameters:@{@"mobile":_mobile} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-            if (succe) {
-                [ZQLoadingView showAlertHUD:@"发送成功" duration:1];
-            }
-        } failure:^(NSError *error) {
-            
-        } animated:YES];
+    if (!_mobile.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
+        return;
     }
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_phone_code/phone/%@",_mobile];
+    __weak __typeof(self)weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            NSInteger code = [jsonDic[@"code"] integerValue];
+            if (code != 400) {
+                strongSelf.code = [NSString stringWithFormat:@"%@",jsonDic[@"code"]];
+                //            [strongSelf.codeBtn setBackgroundColor:[UIColor colorWithRed:0xbb/255.0 green:0xbb/255.0 blue:0xbb/255.0 alpha:1.0]];
+                strongSelf.temTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:strongSelf selector:@selector(numTiming:) userInfo:nil repeats:YES];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:jsonDic[@"statusmsg"] duration:SXLoadingTime];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    } animated:YES];
 
+}
+- (void)numTiming:(NSTimer *)sTimer
+{
+    if (temp == 0) {
+        [sTimer invalidate];
+        self.temTimer = nil;
+        temp = 60;
+        [_codeBtn setUserInteractionEnabled:YES];
+        //        [_codeBtn setBackgroundColor:[UIColor colorWithRed:0x41/255.0 green:0xc9/255.0 blue:0xdc/255.0 alpha:1.0]];
+        [_codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_codeBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",(long)temp--] forState:UIControlStateNormal];
+    }
 }
 #pragma mark ==换一张==
 -(void)change{
@@ -168,19 +214,44 @@
 }
 #pragma mark ==找回密码==
 -(void)found{
+
+    if (!_mobile) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
+        return;
+    }
+    if (!isRight) {
+        [ZQLoadingView showAlertHUD:@"请输入正确的验证码" duration:1.5];
+        return;
+    }
+    if (!_picCode) {
+        [ZQLoadingView showAlertHUD:@"请输入新密码" duration:1.5];
+        return;
+    }
+    
     NSLog(@"找回密码");
-    [JKHttpRequestService POST:@"Register/find_pwd" withParameters:@{@"mobile":_mobile,@"verify":_picCode,@"code":_code} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+    __weak __typeof(self)weakSelf = self;
+    NSString *urlStr = [NSString stringWithFormat:@"daf/password_recovery/phone/%@/password/%@",_mobile,_picCode];
+
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
 //            [UdStorage storageObject:jsonDic[@"data"] forKey:Userid];
-            YResetPassViewController *vc =[[YResetPassViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+//            YResetPassViewController *vc =[[YResetPassViewController alloc]init];
+//            [self.navigationController pushViewController:vc animated:YES];
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                [strongSelf performSelector:@selector(backAction) withObject:strongSelf afterDelay:2.6];
+            }
         }
     } failure:^(NSError *error) {
 
     } animated:YES];
 
 }
-
+- (void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 //#pragma mark ==邮箱找回密码==
 //-(void)chooseEmail{
 //    NSLog(@"邮箱找回");
@@ -208,7 +279,10 @@
             break;
         case 1:
         {
-            _code = textField.text;
+            isRight = [_code isEqualToString:textField.text];
+            if (!isRight) {
+                [ZQLoadingView showAlertHUD:@"验证码错误" duration:SXLoadingTime];
+            }
         }
             break;
         case 2:

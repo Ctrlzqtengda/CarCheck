@@ -36,7 +36,9 @@
     CGFloat height = 40,btnWidth = 60;
     
     _imgBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, height, btnWidth, height + 10);
+//    _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, height, btnWidth, height + 10);
+    _imgBtn.frame = CGRectMake((__kWidth - btnWidth) / 2.0, 10, btnWidth, height + 10);
+
 //    [_imgBtn setTitle:@"二" forState:(UIControlStateNormal)];
 //    [_imgBtn setTitleColor:[UIColor redColor] forState:(UIControlStateNormal)];
     [_imgBtn setTitleColor:[UIColor darkGrayColor] forState:(UIControlStateNormal)];
@@ -68,7 +70,8 @@
         _btnArray = [NSMutableArray array];
         for (int i = 0; i < _dataArray.count; i ++) {
             UIButton *titleBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-            titleBtn.frame = CGRectMake(CGRectGetMaxX(_imgBtn.frame), height*(i+1) + i*5+8, CGRectGetMinX(_imgBtn.frame) - 10, height);
+//            titleBtn.frame = CGRectMake(CGRectGetMaxX(_imgBtn.frame), height*(i+1) + i*5+8, CGRectGetMinX(_imgBtn.frame) - 10, height);
+            titleBtn.frame = CGRectMake(CGRectGetMaxX(_imgBtn.frame), (height+5)*i+12, CGRectGetMinX(_imgBtn.frame) - 10, height);
             titleBtn.backgroundColor = color;
             [titleBtn setTitle:_dataArray[i] forState:(UIControlStateNormal)];
             titleBtn.tag = i+100;

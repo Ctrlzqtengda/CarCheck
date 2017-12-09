@@ -10,19 +10,34 @@
 #import "ZQRegisterViewController.h"
 
 @interface ZQSmsLoginViewController ()
+{
+    BOOL temp;
+}
+@property (strong, nonatomic) UIScrollView *backV;
 
-@property (strong,nonatomic) UIScrollView *backV;
+@property (strong, nonatomic) NSString *mobile;
 
-@property (strong,nonatomic) NSString *mobile;
+@property (strong, nonatomic) NSString *verify;
 
-@property (strong,nonatomic) NSString *verify;
+@property (strong, nonatomic) UIButton *codeBtn;
+
+@property (strong, nonatomic) NSTimer *sTemTimer;
 
 @end
 
 @implementation ZQSmsLoginViewController
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.sTemTimer) {
+        [self.sTemTimer invalidate];
+        self.sTemTimer = nil;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    temp = 60;
     [self initView];
     [self getNavis];
 }
@@ -55,12 +70,13 @@
     _backV.contentSize = CGSizeMake(__kWidth, 606);
     
     //main
-    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 95, 221, 28)];
+    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-60)/2, 95, 60, 60)];
     [_backV addSubview:loginIV];
-    loginIV.image =MImage(@"CJWY");
+//    loginIV.image =MImage(@"CJWY");
+    loginIV.image = MImage(@"appIcon");
     loginIV.contentMode = UIViewContentModeScaleAspectFit;
     
-    NSArray *imageArr = @[@"login_phone",@"login_SMS"];
+    NSArray *imageArr = @[@"login_user",@"login_phone"];
     for (int i=0; i<2; i++) {
         UIView *putV = [[UIView alloc]initWithFrame:CGRectMake(30, 30+CGRectYH(loginIV)+60*i, __kWidth-60, 46)];
         [_backV addSubview:putV];
@@ -68,6 +84,7 @@
         putV.layer.cornerRadius = 5;
         
         UIImageView *headIV = [[UIImageView alloc] initWithFrame:CGRectMake(11, 11, 24, 24)];
+        headIV.contentMode = UIViewContentModeScaleAspectFit;
         [putV addSubview:headIV];
         headIV.image = MImage(imageArr[i]);
         
@@ -87,6 +104,7 @@
             [codeBtn setTitle:@"获取验证码" forState:BtnNormal];
             [codeBtn setTitleColor:__TextColor forState:BtnNormal];
             [codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+            self.codeBtn = codeBtn;
             inputTF.placeholder = @"请输入短信验证码...";
         }
     }
@@ -142,14 +160,44 @@
 #pragma mark ==获取验证码==
 -(void)getCode{
     NSLog(@"获取验证码");
-    [self.view endEditing:YES];
-    [JKHttpRequestService POST:@"Register/short_message_send" withParameters:@{@"mobile":_mobile} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            
+    if (!_mobile.length) {
+        [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
+        return;
+    }
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_phone_code/phone/%@",_mobile];
+    __weak __typeof(self)weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            NSInteger code = [jsonDic[@"code"] integerValue];
+            if (code != 400) {
+                strongSelf.verify = [NSString stringWithFormat:@"%@",jsonDic[@"code"]];
+                //            [strongSelf.codeBtn setBackgroundColor:[UIColor colorWithRed:0xbb/255.0 green:0xbb/255.0 blue:0xbb/255.0 alpha:1.0]];
+                strongSelf.sTemTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:strongSelf selector:@selector(numTiming:) userInfo:nil repeats:YES];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:jsonDic[@"statusmsg"] duration:SXLoadingTime];
+            }
         }
     } failure:^(NSError *error) {
         
     } animated:YES];
+}
+- (void)numTiming:(NSTimer *)sTimer
+{
+    if (temp == 0) {
+        [sTimer invalidate];
+        self.sTemTimer = nil;
+        temp = 60;
+        [_codeBtn setUserInteractionEnabled:YES];
+        //        [_codeBtn setBackgroundColor:[UIColor colorWithRed:0x41/255.0 green:0xc9/255.0 blue:0xdc/255.0 alpha:1.0]];
+        [_codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_codeBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",(long)temp--] forState:UIControlStateNormal];
+    }
 }
 #pragma mark ==登录==
 -(void)Login{

@@ -66,7 +66,7 @@
     rightLb.textColor = __TextColor;
     rightLb.font = MFont(12);
     rightLb.numberOfLines = 0;
-    rightLb.text = @"客服热线：4008769838\n 微信公众号:shenzhoutengda";
+    rightLb.text = [NSString stringWithFormat:@"客服热线：%@\n 微信公众号:shenzhoutengda",[Utility getServerPhone]];
 }
 
 - (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size

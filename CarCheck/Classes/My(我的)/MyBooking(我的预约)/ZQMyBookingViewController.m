@@ -129,6 +129,7 @@
 //机构详情
 - (void)agencyDetailBtnAction:(UIButton *)sender
 {
+//    ZQOrderModel *model = self.dataArr[sender.tag];
     ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" andShowBottom:YES];
     Vc.title = @"机构详情";
     [self.navigationController pushViewController:Vc animated:YES];

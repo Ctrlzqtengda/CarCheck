@@ -95,8 +95,16 @@
             NSString *htmlStr = @"reservationNotice2.html";
             ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
             Vc.title = @"机动车上门接送检车须知";
-            Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            if ([Utility getIs_vip])
+            {
+                Vc.charge = [Utility getDoorToDoorOutlay_VIP].floatValue;
+            }
+            else
+            {
+                Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+            }
             Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            Vc.dSubType = 2;
             [self.navigationController pushViewController:Vc animated:YES];
         }
         else
@@ -105,6 +113,7 @@
             ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
             Vc.title = @"预约须知";
             Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+            Vc.dSubType = 0;
             [self.navigationController pushViewController:Vc animated:YES];
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

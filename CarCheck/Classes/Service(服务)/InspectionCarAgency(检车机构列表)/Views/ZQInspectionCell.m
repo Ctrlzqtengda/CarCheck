@@ -42,6 +42,9 @@ const CGFloat cSpace =  6;
 
 + (CGFloat)inspectionCellHeight
 {
+    if (__kWidth>320) {
+        return 160;
+    }
     return 140;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

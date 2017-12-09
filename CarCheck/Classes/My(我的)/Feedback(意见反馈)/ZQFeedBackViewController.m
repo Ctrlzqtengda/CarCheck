@@ -75,7 +75,7 @@
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendBtn setTitle:@"提交" forState:UIControlStateNormal];
     [sendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendBtn setBackgroundColor:[UIColor blueColor]];
+    [sendBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
     sendBtn.layer.cornerRadius = 4;
     sendBtn.clipsToBounds = YES;
     sendBtn.frame = CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, CGRectGetMaxY(textBgView.frame)+30, 200, 40);

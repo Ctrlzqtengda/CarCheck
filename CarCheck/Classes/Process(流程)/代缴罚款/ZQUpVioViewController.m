@@ -24,6 +24,8 @@
     
     BOOL           isAgreeServer;    //是否同意协议
     BOOL           isVerifyCode;    //验证码是否正确
+    
+    NSInteger temp;
 }
 
 @property (strong, nonatomic) UITableView          *tableView;
@@ -33,13 +35,24 @@
 @property (copy,   nonatomic) NSString             *shortNumString;   //简称
 @property (copy,   nonatomic) NSString             *overdueFine;      //滞纳金
 @property (copy,   nonatomic) NSString             *veriyCode;        //验证码
+
+@property (strong, nonatomic) NSTimer *sTimer;
+@property (strong, nonatomic) UIButton *codeBtn;
 @end
 
 @implementation ZQUpVioViewController
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.sTimer) {
+        [self.sTimer invalidate];
+        self.sTimer = nil;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    temp = 60;
     self.title = @"代缴罚款";
     self.shortNumString = @"冀";
     self.overdueFine = @"";
@@ -224,6 +237,7 @@
             {
                 YPayViewController *payVC = [[YPayViewController alloc] init];
                 payVC.payMoney = [NSString stringWithFormat:@"%@",jsonDic[@"total"]];
+                payVC.aPayType = ZQPayAFineView;
                 [strongSelf.navigationController pushViewController:payVC animated:YES];
             }
         }
@@ -239,20 +253,41 @@
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
-     NSString *urlStr = [NSString stringWithFormat:@"daf/get_code/u_id/%@/code/%@",[Utility getUserID],phoneStr];
+     NSString *urlStr = [NSString stringWithFormat:@"daf/get_phone_code/phone/%@",phoneStr];
 //    获取验证码接口
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
-            if (strongSelf)
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            NSInteger code = [jsonDic[@"code"] integerValue];
+            if (code != 400) {
+                strongSelf.veriyCode = [NSString stringWithFormat:@"%@",jsonDic[@"code"]];
+                //            [strongSelf.codeBtn setBackgroundColor:[UIColor colorWithRed:0xbb/255.0 green:0xbb/255.0 blue:0xbb/255.0 alpha:1.0]];
+                strongSelf.sTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:strongSelf selector:@selector(numTiming:) userInfo:nil repeats:YES];
+            }
+            else
             {
-                strongSelf.veriyCode = @"123456";
+                [ZQLoadingView showAlertHUD:jsonDic[@"statusmsg"] duration:SXLoadingTime];
             }
         }
     } failure:^(NSError *error) {
         
     } animated:YES];
+}
+- (void)numTiming:(NSTimer *)sTimer
+{
+    if (temp == 0) {
+        [sTimer invalidate];
+        self.sTimer = nil;
+        temp = 60;
+        [_codeBtn setUserInteractionEnabled:YES];
+        //        [_codeBtn setBackgroundColor:[UIColor colorWithRed:0x41/255.0 green:0xc9/255.0 blue:0xdc/255.0 alpha:1.0]];
+        [_codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_codeBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",(long)temp--] forState:UIControlStateNormal];
+    }
 }
 #pragma mark UITextFieldDelegate
 
@@ -335,6 +370,7 @@
                 [codeBtn setTitle:@"获取验证码" forState:BtnNormal];
                 [codeBtn setTitleColor:__TextColor forState:BtnNormal];
                 [codeBtn addTarget:self action:@selector(getCode) forControlEvents:BtnTouchUpInside];
+                self.codeBtn = codeBtn;
                 cell.accessoryView = codeBtn;
             }
                 break;

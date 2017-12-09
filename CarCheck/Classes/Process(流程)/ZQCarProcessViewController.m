@@ -149,7 +149,7 @@
         else
         {
             NSLog(@"定位成功经纬度内容:%@",[NSString stringWithFormat:@"lat:%f;lon:%f \n accuracy:%.2fm", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy]);
-            [Utility saveLongitude:location.coordinate.latitude Latitude:location.coordinate.longitude];
+            [Utility saveLongitude:location.coordinate.longitude Latitude:location.coordinate.latitude];
         }
     };
 }
@@ -168,12 +168,15 @@
 -(void)initViews {
     
     [self getData];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    UIView *headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 10)];
+    headV.backgroundColor = [UIColor clearColor];
+    self.tableView.tableHeaderView = headV;
     // 注册
     [self.tableView registerClass:[ZQProcessCell class] forCellReuseIdentifier:@"ZQProcessCell"];
     [self.tableView registerClass:[ZQProcessRightCell class] forCellReuseIdentifier:@"ZQProcessRightCell"];
@@ -290,7 +293,7 @@
                 case 2:
                 {
 //                    type = ZQSubScTypeCellPhone;
-                    NSString *phoneStr = @"4008769838";
+                    NSString *phoneStr = [Utility getServerPhone];
                     NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                     UIApplication * app = [UIApplication sharedApplication];
                     if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -412,7 +415,14 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *tmpArray = _dataArray[indexPath.row];
-    return 35 * (2 + tmpArray.count) + 5 * (tmpArray.count - 1);
+//    return 35 * (2 + tmpArray.count) + 5 * (tmpArray.count - 1);
+    if (__kWidth>320) {
+        if (__kWidth>375) {
+            return 40 * tmpArray.count+50;
+        }
+        return 40 * tmpArray.count+40;
+    }
+    return 40 * tmpArray.count+20;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

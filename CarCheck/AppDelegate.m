@@ -11,14 +11,14 @@
 #define QQID @"1105952274"
 #define QQKEY @"kl3qSJiZvpcmWCDT"
 //微信
-#define WXID @"wx8836bea9c40b21ce"
-#define WXSecret @"a0a15e02a15068886a5637e15ddee70c"
+#define WXID @"wx856faae7831229da"
+#define WXSecret @"c463ec4cb749ef0ab56b3c3615790877"
 
 //微博
 #define WbID @"3311610802"
-#define WbSecret @"99e2a78d92b237bfcbb20dee9f3ea9a0"
+#define WbSecret @"36b4142ac5d137f32d51cd7d"
 //极光
-#define JPKey @"527dae4e9bf59947e7e77304"
+#define JPKey @"8f0ab8de2397697351bec55b"
 #define JPSecret @"f7c189dc704d83cdb042add9"
 
 #import "AppDelegate.h"
@@ -54,10 +54,17 @@
 #import "WeiboSDK.h"
 //支付
 #import "Pingpp.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 @interface AppDelegate ()<UITabBarControllerDelegate,JPUSHRegisterDelegate>
 
 @property (nonatomic, assign) NSUInteger sTabBarIndex;
+
+@property (assign,nonatomic) BOOL isAlert;
+
+@property (assign,nonatomic) BOOL isShake;
+
+@property (assign,nonatomic) BOOL isRound;
 @end
 
 @implementation AppDelegate
@@ -70,6 +77,7 @@
     self.window.rootViewController = [self setupViews];
     
     [self.window makeKeyAndVisible];
+    
 //    [NSThread sleepForTimeInterval:2];
     
 //    @param activePlatforms
@@ -81,7 +89,8 @@
     
     [ShareSDK registerActivePlatforms:@[
                                         @(SSDKPlatformTypeSinaWeibo),
-                                        @(SSDKPlatformTypeWechat),
+                                        @(SSDKPlatformSubTypeWechatSession),
+                                        @(SSDKPlatformSubTypeWechatTimeline),
                                         @(SSDKPlatformTypeQQ),
                                         ]
     onImport:^(SSDKPlatformType platformType)
@@ -133,7 +142,14 @@
     // ping++支付
 //    [Pingpp setDebugMode:NO];
     
+    //极光推送
+    _isAlert = YES;
+    _isRound =YES;
+    _isShake = YES;
+    [self initJPushService:application WithOption:launchOptions];
+    
     [self getServiceMoney];
+
     return YES;
 }
 
@@ -151,6 +167,8 @@
                 if ([array isKindOfClass:[NSArray class]]) {
                     if (array.count) {
                         [Utility saveServiceMoneyWithArray:array];
+                        [Utility storageObject:jsonDic[@"phone"] forKey:@"ServerPhone"];
+
                     }
                 }
             }
@@ -158,6 +176,7 @@
     } failure:^(NSError *error) {
     } animated:NO];
 }
+
 - (BaseTabBarViewController *)setupViews {
     
      BaseTabBarViewController *tabBarVC = [[BaseTabBarViewController alloc] init];
@@ -235,6 +254,7 @@
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     /// Required - 注册 DeviceToken
+    NSLog(@"DeviceTokenDeviceToken:%@",deviceToken);
     [JPUSHService registerDeviceToken:deviceToken];
 }
 //实现注册APNs失败接口
@@ -267,7 +287,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-    [JPUSHService setupWithOption:launchOptions appKey:@""
+    [JPUSHService setupWithOption:launchOptions appKey:JPKey
                           channel:@"App Store"
                  apsForProduction:false
             advertisingIdentifier:advertisingId];
@@ -347,11 +367,204 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService handleRemoteNotification:userInfo];
 //    completionHandler(UIBackgroundFetchResultNewData);
 }
+
+//9.0前的方法，为了适配低版本 保留
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+//
+//    [[UPPaymentControl defaultControl]
+//     handlePaymentResult:url
+//     completeBlock:^(NSString *code, NSDictionary *data) {
+//         //结果code为成功时，先校验签名，校验成功后做后续处理
+//         if([code isEqualToString:@"success"]) {
+//             //判断签名数据是否存在
+//             if(data == nil){
+//                 //如果没有签名数据，建议商户app后台查询交易结果
+//                 return;
+//             }
+//             //数据从NSDictionary转换为NSString
+//             NSData *signData = [NSJSONSerialization dataWithJSONObject:data
+//                                                                options:0
+//                                                                  error:nil];
+//             NSString *sign = [[NSString alloc]
+//                               initWithData:signData
+//                               encoding:NSUTF8StringEncoding];
+//             NSLog(@"Sign: %@", sign);
+//             //验签证书同后台验签证书
+//             //此处的verify，商户需送去商户后台做验签
+//             //支付成功且验签成功，展示支付成功提示
+//             //验签失败，交易结果数据被篡改，商户app后台查询交易结果
+//         } else if([code isEqualToString:@"fail"]) {
+//             //交易失败
+//         } else if([code isEqualToString:@"cancel"]) {
+//             //交易取消
+//         }
+//     }];        //调用其他SDK，例如支付宝SDK等
+    //    if ([sourceApplication isEqualToString:@"com.tencent.xin"]||[sourceApplication isEqualToString:@"pay"]) {
+    //            //微信支付回调
+    //            return [WXApi handleOpenURL:url delegate:self];
+    //    }
+    
+    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
+        NSLog(@"Appdelegate-Pingpp支付结果%@",result);
+        if (error) {
+            switch (error.code) {
+                case PingppErrCancelled:
+                    [ZQLoadingView showAlertHUD:@"支付取消" duration:SXLoadingTime];
+                    break;
+                    
+                default:
+                    [ZQLoadingView showAlertHUD:@"支付失败" duration:SXLoadingTime];
+                    break;
+            }
+            //            [self checkPay];
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"enterSuccessView" object:nil];
+        }
+        else
+        {
+            [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+        }
+    }];
+    
+    if ([sourceApplication isEqualToString:@"CarCheckSchemes"]) {
+        
+        [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
+            NSLog(@"Appdelegate-Pingpp支付结果%@",result);
+            if (error) {
+                switch (error.code) {
+                    case PingppErrCancelled:
+                        [ZQLoadingView showAlertHUD:@"支付取消" duration:SXLoadingTime];
+                        break;
+                        
+                    default:
+                        [ZQLoadingView showAlertHUD:@"支付失败" duration:SXLoadingTime];
+                        break;
+                }
+                //            [self checkPay];
+                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"enterSuccessView" object:nil];
+            }
+            else
+            {
+                [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+            }
+        }];
+        
+        return YES;
+    }
+    
+    if ([url.host isEqualToString:@"safepay"]) {
+        //跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            NSString *status = [NSString stringWithFormat:@"%@",resultDic[@"resultStatus"]];
+            if ([status isEqualToString:@"9000"]) {
+//                [self checkPay];
+            }
+        }];
+    }
+    
+    return YES;
+    
+}
 //支付Pingpp
-- (BOOL)application:(UIApplication *)app
-            openURL:(NSURL *)url
-            options:(NSDictionary *)options {
-    BOOL canHandleURL = [Pingpp handleOpenURL:url withCompletion:nil];
-    return canHandleURL;
+//9.0后的方法
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
+    
+    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
+        NSLog(@"Appdelegate-Pingpp支付结果%@",result);
+        if (error) {
+            switch (error.code) {
+                case PingppErrCancelled:
+                    [ZQLoadingView showAlertHUD:@"支付取消" duration:SXLoadingTime];
+                    break;
+                    
+                default:
+                       [ZQLoadingView showAlertHUD:@"支付失败" duration:SXLoadingTime];
+                    break;
+            }
+            //            [self checkPay];
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"enterSuccessView" object:nil];
+        }
+        else
+        {
+          [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+        }
+    }];
+    
+//    [[UPPaymentControl defaultControl]
+//     handlePaymentResult:url
+//     completeBlock:^(NSString *code, NSDictionary *data) {
+//         //结果code为成功时，先校验签名，校验成功后做后续处理
+//         if([code isEqualToString:@"success"]) {
+//             //判断签名数据是否存在
+//             if(data == nil){
+//                 //如果没有签名数据，建议商户app后台查询交易结果
+//                 return;
+//             }
+//             //数据从NSDictionary转换为NSString
+//             NSData *signData = [NSJSONSerialization dataWithJSONObject:data
+//                                                                options:0
+//                                                                  error:nil];
+//             NSString *sign = [[NSString alloc]
+//                               initWithData:signData
+//                               encoding:NSUTF8StringEncoding];
+//             NSLog(@"Sign: %@", sign);
+//             //验签证书同后台验签证书
+//             //此处的verify，商户需送去商户后台做验签
+//             //支付成功且验签成功，展示支付成功提示
+//             //验签失败，交易结果数据被篡改，商户app后台查询交易结果
+//         } else if([code isEqualToString:@"fail"]) {
+//             //交易失败
+//         } else if([code isEqualToString:@"cancel"]) {
+//             //交易取消
+//         }
+//     }];
+    //    //调用其他SDK，例如支付宝SDK等
+    //    if ([url.host isEqualToString:@"com.tencent.xin"]||[url.host isEqualToString:@"pay"]) {
+    //        //微信支付回调
+    //        return [WXApi handleOpenURL:url delegate:self];
+    //    }
+    
+    
+    if ([url.host isEqualToString:@"safepay"]) {
+        //跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            NSString *status = [NSString stringWithFormat:@"%@",resultDic[@"resultStatus"]];
+            if ([status isEqualToString:@"9000"]) {
+//                [self checkPay];
+            }
+        }];
+    }
+    return YES;
+}
+
+
+//微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法,显示支付结果的
+-(void) onResp:(BaseResp*)resp
+{
+    //启动微信支付的response
+//    NSString *payResoult = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+//    if([resp isKindOfClass:[PayResp class]]){
+//        //支付返回结果，实际支付结果需要去微信服务器端查询
+//        switch (resp.errCode) {
+//            case 0:
+//                payResoult = @"支付结果：成功！";
+////                [self checkPay];
+//                break;
+//            case -1:
+//                payResoult = @"支付结果：失败！";
+//                break;
+//            case -2:
+//                payResoult = @"用户已经退出支付！";
+//                break;
+//            default:
+//                payResoult = [NSString stringWithFormat:@"支付结果：失败！retcode = %d, retstr = %@", resp.errCode,resp.errStr];
+//                break;
+//        }
+//    }
 }
 @end

@@ -201,7 +201,7 @@
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
         
-        UILabel *priceL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+        UILabel *priceL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 20)];
         priceL.font = [UIFont systemFontOfSize:13];
         priceL.textColor = [UIColor lightGrayColor];
         priceL.textAlignment = NSTextAlignmentRight;
@@ -232,7 +232,11 @@
 
     UILabel *label = (UILabel *)cell.accessoryView;
     if ([model.time isKindOfClass:[NSString class]]) {
-        label.text = model.time;
+        NSTimeInterval time=[model.time doubleValue];
+        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        label.text = [dateFormatter stringFromDate: detaildate];
     }
     else
     {
@@ -258,6 +262,9 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KWidth, 20)];
+        _tableView.tableFooterView = view;
     }
     return _tableView;
 }

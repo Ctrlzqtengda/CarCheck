@@ -52,8 +52,9 @@
                         [strongSelf.pendingReturnL setText:dic[@"wait_balance"]];
                         NSString *integral = dic[@"integral"];
                         if (integral.integerValue>0) {
-                            strongSelf.integral = integral;
+                            strongSelf.integral = [NSString stringWithFormat:@"%@",integral];
                         }
+                        [strongSelf.tableView reloadData];
                     }
                 }
             }
@@ -73,6 +74,9 @@
 - (void)walletRechargeBtnAction
 {
     ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
+//    Vc.rechargeSuccess = ^{
+//        
+//    };
     [self.navigationController pushViewController:Vc animated:YES];
 
 }

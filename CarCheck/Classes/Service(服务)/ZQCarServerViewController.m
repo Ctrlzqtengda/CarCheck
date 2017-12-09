@@ -54,7 +54,7 @@
 
 - (void)getBannerData
 {
-    //收支明细接口
+    //获取Banner接口
     
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:@"daf/get_banner" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
@@ -62,27 +62,55 @@
         if (succe) {
             if (strongSelf)
             {
+                if (strongSelf.aheadView.imageStrArray) {
+                    if (strongSelf.aheadView.imageStrArray.count) {
+                        return;
+                    }
+                }
                 NSArray *array = jsonDic[@"res"];
                 if ([array isKindOfClass:[NSArray class]]) {
-                    strongSelf.bannerArray = [ZQBannerModel mj_objectArrayWithKeyValuesArray:array];
-                    NSMutableArray *muArray = [NSMutableArray arrayWithCapacity:0];
-                    for (ZQBannerModel *model in strongSelf.bannerArray) {
-                        [muArray addObject:model.b_path];
-                        NSLog(@"model.b_path = %@",model.b_path);
+                    if (array.count) {
+                        strongSelf.bannerArray = [ZQBannerModel mj_objectArrayWithKeyValuesArray:array];
+                        NSMutableArray *muArray = [NSMutableArray arrayWithCapacity:0];
+                        for (ZQBannerModel *model in strongSelf.bannerArray) {
+                            [muArray addObject:model.b_path];
+                            //                        NSLog(@"model.b_path = %@",model.b_path);
+                        }
+                        //                    strongSelf.imageArray = muArray;
+                        //                    [strongSelf.mainView reloadData];
+                        strongSelf.aheadView.imageStrArray = muArray;
+                        [strongSelf.aheadView startWithBlock:^(NSInteger index) {
+                            
+                        }];
+                        return ;
                     }
-//                    strongSelf.imageArray = muArray;
-//                    [strongSelf.mainView reloadData];
-                    strongSelf.aheadView.imageStrArray = muArray;
-                    [strongSelf.aheadView startWithBlock:^(NSInteger index) {
-                        
-                    }];
                 }
             }
         }
     } failure:^(NSError *error) {
-        
-    } animated:NO];
+//        __strong typeof(self) strongSelf = weakSelf;
+//        if (strongSelf) {
+//            strongSelf.aheadView.imageStrArray = @[@"ada",@"adb",@"adc",@"adp"];
+//            [strongSelf.aheadView startWithBlock:^(NSInteger index) {
+//
+//            }];
+//        }
+    } animated:YES];
     
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.aheadView.imageStrArray) {
+//        NSString *firstStr = self.aheadView.imageStrArray.firstObject;
+//        if ([firstStr isEqualToString:@"ada"]) {
+//            [self getBannerData];
+//        }
+    }
+    else
+    {
+        [self getBannerData];
+    }
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -204,7 +232,7 @@
             case 3:
             {
                 //车辆维修站
-                NSString *phoneStr = @"4008769838";
+                NSString *phoneStr = [Utility getServerPhone];
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -237,7 +265,7 @@
             case 6:
             {
                 //法律咨询
-                NSString *phoneStr = @"4008769838";
+                NSString *phoneStr = [Utility getServerPhone];
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -248,7 +276,7 @@
             case 7:
             {
                //加油充值
-                NSString *phoneStr = @"4008769838";
+                NSString *phoneStr = [Utility getServerPhone];
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -299,7 +327,7 @@
             }
             case 2:
             {
-                NSString *phoneStr = @"4008769838";
+                NSString *phoneStr = [Utility getServerPhone];
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -380,6 +408,12 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==1) {
+        if (__kWidth>320) {
+            if (__kWidth>375) {
+                return CGSizeMake((__kWidth-5*2)/3.0-20, (__kWidth-5*2)/3.0);
+            }
+            return CGSizeMake((__kWidth-5*2)/3.0-15, (__kWidth-5*2)/3.0);
+        }
         return CGSizeMake((__kWidth-5*2)/3.0, (__kWidth-5*2)/3.0);
     }
     else

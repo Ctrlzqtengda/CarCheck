@@ -28,13 +28,22 @@
             succe = YES;
         }
         if (animated) {
-            [ZQLoadingView showAlertHUD:dic[@"codeInfo"] duration:SXLoadingTime];
+            NSString *infoStr = dic[@"codeInfo"];
+            if (infoStr.length) {
+                [ZQLoadingView showAlertHUD:infoStr duration:SXLoadingTime];
+            }
+            else
+            {
+                [ZQLoadingView hideProgressHUD];
+            }
         }
         NSLog(@"接口返回数据%@",dic);
         success(responseObject,succe,dic);
     } failure:^(NSURLSessionDataTask *  task, NSError *  error) {
         NSLog(@"%@",error.description);
-        [ZQLoadingView showAlertHUD:@"网络故障" duration:SXLoadingTime];
+        if (animated) {
+            [ZQLoadingView showAlertHUD:@"网络故障" duration:SXLoadingTime];
+        }
         fail(error);
     }];
 }
@@ -153,6 +162,7 @@
         });
     }
     NSString *url = [NSString stringWithFormat:@"%@%@",BaseAPI,path];
+    NSLog(@"urlurl = %@",url);
 //    url = [Utility percentEncodingWithUrl:url];
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //传图片传5张图片 暂定随便传
@@ -180,12 +190,15 @@
         NSDictionary *resulDic = (NSDictionary*)responseObject;
         NSLog(@"resulDicresulDic%@",resulDic);
         [ZQLoadingView hideProgressHUD];
+        BOOL succe = NO;
         if ([resulDic[@"code"] integerValue] == 1) {
+            succe = YES;
             [ZQLoadingView showAlertHUD:resulDic[@"codeInfo"] duration:SXLoadingTime];
 
         }else{
             [ZQLoadingView showAlertHUD:resulDic[@"codeInfo"] duration:SXLoadingTime];
         }
+        success(responseObject,succe,resulDic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"errorerror%@",error);
         [ZQLoadingView hideProgressHUD];

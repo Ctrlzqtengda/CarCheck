@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *timeCollView;
 @property (weak, nonatomic) IBOutlet UILabel *costMoneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tenMinutesL;
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
 
 @property (strong, nonatomic) NSMutableArray *dateArray;
 
@@ -63,6 +64,11 @@
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:string];
     [att setAttributes:@{NSForegroundColorAttributeName:[UIColor darkTextColor]} range:[string rangeOfString:@"合计金额:"]];
     [self.costMoneyLabel setAttributedText:att];
+    
+    if ([Utility getIs_vip]) {
+        UIImage * image=[UIImage imageNamed:@"VIP_logo"];
+        [_commitButton setImage:image forState:UIControlStateNormal];
+    }
 }
 - (void)getcalendarDatesForDays:(NSInteger)days
 {
@@ -107,7 +113,7 @@
         return;
     }
     NSString *urlStr = [NSString stringWithFormat:@"%@/u_date/%@/phase/%@",self.requestUrl,self.u_date,self.phase];
-    urlStr = @"daf/file_upload/u_id/51/u_name/肚肚/u_phone/18510556565/u_car_card/鲁PQM888/u_car_type/中型车 200元/testing_id/1/type/1/inspection_fee/200/service_charge/0.000000/u_date/11-29/phase/8:00 - 10:00";
+//    urlStr = @"daf/file_upload/u_id/51/u_name/肚肚/u_phone/18510556565/u_car_card/鲁PQM888/u_car_type/中型车 200元/testing_id/1/type/1/inspection_fee/200/service_charge/0.000000/u_date/11-29/phase/8:00 - 10:00";
 //    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
 //    [dict setObject:@"51" forKey:@"u_id"];
 //    [dict setObject:@"旺达" forKey:@"u_name"]; // 标题
@@ -121,7 +127,10 @@
             if (strongSelf)
             {
                 YPayViewController *payVC = [[YPayViewController alloc] init];
-                payVC.payMoney = [NSString stringWithFormat:@"%.0f",totalMoney];
+//                payVC.payMoney = [NSString stringWithFormat:@"%.0f",totalMoney];
+                payVC.payMoney = jsonDic[@"money"];
+                payVC.orderNo = jsonDic[@"order_no"];
+                payVC.aPayType = ZQPayBookingView;
                 [strongSelf.navigationController pushViewController:payVC animated:YES];
             }
         }

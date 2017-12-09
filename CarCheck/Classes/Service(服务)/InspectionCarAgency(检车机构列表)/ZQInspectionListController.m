@@ -16,8 +16,10 @@
 #import "ZQOnlineAlertView.h"
 #import "ZQSuccessAlerView.h"
 
+#import "GPSNaviViewController.h"
+
 //#import <MapKit/MapKit.h>
-#import "NSDictionary+propertyCode.h"
+//#import "NSDictionary+propertyCode.h"
 //UISearchControllerDelegate,UISearchResultsUpdating,
 @interface ZQInspectionListController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 {
@@ -31,6 +33,8 @@
 @property (nonatomic, strong) NSMutableArray *searchListArry;
 
 @property (nonatomic, strong) NSArray *siftArray; //筛选的条件
+
+@property (nonatomic, assign) NSInteger page;
 @end
 
 @implementation ZQInspectionListController
@@ -40,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
+    self.page = 1;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"检车机构";
     [self addNavigationRightItem];
@@ -90,9 +94,9 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
-//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        [weakSelf loadMoreData];
-//    }];
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [weakSelf loadMoreData];
+    }];
 }
 
 - (void)getAgencyListData
@@ -100,12 +104,14 @@
 //    o_product经度  o_range维度
     NSString *urlStr = nil;
     if (self.siftArray) {
-        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude]];
+//筛选条件
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f/p/1",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude]];
     }
     else
     {
 //        /o_product/%@/o_range/%@/o_name/%@/province/%@/city/%@
-        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f",[Utility getUserID],[Utility getLongitude],[Utility getLatitude]];
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],[Utility getLongitude],[Utility getLatitude],(long)self.page];
     }
     //检车机构接口
     __weak typeof(self) weakSelf = self;
@@ -177,7 +183,8 @@
 - (void)getAgencyListDataWithText:(NSString *)text
 {
     //    o_product经度  o_range维度
-    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/o_product/%f/o_range/%f",[Utility getUserID],text,[Utility getLongitude],[Utility getLatitude]];
+    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/o_product/%f/o_range/%f/p/1",[Utility getUserID],text,[Utility getLongitude],[Utility getLatitude]];
     //检车机构接口
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
@@ -211,6 +218,33 @@
 
 - (void)loadMoreData
 {
+     self.page++;
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude],(long)self.page];
+    //检车机构接口
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (succe) {
+            if (strongSelf)
+            {
+                NSArray *array = jsonDic[@"res"];
+                if ([array isKindOfClass:[NSArray class]]) {
+                    if (array.count) {
+                        [strongSelf.agencyList addObjectsFromArray:[ZQInspectionModel mj_objectArrayWithKeyValuesArray:array]];
+                    }
+                    [strongSelf.tableView reloadData];
+                }
+            }
+        }
+        [strongSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            [strongSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+    } animated:YES];
+    /*
     // 1.添加假数据
     for (int i = 0; i<5; i++) {
         NSDictionary *dic = @{@"image":@"agency",@"name":@"聚州机动车检站",@"distance":@"2.3km",@"address":@"思明区岭兜北二路401",@"phone":@"18120732580",@"linkman":@"王小虎"};
@@ -226,7 +260,7 @@
         [tableView.mj_footer endRefreshing];
     });
     //            [tableView.mj_footer endRefreshingWithNoMoreData];
-
+*/
 }
 - (void)addNavigationRightItem
 {
@@ -336,6 +370,31 @@
 //导航
 - (void)navigationBtnAction:(UIButton *)sender
 {
+    ZQInspectionModel *model = self.agencyList[sender.tag];
+    if (model.type.integerValue == 1)
+    {
+        if (!model.o_range || !model.o_product) {
+          [ZQLoadingView showAlertHUD:@"此机构暂没有位置数据!" duration:SXLoadingTime];
+            return;
+        }
+        if (![Utility getLatitude]) {
+            [ZQLoadingView showAlertHUD:@"没有当前位置数据!" duration:SXLoadingTime];
+            return;
+        }
+        GPSNaviViewController *nav = [[GPSNaviViewController alloc] init];
+        
+        nav.startPoint = [AMapNaviPoint locationWithLatitude:[Utility getLatitude] longitude:[Utility getLongitude]];
+        nav.endPoint = [AMapNaviPoint locationWithLatitude:model.o_range.doubleValue longitude:model.o_product.doubleValue];
+        [self.navigationController pushViewController:nav animated:YES];
+        return;
+    }
+    [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待!" duration:SXLoadingTime];
+
+//    nav.startPoint = [AMapNaviPoint locationWithLatitude:39.993135 longitude:116.474175];
+//    nav.endPoint = [AMapNaviPoint locationWithLatitude:39.908791 longitude:116.321257];;
+
+
+    /*
     ZQInspectionModel *model = nil;
 //    if (self.searchController.active) {
 //        model = self.searchListArry[sender.tag];
@@ -358,6 +417,7 @@
     }
     [ZQLoadingView showAlertHUD:@"此机构暂未开通业务敬请期待！" duration:2.0];
 //    [Utility baiDuMap:nil];
+     */
 }
 //立即预约
 - (void)bookingBtnAction:(UIButton *)sender
@@ -377,7 +437,7 @@
     }
     switch (self.subType) {
             case ZQSubScTypeCellPhone:{
-                NSString *phoneStr = @"4008769838";
+                NSString *phoneStr = [Utility getServerPhone];
                 NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
                 UIApplication * app = [UIApplication sharedApplication];
                 if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
@@ -392,8 +452,15 @@
 //                if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
                     ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
                     Vc.title = @"机动车上门接送检车须知";
+                if ([Utility getIs_vip]) {
+                    Vc.charge = [Utility getDoorToDoorOutlay_VIP].floatValue;
+                }
+                else
+                {
                     Vc.charge = [Utility getDoorToDoorOutlay].floatValue;
+                }
                     Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                Vc.dSubType = self.subType;
                     [self.navigationController pushViewController:Vc animated:YES];
                     return;
 //                }
@@ -416,6 +483,7 @@
                 ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
                 Vc.title = @"预约须知";
                 Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                 Vc.dSubType = self.subType;
                 [self.navigationController pushViewController:Vc animated:YES];
 //            }
             break;
@@ -424,7 +492,7 @@
         {
             ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
             vc.pageType = 1;
-            vc.o_testing_id = @"1";
+            vc.o_testing_id = model.o_id;
             [self.navigationController pushViewController:vc animated:YES];
             break;
         }
@@ -586,7 +654,11 @@
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }
 //}
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

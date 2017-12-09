@@ -27,7 +27,11 @@
 
 +(NSInteger)getIs_vip
 {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"is_vip"];
+    NSInteger temp = [[NSUserDefaults standardUserDefaults] integerForKey:@"is_vip"];
+    if (temp == 2) {
+        return YES;
+    }
+    return NO;
 }
 
 +(NSString *)getUserPhone
@@ -298,7 +302,30 @@
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"NewCarOutlay"];
 }
-
+/**
+ *  获取新车免检VIP服务费
+ *
+ */
++(NSString *)getNewCarServiceOutlay_VIP
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"NewCarOutlay_VIP"];
+}
+/**
+ *  获取上门VIP服务费
+ *
+ */
++(NSString *)getDoorToDoorOutlay_VIP
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"DoorOutlay_VIP"];
+}
+/**
+ *  获取服务电话
+ *
+ */
++(NSString *)getServerPhone
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"ServerPhone"];
+}
 +(void)saveServiceMoneyWithArray:(NSArray*)array
 {
     for (NSDictionary *dic in array) {
@@ -306,9 +333,15 @@
         if ([str isKindOfClass:[NSString class]]) {
             if ([str rangeOfString:@"新车"].location != NSNotFound) {
                 [Utility storageObject:dic[@"c_cost"] forKey:@"NewCarOutlay"];
+                [Utility storageObject:dic[@"vip_cost"] forKey:@"NewCarOutlay_VIP"];
             }
             if ([str rangeOfString:@"上门"].location != NSNotFound) {
                 [Utility storageObject:dic[@"c_cost"] forKey:@"DoorOutlay"];
+                [Utility storageObject:dic[@"vip_cost"] forKey:@"DoorOutlay_VIP"];
+            }
+            if ([str rangeOfString:@"罚款"].location != NSNotFound) {
+                [Utility storageObject:dic[@"c_cost"] forKey:@"FineOutlay"];
+                [Utility storageObject:dic[@"vip_cost"] forKey:@"FineOutlay_VIP"];
             }
         }
     }

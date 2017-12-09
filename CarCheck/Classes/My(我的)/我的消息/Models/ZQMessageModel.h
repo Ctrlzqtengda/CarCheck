@@ -10,14 +10,8 @@
 
 @interface ZQMessageModel : NSObject
 
-/**消息id*/
-@property (strong,nonatomic) NSString *newsId;
-/**消息标题*/
-@property (strong,nonatomic) NSString *title;
-/**消息时间戳*/
-@property (strong,nonatomic) NSString *time;
-/**消息内容*/
-@property (strong,nonatomic) NSString *content;
-/**图片*/
-@property (strong,nonatomic) NSString *imageName;
+@property (nonatomic, strong) NSString *m_id;
+@property (nonatomic, strong) NSString *t_type;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *t_contentered;
 @end

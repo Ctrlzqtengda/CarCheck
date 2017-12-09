@@ -36,8 +36,8 @@
 -(void)initView{
     _headV = [[YOrderSuccessHeadView alloc]initWithFrame:CGRectMake(0, 0, __kWidth, 200)];
     [self addSubview:_headV];
-    _headV.title = @"订单成功";
-    _headV.detail = @"我们将尽快为您安排发货!";
+    _headV.title = @"支付成功";
+//    _headV.detail = @"我们将尽快为您安排发货!";
 
     UIView *mainV = [[UIView alloc]initWithFrame:CGRectMake(5, CGRectYH(_headV)+20, __kWidth-10, 125)];
     [self addSubview:mainV];
@@ -55,7 +55,7 @@
     addNoLb.textAlignment = NSTextAlignmentLeft;
     addNoLb.textColor = __DTextColor;
     addNoLb.font = MFont(14);
-    addNoLb.text = @"收货地址：";
+//    addNoLb.text = @"收货地址：";
 
     _addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(addNoLb), CGRectYH(_nameLb)+10, __kWidth-110, 35)];
     [mainV addSubview:_addressLb];

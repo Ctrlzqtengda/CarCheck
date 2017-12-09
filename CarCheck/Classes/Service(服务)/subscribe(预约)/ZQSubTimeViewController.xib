@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZQSubTimeViewController">
             <connections>
                 <outlet property="collectionView" destination="e4l-AG-2eU" id="St5-ag-uea"/>
+                <outlet property="commitButton" destination="I9y-Tv-deX" id="H2l-Gc-oFG"/>
                 <outlet property="costMoneyLabel" destination="v3A-dq-6jt" id="Hsr-mT-c62"/>
                 <outlet property="timeCollView" destination="dFt-ad-PyK" id="057-P5-9Q7"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Za7-Ju-2pi"/>
@@ -58,13 +59,12 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9y-Tv-deX">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9y-Tv-deX">
                     <rect key="frame" x="40" y="517" width="295" height="40"/>
                     <color key="backgroundColor" red="0.069129817189999998" green="0.58537095790000004" blue="0.91349869969999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="7Yr-Fp-5mk"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="提交">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>

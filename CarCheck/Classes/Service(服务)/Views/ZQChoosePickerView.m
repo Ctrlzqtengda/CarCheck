@@ -7,6 +7,7 @@
 //
 
 #import "ZQChoosePickerView.h"
+#import "ZQProvinceModel.h"
 
 @interface ZQChoosePickerView()<UIPickerViewDelegate,UIPickerViewDataSource>{
     
@@ -71,8 +72,12 @@
 }
 
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component __TVOS_PROHIBITED {
-    
-    return _dataArray[row];
+    NSString *str = _dataArray[row];
+    if ([str isKindOfClass:[NSString class]]) {
+        return str;
+    }
+    ZQProvinceModel *model = _dataArray[row];
+    return model.province;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{

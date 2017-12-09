@@ -77,10 +77,11 @@
     _backV.contentSize = CGSizeMake(__kWidth, 606);
     
     //main
-    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 75, 221, 28)];
+//    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-221)/2, 75, 221, 28)];
+    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-60)/2, 75, 60, 60)];
     [_backV addSubview:loginIV];
-    loginIV.image =MImage(@"CJWY");
-//    loginIV.image = MImage(@"appIcon");
+//    loginIV.image =MImage(@"CJWY");
+    loginIV.image = MImage(@"appIcon");
     loginIV.contentMode = UIViewContentModeScaleAspectFit;
     
     NSArray *imageArr = @[@"login_user",@"login_password"];
@@ -220,7 +221,9 @@
 #pragma mark ==无法登录==
 -(void)cannotLogin{
     NSLog(@"无法登录？");
-    
+    YFoundPasswordViewController *vc = [[YFoundPasswordViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+    /*
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击取消");
@@ -236,6 +239,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }]];
     [self presentViewController:alert animated:YES completion:nil];
+     */
 }
 
 #pragma mark ==注册==
