@@ -15,6 +15,8 @@
 #import "ZQHtmlViewController.h"
 #import "YPayViewController.h"
 
+#import "NSString+Validation.h"
+
 @interface ZQNewUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZQVioUpTableViewCellDelegate>{
     NSArray        *_titleArray;
     NSArray        *_placeArray;
@@ -191,8 +193,8 @@
         return;
     }
     NSString *carCodeStr = [_contentArray[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!carCodeStr.length) {
-        [ZQLoadingView showAlertHUD:@"请输入车牌号码" duration:SXLoadingTime];
+    if (carCodeStr.length!=6) {
+        [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
     }
     carCodeStr = [NSString stringWithFormat:@"%@%@",self.shortNumString,carCodeStr];
@@ -207,7 +209,14 @@
         return;
     }
     NSString *phoneStr = [_contentArray[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!phoneStr.length) {
+    if (phoneStr.length) {
+        if (![phoneStr isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
@@ -237,6 +246,8 @@
             {
                 YPayViewController *payVC = [[YPayViewController alloc] init];
                 payVC.payMoney = [NSString stringWithFormat:@"%@",jsonDic[@"total"]];
+//                payVC.payMoney = jsonDic[@"money"];
+                payVC.orderNo = jsonDic[@"order_no"];
                 payVC.aPayType = ZQPayAFineView;
                 [strongSelf.navigationController pushViewController:payVC animated:YES];
             }
@@ -249,7 +260,14 @@
 - (void)getCode
 {
     NSString *phoneStr = [_contentArray[4] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!phoneStr.length) {
+    if (phoneStr.length) {
+        if (![phoneStr isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
@@ -394,8 +412,13 @@
                 break;
             case 1:
             {
-                if ([self.overdueFine floatValue]) {
-                    cell.contentTf.text = [NSString stringWithFormat:@"￥%@",self.overdueFine];
+                CGFloat ff = [self.overdueFine floatValue];
+                if (ff) {
+                    cell.contentTf.text = [NSString stringWithFormat:@"￥%.0f",ff];
+                }
+                else
+                {
+                    cell.contentTf.text = @"￥0";
                 }
             }
                 break;

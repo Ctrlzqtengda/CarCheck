@@ -99,7 +99,7 @@ __block __weak __typeof(&*self)weakSelf = self;
 # define BtnHighlighted       UIControlStateHighlighted
 
 //项目名称
-#define  ZQPROJECTNAME @"车检"
+#define  ZQPROJECTNAME @"新概念检车"
 
 
 //提示信息显示 时间

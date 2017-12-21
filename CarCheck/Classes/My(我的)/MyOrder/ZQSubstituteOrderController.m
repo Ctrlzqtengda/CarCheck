@@ -14,6 +14,8 @@
 #import "ZQHtmlViewController.h"
 #import "NSDictionary+propertyCode.h"
 
+#import "YPayViewController.h"
+
 @interface ZQSubstituteOrderController ()<UITableViewDelegate,UITableViewDataSource>
 {
     ZQOrderTypeChooseView *orderHeadView;
@@ -46,7 +48,7 @@
     orderHeadView.userInteractionEnabled = YES;
     //我的订单接口 1.处理中，2.已完成 3.退款
     NSString *urlStr = [NSString stringWithFormat:@"daf/get_fine_order/u_id/%@/order_status/%u",[Utility getUserID],_currentViewType];
-    
+    [ZQLoadingView  showProgressHUD:@"loading..."];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         __strong typeof(self) strongSelf = weakSelf;
@@ -66,13 +68,15 @@
                 [strongSelf configDataWithArray:@[]];
             }
         }
+        [ZQLoadingView hideProgressHUD];
     } failure:^(NSError *error) {
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
         {
             [strongSelf configDataWithArray:@[]];
+            [ZQLoadingView hideProgressHUD];
         }
-    } animated:YES];
+    } animated:NO];
     
     
 }
@@ -256,8 +260,17 @@
      ZQSubstituteOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZQSubstituteOrderCell"];
     if (!cell) {
         cell = [[ZQSubstituteOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZQSubstituteOrderCell"];
+         [cell.substitutePayBtn addTarget:self action:@selector(substitutePayBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-    cell.orderModel = _dataArr[indexPath.row];
+    ZQSubstituteOrderModel *orderModel = _dataArr[indexPath.row];
+    if (orderModel.order_status.integerValue==1) {
+        cell.substitutePayBtn.tag = indexPath.row;
+        [cell.substitutePayBtn setHidden:NO];
+    }
+    else{
+       [cell.substitutePayBtn setHidden:YES];
+    }
+    cell.orderModel = orderModel;
      return cell;
 
 }
@@ -268,8 +281,17 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
 }
-
+- (void)substitutePayBtnAction:(UIButton *)sender
+{
+    ZQSubstituteOrderModel *orderModel = _dataArr[sender.tag];
+    YPayViewController *payVC = [[YPayViewController alloc] init];
+    payVC.payMoney = orderModel.pay_money;
+    payVC.orderNo = orderModel.order_no;
+    payVC.aPayType = ZQPayAFineView;
+    [self.navigationController pushViewController:payVC animated:YES];
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -278,7 +300,7 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KWidth, self.view.bounds.size.height-40) style:(UITableViewStyleGrouped)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64+40, KWidth, self.view.bounds.size.height-40-64) style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);

@@ -20,4 +20,5 @@
 @property (nonatomic, copy) NSString *purchase;
 @property (nonatomic, copy) NSString *save;
 @property (nonatomic, copy) NSString *expire;
+@property (nonatomic, copy) NSString *remaining_time;
 @end

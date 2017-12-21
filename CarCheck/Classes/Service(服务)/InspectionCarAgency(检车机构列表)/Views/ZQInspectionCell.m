@@ -19,6 +19,8 @@ const CGFloat cSpace =  6;
 }
 @property (nonatomic, strong) UIImageView *imgV;
 
+@property (nonatomic, strong) UIImageView *unUseImageV;
+
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @property (nonatomic, strong) UILabel *distanceLabel;
@@ -42,7 +44,7 @@ const CGFloat cSpace =  6;
 
 + (CGFloat)inspectionCellHeight
 {
-    if (__kWidth>320) {
+    if (__kWidth>320) { 
         return 160;
     }
     return 140;
@@ -56,6 +58,7 @@ const CGFloat cSpace =  6;
         labelWidth = 36;
         labelHeight = 18;
         [self.contentView addSubview:self.imgV];
+        [self.imgV addSubview:self.unUseImageV];
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.distanceLabel];
         [self.contentView addSubview:self.addressLabel];
@@ -65,11 +68,11 @@ const CGFloat cSpace =  6;
         label.textColor = LH_RGBCOLOR(17,149,232);
         [self.contentView addSubview:label];
         
-        [self.contentView addSubview:self.linkmanDesLabel];
-        [self.contentView addSubview:self.linkmanLabel];
-        [self.contentView addSubview:self.phoneDesL];
+//        [self.contentView addSubview:self.linkmanDesLabel];
+//        [self.contentView addSubview:self.linkmanLabel];
+//        [self.contentView addSubview:self.phoneDesL];
 //        [self.contentView addSubview:self.phoneLabel];
-        [self.contentView addSubview:self.phoneBtn];
+//        [self.contentView addSubview:self.phoneBtn];
         [self.contentView addSubview:self.navigationBtn];
         [self.contentView addSubview:self.bookingBtn];
     }
@@ -106,6 +109,7 @@ const CGFloat cSpace =  6;
     self.addressLabel.frame = rect;
     [self.addressLabel setText:addressStr];
     
+    /*
     NSString *linkmanStr = _inspectionModel.contact_name;
     rect = self.linkmanDesLabel.frame;
     rect.origin.y = CGRectGetMaxY(self.addressLabel.frame);
@@ -126,6 +130,15 @@ const CGFloat cSpace =  6;
     rect.origin.y = CGRectGetMinY(self.phoneDesL.frame);
     self.phoneBtn.frame = rect;
     [self.phoneBtn setTitle:phoneStr forState:UIControlStateNormal];
+     */
+    if (_inspectionModel.type.integerValue==1)
+    {
+        [self.unUseImageV setHidden:YES];
+    }
+    else
+    {
+        [self.unUseImageV setHidden:NO];
+    }
 }
 
 - (void)phoneBtnAction:(UIButton *)sender
@@ -152,6 +165,19 @@ const CGFloat cSpace =  6;
         _imgV.layer.masksToBounds = YES;
     }
     return _imgV;
+}
+
+- (UIImageView *)unUseImageV
+{
+    if (!_unUseImageV) {
+//        CGFloat imageW =  __kWidth*176/750;
+        UIImage *image = [UIImage imageNamed:@"unUse"];
+        _unUseImageV = [[UIImageView alloc] initWithImage:image];
+        //        _imgV = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10,imageW, [ZQInspectionCell inspectionCellHeight]-20)];
+        _unUseImageV.contentMode = UIViewContentModeScaleAspectFill;
+        _unUseImageV.layer.masksToBounds = YES;
+    }
+    return _unUseImageV;
 }
 
 - (UILabel *)titleLabel

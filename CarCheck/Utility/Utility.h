@@ -158,7 +158,12 @@
  *
  */
 +(NSString *)getServerPhone;
-
+/**
+ *  获取支付
+ *
+ */
++(NSString *)getWalletPayPassword;
++(void)saveWalletPayPassword:(NSString *)pwd;
 //经纬度
 +(double)getLongitude;
 +(double)getLatitude;

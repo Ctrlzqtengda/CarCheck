@@ -23,6 +23,14 @@
     [[JKHttpClientTool sharedManager] POST:url parameters:params progress:nil success:^(NSURLSessionDataTask *  task, id responseObject) {
 
         NSDictionary *dic = (NSDictionary*)responseObject;
+        if ([dic isKindOfClass:[NSData class]]) {
+            NSString *result = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSData * data = [result dataUsingEncoding:NSUTF8StringEncoding];
+
+            dic =[NSJSONSerialization JSONObjectWithData:data
+                                                        options:NSJSONReadingAllowFragments
+                                                          error:nil];
+        }
         BOOL succe=NO;
         if ([dic[@"code"] integerValue] == 1) {
             succe = YES;
@@ -47,6 +55,27 @@
         fail(error);
     }];
 }
+//+ (NSDictionary *)dictionaryWithContentsOfData:(NSData *)data {
+//
+//    CFPropertyListRef list = CFPropertyListCreateFromXMLData(kCFAllocatorDefault, (__bridge CFDataRef)data, kCFPropertyListImmutable, NULL);
+//
+//    if(list == nil) return nil;
+//
+//    if ([(__bridge id)list isKindOfClass:[NSDictionary class]]) {
+//
+//        return [(NSDictionary *)list autorelease];
+//
+//    }
+//
+//    else {
+//
+//        CFRelease(list);
+//
+//        return nil;
+//
+//    }
+//
+//}
 +(void)POST:(NSString *)path withParameters:(NSDictionary *)params success:(SuccessCallBack)success failure:(FailureCallBack)fail {
    
     NSString *url = [NSString stringWithFormat:@"%@%@",BaseAPI,path];
@@ -127,11 +156,11 @@
     NSLog(@"path ==%@%@",url,params);
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 30;
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
-    [manager POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>   formData) {
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+//    manager.requestSerializer.timeoutInterval = 30;
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
+    [[JKHttpClientTool sharedManager] POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>   formData) {
         if (imageData) {
             NSString *file  =[NSString stringWithFormat:@"%@.jpg",name];
             [formData appendPartWithFileData:imageData name:name fileName:file mimeType:@"image/png/jpeg/jpg"];
@@ -143,11 +172,19 @@
 //        NSError *error;
 //        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSUTF8StringEncoding error:&error];
         NSDictionary *resulDic = (NSDictionary*)responseObject;
+        if ([resulDic isKindOfClass:[NSData class]]) {
+            NSString *result = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSData * data = [result dataUsingEncoding:NSUTF8StringEncoding];
+            
+            resulDic =[NSJSONSerialization JSONObjectWithData:data
+                                                 options:NSJSONReadingAllowFragments
+                                                   error:nil];
+        }
         BOOL succe=NO;
         if ([resulDic[@"code"] integerValue] == 1) {
             succe = YES;
         }
-        [ZQLoadingView showAlertHUD:resulDic[@"codeInfo"] duration:SXLoadingTime];
+//        [ZQLoadingView showAlertHUD:resulDic[@"codeInfo"] duration:SXLoadingTime];
         NSLog(@"%@",resulDic);
         success(responseObject,succe,resulDic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -166,10 +203,10 @@
 //    url = [Utility percentEncodingWithUrl:url];
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //传图片传5张图片 暂定随便传
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    [[JKHttpClientTool sharedManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         [formData appendPartWithFileData:imageArr[0] name:@"u_car_pic1" fileName:@"u_car_pic1.jpg" mimeType:@"image/jpeg"];
         [formData appendPartWithFileData:imageArr[1] name:@"u_idcard_pic2" fileName:@"u_idcard_pic2.jpg" mimeType:@"image/jpeg"];
@@ -188,6 +225,14 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *resulDic = (NSDictionary*)responseObject;
+        if ([resulDic isKindOfClass:[NSData class]]) {
+            NSString *result = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSData * data = [result dataUsingEncoding:NSUTF8StringEncoding];
+            
+            resulDic =[NSJSONSerialization JSONObjectWithData:data
+                                                      options:NSJSONReadingAllowFragments
+                                                        error:nil];
+        }
         NSLog(@"resulDicresulDic%@",resulDic);
         [ZQLoadingView hideProgressHUD];
         BOOL succe = NO;

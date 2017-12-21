@@ -16,6 +16,7 @@
 }
 @property (strong, nonatomic) UIPickerView *pickView;
 @property (strong, nonatomic) NSMutableArray *dataArray;
+@property (copy, nonatomic) ZQIndexBlock indexBlock;
 @end
 
 @implementation ZQChoosePickerView
@@ -64,6 +65,14 @@
     _myBlock = block;
     [view addSubview:self];
 }
+-(void)showDataArray:(NSArray *)dataArray inView:(UIView *)view chooseBackBlock:(ZQIndexBlock )block
+{
+    _index = 0;
+    _dataArray = [NSMutableArray arrayWithArray:dataArray];
+    [self.pickView reloadAllComponents];
+    self.indexBlock = block;
+    [view addSubview:self];
+}
 #pragma mark UIPickerViewDelegate,UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     
@@ -93,13 +102,24 @@
 
 #pragma mark ==取消==
 -(void)chooseCanel{
-    _myBlock(nil);
+    if (self.indexBlock) {
+    }
+    else
+    {
+        _myBlock(nil);
+    }
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
 }
 #pragma mark ==确认==
 -(void)chooseSure{
-    _myBlock(_dataArray[_index]);
+    if (self.indexBlock) {
+        self.indexBlock(_index);
+    }
+    else
+    {
+        _myBlock(_dataArray[_index]);
+    }
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
 }

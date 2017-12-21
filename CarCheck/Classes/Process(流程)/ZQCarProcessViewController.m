@@ -31,6 +31,8 @@
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
 
+#import "ZQHtmlViewController.h"
+
 #define DefaultLocationTimeout 10
 #define DefaultReGeocodeTimeout 5
 
@@ -226,67 +228,67 @@
 #pragma mark ZQProcessCellDelegate
 -(void)selectAtRow:(NSInteger)row index:(NSInteger)index {
     NSLog(@"ZQProcessCellDelegate row=%ld index = %ld",(long)row,(long)index);
-    if (![Utility isLogin])
-    {
-        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
-        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
-        [self.navigationController presentViewController:loginNa animated:YES completion:^{
-            
-        }];
-        return;
-    }
     switch (row) {
         case 0:{
 //            违章查询
-            ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
-            [self.navigationController pushViewController:vc animated:YES];
+//            ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
+//            [self.navigationController pushViewController:vc animated:YES];
+            ZQHtmlViewController *htmlVc = [[ZQHtmlViewController alloc] initWithUrlString:@"http://m.hbgajg.com/?from=singlemessage&isappinstalled=0" andShowBottom:NO];
+            [htmlVc hidesBottomBarWhenPushed];
+            htmlVc.title = @"违章查询";
+            [self.navigationController pushViewController:htmlVc animated:YES];
+//
         }
             break;
         case 2:{
             switch (index) {
                 case 0:
                 {
-                    //机动车在线预约检车
-                    ZQSubScType type = ZQSubScTypeDefailt;
-//                    NSString *htmlStr = @"reservationNotice3.html";
-//                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                    if ([self userIsLogin]) {
+                        //机动车在线预约检车
+                        ZQSubScType type = ZQSubScTypeDefailt;
+                        //                    NSString *htmlStr = @"reservationNotice3.html";
+                        //                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
                         ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
                         inspectionVC.subType = type;
                         [inspectionVC setHidesBottomBarWhenPushed:YES];
                         [self.navigationController pushViewController:inspectionVC animated:YES];
-//                    }
-//                    else
-//                    {
-//                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-//                        Vc.title = @"预约须知";
-//                        Vc.classString = NSStringFromClass([ZQInspectionListController class]);
-//                        [Vc setHidesBottomBarWhenPushed:YES];
-//                        [self.navigationController pushViewController:Vc animated:YES];
-//                    }
+                        //                    }
+                        //                    else
+                        //                    {
+                        //                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                        //                        Vc.title = @"预约须知";
+                        //                        Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+                        //                        [Vc setHidesBottomBarWhenPushed:YES];
+                        //                        [self.navigationController pushViewController:Vc animated:YES];
+                        //                    }
+                    }
                 }
                     break;
                 case 1:
                 {
-                    ZQSubScType type = ZQSubScTypeVisit;
-                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-                    inspectionVC.subType = type;
-                    [inspectionVC setHidesBottomBarWhenPushed:YES];
-                    [self.navigationController pushViewController:inspectionVC animated:YES];
-                    
-                    
-//                    NSString *htmlStr = @"reservationNotice2.html";
-//                    if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-//                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-//                        Vc.title = @"机动车上门接送检车须知";
-//                        Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
-//                        [Vc setHidesBottomBarWhenPushed:YES];
-//                        [self.navigationController pushViewController:Vc animated:YES];
-//                        return;
-//                    }
-//                    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
-//                    subVC.serviceCharge = 150.0;
-//                    [subVC setHidesBottomBarWhenPushed:YES];
-//                    [self.navigationController pushViewController:subVC animated:YES];
+                    if ([self userIsLogin]) {
+                        ZQSubScType type = ZQSubScTypeVisit;
+                        ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                        inspectionVC.subType = type;
+                        [inspectionVC setHidesBottomBarWhenPushed:YES];
+                        [self.navigationController pushViewController:inspectionVC animated:YES];
+                        
+                        
+                        //                    NSString *htmlStr = @"reservationNotice2.html";
+                        //                    if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                        //                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                        //                        Vc.title = @"机动车上门接送检车须知";
+                        //                        Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
+                        //                        [Vc setHidesBottomBarWhenPushed:YES];
+                        //                        [self.navigationController pushViewController:Vc animated:YES];
+                        //                        return;
+                        //                    }
+                        //                    ZQUpSubdataViewController *subVC = [[ZQUpSubdataViewController alloc] initWithNibName:@"ZQUpSubdataViewController" bundle:nil];
+                        //                    subVC.serviceCharge = 150.0;
+                        //                    [subVC setHidesBottomBarWhenPushed:YES];
+                        //                    [self.navigationController pushViewController:subVC animated:YES];
+                    }
                     return;
                 }
                     break;
@@ -304,20 +306,22 @@
                     break;
                 case 3:
                 {
-                    NSString *htmlStr = @"NewCarNotice.html";
-//                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-//                        ZQNewCarCheckController *newCarVC = [[ZQNewCarCheckController alloc] init];
-//                        [newCarVC setHidesBottomBarWhenPushed:YES];
-//                        [self.navigationController pushViewController:newCarVC animated:YES];
-//                    }
-//                    else
-//                    {
+                    if ([self userIsLogin]) {
+                        NSString *htmlStr = @"NewCarNotice.html";
+                        //                    if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                        //                        ZQNewCarCheckController *newCarVC = [[ZQNewCarCheckController alloc] init];
+                        //                        [newCarVC setHidesBottomBarWhenPushed:YES];
+                        //                        [self.navigationController pushViewController:newCarVC animated:YES];
+                        //                    }
+                        //                    else
+                        //                    {
                         ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
                         Vc.title = @"新车免检预约服务须知";
                         Vc.classString = NSStringFromClass([ZQNewCarCheckController class]);
                         [Vc setHidesBottomBarWhenPushed:YES];
                         [self.navigationController pushViewController:Vc animated:YES];
-//                    }
+                        //                    }
+                    }
                     return;
                 }
                     break;
@@ -348,16 +352,34 @@
     
 }
 
+- (BOOL)userIsLogin
+{
+    if ([Utility isLogin])
+    {
+        return YES;
+    }
+    else
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
+            
+        }];
+        return NO;
+    }
+}
 #pragma mark ZQProcessRightCellDelegate
 -(void)selectRightAtRow:(NSInteger)row index:(NSInteger)index {
     NSLog(@"ZQProcessRightCellDelegate row=%ld index = %ld",(long)row,(long)index);
     switch (row) {
         case 1:{
-//            ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
-//            [self.navigationController pushViewController:vc animated:YES];
-            ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
-            [vc setHidesBottomBarWhenPushed:YES];
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([self userIsLogin]) {
+                //            ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+                //            [self.navigationController pushViewController:vc animated:YES];
+                ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
+                [vc setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
             break;
         case 3:{

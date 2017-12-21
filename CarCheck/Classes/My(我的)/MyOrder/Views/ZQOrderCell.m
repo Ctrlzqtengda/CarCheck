@@ -63,6 +63,7 @@
         [self.bgView addSubview:self.addressL];
         [self.bgView addSubview:self.timeL];
         [self.bgView addSubview:self.priceL];
+        [self.bgView addSubview:self.newCarPayBtn];
 //        [self.contentView addSubview:self.statusL];
     }
     
@@ -89,8 +90,8 @@
     NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
     [self.timeL setText:[NSString stringWithFormat:@"下单时间: %@",currentDateStr]];
     
-    NSString *moneyStr = [NSString stringWithFormat:@"预付金额: ￥%@",@"30.00"];
-    NSRange range = [moneyStr rangeOfString:@"￥30.00"];
+    NSString *moneyStr = [NSString stringWithFormat:@"预付金额: ￥%@",_orderModel.pay_money];
+    NSRange range = [moneyStr rangeOfString:[NSString stringWithFormat:@"￥%@",_orderModel.pay_money]];
     NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
     [self.priceL setAttributedText:attachStr];
@@ -191,7 +192,19 @@
     }
     return _priceL;
 }
-
+- (UIButton *)newCarPayBtn
+{
+    if (!_newCarPayBtn) {
+        _newCarPayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_newCarPayBtn setFrame:CGRectMake(CGRectGetWidth(_bgView.frame)-90,CGRectGetHeight(_bgView.frame)-40,80, 30)];
+        _newCarPayBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [_newCarPayBtn setTitle:@"继续支付" forState:UIControlStateNormal];
+        [_newCarPayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_newCarPayBtn setBackgroundColor:[UIColor redColor]];
+        _newCarPayBtn.layer.cornerRadius = 6;
+    }
+    return _newCarPayBtn;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

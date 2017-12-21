@@ -117,13 +117,19 @@
                                                      toDate:[NSDate date]
                                                     options:0];
         NSInteger cDays = [components day];
-        CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
-        if (overdueFineMoney>money.floatValue) {
-          self.overdueFine = money;
+        if (cDays>15) {
+            CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
+            if (overdueFineMoney>money.floatValue) {
+                self.overdueFine = money;
+            }
+            else
+            {
+                self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+            }
         }
         else
         {
-           self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+            self.overdueFine = @"0";
         }
     }
     [self.tableView reloadData];
@@ -191,8 +197,8 @@
         return;
     }
     NSString *carCodeStr = [_contentArray[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!carCodeStr.length) {
-        [ZQLoadingView showAlertHUD:@"请输入车牌号码" duration:SXLoadingTime];
+    if (carCodeStr.length !=6) {
+        [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
     }
     carCodeStr = [NSString stringWithFormat:@"%@%@",self.shortNumString,carCodeStr];
@@ -237,6 +243,7 @@
             {
                 YPayViewController *payVC = [[YPayViewController alloc] init];
                 payVC.payMoney = [NSString stringWithFormat:@"%@",jsonDic[@"total"]];
+                payVC.orderNo = jsonDic[@"order_no"];
                 payVC.aPayType = ZQPayAFineView;
                 [strongSelf.navigationController pushViewController:payVC animated:YES];
             }
@@ -318,13 +325,19 @@
                                                                                  toDate:[NSDate date]
                                                                                 options:0];
                 NSInteger cDays = [components day];
-                CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
-                if (overdueFineMoney>money.floatValue) {
-                self.overdueFine = money;
+                if (cDays>15) {
+                    CGFloat overdueFineMoney = (cDays-15)*money.floatValue*0.03;
+                    if (overdueFineMoney>money.floatValue) {
+                        self.overdueFine = money;
+                    }
+                    else
+                    {
+                        self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+                    }
                 }
                 else
                 {
-                self.overdueFine = [NSString stringWithFormat:@"%.2f",overdueFineMoney];
+                    self.overdueFine = @"0";
                 }
             }
             _bottomV.total = [NSString stringWithFormat:@"%.2f",money.floatValue+ self.overdueFine.floatValue];
@@ -394,8 +407,13 @@
                 break;
             case 1:
             {
-                if ([self.overdueFine floatValue]) {
-                    cell.contentTf.text = [NSString stringWithFormat:@"￥%@",self.overdueFine];
+                CGFloat ff = [self.overdueFine floatValue];
+                if (ff) {
+                    cell.contentTf.text = [NSString stringWithFormat:@"￥%.2f",ff];
+                }
+                else
+                {
+                    cell.contentTf.text = @"￥0";
                 }
             }
                 break;

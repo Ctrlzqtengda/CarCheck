@@ -76,6 +76,7 @@
     self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
     // 取消searchBar上下边缘的分割线
     self.searchController.searchBar.backgroundImage = [[UIImage alloc] init];
+    self.searchController.searchBar.placeholder = @"搜索检测站";
     
     UITextField *searchTextField = (UITextField *)[[[self.searchController.searchBar.subviews firstObject] subviews] lastObject];
     searchTextField.backgroundColor = [UIColor colorWithRed:182.0/255 green:182.0/255 blue:182.0/255 alpha:0.3];
@@ -101,6 +102,8 @@
 
 - (void)getAgencyListData
 {
+    [self.tableView.mj_footer resetNoMoreData];
+    self.page = 1;
 //    o_product经度  o_range维度
     NSString *urlStr = nil;
     if (self.siftArray) {
@@ -111,7 +114,7 @@
     else
     {
 //        /o_product/%@/o_range/%@/o_name/%@/province/%@/city/%@
-        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],[Utility getLongitude],[Utility getLatitude],(long)self.page];
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f/p/1",[Utility getUserID],[Utility getLongitude],[Utility getLatitude]];
     }
     //检车机构接口
     __weak typeof(self) weakSelf = self;
@@ -219,7 +222,17 @@
 - (void)loadMoreData
 {
      self.page++;
-    NSString *urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude],(long)self.page];
+    NSString *urlStr = nil;
+    if (self.siftArray) {
+        //筛选条件
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_name/%@/province/%@/city/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],self.siftArray[0],self.siftArray[1],self.siftArray[2],[Utility getLongitude],[Utility getLatitude],(long)self.page];
+    }
+    else
+    {
+        //        /o_product/%@/o_range/%@/o_name/%@/province/%@/city/%@
+        urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f/p/%ld",[Utility getUserID],[Utility getLongitude],[Utility getLatitude],(long)self.page];
+    }
     //检车机构接口
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
@@ -229,21 +242,32 @@
             {
                 NSArray *array = jsonDic[@"res"];
                 if ([array isKindOfClass:[NSArray class]]) {
+                    NSMutableArray *mArray = nil;
                     if (array.count) {
-                        [strongSelf.agencyList addObjectsFromArray:[ZQInspectionModel mj_objectArrayWithKeyValuesArray:array]];
+                        mArray = [ZQInspectionModel mj_objectArrayWithKeyValuesArray:array];
+                        [strongSelf.agencyList addObjectsFromArray:mArray];
                     }
-                    [strongSelf.tableView reloadData];
+//                    [strongSelf.tableView reloadData];
+                    NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:0];
+                    for (int ind = 0; ind < [mArray count]; ind++) {
+                        NSIndexPath *newPath =  [NSIndexPath indexPathForRow:[strongSelf.agencyList indexOfObject:[mArray objectAtIndex:ind]] inSection:0];
+                        [insertIndexPaths addObject:newPath];
+                    }
+                    [strongSelf.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+                    [strongSelf.tableView.mj_footer setHidden:YES];
+                    [strongSelf performSelector:@selector(hideAction) withObject:nil afterDelay:0.6];
+                    return ;
                 }
             }
         }
-        [strongSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+         [strongSelf.tableView.mj_footer endRefreshingWithNoMoreData];
     } failure:^(NSError *error) {
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
         {
-            [strongSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            [strongSelf.tableView.mj_footer resetNoMoreData];
         }
-    } animated:YES];
+    } animated:NO];
     /*
     // 1.添加假数据
     for (int i = 0; i<5; i++) {
@@ -261,6 +285,11 @@
     });
     //            [tableView.mj_footer endRefreshingWithNoMoreData];
 */
+}
+- (void)hideAction
+{
+    [self.tableView.mj_footer resetNoMoreData];
+    [self.tableView.mj_footer setHidden:NO];
 }
 - (void)addNavigationRightItem
 {

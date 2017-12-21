@@ -54,6 +54,7 @@
     [super viewDidLoad];
     self.title = @"充值";
     _chooseIndex = 1;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self getData];
 
     [self initView];
@@ -61,7 +62,7 @@
 
 - (void)initView{
     //    _tableV = [[UITableView alloc] initWithFrame];
-    _tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, __kWidth, __kHeight-64) style:(UITableViewStyleGrouped)];
+    _tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, __kWidth, __kHeight-64) style:(UITableViewStyleGrouped)];
     [self.view addSubview:_tableV];
     _tableV.backgroundColor =  [UIColor whiteColor];
     _tableV.separatorColor = [UIColor clearColor];
@@ -82,7 +83,7 @@
     _contactView.borderStyle = UITextBorderStyleRoundedRect;
     _contactView.autocorrectionType = UITextAutocorrectionTypeNo;
     _contactView.returnKeyType = UIReturnKeyDone;
-    _contactView.keyboardType = UIKeyboardTypeNumberPad;
+    _contactView.keyboardType = UIKeyboardTypeDecimalPad;
     _contactView.delegate = self;
 //    _contactView.placeholder = @"";
     _contactView.font = [UIFont systemFontOfSize:14];
@@ -108,6 +109,22 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField.text rangeOfString:@"."].location == NSNotFound) {
+        self.payMoney = textField.text;    return YES;
+    }
+    else
+    {
+        if (string.length == 0) return YES;
+        NSString *lastStr = [[textField.text componentsSeparatedByString:@"."] lastObject];
+        if (lastStr.length>1) {
+            return NO;
+        }
+        self.payMoney = textField.text;
+        return YES;
+    }
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     self.payMoney = textField.text;
@@ -139,9 +156,9 @@
     return 70;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 50;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 50;
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -170,7 +187,7 @@
 - (void)requestWeiChatPay
 {
     if (_payMoney.floatValue > 0) {
-        NSString *urlStr = [NSString stringWithFormat:@"daf/wx_order/u_id/%@/money/%@",[Utility getUserID],_payMoney];
+        NSString *urlStr = [NSString stringWithFormat:@"daf/wx_order/channel/wx/u_id/%@/money/%.2f",[Utility getUserID],_payMoney.floatValue];
         __weak typeof(self) weakSelf = self;
         [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
             __strong typeof(self) strongSelf = weakSelf;

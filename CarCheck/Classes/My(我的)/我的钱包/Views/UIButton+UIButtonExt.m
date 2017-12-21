@@ -20,8 +20,16 @@
     CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
     
     // raise the image and push it right to center it
-    self.imageEdgeInsets = UIEdgeInsetsMake(
-                                            - (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
+    if (__kWidth>320) {
+        self.imageEdgeInsets = UIEdgeInsetsMake(
+                                                - (totalHeight - imageSize.height), 0.0, 0.0, - titleSize.width);
+    }
+    else
+    {
+        self.imageEdgeInsets = UIEdgeInsetsMake(
+                                                - (totalHeight - imageSize.height), 16.0, 0.0, - titleSize.width);
+    }
+
     
     // lower the text and push it left to center it
     self.titleEdgeInsets = UIEdgeInsetsMake(

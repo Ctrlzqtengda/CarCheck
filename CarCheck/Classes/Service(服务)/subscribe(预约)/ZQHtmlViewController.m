@@ -19,7 +19,7 @@
     CGFloat bottomHeight;
     BOOL isAgree;
 }
-@property (nonatomic, copy) NSString *urlString;
+@property (nonatomic, copy)  NSString *urlString;
 @property (strong,nonatomic) UIProgressView *progressV;
 @property (strong,nonatomic) WKWebView *webView;
 @property (assign,nonatomic) NSInteger isShow;
@@ -72,16 +72,23 @@
     }
     else
     {
-        if ([_urlString hasPrefix:@"agency"]) {
-            [self requestInstitutionDetailData];
+        if ([_urlString hasPrefix:@"http://"])
+        {
+            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]]];
         }
-        else{
-            
-            NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
-            NSString *path = [mainBundleDirectory stringByAppendingPathComponent:_urlString];
-            NSURL *url = [NSURL fileURLWithPath:path];
-            NSURLRequest *request = [NSURLRequest requestWithURL:url];
-            [self.webView loadRequest:request];
+        else
+        {
+            if ([_urlString hasPrefix:@"agency"]) {
+                [self requestInstitutionDetailData];
+            }
+            else{
+                
+                NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
+                NSString *path = [mainBundleDirectory stringByAppendingPathComponent:_urlString];
+                NSURL *url = [NSURL fileURLWithPath:path];
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                [self.webView loadRequest:request];
+            }
         }
     }
     [self.progressV setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 5)];
@@ -318,24 +325,53 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     NSLog(@"加载完成");
     self.progressV.hidden = YES;
+    [self.webView evaluateJavaScript:@"document.documentElement.style.webkitTouchCallout='none';" completionHandler:nil];
+    [self.webView evaluateJavaScript:@"document.documentElement.style.webkitUserSelect='none';"completionHandler:nil];
 }
 // 页面加载失败时调用
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
     NSLog(@"加载失败");
 }
 
+-(WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
+{
+    
+    NSLog(@"createWebViewWithConfiguration");
+    
+    if (!navigationAction.targetFrame.isMainFrame) {
+        
+        [webView loadRequest:navigationAction.request];
+        
+    }
+    
+    return nil;
+    
+}
 //**WKNavigationDelegate*
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSString *requestString = navigationAction.request.URL.absoluteString;
+    NSLog(@"requestString1111:%@",requestString);
+
+    if (navigationAction.targetFrame==nil) {
+        [webView loadRequest:navigationAction.request];
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
     //获取请求的url路径.
     NSString *requestString = navigationResponse.response.URL.absoluteString;
     NSLog(@"requestString:%@",requestString);
+//    if (decisionHandler) {
+//        <#statements#>
+//    }
     // 遇到要做出改变的字符串
-    NSString *subStr = @"www.baidu.com";
-    if ([requestString rangeOfString:subStr].location != NSNotFound) {
-        NSLog(@"这个字符串中有subStr");
-        //回调的URL中如果含有百度，就直接返回，也就是关闭了webView界面
-//        [self.navigationController  popViewControllerAnimated:YES];
-    }
+//    NSString *subStr = @"www.baidu.com";
+//    if ([requestString rangeOfString:subStr].location != NSNotFound) {
+//        NSLog(@"这个字符串中有subStr");
+//        //回调的URL中如果含有百度，就直接返回，也就是关闭了webView界面
+////        [self.navigationController  popViewControllerAnimated:YES];
+//    }
     
     decisionHandler(WKNavigationResponsePolicyAllow);
     

@@ -27,5 +27,5 @@
 @property (nonatomic, copy) NSString *service_charge;
 @property (nonatomic, copy) NSString *pay_money;
 @property (nonatomic, copy) NSString *create_time;
-
+@property (nonatomic, copy) NSString *order_no;
 @end

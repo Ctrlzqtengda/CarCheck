@@ -8,6 +8,7 @@
 
 #import "ZQRegisterViewController.h"
 #import "ZQLoadingView.h"
+#import "NSString+Validation.h"
 
 @interface ZQRegisterViewController ()<UITextFieldDelegate>
 {
@@ -137,7 +138,14 @@
 #pragma mark ==注册==
 -(void)regiSter{
     [self.view endEditing:YES];
-    if (!_mobile) {
+    if (_mobile) {
+        if (![_mobile isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
         return;
     }
@@ -175,7 +183,14 @@
         [ZQLoadingView showAlertHUD:@"请稍后获取" duration:SXLoadingTime];
         return;
     }
-    if (!_mobile.length) {
+    if (_mobile.length) {
+        if (![_mobile isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
         return;
     }

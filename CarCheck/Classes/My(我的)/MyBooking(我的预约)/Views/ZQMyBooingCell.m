@@ -24,14 +24,15 @@
 
 @property (nonatomic, strong) UILabel *phoneL;
 @property (nonatomic, strong) UILabel *prepaidAmountL;
+
 @end
 
 @implementation ZQMyBooingCell
 
 + (CGFloat)myBooingCellHeight
 {
-//    return 207;
-    return 207-70;
+    return 207;
+//    return 207-70;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,13 +42,14 @@
         xMagin = 10;
         labelWidth = __kWidth - 2*xMagin;
         [self.contentView addSubview:self.bgView];
-//        [self.contentView addSubview:self.btnBgView];
+        [self.contentView addSubview:self.btnBgView];
         [self.bgView addSubview:self.bookingTitleL];
         [self.bgView addSubview:self.bookingTimeL];
         [self.bgView addSubview:self.contactL];
         [self.bgView addSubview:self.phoneL];
         [self.bgView addSubview:self.prepaidAmountL];
-        [self.btnBgView addSubview:self.agencyDetailBtn];
+        [self.bgView addSubview:self.agencyDetailBtn];
+        [self.btnBgView addSubview:self.evaluationBtn];
         [self.btnBgView addSubview:self.endorseBtn];
     }
     
@@ -79,6 +81,18 @@
     NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
     [self.prepaidAmountL setAttributedText:attachStr];
+    
+    if (_orderModel.order_status.integerValue==1) {
+//        [self.agencyDetailBtn setHidden:NO];
+        [self.btnBgView setHidden:NO];
+        [_agencyDetailBtn setTitle:@"继续支付" forState:UIControlStateNormal];
+    }
+    else
+    {
+//        [self.agencyDetailBtn setHidden:YES];
+        [self.btnBgView setHidden:YES];
+        [_agencyDetailBtn setTitle:@"评价" forState:UIControlStateNormal];
+    }
 }
 
 - (UIView *)bgView
@@ -149,22 +163,38 @@
 {
     if (!_agencyDetailBtn) {
         _agencyDetailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_agencyDetailBtn setFrame:CGRectMake((CGRectGetWidth(_btnBgView.frame)-100*2)/3, (CGRectGetHeight(_btnBgView.frame)-30)/2,100, 30)];
+        [_agencyDetailBtn setFrame:CGRectMake(CGRectGetWidth(_bgView.frame)-90,CGRectGetHeight(_bgView.frame)-40,80, 30)];
         _agencyDetailBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [_agencyDetailBtn setTitle:@"机构详情" forState:UIControlStateNormal];
+        [_agencyDetailBtn setTitle:@"继续支付" forState:UIControlStateNormal];
         [_agencyDetailBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_agencyDetailBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
+        [_agencyDetailBtn setBackgroundColor:[UIColor redColor]];
         _agencyDetailBtn.layer.cornerRadius = 6;
     }
     return _agencyDetailBtn;
 }
+- (UIButton *)evaluationBtn
+{
+    if (!_evaluationBtn) {
+        _evaluationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_evaluationBtn setFrame:CGRectMake((CGRectGetWidth(_btnBgView.frame)-100*2)/3, (CGRectGetHeight(_btnBgView.frame)-30)/2,100, 30)];
+        _evaluationBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+//        [_evaluationBtn setTitle:@"评价" forState:UIControlStateNormal];
+        [_evaluationBtn setTitle:@"改签订单" forState:UIControlStateNormal];
+        [_evaluationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_evaluationBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
+        _evaluationBtn.layer.cornerRadius = 6;
+    }
+    return _evaluationBtn;
+}
+
 - (UIButton *)endorseBtn
 {
     if (!_endorseBtn) {
         _endorseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_endorseBtn setFrame:CGRectMake(CGRectGetMaxX(_agencyDetailBtn.frame)+CGRectGetMinX(_agencyDetailBtn.frame), CGRectGetMinY(_agencyDetailBtn.frame),CGRectGetWidth(_agencyDetailBtn.frame), 30)];
+        [_endorseBtn setFrame:CGRectMake(CGRectGetMaxX(_evaluationBtn.frame)+CGRectGetMinX(_evaluationBtn.frame), CGRectGetMinY(_evaluationBtn.frame),CGRectGetWidth(_evaluationBtn.frame), 30)];
         _endorseBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [_endorseBtn setTitle:@"改签订单" forState:UIControlStateNormal];
+//        [_endorseBtn setTitle:@"改签订单" forState:UIControlStateNormal];
+        [_endorseBtn setTitle:@"删除订单" forState:UIControlStateNormal];
         [_endorseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_endorseBtn setBackgroundColor:LH_RGBCOLOR(17,149,232)];
         _endorseBtn.layer.cornerRadius = 6;

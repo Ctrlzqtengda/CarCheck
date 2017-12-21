@@ -55,9 +55,10 @@
 - (void)getBannerData
 {
     //获取Banner接口
-    
+    [ZQLoadingView showProgressHUD:@"loading..."];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:@"daf/get_banner" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        [ZQLoadingView hideProgressHUD];
         __strong typeof(self) strongSelf = weakSelf;
         if (succe) {
             if (strongSelf)
@@ -88,6 +89,7 @@
             }
         }
     } failure:^(NSError *error) {
+        [ZQLoadingView hideProgressHUD];
 //        __strong typeof(self) strongSelf = weakSelf;
 //        if (strongSelf) {
 //            strongSelf.aheadView.imageStrArray = @[@"ada",@"adb",@"adc",@"adp"];
@@ -95,7 +97,7 @@
 //
 //            }];
 //        }
-    } animated:YES];
+    } animated:NO];
     
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -183,32 +185,28 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (![Utility isLogin])
-    {
-        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
-        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
-        [self.navigationController presentViewController:loginNa animated:YES completion:^{
-            
-        }];
-        return;
-    }
+    
     if (indexPath.section==2) {
         switch (indexPath.row) {
             case 0:
             {
-                ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
-                [vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:vc animated:YES];
+                ZQHtmlViewController *htmlVc = [[ZQHtmlViewController alloc] initWithUrlString:@"http://m.hbgajg.com/?from=singlemessage&isappinstalled=0" andShowBottom:NO];
+                [htmlVc hidesBottomBarWhenPushed];
+                htmlVc.title = @"违章查询";
+                [self.navigationController pushViewController:htmlVc animated:YES];
+//                ZQViolationViewController *vc = [[ZQViolationViewController alloc] initWithNibName:@"ZQViolationViewController" bundle:nil];
+//                [vc setHidesBottomBarWhenPushed:YES];
+//                [self.navigationController pushViewController:vc animated:YES];
                 break;
             }
             case 1:
             {
-                
-                ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-                inspectionVC.subType = ZQSubScTypeNone;
-                [inspectionVC setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:inspectionVC animated:YES];
-                
+                if ([self userIsLogin]) {
+                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                    inspectionVC.subType = ZQSubScTypeNone;
+                    [inspectionVC setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:inspectionVC animated:YES];
+                }
                 break;
             }
             case 2:
@@ -245,13 +243,16 @@
             }
                 case 4:
             {
-                // 代缴罚款
-//                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
-//                [vc setHidesBottomBarWhenPushed:YES];
-//                [self.navigationController pushViewController:vc animated:YES];
-                ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
-                [vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:vc animated:YES];
+                if ([self userIsLogin])
+                {
+                    // 代缴罚款
+                    //                ZQPayVioViewController *vc = [[ZQPayVioViewController alloc] initWithNibName:@"ZQPayVioViewController" bundle:nil];
+                    //                [vc setHidesBottomBarWhenPushed:YES];
+                    //                [self.navigationController pushViewController:vc animated:YES];
+                    ZQUpVioViewController *vc = [[ZQUpVioViewController alloc] init];
+                    [vc setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
                 break;
             }
                 case 5:
@@ -305,24 +306,26 @@
             }
             case 1:
             {
-                // 在线预约
-                ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
-                [vc setHidesBottomBarWhenPushed:YES];
-                [self.navigationController pushViewController:vc animated:YES];
-//                NSString *htmlStr = @"reservationNotice3.html";
-//                if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-//                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
-//                    [inspectionVC setHidesBottomBarWhenPushed:YES];
-//                    [self.navigationController pushViewController:inspectionVC animated:YES];
-//                }
-//                else
-//                {
-//                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
-//                    Vc.title = @"预约须知";
-//                    Vc.classString = NSStringFromClass([ZQInspectionListController class]);
-//                    [Vc setHidesBottomBarWhenPushed:YES];
-//                    [self.navigationController pushViewController:Vc animated:YES];
-//                }
+                if ([self userIsLogin]) {
+                    // 在线预约
+                    ZQOnlineSubViewController *vc = [[ZQOnlineSubViewController alloc] initWithNibName:@"ZQOnlineSubViewController" bundle:nil];
+                    [vc setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:vc animated:YES];
+                    //                NSString *htmlStr = @"reservationNotice3.html";
+                    //                if ([UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+                    //                    ZQInspectionListController *inspectionVC = [[ZQInspectionListController alloc] init];
+                    //                    [inspectionVC setHidesBottomBarWhenPushed:YES];
+                    //                    [self.navigationController pushViewController:inspectionVC animated:YES];
+                    //                }
+                    //                else
+                    //                {
+                    //                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                    //                    Vc.title = @"预约须知";
+                    //                    Vc.classString = NSStringFromClass([ZQInspectionListController class]);
+                    //                    [Vc setHidesBottomBarWhenPushed:YES];
+                    //                    [self.navigationController pushViewController:Vc animated:YES];
+                    //                }
+                }
                 break;
             }
             case 2:
@@ -352,6 +355,22 @@
             default:
                 break;
         }
+    }
+}
+- (BOOL)userIsLogin
+{
+    if ([Utility isLogin])
+    {
+        return YES;
+    }
+    else
+    {
+        ZQLoginViewController *loginVC = [[ZQLoginViewController alloc] init];
+        BaseNavigationController *loginNa = [[BaseNavigationController alloc] initWithRootViewController:loginVC];
+        [self.navigationController presentViewController:loginNa animated:YES completion:^{
+            
+        }];
+        return NO;
     }
 }
 #pragma mark headerAndFooter

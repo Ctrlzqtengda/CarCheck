@@ -12,5 +12,6 @@
 @interface ZQOrderCell : UITableViewCell
 
 + (CGFloat)OrderCellHeight;
+@property (nonatomic, strong) UIButton *newCarPayBtn;
 @property (nonatomic, strong) ZQNewCarOrderModel *orderModel;
 @end

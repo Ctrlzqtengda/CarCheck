@@ -12,10 +12,16 @@
 
 #import "ZQMyBooingCell.h"
 #import "ZQHtmlViewController.h"
+#import "YPayViewController.h"
+#import "ZQValuationController.h"
+
+#import "ZQSubTimeViewController.h"
 
 @interface ZQMyOrderViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     ZQOrderTypeChooseView *orderHeadView;
+    
+    NSInteger seletedIndex;
 }
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -47,7 +53,7 @@
     orderHeadView.userInteractionEnabled = YES;
     //我的订单接口 1.处理中，2.已完成 3.退款
     NSString *urlStr = [NSString stringWithFormat:@"daf/get_file/u_id/%@/order_status/%u",[Utility getUserID],_currentViewType];
-    
+    [ZQLoadingView  showProgressHUD:@"loading..."];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         __strong typeof(self) strongSelf = weakSelf;
@@ -67,13 +73,15 @@
                 [strongSelf configDataWithArray:@[]];
             }
         }
+        [ZQLoadingView hideProgressHUD];
     } failure:^(NSError *error) {
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
         {
             [strongSelf configDataWithArray:@[]];
+            [ZQLoadingView hideProgressHUD];
         }
-    } animated:YES];
+    } animated:NO];
 }
 
 - (void)configDataWithArray:(NSArray *)array
@@ -236,6 +244,13 @@
     [self.tableView setHidden:NO];
     self.dataArr = mArray;
     [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+//    [self performSelector:@selector(scrollToTopAction) withObject:nil afterDelay:1.0];
+}
+- (void)scrollToTopAction
+{
+//    [self.tableView setContentOffset:CGPointZero animated:YES];
 }
 - (void)noDataShowText:(NSString *)str
 {
@@ -259,44 +274,111 @@
         cell = [[ZQMyBooingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.agencyDetailBtn addTarget:self action:@selector(agencyDetailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.evaluationBtn addTarget:self action:@selector(evaluationBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [cell.endorseBtn addTarget:self action:@selector(endorseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     cell.agencyDetailBtn.tag = indexPath.row;
+    cell.evaluationBtn.tag = indexPath.row;
+    cell.endorseBtn.tag = indexPath.row;
     cell.orderModel = self.dataArr[indexPath.row];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [ZQMyBooingCell myBooingCellHeight];
+    ZQOrderModel *orderModel = self.dataArr[indexPath.row];
+    if (orderModel.order_status.integerValue==1)
+    {
+        return [ZQMyBooingCell myBooingCellHeight];
+    }
+    else
+    {
+        return [ZQMyBooingCell myBooingCellHeight]-70;
+    }
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (_currentViewType==ZQInProcessOrdersView) {
+//        ZQOrderModel *orderModel = self.dataArr[indexPath.row];
+//        YPayViewController *payVC = [[YPayViewController alloc] init];
+//        payVC.payMoney = orderModel.pay_money;
+//        payVC.orderNo = orderModel.order_no;
+//        payVC.aPayType = ZQPayBookingView;
+//        [self.navigationController pushViewController:payVC animated:YES];
+//    }
 }
 
 //机构详情
 - (void)agencyDetailBtnAction:(UIButton *)sender
 {
-    ZQOrderModel *model = self.dataArr[sender.tag];
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" testId:model.testing_id andShowBottom:YES];
-    Vc.title = @"检车站详情";
-    Vc.dSubType = model.type.integerValue;
-    [self.navigationController pushViewController:Vc animated:YES];
+    ZQOrderModel *orderModel = self.dataArr[sender.tag];
+    if ([sender.titleLabel.text isEqualToString:@"评价"]) {
+        ZQValuationController *valuationVc = [[ZQValuationController alloc] init];
+        valuationVc.jigou_id = orderModel.testing_id;
+        [self.navigationController pushViewController:valuationVc animated:YES];
+    }
+    else
+    {
+        YPayViewController *payVC = [[YPayViewController alloc] init];
+        payVC.payMoney = orderModel.pay_money;
+        payVC.orderNo = orderModel.order_no;
+        payVC.aPayType = ZQPayBookingView;
+        [self.navigationController pushViewController:payVC animated:YES];
+    }
+    
+//    ZQOrderModel *model = self.dataArr[sender.tag];
+//    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"agency.html" testId:model.testing_id andShowBottom:YES];
+//    Vc.title = @"检车站详情";
+//    Vc.dSubType = model.type.integerValue;
+//    [self.navigationController pushViewController:Vc animated:YES];
 }
-//改签订单
+//删除订单
 - (void)endorseBtnAction:(UIButton *)sender
 {
-    
+    ZQOrderModel *model = self.dataArr[sender.tag];
+    __block NSInteger tempTag = sender.tag;
+    NSString *urlStr = [NSString stringWithFormat:@"daf/delete_order/u_id/%@/order_no/%@",[Utility getUserID],model.order_no];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (succe) {
+            if (strongSelf)
+            {
+                [strongSelf.dataArr removeObjectAtIndex:tempTag];
+                [strongSelf.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:tempTag inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+        }
+    } animated:YES];
+}
+//改签订单
+- (void)evaluationBtnAction:(UIButton *)sender
+{
+    ZQOrderModel *orderModel = self.dataArr[sender.tag];
+    ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
+    subVC.serviceChargeMoney = [orderModel.service_charge floatValue];
+    subVC.costMoney = orderModel.inspection_fee;
+//    subVC.order_no = orderModel.order_no;
+    subVC.orderModel = orderModel;
+    [self.navigationController pushViewController:subVC animated:YES];
+    seletedIndex = sender.tag;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    if (self.dataArr.count) {
+         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:seletedIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KWidth, self.view.bounds.size.height-40) style:(UITableViewStyleGrouped)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64+40, KWidth, self.view.bounds.size.height-64-40) style:(UITableViewStylePlain)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);

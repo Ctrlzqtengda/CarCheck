@@ -39,6 +39,7 @@
     self.title = @"VIP会员服务";
     [self getDataAnimated:YES];
     [self initViews];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessNotifacation) name:@"enterSuccessView" object:nil];
 }
 - (void)initViews {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
@@ -84,10 +85,7 @@
             __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
             {
-                 [strongSelf.putBtn setTitle:@"VIP到期日:" forState:BtnNormal];
-                 [strongSelf.putBtn setUserInteractionEnabled:NO];
-                [strongSelf getDataAnimated:NO];
-                [strongSelf.mainView reloadData];
+                 [strongSelf paySuccessNotifacation];
             }
         };
         [self.navigationController pushViewController:payVC animated:YES];
@@ -101,11 +99,18 @@
         [self presentViewController:alert animated:YES completion:nil];
     }
 }
+- (void)paySuccessNotifacation
+{
+    [self.putBtn setTitle:@"VIP到期日:" forState:BtnNormal];
+    [self.putBtn setUserInteractionEnabled:NO];
+    [self getDataAnimated:NO];
+//    [self.mainView reloadData];
+}
 -(void)getDataAnimated:(BOOL)animate {
     //    _dataArray = @[@{@"title":@"违章查询",@"subtitle":@"weizhang"},@{@"title":@"检车机构",@"subtitle":@"jianche"},@{@"title":@"保险服务",@"subtitle":@"baoxian"},@{@"title":@"车辆维修",@"subtitle":@"weixiu"},@{@"title":@"代缴罚款",@"subtitle":@"fakuan"},@{@"title":@"常见问题",@"subtitle":@"wenti"},@{@"title":@"法律咨询",@"subtitle":@"falv"},@{@"title":@"加油充值",@"subtitle":@"jiayou"}];
     //VIP会员接口
     NSString *urlStr = [NSString stringWithFormat:@"daf/get_vip_member/u_id/%@",[Utility getUserID]];
-    _dataArray = @[@{@"title":@"机动车年检\n全年免费代办",@"price":@"价值69元",@"image":@"myMoney"},@{@"title":@"保险服务\n全年免费代办",@"price":@"价值50元",@"image":@"myMoney"},@{@"title":@"代缴罚款\n全年免费代办",@"price":@"价值30元",@"image":@"myMoney"},@{@"title":@"年检代办\n全年免费代办",@"price":@"价值50元",@"image":@"myMoney"},@{@"title":@"法律援助\n全年免费代办",@"price":@"价值100元",@"image":@"myMoney"},@{@"title":@"头等舱服务\n全年免费代办",@"price":@"价值99元",@"image":@"myMoney"}];
+    _dataArray = @[@{@"title":@"机动车年检",@"price":@"价值69元",@"image":@"myMoney"},@{@"title":@"保险服务",@"price":@"价值70元",@"image":@"myMoney"},@{@"title":@"代缴罚款",@"price":@"价值30元",@"image":@"myMoney"},@{@"title":@"年检代办",@"price":@"价值30元",@"image":@"myMoney"},@{@"title":@"法律援助",@"price":@"价值100元",@"image":@"myMoney"},@{@"title":@"头等舱服务",@"price":@"价值99元",@"image":@"myMoney"}];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
@@ -117,8 +122,20 @@
                     strongSelf.aVipModel = [ZQVIPModel mj_objectWithKeyValues:dic];
                     [strongSelf.aheadView configBuyCardViewWithModel:strongSelf.aVipModel];
                     if (strongSelf.aVipModel.is_vip.integerValue == 2) {
-                         [strongSelf.putBtn setTitle:[NSString stringWithFormat:@"VIP到期日: %@",strongSelf.aVipModel.expire] forState:BtnNormal];
+                        NSTimeInterval time= [strongSelf.aVipModel.remaining_time doubleValue];
+                        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                        NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+                         [strongSelf.putBtn setTitle:[NSString stringWithFormat:@"VIP到期日: %@",currentDateStr] forState:BtnNormal];
+                        [strongSelf.putBtn setUserInteractionEnabled:NO];
+                        [Utility storageInteger:2 forKey:@"is_vip"];
 //                         [strongSelf.mainView reloadData];
+                    }
+                    else
+                    {
+                        [strongSelf.putBtn setTitle:@"￥99/年 我要开卡" forState:BtnNormal];
+                        [strongSelf.putBtn setUserInteractionEnabled:YES];
                     }
 
                 }
@@ -221,12 +238,7 @@
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-  if ([Utility getIs_vip])
-  {
-      return CGSizeZero;
-  }
-    else
-        return CGSizeMake(__kWidth, 56);
+    return CGSizeMake(__kWidth, 56);
 }
 //详细介绍
 - (void)introductBtnAction

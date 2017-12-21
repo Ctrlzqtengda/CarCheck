@@ -11,6 +11,8 @@
 #import "YResetPassViewController.h"
 #import "ZQLoadingView.h"
 
+#import "NSString+Validation.h"
+
 @interface YFoundPasswordViewController ()<UITextFieldDelegate>
 {
     BOOL isRight;
@@ -167,7 +169,14 @@
 -(void)getCode{
     NSLog(@"获取验证码");
     [self.view endEditing:YES];
-    if (!_mobile.length) {
+    if (_mobile.length) {
+        if (![_mobile isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
         return;
     }
@@ -215,7 +224,14 @@
 #pragma mark ==找回密码==
 -(void)found{
 
-    if (!_mobile) {
+    if (_mobile) {
+        if (![_mobile isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:1.5];
         return;
     }

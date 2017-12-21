@@ -10,8 +10,9 @@
 
 @interface ZQMessageModel : NSObject
 
-@property (nonatomic, strong) NSString *m_id;
-@property (nonatomic, strong) NSString *t_type;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *t_contentered;
+@property (nonatomic, copy) NSString *m_id;
+@property (nonatomic, copy) NSString *t_type;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *t_contentered;
+@property (nonatomic, copy) NSString *t_date;
 @end

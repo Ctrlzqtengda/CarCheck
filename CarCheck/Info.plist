@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>车检</string>
+	<string>新概念检车</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -118,11 +118,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App需要您的同意,才能访问相机</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>&apos;新概念检车&apos; 需要获取你当前的位置</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>&apos;新概念检车&apos; 需要获取你当前的位置</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>&apos;新概念检车&apos; 需要获取你当前的位置</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App需要您的同意,才能访问相册</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -21,6 +21,9 @@
 
 #import <Pingpp.h>
 
+#import "PasswordKeyboard.h"
+#import "ZQPayPasswordController.h"
+
 @interface YPayViewController ()<UITableViewDelegate,UITableViewDataSource,YPayOtherHeadDelegate,YOrderSuccessViewDelegate>{
     BOOL _isPaySuccess;
 }
@@ -37,12 +40,14 @@
 
 @property (strong,nonatomic) NSArray *detailArr;
 
+@property (nonatomic, strong) PasswordKeyboard *keyboard;
+
 @end
 
 @implementation YPayViewController
 
 -(void)getData{
-    _imageArr = @[@"Payment_zfb",@"Payment_wx",@"Payment_wx"];
+    _imageArr = @[@"Payment_zfb",@"Payment_wx",@"money_logo"];
     _titleArr = @[@"支付宝支付",@"微信支付",@"钱包支付"];
     _detailArr = @[@"支付宝安全支付",@"微信安全支付",@"钱包安全支付"];
 //    if (IsNilString(_payMoney)||_payMoney.floatValue ==0) {
@@ -52,6 +57,25 @@
 //    }
     [_tableV reloadData];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPayStatus:) name:YSOrderPayStatus object:nil];
+    
+    _keyboard = [PasswordKeyboard keyboard];
+    [self.view addSubview:_keyboard];
+    __weak typeof(self)wk = self;
+    _keyboard.completeBlock = ^(NSString *password) {
+        if ([password isEqualToString:[Utility getWalletPayPassword]]) {
+             [wk requestWallet_vip_orderPay];
+        }
+        else
+        {
+            [ZQLoadingView showAlertHUD:@"支付密码错误" duration:SXLoadingTime];
+        }
+//        wk.pwdTF.text = [NSString stringWithFormat:@"password is %@.",password];
+    };
+    
+    _keyboard.forgotPasswordBlock = ^{
+        ZQPayPasswordController *payPasswordVc = [[ZQPayPasswordController alloc] initWithType:2];
+        [wk.navigationController pushViewController:payPasswordVc animated:YES];
+    };
 }
 
 
@@ -134,7 +158,7 @@
             break;
         case 2:
         {
-            [self requestWallet_vip_orderPay];
+            [_keyboard showKeyboard];
         }
             break;
         default:
@@ -164,7 +188,7 @@
             break;
         case ZQPayAFineView:
         {
-            urlStr = [NSString stringWithFormat:@"daf/wx_vip_order/u_id/%@/channel/wx",[Utility getUserID]];
+            urlStr = [NSString stringWithFormat:@"daf/wx_fine_order/u_id/%@/channel/wx/order_no/%@",[Utility getUserID],self.orderNo];
         }
             break;
         case ZQPayBookingView:
@@ -180,18 +204,21 @@
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
         {
-            [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
-                NSLog(@"YpayVC微信支付结果:%@",result);
-                if (error) {
-                    //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
-                    //                        [strongSelf getPayStatus:nil];
-                    [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
-                }
-                else
-                {
-                    [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
-                }
-            }];
+            if ([jsonDic[@"code"] integerValue] != 100)
+            {
+                [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
+                    NSLog(@"YpayVC微信支付结果:%@",result);
+                    if (error) {
+                        //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
+                        //                        [strongSelf getPayStatus:nil];
+                        [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
+                    }
+                    else
+                    {
+                        [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+                    }
+                }];
+            }
         }
     } failure:^(NSError *error) {
     } animated:YES];
@@ -239,7 +266,7 @@
             break;
         case ZQPayAFineView:
         {
-            urlStr = [NSString stringWithFormat:@"daf/wallet_vip_order/u_id/%@",[Utility getUserID]];
+            urlStr = [NSString stringWithFormat:@"daf/wallet_send/u_id/%@/order_no/%@",[Utility getUserID],self.orderNo];
         }
             break;
         case ZQPayBookingView:

@@ -18,4 +18,5 @@
 @property (nonatomic, copy) NSString *u_phone;
 @property (nonatomic, copy) NSString *u_id;
 @property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *pay_money;
 @end

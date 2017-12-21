@@ -14,6 +14,7 @@
 #import "YshareChooseView.h"
 
 #import "JPUSHService.h"
+#import "NSString+Validation.h"
 
 @interface  ZQLoginViewController()<UITextFieldDelegate,YshareChooseViewDelegate>
 
@@ -158,7 +159,14 @@
 #pragma mark ==登录==
 -(void)Login{
     [self.view endEditing:YES];
-    if (!_name.length) {
+    if (_name.length) {
+        if (![_name isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入您的手机号" duration:2.0];
         return;
     }

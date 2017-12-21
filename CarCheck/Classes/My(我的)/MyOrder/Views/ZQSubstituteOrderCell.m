@@ -71,6 +71,7 @@
         [self.bgView addSubview:self.feeL];
         [self.bgView addSubview:self.timeL];
         [self.bgView addSubview:self.priceL];
+        [self.bgView addSubview:self.substitutePayBtn];
     }
     
     return self;
@@ -91,7 +92,8 @@
     [attachStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
     [self.carCodeL setAttributedText:attachStr];
     [self.addressL setText:[NSString stringWithFormat:@"处罚日期: %@",_orderModel.fine_date]];
-    [self.statusL setText:[NSString stringWithFormat:@"手机号码: %@",_orderModel.phone_num]];
+//    [self.statusL setText:[NSString stringWithFormat:@"手机号码: %@",_orderModel.phone_num]];
+    [self.statusL setText:[NSString stringWithFormat:@"手机号码: %@",_orderModel.phone]];
     if (!_orderModel.late_fee) {
         _orderModel.late_fee = @"0";
     }
@@ -215,7 +217,19 @@
     }
     return _priceL;
 }
-
+- (UIButton *)substitutePayBtn
+{
+    if (!_substitutePayBtn) {
+        _substitutePayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_substitutePayBtn setFrame:CGRectMake(CGRectGetWidth(_bgView.frame)-90,CGRectGetHeight(_bgView.frame)-40,80, 30)];
+        _substitutePayBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [_substitutePayBtn setTitle:@"继续支付" forState:UIControlStateNormal];
+        [_substitutePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_substitutePayBtn setBackgroundColor:[UIColor redColor]];
+        _substitutePayBtn.layer.cornerRadius = 6;
+    }
+    return _substitutePayBtn;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

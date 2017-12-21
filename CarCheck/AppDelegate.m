@@ -158,7 +158,8 @@
 {
     //费用接口
     __weak typeof(self) weakSelf = self;
-    [JKHttpRequestService POST:@"daf/get_service_money" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_service_money/u_id/%@",[Utility getUserID]];
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
             __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
@@ -168,12 +169,13 @@
                     if (array.count) {
                         [Utility saveServiceMoneyWithArray:array];
                         [Utility storageObject:jsonDic[@"phone"] forKey:@"ServerPhone"];
-
+                        [Utility storageObject:jsonDic[@"is_vip"] forKey:@"is_vip"];
                     }
                 }
             }
         }
     } failure:^(NSError *error) {
+        [Utility storageObject:@"4008769838" forKey:@"ServerPhone"];
     } animated:NO];
 }
 
@@ -486,11 +488,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                     break;
             }
             //            [self checkPay];
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"enterSuccessView" object:nil];
         }
         else
         {
           [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"enterSuccessView" object:nil];
         }
     }];
     

@@ -78,7 +78,7 @@
     
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
     titleLabel.center = CGPointMake(cardLogo.center.x, cardLogo.center.y+65);
-    titleLabel.text = @"预计可省2500元/年\n更好、更省、更优";
+    titleLabel.text = @"预计可省299元/年\n更好、更省、更优";
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 2;
@@ -87,7 +87,7 @@
     self.spareL = titleLabel;
     
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,5, 180, 20)];
-    titleLabel.text = @"已有96706人购买";
+    titleLabel.text = @"已有10000人购买";
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textColor = [UIColor whiteColor];
     [bView addSubview:titleLabel];
@@ -139,7 +139,13 @@
     [attr addAttribute:NSFontAttributeName value:MFont(14) range:yRange];
     [attr addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:yRange];
     self.priceL.attributedText = attr;
+    if (!model.save.integerValue) {
+        model.save = @"0";
+    }
     self.spareL.text = [NSString stringWithFormat:@"预计可省%@元/年\n更好、更省、更优",model.save];
+    if (!model.purchase.integerValue) {
+        model.purchase = @"0";
+    }
     self.buyCountL.text = [NSString stringWithFormat:@"已有%@人购买",model.purchase];
     
 }

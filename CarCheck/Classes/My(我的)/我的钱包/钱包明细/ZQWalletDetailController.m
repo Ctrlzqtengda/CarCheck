@@ -196,6 +196,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"walletDetails"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"walletDetails"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.textColor = [UIColor darkTextColor];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
@@ -209,21 +210,22 @@
 //        [cell.contentView addSubview:priceL];
 //        priceL.tag = 11111;
     }
-    cell.imageView.image = [UIImage imageNamed:@"icon29"];
+    cell.imageView.image = [UIImage imageNamed:@"myMoney"];
     ZQWalletDetailModel *model = self.dataArr[indexPath.row];
-    switch (model.type.integerValue) {
-        case 1:
-            cell.textLabel.text = @"自行上线检车";
-        break;
-        case 2:
-            cell.textLabel.text = @"上门接送检车";
-            break;
-        case 3:
-            cell.textLabel.text = @"新车免检服务";
-            break;
-        default:
-            break;
-    }
+    cell.textLabel.text = model.type;
+//    switch (model.type.integerValue) {
+//        case 1:
+//            cell.textLabel.text = @"自行上线检车";
+//        break;
+//        case 2:
+//            cell.textLabel.text = @"上门接送检车";
+//            break;
+//        case 3:
+//            cell.textLabel.text = @"新车免检服务";
+//            break;
+//        default:
+//            break;
+//    }
     NSString *moneyStr = [NSString stringWithFormat:@"金额: ￥%@",model.x_my];
     NSRange range = [moneyStr rangeOfString:[NSString stringWithFormat:@"￥%@",model.x_my]];
     NSMutableAttributedString *attachStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];

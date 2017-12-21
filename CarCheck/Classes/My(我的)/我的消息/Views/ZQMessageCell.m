@@ -25,6 +25,7 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
 //        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor whiteColor];
         [self initView];
     }
@@ -36,19 +37,18 @@
 //    _logoIV = [[UIImageView alloc]initWithFrame:CGRectMake(10, 16, 0, 0)];
     [self addSubview:_logoIV];
     
-    _titleLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+14, 22, 210, 15)];
+    _titleLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+8, 22, 130, 15)];
     [self addSubview:_titleLb];
-    _titleLb.textAlignment = NSTextAlignmentLeft;
     _titleLb.textColor = __DTextColor;
     _titleLb.font = MFont(15);
     
-//    _timeLb = [[UILabel  alloc]initWithFrame:CGRectMake(CGRectXW(_titleLb), 22, __kWidth-CGRectXW(_titleLb)-10, 15)];
-//    [self addSubview:_timeLb];
-//    _timeLb.textAlignment = NSTextAlignmentRight;
-//    _timeLb.textColor = LH_RGBCOLOR(170, 170, 170);
-//    _timeLb.font = MFont(12);
+    _timeLb = [[UILabel  alloc]initWithFrame:CGRectMake(__kWidth-130, 22, 120, 15)];
+    [self addSubview:_timeLb];
+    _timeLb.textAlignment = NSTextAlignmentRight;
+    _timeLb.textColor = LH_RGBCOLOR(170, 170, 170);
+    _timeLb.font = MFont(12);
     
-    _detailLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+14, CGRectYH(_titleLb)+7, __kWidth-90, 42)];
+    _detailLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectXW(_logoIV)+8, CGRectYH(_titleLb)+7, __kWidth-90, 42)];
     [self addSubview:_detailLb];
     _detailLb.numberOfLines = 0;
     _detailLb.textColor = LH_RGBCOLOR(153, 153, 153);
@@ -60,13 +60,18 @@
     _titleLb.text = _model.title;
     _logoIV.image = MImage(@"appIcon");
     _detailLb.text = _model.t_contentered;
-//    if (_model.time) {
-//        _timeLb.text = _model.time;
-//    }
-//    else
-//    {
-//        _timeLb.text = @"2017-11-01";
-//    }
+    if (_model.t_date) {
+        NSTimeInterval time=[_model.t_date doubleValue];
+        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+        _timeLb.text = currentDateStr;
+    }
+    else
+    {
+        _timeLb.text = @"2017-11-01";
+    }
     //    NSDate *dateNow = [NSDate dateWithTimeIntervalSinceNow:0];
     //    NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[dateNow timeIntervalSince1970]];
     //    NSInteger sendTime = [timeSp integerValue]- [model.time integerValue];

@@ -11,6 +11,7 @@
 #import "ZQChoosePickerView.h"
 //#import "ZQHtmlViewController.h"
 //#import "YPayViewController.h"
+#import "NSString+Validation.h"
 
 @interface ZQInsuranceVController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQVioUpTableViewCellDelegate>
 
@@ -95,13 +96,20 @@
         return;
     }
     NSString *phoneStr = [self.i_phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!phoneStr.length) {
+    if (phoneStr.length) {
+        if (![phoneStr isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
     NSString *carCardStr = [self.i_car_card stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!carCardStr.length) {
-        [ZQLoadingView showAlertHUD:@"请输入车牌号码" duration:SXLoadingTime];
+    if (carCardStr.length !=6) {
+        [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
     }
     carCardStr = [NSString stringWithFormat:@"%@%@",self.shortNumStr,carCardStr];

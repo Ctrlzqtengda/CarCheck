@@ -19,7 +19,7 @@
     [super viewDidLoad];
     self.title = @"关于我们";
     [self initView];
-    [self getData];
+//    [self getData];
 }
 -(void)getData{
     
@@ -38,7 +38,7 @@
 }
 -(void)initView{
     //main
-    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-70)/2, 90, 70, 70)];
+    UIImageView *loginIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-70)/2, 130, 70, 70)];
     [self.view addSubview:loginIV];
     loginIV.image =MImage(@"appIcon");
     
@@ -54,9 +54,10 @@
     listLb.textAlignment = NSTextAlignmentCenter;
     listLb.font = MFont(11);
     listLb.textColor = __TextColor;
-    listLb.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    listLb.text = [NSString stringWithFormat:@"v %@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     
     self.QRIV = [[UIImageView alloc]initWithFrame:CGRectMake((__kWidth-150)/2, CGRectYH(versionLb)+30, 150, 150)];
+    self.QRIV.image = [UIImage imageNamed:@"about_scan"];
     [self.view addSubview:self.QRIV];
 
     
@@ -66,7 +67,7 @@
     rightLb.textColor = __TextColor;
     rightLb.font = MFont(12);
     rightLb.numberOfLines = 0;
-    rightLb.text = [NSString stringWithFormat:@"客服热线：%@\n 微信公众号:shenzhoutengda",[Utility getServerPhone]];
+    rightLb.text = [NSString stringWithFormat:@"客服热线：%@\n 微信公众号:河北领投网络科技有限公司",[Utility getServerPhone]];
 }
 
 - (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size

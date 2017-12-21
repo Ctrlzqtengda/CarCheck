@@ -92,7 +92,7 @@
     if (indexPath.row==0&&indexPath.section==0) {
         [cell.detailTextLabel setTextColor:[UIColor brownColor]];
 //        [cell.detailTextLabel setTextColor:LH_RGBCOLOR(17,149,232)];
-        [cell.detailTextLabel setText:@"奖励50积分"];
+        [cell.detailTextLabel setText:@"奖励20积分"];
     }
     return cell;
 }
@@ -106,6 +106,7 @@
                 {
                     //分享
                     [self shareAction];
+                    [self requestShareData];
                 }
                     break;
                 case 1:{
@@ -156,7 +157,8 @@
     NSArray* imageArray = @[[UIImage imageNamed:@"icon29"]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:@"新概念检车联盟" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"新概念检车联盟" type:SSDKContentTypeAuto];
+//
+        [shareParams SSDKSetupShareParamsByText:@"新概念检车联盟依托互联网+，整合优化各方资源，为广大车主提供省时省力省心的一站式全方位服务" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"新概念检车联盟" type:SSDKContentTypeAuto];
         //2、分享（可以弹出我们的分享菜单和编辑界面）
         //要显示菜单的视图, iPad版中此参数作为弹出菜单的参照视图，只有传这个才可以弹出我们的分享菜单，可以传分享的按钮对象或者自己创建小的view 对象，iPhone可以传nil不会影响
         [ShareSDK showShareActionSheet:nil items:nil shareParams:shareParams onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
@@ -164,7 +166,6 @@
                 case SSDKResponseStateSuccess:
                 {
                     [ZQLoadingView showAlertHUD:@"分享成功" duration:SXLoadingTime];
-                    [self requestShareData];
                     break;
                 }
                 case SSDKResponseStateFail:

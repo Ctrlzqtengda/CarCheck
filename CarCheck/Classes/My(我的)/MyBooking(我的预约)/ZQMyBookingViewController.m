@@ -101,7 +101,7 @@
         cell = [[ZQMyBooingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.agencyDetailBtn addTarget:self action:@selector(agencyDetailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.endorseBtn addTarget:self action:@selector(endorseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [cell.endorseBtn addTarget:self action:@selector(endorseBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     cell.agencyDetailBtn.tag = indexPath.row;
     cell.orderModel = self.bookingList[indexPath.row];

@@ -12,7 +12,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.timeLabel.backgroundColor = [UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
     self.timeLabel.layer.cornerRadius = 5;
     self.timeLabel.clipsToBounds = YES;
     // Initialization code

@@ -12,5 +12,6 @@
 @interface ZQSubstituteOrderCell : UITableViewCell
 
 + (CGFloat)SubstituteOrderCellHeight;
+@property (nonatomic, strong) UIButton *substitutePayBtn;
 @property (nonatomic, strong) ZQSubstituteOrderModel *orderModel;
 @end

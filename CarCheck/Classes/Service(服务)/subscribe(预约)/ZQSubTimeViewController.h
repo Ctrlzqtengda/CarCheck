@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "ZQOrderModel.h"
 
 @interface ZQSubTimeViewController : BaseViewController
 
@@ -14,4 +15,7 @@
 @property (nonatomic, copy) NSString *requestUrl;
 @property (nonatomic, strong) NSArray *uploadImageArr;
 @property (nonatomic, assign) CGFloat serviceChargeMoney;
+
+//@property (nonatomic, copy) NSString *order_no;
+@property (nonatomic, strong) ZQOrderModel *orderModel;
 @end

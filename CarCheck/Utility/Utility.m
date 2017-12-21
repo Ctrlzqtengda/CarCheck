@@ -33,7 +33,14 @@
     }
     return NO;
 }
-
+/**
+ *  获取支付
+ *
+ */
++(NSString *)getWalletPayPassword
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"WalletPayP"];
+}
 +(NSString *)getUserPhone
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"userPhone"];
@@ -46,6 +53,10 @@
 {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"userHeadUrl"];
 }
++(void)saveWalletPayPassword:(NSString *)pwd
+{
+   [Utility storageObject:pwd forKey:@"WalletPayP"];
+}
 +(void)saveUserInfo:(NSDictionary *)dict
 {
     if (dict) {
@@ -54,6 +65,7 @@
         [Utility storageObject:dict[@"phone"] forKey:@"userPhone"];
         [Utility storageInteger:[dict[@"is_vip"] integerValue] forKey:@"is_vip"];
         [Utility storageObject:[NSString stringWithFormat:@"%@",dict[@"uid"]] forKey:@"userId"];
+        [Utility storageObject:[NSString stringWithFormat:@"%@",dict[@"zfpassword"]] forKey:@"WalletPayP"];
         NSString *headStr = dict[@"head"];
         if ([headStr isKindOfClass:[NSString class]]) {
             if (headStr.length) {
@@ -68,6 +80,7 @@
         [Utility storageInteger:0 forKey:@"is_vip"];
         [Utility storageObject:nil forKey:@"userId"];
         [Utility storageObject:nil forKey:@"userHeadUrl"];
+        [Utility storageObject:nil forKey:@"WalletPayP"];
     }
 }
 +(double)getLongitude

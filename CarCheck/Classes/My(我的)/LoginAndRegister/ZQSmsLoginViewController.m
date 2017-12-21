@@ -8,6 +8,7 @@
 
 #import "ZQSmsLoginViewController.h"
 #import "ZQRegisterViewController.h"
+#import "NSString+Validation.h"
 
 @interface ZQSmsLoginViewController ()
 {
@@ -160,7 +161,14 @@
 #pragma mark ==获取验证码==
 -(void)getCode{
     NSLog(@"获取验证码");
-    if (!_mobile.length) {
+    if (_mobile.length) {
+        if (![_mobile isValidMobilePhoneNumber]) {
+            [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
+            return;
+        }
+    }
+    else
+    {
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
         return;
     }

@@ -11,6 +11,8 @@
 #import "ZQRechargeViewController.h"
 #import "ZQWalletDetailController.h"
 
+#import "ZQPayPasswordController.h"
+
 @interface ZQMyMoneyViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -70,6 +72,45 @@
 //    [self.pendingReturnL setText:@"0"];
 //}
 
+- (void)walletBtnAction:(UIButton *)sender
+{
+    switch (sender.tag) {
+        case 100:
+        {
+            if ([Utility getWalletPayPassword]) {
+                ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
+                //    Vc.rechargeSuccess = ^{
+                //
+                //    };
+                [self.navigationController pushViewController:Vc animated:YES];
+            }
+            else
+            {
+                ZQPayPasswordController *payPasswordVc = [[ZQPayPasswordController alloc] initWithType:1];
+                [self.navigationController pushViewController:payPasswordVc animated:YES];
+            }
+        }
+            break;
+        case 101:
+        {
+            NSString *phoneStr = [Utility getServerPhone];
+            NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
+            UIApplication * app = [UIApplication sharedApplication];
+            if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+                [app openURL:[NSURL URLWithString:PhoneStr]];
+            }
+        }
+            break;
+        case 102:
+        {
+            ZQWalletDetailController *Vc = [[ZQWalletDetailController alloc] init];
+            [self.navigationController pushViewController:Vc animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+}
 //钱包充值
 - (void)walletRechargeBtnAction
 {
@@ -116,7 +157,7 @@
         cell.detailTextLabel.textColor = [UIColor brownColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.imageView.image = [UIImage imageNamed:@"icon29"];
+    cell.imageView.image = [UIImage imageNamed:@"integral_log0"];
     cell.textLabel.text = @"我的积分";
     cell.detailTextLabel.text = self.integral;
     return cell;
@@ -191,31 +232,47 @@
 {
     CGFloat height = 82;
     UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(16, 162, CGRectGetWidth(self.view.frame)-32, height)];
-    bottomV.layer.cornerRadius = 6;
+//    bottomV.layer.cornerRadius = 6;
 //    bottomV.layer.masksToBounds = YES;
     [bottomV setBackgroundColor:LH_RGBCOLOR(238,247,255)];
     [self.tableView.tableHeaderView addSubview:bottomV];
     
-    CGFloat width = CGRectGetWidth(bottomV.frame)/2;
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(0, 0, width, height)];
-    [button setImage:[UIImage imageNamed:@"walletRecharge"] forState:UIControlStateNormal];
-    [button setTitle:@"钱包充值" forState:UIControlStateNormal];
-    [button setTitleColor:__TextColor forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [button centerImageAndTitle];
-    [button addTarget:self action:@selector(walletRechargeBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [bottomV addSubview:button];
-    
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(width, 0, width, height)];
-    [button setImage:[UIImage imageNamed:@"walletDetails"] forState:UIControlStateNormal];
-    [button setTitle:@"钱包明细" forState:UIControlStateNormal];
-    [button setTitleColor:__TextColor forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [button centerImageAndTitle];
-    [button addTarget:self action:@selector(walletDetailsBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [bottomV addSubview:button];
+    NSArray *imageArr = @[@"walletRecharge",@"withdrawal",@"walletDetails"];
+    NSArray *titleArr = @[@"钱包充值",@"钱包提现",@"钱包明细"];
+    CGFloat magin = 5;
+    CGFloat width = (CGRectGetWidth(bottomV.frame)-magin*4)/3;
+    for (int i = 0; i<imageArr.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setFrame:CGRectMake((width+5)*i+magin, magin, width, height-2*magin)];
+        [button setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
+        [button setTitle:titleArr[i] forState:UIControlStateNormal];
+        [button setTitleColor:__TextColor forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [button centerImageAndTitle];
+        [button setBackgroundColor:[UIColor whiteColor]];
+        [button addTarget:self action:@selector(walletBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [bottomV addSubview:button];
+        button.tag = i + 100;
+    }
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setFrame:CGRectMake(0, 0, width, height)];
+//    [button setImage:[UIImage imageNamed:@"walletRecharge"] forState:UIControlStateNormal];
+//    [button setTitle:@"钱包充值" forState:UIControlStateNormal];
+//    [button setTitleColor:__TextColor forState:UIControlStateNormal];
+//    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//    [button centerImageAndTitle];
+//    [button addTarget:self action:@selector(walletRechargeBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//    [bottomV addSubview:button];
+//
+//    button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setFrame:CGRectMake(width, 0, width, height)];
+//    [button setImage:[UIImage imageNamed:@"walletDetails"] forState:UIControlStateNormal];
+//    [button setTitle:@"钱包明细" forState:UIControlStateNormal];
+//    [button setTitleColor:__TextColor forState:UIControlStateNormal];
+//    [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//    [button centerImageAndTitle];
+//    [button addTarget:self action:@selector(walletDetailsBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//    [bottomV addSubview:button];
     
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, CGRectGetMaxY(bottomV.frame)+10, CGRectGetWidth(bottomV.frame), 20)];
 //    [label setTextAlignment:NSTextAlignmentCenter];

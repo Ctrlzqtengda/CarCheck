@@ -29,6 +29,8 @@ static CGFloat kImageOriginHight = 200.f;
 //@property (strong, nonatomic) UIImageView *headIV;
 @property (strong, nonatomic) UIButton *headBtn;
 @property (strong, nonatomic) UILabel *phoneLabel;
+
+@property (strong, nonatomic) UIImageView *VIPImageV;
 @end
 
 @implementation ZQNewMyViewController
@@ -108,7 +110,8 @@ static CGFloat kImageOriginHight = 200.f;
     cell.textLabel.text = dic[@"title"];
     if (indexPath.section==0&&indexPath.row==3) {
         cell.detailTextLabel.textColor = LH_RGBCOLOR(17,149,232);
-        cell.detailTextLabel.text = @"开通VIP独享全年减免";
+//        cell.detailTextLabel.text = @"开通VIP独享全年减免";
+        cell.detailTextLabel.text = @"首次开通VIP赠送200积分";
     }
     else
     {
@@ -321,7 +324,7 @@ static CGFloat kImageOriginHight = 200.f;
         _tableView.tableHeaderView = headView;
         expandZoomImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kImageOriginHight, 128)];
         expandZoomImageView.contentMode = UIViewContentModeScaleAspectFill;
-        expandZoomImageView.image = [UIImage imageNamed:@"WechatIMG52"];
+        expandZoomImageView.image = [UIImage imageNamed:@"my_bgImage"];
         expandZoomImageView.clipsToBounds = YES;
         [headView addSubview:expandZoomImageView];
         
@@ -343,6 +346,10 @@ static CGFloat kImageOriginHight = 200.f;
         [_headBtn addTarget:self action:@selector(headBtnAction) forControlEvents:UIControlEventTouchUpInside];
         [headView addSubview:_headBtn];
         
+        self.VIPImageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"VIP_Head_logo"]];
+        [self.VIPImageV setCenter:CGPointMake(CGRectGetMaxX(_headBtn.frame)-8, CGRectGetMaxY(_headBtn.frame)-15)];
+        [headView addSubview:_VIPImageV];
+        
         self.phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_headBtn.frame), __kWidth, 30)];
         [_phoneLabel setTextAlignment:NSTextAlignmentCenter];
         [_phoneLabel setTextColor:[UIColor whiteColor]];
@@ -357,14 +364,13 @@ static CGFloat kImageOriginHight = 200.f;
     
     [_phoneLabel setText:[Utility getUserName]];
      [_headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ImageBaseAPI,[Utility getUserHeadUrl]]] forState:UIControlStateNormal placeholderImage:MImage(@"user_head")];
-//    if ([Utility isLogin]) {
-//
-//    }
-//    else
-//    {
-//        [_phoneLabel setText:@"未登录"];
-//        [_headBtn setBackgroundImage:MImage(@"user_head") forState:UIControlStateNormal];
-//    }
+    if ([Utility getIs_vip]) {
+        [self.VIPImageV setHidden:NO];
+    }
+    else
+    {
+        [self.VIPImageV setHidden:YES];
+    }
 }
 - (void)viewDidAppear:(BOOL)animated
 {

@@ -24,4 +24,5 @@
 @property (nonatomic, copy) NSString *pay_time;
 @property (nonatomic, copy) NSString *pay_money;
 @property (nonatomic, copy) NSString *late_fee;
+@property (nonatomic, copy) NSString *phone;
 @end

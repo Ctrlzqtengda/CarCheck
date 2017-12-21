@@ -21,6 +21,8 @@
     NSArray *costArray;
     NSArray *costDetailArray;
     CGFloat totalMoney;
+    
+    BOOL isToday;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -50,7 +52,7 @@
     
     if (self.serviceChargeMoney>0) {
         costArray = @[@"检车费用:",@"上门服务费:"];
-        costDetailArray = @[[NSString stringWithFormat:@"%@ ",self.costMoney],[NSString stringWithFormat:@"%.0f 元",self.serviceChargeMoney]];
+        costDetailArray = @[[NSString stringWithFormat:@"%@ 元",self.costMoney],[NSString stringWithFormat:@"%.0f 元",self.serviceChargeMoney]];
         [self.tenMinutesL setHidden:YES];
         totalMoney = [self.costMoney floatValue]+self.serviceChargeMoney;
     }
@@ -72,18 +74,19 @@
 }
 - (void)getcalendarDatesForDays:(NSInteger)days
 {
-    NSDate *today = [NSDate date];
+//    NSDate *tomorrow = [[NSDate date] dateAfterDay:1];
+    NSDate *tomorrow = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *endOfDate = [today dateAfterDay:days];
+    NSDate *endOfDate = [tomorrow dateAfterDay:days];
     NSDateComponents *components = [calendar components:NSCalendarUnitDay
-                                               fromDate:today
+                                               fromDate:tomorrow
                                                  toDate:endOfDate
                                                 options:0];
     NSInteger cDays = [components day];
     NSMutableArray *calendarDays = [[NSMutableArray alloc]init];
     for (NSInteger day = 0; day <cDays; day++) {
         [components setDay:day];
-        NSDate *dDate = [calendar dateByAddingComponents:components toDate:today options:0];
+        NSDate *dDate = [calendar dateByAddingComponents:components toDate:tomorrow options:0];
         NSDateComponents * comps_other= [calendar components:(NSCalendarUnitMonth |
                                                               NSCalendarUnitDay |
                                                               NSCalendarUnitWeekday) fromDate:dDate];
@@ -112,33 +115,67 @@
         [ZQLoadingView showAlertHUD:@"请选择时间段" duration:SXLoadingTime];
         return;
     }
-    NSString *urlStr = [NSString stringWithFormat:@"%@/u_date/%@/phase/%@",self.requestUrl,self.u_date,self.phase];
-//    urlStr = @"daf/file_upload/u_id/51/u_name/肚肚/u_phone/18510556565/u_car_card/鲁PQM888/u_car_type/中型车 200元/testing_id/1/type/1/inspection_fee/200/service_charge/0.000000/u_date/11-29/phase/8:00 - 10:00";
-//    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:@"51" forKey:@"u_id"];
-//    [dict setObject:@"旺达" forKey:@"u_name"]; // 标题
-//    [dict setObject:@"18098789878" forKey:@"u_phone"];// 类别ID
-//    [dict setObject:@"鲁PM122" forKey:@"u_car_card"];// 文物名
-//    [dict setObject:@"大型车300元" forKey:@"u_car_type"];// 性质 id
-    __weak typeof(self) weakSelf = self;
-    [JKHttpRequestService POST:urlStr Params:nil NSArray:self.uploadImageArr key:@"u_car_pic" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
-            if (strongSelf)
-            {
-                YPayViewController *payVC = [[YPayViewController alloc] init];
-//                payVC.payMoney = [NSString stringWithFormat:@"%.0f",totalMoney];
-                payVC.payMoney = jsonDic[@"money"];
-                payVC.orderNo = jsonDic[@"order_no"];
-                payVC.aPayType = ZQPayBookingView;
-                [strongSelf.navigationController pushViewController:payVC animated:YES];
-            }
-        }
-    } failure:^(NSError *error) {
-        
-    } animated:YES];
-}
 
+    if (self.requestUrl) {
+      NSString *urlStr = [NSString stringWithFormat:@"%@/u_date/%@/phase/%@",self.requestUrl,self.u_date,self.phase];
+        __weak typeof(self) weakSelf = self;
+        [JKHttpRequestService POST:urlStr Params:nil NSArray:self.uploadImageArr key:@"u_car_pic" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+            if (succe) {
+                __strong typeof(self) strongSelf = weakSelf;
+                if (strongSelf)
+                {
+                    YPayViewController *payVC = [[YPayViewController alloc] init];
+                    //                payVC.payMoney = [NSString stringWithFormat:@"%.0f",totalMoney];
+                    payVC.payMoney = jsonDic[@"money"];
+                    payVC.orderNo = jsonDic[@"order_no"];
+                    payVC.aPayType = ZQPayBookingView;
+                    [strongSelf.navigationController pushViewController:payVC animated:YES];
+                }
+            }
+        } failure:^(NSError *error) {
+            
+        } animated:YES];
+    }
+    else
+    {
+        if (self.orderModel) {
+            NSString *urlStr = [NSString stringWithFormat:@"daf/set_order/u_id/%@/order_no/%@/u_date/%@/phase/%@",[Utility getUserID],self.orderModel.order_no,self.u_date,self.phase];
+            __weak typeof(self) weakSelf = self;
+            [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+                if (succe) {
+                    __strong typeof(self) strongSelf = weakSelf;
+                    if (strongSelf)
+                    {
+                        strongSelf.orderModel.u_date = strongSelf.u_date;
+                        strongSelf.orderModel.phase = strongSelf.phase;
+                        [strongSelf performSelector:@selector(backAction) withObject:nil afterDelay:SXLoadingTime];
+                    }
+                }
+            } failure:^(NSError *error) {
+                
+            } animated:YES];
+//            [JKHttpRequestService POST:urlStr Params:nil NSArray:self.uploadImageArr key:@"u_car_pic" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+//                if (succe) {
+//                    __strong typeof(self) strongSelf = weakSelf;
+//                    if (strongSelf)
+//                    {
+//                    }
+//                }
+//            } failure:^(NSError *error) {
+//
+//            } animated:YES];
+        }
+        else
+        {
+            [ZQLoadingView showAlertHUD:@"没有订单号" duration:SXLoadingTime];
+            return;
+        }
+    }
+}
+-(void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 -(void)initViews {
     
     self.title = @"选择预约时间";
@@ -178,21 +215,41 @@
     if (collectionView == self.collectionView) {
         ZQCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"monthDayCell_id" forIndexPath:indexPath];
         ZQDateModel *model = self.dateArray[indexPath.row];
-        [cell.monLabel setText:[NSString stringWithFormat:@"%ld-%@",model.dMonth,model.dDay]];
+        [cell.monLabel setText:[NSString stringWithFormat:@"%ld-%@",(long)model.dMonth,model.dDay]];
         [cell.dayLabel setText:model.dWeek];
 //        cell.backgroundColor = model.isSelected ? [UIColor colorWithRed:130/255.0 green:202/255.0 blue:63/255.0 alpha:1]:[UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
         return cell;
     }else {
         ZQTimeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeCell_id" forIndexPath:indexPath];
-        [cell.timeLabel setText:timeArray[indexPath.row]];
+        NSString *string = timeArray[indexPath.row];
+        [cell.timeLabel setText:string];
+        if (isToday) {
+            if ([self timeIsUnuseWithText:string]) {
+                cell.timeLabel.backgroundColor = [UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
+                cell.userInteractionEnabled = YES;
+            }
+            else
+            {
+                cell.timeLabel.backgroundColor = [UIColor lightGrayColor];
+                cell.userInteractionEnabled = NO;
+            }
+        }
+        else
+        {
+            cell.timeLabel.backgroundColor = [UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
+            cell.userInteractionEnabled = YES;
+        }
         return cell;
     }
     
 }
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZQDateModel *model = self.dateArray[indexPath.row];
-   cell.backgroundColor = model.isSelected ? [UIColor colorWithRed:130/255.0 green:202/255.0 blue:63/255.0 alpha:1]:[UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
+    if (collectionView == self.collectionView)
+    {
+        ZQDateModel *model = self.dateArray[indexPath.row];
+        cell.backgroundColor = model.isSelected ? [UIColor colorWithRed:130/255.0 green:202/255.0 blue:63/255.0 alpha:1]:[UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
+    }
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -283,13 +340,30 @@
         ZQDateModel *model = self.dateArray[indexPath.row];
         model.isSelected = YES;
         [self updateCellStatus:cell selected:model.isSelected];
-        self.u_date = [NSString stringWithFormat:@"%ld-%@",model.dMonth,model.dDay];
+        self.u_date = [NSString stringWithFormat:@"%ld-%@",(long)model.dMonth,model.dDay];
+
+        NSDateComponents*comps =[[NSCalendar currentCalendar] components:(NSCalendarUnitMonth |NSCalendarUnitDay)
+                
+                           fromDate:[NSDate date]];
+        NSInteger month = [comps month];
+        
+        NSInteger day = [comps day];
+        
+        if ((model.dMonth==month)&&(day==model.dDay.integerValue)) {
+            isToday = YES;
+        }
+        else
+        {
+            isToday = NO;
+        }
+        [self.timeCollView reloadData];
     }
 }
 
 //取消选中操作
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{NSLog(@"取消选中操作取消选中操作=%ld",indexPath.row);
+{
+//    NSLog(@"取消选中操作取消选中操作=%ld",indexPath.row);
     UICollectionViewCell *collectionCell = [collectionView cellForItemAtIndexPath:indexPath];
     if ([collectionCell class] == [ZQTimeCollectionViewCell class])
     {
@@ -319,7 +393,7 @@
         }
         else
         {
-            NSLog(@"取消选中操作取消选中操作执行执行");
+//            NSLog(@"取消选中操作取消选中操作执行执行");
         }
         cell.backgroundColor = selected ? [UIColor colorWithRed:130/255.0 green:202/255.0 blue:63/255.0 alpha:1]:[UIColor colorWithRed:208/255.0 green:231/255.0 blue:245/255.0 alpha:1];
     }
@@ -351,6 +425,37 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40;
+}
+- (BOOL)timeIsUnuseWithText:(NSString *)timeTxt
+{
+    NSString *timeStr = [[[timeTxt componentsSeparatedByString:@"-"] lastObject] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    timeStr = [[timeStr componentsSeparatedByString:@":"] firstObject];
+    NSDateComponents*comps =[[NSCalendar currentCalendar] components:(NSCalendarUnitHour)
+            
+                       fromDate:[NSDate date]];
+    NSInteger hour = [comps hour];
+//    NSLog(@"当前时间的hour:%ld",(long)hour);
+
+    if (timeStr.integerValue>hour) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+    //当前的时分秒获得
+    
+//    comps =[calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute |NSCalendarUnitSecond)
+//
+//                       fromDate:date];
+    
+//    NSInteger hour = [comps hour];
+    
+//    NSInteger minute = [comps minute];
+    
+//    NSInteger second = [comps second];
+    
+//    NSLog(@"hour:%d minute: %d second: %d", hour, minute, second);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

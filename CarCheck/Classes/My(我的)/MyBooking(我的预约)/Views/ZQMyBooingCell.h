@@ -15,6 +15,7 @@
 @property (nonatomic, strong) ZQOrderModel *orderModel;
 
 @property (nonatomic, strong) UIButton *agencyDetailBtn;
+@property (nonatomic, strong) UIButton *evaluationBtn;
 @property (nonatomic, strong) UIButton *endorseBtn;
 +(CGFloat)myBooingCellHeight;
 @end
