@@ -23,7 +23,6 @@
 		5E62525F1FB41E3300DC9AB9 /* ZQMsgSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E62525E1FB41E3300DC9AB9 /* ZQMsgSetViewController.m */; };
 		5E6252631FB4210C00DC9AB9 /* ZQMsgFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6252621FB4210C00DC9AB9 /* ZQMsgFootView.m */; };
 		5E6252661FB42BDA00DC9AB9 /* ZQAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6252651FB42BDA00DC9AB9 /* ZQAboutUsViewController.m */; };
-		5E62526A1FB4313200DC9AB9 /* appIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E6252691FB4313200DC9AB9 /* appIcon@2x.png */; };
 		5E62526D1FB432DC00DC9AB9 /* ZQMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E62526C1FB432DC00DC9AB9 /* ZQMessageViewController.m */; };
 		5E6252721FB4377C00DC9AB9 /* ZQMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6252711FB4377C00DC9AB9 /* ZQMessageCell.m */; };
 		5E6252761FB437A700DC9AB9 /* ZQMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6252751FB437A700DC9AB9 /* ZQMessageModel.m */; };
@@ -99,6 +98,7 @@
 		5EF0A5DC1FE7B43900C29A0F /* YOrderPictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0A5DA1FE7B43900C29A0F /* YOrderPictureCell.m */; };
 		5EF0A5DF1FE7DF4A00C29A0F /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0A5DE1FE7DF4A00C29A0F /* NSString+Validation.m */; };
 		5EF0A5E61FEA291E00C29A0F /* ZQProCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0A5E51FEA291E00C29A0F /* ZQProCityView.m */; };
+		5EF0A60D1FEB910C00C29A0F /* appIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EF0A60C1FEB910C00C29A0F /* appIcon@2x.png */; };
 		5EF0C53A1FE7561600577FDD /* PasswordKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0C5381FE7561600577FDD /* PasswordKeyboard.m */; };
 		5EF0C53B1FE7561600577FDD /* PasswordKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF0C5391FE7561600577FDD /* PasswordKeyboard.xib */; };
 		5EF2F48F1F8DF44F00120555 /* ZQRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF2F48E1F8DF44F00120555 /* ZQRegisterViewController.m */; };
@@ -207,7 +207,6 @@
 		5E6252621FB4210C00DC9AB9 /* ZQMsgFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMsgFootView.m; sourceTree = "<group>"; };
 		5E6252641FB42BDA00DC9AB9 /* ZQAboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQAboutUsViewController.h; sourceTree = "<group>"; };
 		5E6252651FB42BDA00DC9AB9 /* ZQAboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQAboutUsViewController.m; sourceTree = "<group>"; };
-		5E6252691FB4313200DC9AB9 /* appIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appIcon@2x.png"; path = "CarCheck/Assets.xcassets/AppIcon.appiconset/appIcon@2x.png"; sourceTree = "<group>"; };
 		5E62526B1FB432DC00DC9AB9 /* ZQMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMessageViewController.h; sourceTree = "<group>"; };
 		5E62526C1FB432DC00DC9AB9 /* ZQMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMessageViewController.m; sourceTree = "<group>"; };
 		5E6252701FB4377C00DC9AB9 /* ZQMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMessageCell.h; sourceTree = "<group>"; };
@@ -345,6 +344,7 @@
 		5EF0A5DE1FE7DF4A00C29A0F /* NSString+Validation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Validation.m"; sourceTree = "<group>"; };
 		5EF0A5E41FEA291E00C29A0F /* ZQProCityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQProCityView.h; sourceTree = "<group>"; };
 		5EF0A5E51FEA291E00C29A0F /* ZQProCityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQProCityView.m; sourceTree = "<group>"; };
+		5EF0A60C1FEB910C00C29A0F /* appIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appIcon@2x.png"; sourceTree = "<group>"; };
 		5EF0C5371FE7561600577FDD /* PasswordKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordKeyboard.h; sourceTree = "<group>"; };
 		5EF0C5381FE7561600577FDD /* PasswordKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordKeyboard.m; sourceTree = "<group>"; };
 		5EF0C5391FE7561600577FDD /* PasswordKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordKeyboard.xib; sourceTree = "<group>"; };
@@ -966,7 +966,7 @@
 				5EB7337F1FC12EC50071F4D2 /* vip_detail.html */,
 				5EB733731FBED9940071F4D2 /* WechatIMG47@2x.png */,
 				5E6252931FB5984800DC9AB9 /* icon29@2x.png */,
-				5E6252691FB4313200DC9AB9 /* appIcon@2x.png */,
+				5EF0A60C1FEB910C00C29A0F /* appIcon@2x.png */,
 				5EDCC0F21FAC5C59007789DC /* agency.png */,
 				5EDCC0F01FAC59E4007789DC /* agency.html */,
 				5EDCC0EE1FAC4D8F007789DC /* questions.html */,
@@ -1372,13 +1372,13 @@
 				TargetAttributes = {
 					F04ACD901F79E20B00F4C50D = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1422,11 +1422,11 @@
 				F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */,
 				5EB733741FBED9950071F4D2 /* WechatIMG47@2x.png in Resources */,
 				F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */,
+				5EF0A60D1FEB910C00C29A0F /* appIcon@2x.png in Resources */,
 				5E6252941FB5984800DC9AB9 /* icon29@2x.png in Resources */,
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
 				F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */,
 				5EE703B81FB2EE8000D2945F /* NewCarNotice.html in Resources */,
-				5E62526A1FB4313200DC9AB9 /* appIcon@2x.png in Resources */,
 				5EDCC0F31FAC5C5A007789DC /* agency.png in Resources */,
 				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
 				5EF0C53B1FE7561600577FDD /* PasswordKeyboard.xib in Resources */,
@@ -1758,19 +1758,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = CarCheck/CarCheck.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 82MW95X34W;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G4P97SU4WQ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = CarCheck/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2b0e5edf-4531-4e62-9191-c825d09cc5a7";
-				PROVISIONING_PROFILE_SPECIFIER = "carcheck-development";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1780,19 +1782,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = CarCheck/CarCheck.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G4P97SU4WQ;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = CarCheck/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JinYeFeiLin.CarCheck1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

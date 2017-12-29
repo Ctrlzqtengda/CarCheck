@@ -228,7 +228,7 @@
 
 #pragma mark ==无法登录==
 -(void)cannotLogin{
-    NSLog(@"无法登录？");
+    
     YFoundPasswordViewController *vc = [[YFoundPasswordViewController alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
     /*

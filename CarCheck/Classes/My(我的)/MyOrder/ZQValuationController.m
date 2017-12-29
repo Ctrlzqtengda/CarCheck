@@ -73,7 +73,7 @@
 }
 */
 -(void)evaluteText:(NSString *)string index:(NSInteger)tag{
-    NSLog(@"评价的内容string:%@",string);
+//    NSLog(@"评价的内容string:%@",string);
     self.valuationStr = string;
 //    _dataModel.evalue = string;
 }

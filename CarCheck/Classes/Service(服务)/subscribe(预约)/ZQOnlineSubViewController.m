@@ -92,8 +92,9 @@
 {
     if (self.pageType) {
         if (indexPath.section) {
-            NSString *htmlStr = @"reservationNotice2.html";
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+//            NSString *htmlStr = @"reservationNotice2.html";
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.6" testId:self.o_testing_id andShowBottom:3];
             Vc.title = @"机动车上门接送检车须知";
             if ([Utility getIs_vip])
             {
@@ -109,8 +110,9 @@
         }
         else
         {
-            NSString *htmlStr = @"reservationNotice3.html";
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+//            NSString *htmlStr = @"reservationNotice3.html";
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:self.o_testing_id andShowBottom:3];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.2" testId:self.o_testing_id andShowBottom:3];
             Vc.title = @"预约须知";
             Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
             Vc.dSubType = 0;

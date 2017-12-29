@@ -41,7 +41,8 @@
     _page = 1;
     [self.view addSubview:self.tableView];
     [self addSegment];
-    [self segmentAction:ZQSubInProcessOrdersView];
+//    [self segmentAction:ZQSubInProcessOrdersView];
+    [self segmentAction:ZQSubAllOrdersView];
 }
 - (void)requestOrdersDataWithTableViewType
 {
@@ -146,7 +147,8 @@
     if (!orderHeadView) {
         orderHeadView = [[ZQOrderTypeChooseView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), 40)];
         //        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"已撤销",@"全部"]];
-        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"全部"]];
+//        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"全部"]];
+        [orderHeadView configViewWithArray:@[@"全部",@"处理中",@"已成功"]];
         [self.view addSubview:orderHeadView];
         
         __weak __typeof(self)weakSelf = self;
@@ -155,14 +157,18 @@
             if (strongSelf) {
                 switch (orderType) {
                     case 0:
-                        [strongSelf segmentAction:ZQSubInProcessOrdersView];
+//                        [strongSelf segmentAction:ZQSubInProcessOrdersView];
+                        [strongSelf segmentAction:ZQSubAllOrdersView];
                         break;
                     case 1:
-                        [strongSelf segmentAction:ZQSubSucessOrdersView];
+//                        [strongSelf segmentAction:ZQSubSucessOrdersView];
+                        [strongSelf segmentAction:ZQSubInProcessOrdersView];
+
                         break;
                     case 2:
                         //                        [strongSelf segmentAction:ZQSubRevocationOrdersView];
-                        [strongSelf segmentAction:ZQSubAllOrdersView];
+//                        [strongSelf segmentAction:ZQSubAllOrdersView];
+                        [strongSelf segmentAction:ZQSubSucessOrdersView];
                         break;
                     case 3:
                         [strongSelf segmentAction:ZQSubAllOrdersView];

@@ -41,7 +41,8 @@
     _page = 1;
     [self.view addSubview:self.tableView];
     [self addSegment];
-    [self segmentAction:ZQNewCarInProcessOrdersView];
+//    [self segmentAction:ZQNewCarInProcessOrdersView];
+    [self segmentAction:ZQNewCarAllOrdersView];
 }
 - (void)requestOrdersDataWithTableViewType
 {
@@ -148,7 +149,8 @@
     if (!orderHeadView) {
         orderHeadView = [[ZQOrderTypeChooseView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), 40)];
         //        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"已撤销",@"全部"]];
-        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"全部"]];
+//        [orderHeadView configViewWithArray:@[@"处理中",@"已成功",@"全部"]];
+        [orderHeadView configViewWithArray:@[@"全部",@"处理中",@"已成功"]];
         [self.view addSubview:orderHeadView];
         
         __weak __typeof(self)weakSelf = self;
@@ -157,14 +159,18 @@
             if (strongSelf) {
                 switch (orderType) {
                     case 0:
-                        [strongSelf segmentAction:ZQNewCarInProcessOrdersView];
+//                        [strongSelf segmentAction:ZQNewCarInProcessOrdersView];
+                        [strongSelf segmentAction:ZQNewCarAllOrdersView];
                         break;
                     case 1:
-                        [strongSelf segmentAction:ZQNewCarSucessOrdersView];
+//                        [strongSelf segmentAction:ZQNewCarSucessOrdersView];
+                         [strongSelf segmentAction:ZQNewCarInProcessOrdersView];
                         break;
                     case 2:
                         //                        [strongSelf segmentAction:NewCarRevocationOrdersV];
-                        [strongSelf segmentAction:ZQNewCarAllOrdersView];
+//                        [strongSelf segmentAction:ZQNewCarAllOrdersView];
+                           [strongSelf segmentAction:ZQNewCarSucessOrdersView];
+                        
                         break;
                     case 3:
                         [strongSelf segmentAction:ZQNewCarAllOrdersView];

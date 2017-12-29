@@ -133,7 +133,7 @@
 {
     NSString *tString = [NSString stringWithFormat:@"￥%@  原价¥%@",model.current_price,model.original_price];
     NSRange range = [tString rangeOfString:[NSString stringWithFormat:@"￥%@",model.current_price]];
-    NSRange yRange = [tString rangeOfString:[NSString stringWithFormat:@"原价¥%@",model.original_price]];
+    NSRange yRange = [tString rangeOfString:[NSString stringWithFormat:@"¥%@",model.original_price]];
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:tString];
     [attr addAttribute:NSFontAttributeName value:MFont(16) range:range];
     [attr addAttribute:NSFontAttributeName value:MFont(14) range:yRange];

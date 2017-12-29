@@ -43,7 +43,8 @@
         _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, _height * 0.8, _width * 0.2, _height * 0.1)];
         _pageControl.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
         _pageControl.center = CGPointMake(self.center.x, _pageControl.center.y);
-        _pageControl.currentPageIndicatorTintColor = [UIColor greenColor];
+//        _pageControl.currentPageIndicatorTintColor = [UIColor greenColor];
+        _pageControl.currentPageIndicatorTintColor = __DefaultColor;
         _pageControl.hidesForSinglePage = NO;
         _pageControl.enabled = NO;
         [self addSubview:_pageControl];
@@ -197,7 +198,7 @@
 }
 
 - (void)tapImageView:(UIGestureRecognizer *)gesture {
-//    _clickBlock(_currenIndex);
+    _clickBlock(_currenIndex);
 }
 
 /*

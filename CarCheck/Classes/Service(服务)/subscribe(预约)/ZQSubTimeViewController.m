@@ -45,7 +45,7 @@
     self.u_date = @"";
     self.phase = @"";
     
-    timeArray = @[@"8:00 - 10:00",@"10:00 - 12:00",@"13:00 - 15:00",@"15:00 - 17:00"];
+    timeArray = @[@"8:00 - 10:00",@"10:00 - 12:00",@"13:30 - 15:30",@"15:30 - 17:30"];
     [self getcalendarDatesForDays:15];
     [self initViews];
     // Do any additional setup after loading the view from its nib.
@@ -200,7 +200,45 @@
 //    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sureTimeHeader"];
     
 }
-
+//预约时间段内限制预约数量
+- (void)limitCarNumWithIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.orderModel) {
+        self.time_tes_id = self.orderModel.testing_id;
+    }
+    NSString *urlStr = [NSString stringWithFormat:@"daf/get_order_time/testing_id/%@/u_date/%@/phase/%@",self.time_tes_id,self.u_date,self.phase];
+    [ZQLoadingView showProgressHUD:@"loading..."];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (succe) {
+            if (strongSelf)
+            {
+                NSInteger carNum = [jsonDic[@"codeInfo"] integerValue];
+                if (carNum>0) {
+                    [ZQLoadingView hideProgressHUD];
+                    UICollectionViewCell *collectionCell = [strongSelf.timeCollView cellForItemAtIndexPath:indexPath];
+                    [strongSelf updateCellStatus:collectionCell selected:YES];
+                    return ;
+                }
+                else
+                {
+                    [ZQLoadingView showAlertHUD:@"当前时间段预约已满" duration:SXLoadingTime];
+                    strongSelf.phase = nil;
+                    return;
+                }
+            }
+        }
+        strongSelf.phase = nil;
+        [ZQLoadingView hideProgressHUD];
+    } failure:^(NSError *error) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf) {
+            self.phase = nil;
+            [ZQLoadingView hideProgressHUD];
+        }
+    } animated:NO];
+}
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (collectionView == self.collectionView) {
@@ -326,7 +364,8 @@
     if ([collectionCell class] == [ZQTimeCollectionViewCell class])
     {
         self.phase = timeArray[indexPath.row];
-        [self updateCellStatus:collectionCell selected:YES];
+        [self limitCarNumWithIndexPath:indexPath];
+//        [self updateCellStatus:collectionCell selected:YES];
     }
     else
     {
@@ -429,8 +468,9 @@
 - (BOOL)timeIsUnuseWithText:(NSString *)timeTxt
 {
     NSString *timeStr = [[[timeTxt componentsSeparatedByString:@"-"] lastObject] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    timeStr = [[timeStr componentsSeparatedByString:@":"] firstObject];
-    NSDateComponents*comps =[[NSCalendar currentCalendar] components:(NSCalendarUnitHour)
+    NSArray *timeArr = [timeStr componentsSeparatedByString:@":"];
+    timeStr = [timeArr firstObject];
+    NSDateComponents*comps =[[NSCalendar currentCalendar] components:(NSCalendarUnitHour | NSCalendarUnitMinute)
             
                        fromDate:[NSDate date]];
     NSInteger hour = [comps hour];
@@ -441,6 +481,13 @@
     }
     else
     {
+        if (timeStr.integerValue==hour) {
+            NSInteger minute = [comps minute];
+            timeStr = [timeArr lastObject];
+            if (timeStr.integerValue>minute) {
+                return YES;
+            }
+        }
         return NO;
     }
     //当前的时分秒获得

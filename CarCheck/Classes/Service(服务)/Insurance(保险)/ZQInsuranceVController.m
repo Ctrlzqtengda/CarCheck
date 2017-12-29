@@ -12,6 +12,7 @@
 //#import "ZQHtmlViewController.h"
 //#import "YPayViewController.h"
 #import "NSString+Validation.h"
+#import "YBuyingDatePicker.h"
 
 @interface ZQInsuranceVController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQVioUpTableViewCellDelegate>
 
@@ -19,11 +20,13 @@
 @property (strong,nonatomic) NSArray *titleArray;
 @property (strong,nonatomic) NSArray *placeArray;
 @property (strong,nonatomic) ZQChoosePickerView *pickView;
+@property (strong, nonatomic) YBuyingDatePicker *datePickV;
 
 @property (copy, nonatomic) NSString *shortNumStr;
 @property (copy, nonatomic) NSString *i_name;
 @property (copy, nonatomic) NSString *i_phone;
 @property (copy, nonatomic) NSString *i_car_card;
+@property (copy, nonatomic) NSString *endTime;
 
 @end
 
@@ -31,14 +34,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.shortNumStr = @"冀";
     self.title = @"保险服务";
+    self.i_phone = [Utility getUserPhone];
+    self.shortNumStr = @"冀";
+    self.endTime = @"";
     [self setupData];
     [self initViews];
 }
 -(void)setupData {
-    _titleArray = @[@"车主姓名",@"手机号码",@"车辆号码"];
-    _placeArray = @[@"请输入车主姓名",@"请输入手机号码",@"请输入车辆号码"];
+    _titleArray = @[@"车主姓名",@"手机号码",@"保险到期日",@"车辆号码"];
+    _placeArray = @[@"请输入车主姓名",@"请输入手机号码",@"请选择时间",@"请输入车辆号码"];
 }
 -(void)initViews {
     
@@ -107,14 +112,19 @@
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
-    NSString *carCardStr = [self.i_car_card stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!self.endTime.length) {
+        [ZQLoadingView showAlertHUD:@"请选择保险到期日" duration:SXLoadingTime];
+        return;
+    }
+    NSString *carCardStr = [self.i_car_card trimDoneString];
     if (carCardStr.length !=6) {
         [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
     }
     carCardStr = [NSString stringWithFormat:@"%@%@",self.shortNumStr,carCardStr];
     //保险服务接口
-    NSString *urlStr = [NSString stringWithFormat:@"daf/insurance_service/u_id/%@/i_name/%@/i_phone/%@/i_car_card/%@",[Utility getUserID],nameStr,phoneStr,carCardStr];
+    NSString *urlStr = [NSString stringWithFormat:@"daf/insurance_service/u_id/%@/i_name/%@/i_phone/%@/i_car_card/%@/endtime/%@",[Utility getUserID],nameStr,phoneStr,carCardStr,self.endTime];
+//    api/daf/insurance_service/u_id/62/i_name/哈哈/i_phone/18764117706/i_car_card/冀M12345/endtime/2017-12-29
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
@@ -134,19 +144,23 @@
 }
 - (void)phoneBtnAction
 {
-    NSString *phoneStr = [Utility getServerPhone];
-    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-    UIApplication * app = [UIApplication sharedApplication];
-    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-        [app openURL:[NSURL URLWithString:PhoneStr]];
-    }
+    [Utility phoneCallAction];
 }
-#pragma mark ZQVioUpTableViewCellDelegate
--(void)showChooseView {
+- (void)hiddenView {
+    
+    if (_datePickV) {
+        [_datePickV removeFromSuperview];
+        _datePickV = nil;
+    }
     if (_pickView) {
         [_pickView removeFromSuperview];
         _pickView = nil;
     }
+}
+#pragma mark ZQVioUpTableViewCellDelegate
+-(void)showChooseView {
+    [self.view endEditing:YES];
+    [self hiddenView];
     __weak typeof(self) weakSelf = self;
     [self.pickView showWithDataArray:[Utility getProvinceShortNum] inView:self.view chooseBackBlock:^(NSString *selectedStr) {
         __strong typeof(self) strongSelf = weakSelf;
@@ -159,14 +173,31 @@
     }];
     
 }
-
+#pragma mark ==YBuyingDatePickerDelegate==
+-(void)chooseDateTime:(NSString *)sender{
+    NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *coms = [NSDate dateWithTimeIntervalSince1970:[sender integerValue]];
+    self.endTime =[formatter stringFromDate:coms];
+    [self.tableView reloadData];
+}
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
     //    self.tableView.reloadData;
     
 }
-
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField.tag == 2) {
+        //            self.endTime = textField.text;
+        [self.view endEditing:YES];
+        [self hiddenView];
+        [self.view addSubview:self.datePickV];
+        return NO;
+    }
+    [self hiddenView];
+    return YES;
+}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     return [textField resignFirstResponder];
@@ -183,7 +214,7 @@
             self.i_phone = textField.text;
         }
             break;
-        case 2:
+        case 3:
         {
             self.i_car_card = textField.text;
         }
@@ -203,7 +234,7 @@
     
     ZQVioUpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZQVioUpTableViewCell_id" forIndexPath:indexPath];
     ZqCellType type;
-    if (indexPath.row==2) {
+    if (indexPath.row==(_titleArray.count-1)) {
         type = ZQVioUpCellType1;
     }
     else
@@ -212,6 +243,17 @@
     }
     cell.contentTf.delegate = self;
     cell.contentTf.tag = indexPath.row;
+    switch (indexPath.row) {
+        case 1:
+            cell.contentTf.text = self.i_phone;
+            break;
+        case 2:
+            cell.contentTf.text = self.endTime;
+            break;
+        default:
+            break;
+    }
+    
     //        cell.contentTf.text = _contentArray[indexPath.row];
     cell.delegate = self;
     NSString *title = _titleArray[indexPath.row];
@@ -229,6 +271,13 @@
         _pickView = [[ZQChoosePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 200, KWidth, 200)];
     }
     return _pickView;
+}
+-(YBuyingDatePicker *)datePickV{
+    if (!_datePickV) {
+        _datePickV = [[YBuyingDatePicker alloc]initWithFrame:CGRectMake(0, __kHeight-260, __kWidth, 260)];
+        _datePickV.delegate = self;
+    }
+    return _datePickV;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

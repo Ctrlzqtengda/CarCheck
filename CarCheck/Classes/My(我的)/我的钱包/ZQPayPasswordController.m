@@ -59,6 +59,7 @@
     {
         self.title = @"忘记支付密码";
     }
+    _payPhone = [Utility getUserPhone];
     timeNum = 60;
     [self initView];
 }
@@ -111,6 +112,7 @@
         switch (i) {
             case 0:
             {
+                inputTF.text = _payPhone;
             }
                 break;
             case 1:
@@ -174,7 +176,6 @@
 }
 #pragma mark ==获取验证码==
 -(void)getPayVerifyCode{
-    NSLog(@"获取验证码");
     [self.view endEditing:YES];
     if (_payPhone.length) {
         if (![_payPhone isValidMobilePhoneNumber]) {
@@ -260,7 +261,6 @@
 //        urlStr = [NSString stringWithFormat:@"daf/update_zfpassword/u_id/%@/zfpassword/%@",[Utility getUserID],[_payPassword md5Encrypt]];
         urlStr = [NSString stringWithFormat:@"daf/update_zfpassword/u_id/%@/zfpassword/%@",[Utility getUserID],_payPassword];
     }
-    NSLog(@"找回支付密码");
     __weak __typeof(self)weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {

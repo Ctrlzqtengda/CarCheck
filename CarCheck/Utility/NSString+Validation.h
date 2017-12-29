@@ -12,4 +12,5 @@
 
 - (BOOL)isValidMobilePhoneNumber;
 - (NSString *) md5Encrypt;
+- (NSString *)trimDoneString;
 @end

@@ -63,7 +63,7 @@
         }
     } failure:^(NSError *error) {
        
-    } animated:YES];
+    } animated:NO];
 }
 //- (void)viewDidAppear:(BOOL)animated
 //{
@@ -93,12 +93,7 @@
             break;
         case 101:
         {
-            NSString *phoneStr = [Utility getServerPhone];
-            NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-            UIApplication * app = [UIApplication sharedApplication];
-            if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                [app openURL:[NSURL URLWithString:PhoneStr]];
-            }
+            [Utility phoneCallAction];
         }
             break;
         case 102:
@@ -180,7 +175,8 @@
         _tableView.dataSource = self;
         _tableView.separatorColor = HEXCOLOR(0xeeeeee);
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 286-50)];
+//        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 236)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 236-44)];
         headView.backgroundColor = [UIColor whiteColor];
         [_tableView setTableHeaderView:headView];
         
@@ -193,7 +189,8 @@
 
 - (void)configTableHeadView
 {
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 216)];
+//    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 216)];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 172)];
     bgView.backgroundColor = LH_RGBCOLOR(17,149,232);
     [self.tableView.tableHeaderView addSubview:bgView];
     
@@ -203,21 +200,21 @@
     [label setText:@"总资产(元)"];
     [bgView addSubview:label];
     
-    [bgView addSubview:self.usableL];
-    label = [self creatLabel];
-    [label setFrame:CGRectMake(CGRectGetMinX(_usableL.frame), CGRectGetMaxY(_usableL.frame), CGRectGetWidth(_usableL.frame), 20)];
-    [label setText:@"可用余额"];
-    [bgView addSubview:label];
+//    [bgView addSubview:self.usableL];
+//    label = [self creatLabel];
+//    [label setFrame:CGRectMake(CGRectGetMinX(_usableL.frame), CGRectGetMaxY(_usableL.frame), CGRectGetWidth(_usableL.frame), 20)];
+//    [label setText:@"可用余额"];
+//    [bgView addSubview:label];
+//
+//    [bgView addSubview:self.pendingReturnL];
+//    label = [self creatLabel];
+//    [label setFrame:CGRectMake(CGRectGetMinX(_pendingReturnL.frame), CGRectGetMaxY(_pendingReturnL.frame), CGRectGetWidth(_pendingReturnL.frame), 20)];
+//    [label setText:@"待返还金额"];
+//    [bgView addSubview:label];
     
-    [bgView addSubview:self.pendingReturnL];
-    label = [self creatLabel];
-    [label setFrame:CGRectMake(CGRectGetMinX(_pendingReturnL.frame), CGRectGetMaxY(_pendingReturnL.frame), CGRectGetWidth(_pendingReturnL.frame), 20)];
-    [label setText:@"待返还金额"];
-    [bgView addSubview:label];
-    
-    UIView *vLine = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(_usableL.frame)-1, CGRectGetMinY(_usableL.frame)+8, 1, 20)];
-    [vLine setBackgroundColor:[UIColor whiteColor]];
-    [bgView addSubview:vLine];
+//    UIView *vLine = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(_usableL.frame)-1, CGRectGetMinY(_usableL.frame)+8, 1, 20)];
+//    [vLine setBackgroundColor:[UIColor whiteColor]];
+//    [bgView addSubview:vLine];
 }
 - (UILabel *)creatLabel
 {
@@ -231,7 +228,9 @@
 - (void)cofigTableHeadBottomView
 {
     CGFloat height = 82;
-    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(16, 162, CGRectGetWidth(self.view.frame)-32, height)];
+//    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(16, 162, CGRectGetWidth(self.view.frame)-32, height)];
+    UIView *bottomV = [[UIView alloc] initWithFrame:CGRectMake(16, 122, CGRectGetWidth(self.view.frame)-32, height)];
+
 //    bottomV.layer.cornerRadius = 6;
 //    bottomV.layer.masksToBounds = YES;
     [bottomV setBackgroundColor:LH_RGBCOLOR(238,247,255)];
@@ -292,7 +291,9 @@
 - (UILabel *)totalMoneyL
 {
     if (!_totalMoneyL) {
-        _totalMoneyL = [[UILabel alloc] initWithFrame:CGRectMake((__kWidth-100)/2, 30, 100, 30)];
+//        _totalMoneyL = [[UILabel alloc] initWithFrame:CGRectMake((__kWidth-100)/2, 30, 100, 30)];
+        _totalMoneyL = [[UILabel alloc] initWithFrame:CGRectMake((__kWidth-100)/2, 41, 100, 30)];
+
         [_totalMoneyL setFont:[UIFont boldSystemFontOfSize:28]];
         [_totalMoneyL setTextColor:[UIColor whiteColor]];
         [_totalMoneyL setTextAlignment:NSTextAlignmentCenter];

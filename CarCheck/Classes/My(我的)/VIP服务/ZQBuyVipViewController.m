@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"VIP会员服务";
-    [self getDataAnimated:YES];
+    [self getDataAnimated:NO];
     [self initViews];
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessNotifacation) name:@"enterSuccessView" object:nil];
 }
@@ -254,7 +254,8 @@
 }
 - (void)footAgreeBtnAction
 {
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"vip_detail.html" andShowBottom:NO];
+//    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"vip_detail.html" andShowBottom:NO];
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.1" andShowBottom:NO];
     Vc.title = @"VIP用户服务须知";
     [self.navigationController pushViewController:Vc animated:YES];
 }

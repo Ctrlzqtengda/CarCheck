@@ -14,6 +14,7 @@
 #import "ZQChoosePickerView.h"
 #import "ZQHtmlViewController.h"
 #import "YPayViewController.h"
+#import "NSString+Validation.h"
 
 @interface ZQUpVioViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZQvioFooterViewDelegate,YSureOrderBottomViewDelegate,YBuyingDatePickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZQVioUpTableViewCellDelegate>{
     NSArray        *_titleArray;
@@ -58,7 +59,7 @@
     self.overdueFine = @"";
     isAgreeServer = NO;
     self.veriyCode = @"123456";
-    desString = @"该服务适用于已开具《公安交通管理简易程序处罚决定书》的违章，若没有该罚单，请先到交通管理部门领取处罚决定书，然后填写下面的信息即可在线缴纳罚款";
+    desString = @"该服务适用于已开具《公安交通管理简易程序处罚决定书》的违章，若没有该罚单，请先到交通管理部门领取处罚决定书，然后填写下面的信息即可在线缴纳罚款。";
     [self setupData];
     [self initViews];
 }
@@ -73,6 +74,7 @@
     _placeArray = @[@[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请输入办理进度通知的手机号码",@"请输入验证码"],@[@"￥0",@"￥0",@"￥0",@"合计：￥0"]];
 //    _placeArray = @[@"请输入16位处罚决定书编号",@"请输入完整车牌号",@"请输入罚单上的处罚金额",@"请输入开具罚单的日期",@"请输入办理进度通知的手机号码",@"请输入验证码"];
     _contentArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"",@"",@"", nil];
+    _contentArray[4] = [Utility getUserPhone];
 }
 
 -(ZQChoosePickerView *)pickView {
@@ -168,7 +170,8 @@
 }
 // 服务须知
 -(void)knowProtocolAction:(id )sender{
-    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"forfeit.html" andShowBottom:NO];
+//    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"forfeit.html" andShowBottom:NO];
+    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.8" andShowBottom:NO];
     Vc.title = @"罚款代缴服务须知";
     [self.navigationController pushViewController:Vc animated:YES];
 }
@@ -196,7 +199,7 @@
         [ZQLoadingView showAlertHUD:@"请输入16位罚单编号" duration:SXLoadingTime];
         return;
     }
-    NSString *carCodeStr = [_contentArray[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *carCodeStr = [_contentArray[1] trimDoneString];
     if (carCodeStr.length !=6) {
         [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
@@ -235,8 +238,9 @@
     }
     //代缴罚款接口
     NSString *urlStr = [NSString stringWithFormat:@"daf/payment_of_fines/u_id/%@/ticket_number/%@/car_card/%@/fine_money/%@/fine_date/%@/phone/%@",[Utility getUserID],ticketNumStr,carCodeStr,punishMoneyStr,punishDateStr,phoneStr];
+//    UIImageJPEGRepresentation(_chooseImage, 0.5)
     __weak typeof(self) weakSelf = self;
-    [JKHttpRequestService POST:urlStr Params:nil NSData:UIImageJPEGRepresentation(_chooseImage, 0.5) key:@"pic_path" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+    [JKHttpRequestService POST:urlStr Params:nil NSData:[self imageData:_chooseImage] key:@"pic_path" success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         if (succe) {
             __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
@@ -394,6 +398,9 @@
                 break;
         }
         tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        if (indexPath.row==4) {
+            cell.contentTf.text = [Utility getUserPhone];
+        }
     }else{
         type = ZQVioUpCellType4;
         switch (indexPath.row) {
@@ -520,12 +527,36 @@
 
 -(void)chooseImageAction {
     
-    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
-    //想要知道选择的图片
-    pickerVC.delegate = self;
-    //开启编辑状态
-    pickerVC.allowsEditing = YES;
-    [self presentViewController:pickerVC animated:YES completion:nil];
+    UIAlertController *actionSheetController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+        pickerVC.delegate = self;
+        pickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self.tabBarController presentViewController:pickerVC animated:YES completion:nil];
+    }];
+    UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"我的相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+        //想要知道选择的图片
+        pickerVC.delegate = self;
+        //开启编辑状态
+        pickerVC.allowsEditing = YES;
+        (void)(pickerVC.videoQuality = UIImagePickerControllerQualityTypeLow),           // 最低的质量,适合通过蜂窝网络传输
+        [self presentViewController:pickerVC animated:YES completion:nil];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [actionSheetController addAction:cameraAction];
+    [actionSheetController addAction:albumAction];
+    [actionSheetController addAction:cancelAction];
+    [self presentViewController:actionSheetController animated:YES completion:nil];
+//    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+//    //想要知道选择的图片
+//    pickerVC.delegate = self;
+//    //开启编辑状态
+//    pickerVC.allowsEditing = YES;
+//    [self presentViewController:pickerVC animated:YES completion:nil];
     
 }
 
@@ -547,6 +578,22 @@
         _datePickV.delegate = self;
     }
     return _datePickV;
+}
+- (NSData *)imageData:(UIImage *)myimage{
+    NSData *data=UIImageJPEGRepresentation(myimage, 1.0);
+    if (data.length>100*1024) {
+        if (data.length>1024*1024) {//1M以及以上
+            data=UIImageJPEGRepresentation(myimage, 0.1);
+            
+        }else if (data.length>512*1024) {//0.5M-1M
+            data=UIImageJPEGRepresentation(myimage, 0.5);
+            
+        }else if (data.length>200*1024) {//0.25M-0.5M
+            data=UIImageJPEGRepresentation(myimage, 0.9);
+            
+        }    }
+    return data;
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

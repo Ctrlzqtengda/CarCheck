@@ -85,7 +85,7 @@
  *  返回  调用
  */
 -(void)back{
-    NSLog(@"返回前页面");
+//    NSLog(@"返回前页面");
     
     if (self.navigationController.viewControllers.count>1) {
          [self.navigationController popViewControllerAnimated:YES];
@@ -108,12 +108,12 @@
  *  结束编辑
  */
 -(void)allResignFirstResponder{
-    NSLog(@"allResignFirstResponder====");
+//    NSLog(@"allResignFirstResponder====");
     
     [self.view endEditing:YES];
 }
 -(void)dealloc{
-    NSLog(@"界面销毁了");
+//    NSLog(@"界面销毁了");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

@@ -192,12 +192,7 @@ static CGFloat kImageOriginHight = 200.f;
         case 2:
         {
             //客服电话
-            NSString *phoneStr = [Utility getServerPhone];
-            NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-            UIApplication * app = [UIApplication sharedApplication];
-            if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                [app openURL:[NSURL URLWithString:PhoneStr]];
-            }
+            [Utility phoneCallAction];
         }
             break;
         case 3:
@@ -241,11 +236,11 @@ static CGFloat kImageOriginHight = 200.f;
 }
 - (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    NSLog(@"%@",NSStringFromCGSize(scaledImage.size));
+//    NSLog(@"%@",NSStringFromCGSize(scaledImage.size));
     return scaledImage;
 }
 #pragma mark - 上传头像

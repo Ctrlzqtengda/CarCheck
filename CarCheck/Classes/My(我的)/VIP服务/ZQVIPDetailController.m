@@ -64,7 +64,18 @@
 //                    cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
-                [cell.imageView setImage:[UIImage imageNamed:@"appIcon"]];
+//                UIImageView *bView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 45)];
+//                [bView setBackgroundColor:LH_RGBCOLOR(187,156,92)];
+                cell.imageView.layer.cornerRadius = 6;
+                cell.imageView.layer.masksToBounds = YES;
+                [cell.imageView setImage:[self getImage:@"会员卡"]];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 80, 26)];
+                label.text = @"会员卡";
+                label.textAlignment = NSTextAlignmentCenter;
+                label.textColor = [UIColor whiteColor];
+                [cell.imageView addSubview:label];
+
+//                [cell.imageView setImage:[UIImage imageNamed:@"appIcon"]];
                 cell.textLabel.text = @"尊享违章代办超值体验";
                 [cell.detailTextLabel setText:@"￥99"];
                 
@@ -81,7 +92,7 @@
                 
                 NSString *tString = [NSString stringWithFormat:@"￥%@  原价¥%@",self.vipModel.current_price,self.vipModel.original_price];
                 NSRange range = [tString rangeOfString:[NSString stringWithFormat:@"￥%@",self.vipModel.current_price]];
-                NSRange yRange = [tString rangeOfString:[NSString stringWithFormat:@"原价¥%@",self.vipModel.original_price]];
+                NSRange yRange = [tString rangeOfString:[NSString stringWithFormat:@"¥%@",self.vipModel.original_price]];
                 NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:tString];
                 [attr addAttribute:NSFontAttributeName value:MFont(18) range:range];
                 [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
@@ -174,6 +185,53 @@
     return 0.001;
 }
 
+- (UIImage *)getImage:(NSString *)name
+{
+    UIColor *color = LH_RGBCOLOR(220,195,129);
+    CGRect rect = CGRectMake(0.0f, 0.0f, 80, 46);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+//    NSString *headerName = nil;
+//    if (name.length < 3) {
+//        headerName = name;
+//    }else{
+//        headerName = [name substringFromIndex:name.length-2];
+//    }
+//    UIImage *headerimg = [self imageToAddText:img withText:headerName];
+//     UIImage *headerimg = [self imageToAddText:img withText:name];
+//    return headerimg;
+    return img;
+}
+
+//把文字绘制到图片上
+- (UIImage *)imageToAddText:(UIImage *)img withText:(NSString *)text
+{
+    //1.获取上下文
+    UIGraphicsBeginImageContext(img.size);
+    //2.绘制图片
+    [img drawInRect:CGRectMake(0, 0, img.size.width, img.size.height)];
+    //3.绘制文字
+//    CGRect rect = CGRectMake(0,(img.size.height-45)/2, img.size.width, 25);
+    CGRect rect = CGRectMake(12,13, 56, 20);
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSTextAlignmentCenter;
+    //文字的属性
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:16],NSParagraphStyleAttributeName:style,NSForegroundColorAttributeName:[UIColor whiteColor],NSStrokeWidthAttributeName:@(-4)};
+    //将文字绘制上去
+    [text drawInRect:rect withAttributes:dic];
+
+    //4.获取绘制到得图片
+    UIImage *watermarkImg = UIGraphicsGetImageFromCurrentImageContext();
+    //5.结束图片的绘制
+    UIGraphicsEndImageContext();
+    
+    return watermarkImg;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

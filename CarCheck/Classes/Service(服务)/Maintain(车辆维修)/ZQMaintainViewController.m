@@ -153,7 +153,7 @@
     alerView.handler = ^(NSArray *contenArr)
     {
         [contenArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(@"车检机构内容筛选提交内容:%@",obj);
+//            NSLog(@"车检机构内容筛选提交内容:%@",obj);
         }];
     };
     [alerView show];
@@ -224,12 +224,7 @@
 //预约
 - (void)bookingBtnAction:(UIButton *)sender
 {
-    NSString *phoneStr = [Utility getServerPhone];
-    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-    UIApplication * app = [UIApplication sharedApplication];
-    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-        [app openURL:[NSURL URLWithString:PhoneStr]];
-    }
+    [Utility phoneCallAction];
 }
 - (UITableView *)tableView
 {
@@ -264,7 +259,6 @@
     //        }
     //    }
     
-    NSLog(@"updateSearchResultsForSearchController");
     NSString *searchString = [self.searchController.searchBar text];
     NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     if (self.searchListArry!= nil) {
@@ -280,29 +274,29 @@
 
 - (void)willPresentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"willPresentSearchController");
+//    NSLog(@"willPresentSearchController");
 }
 
 - (void)didPresentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"didPresentSearchController");
-#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
+//    NSLog(@"didPresentSearchController");
+//#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
     //    [self.view addSubview:self.searchController.searchBar];
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController
 {
-    NSLog(@"willDismissSearchController");
+//    NSLog(@"willDismissSearchController");
 }
 
 - (void)didDismissSearchController:(UISearchController *)searchController
 {
-    NSLog(@"didDismissSearchController");
+//    NSLog(@"didDismissSearchController");
 }
 
 - (void)presentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"presentSearchController");
+//    NSLog(@"presentSearchController");
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {

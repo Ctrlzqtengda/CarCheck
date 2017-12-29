@@ -31,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"收支明细";
+    self.title = @"钱包明细";
     _status =@"";
     _page = 1;
     [self.view addSubview:self.tableView];
@@ -43,7 +43,7 @@
 {
     //收支明细接口
     NSString *urlStr = [NSString stringWithFormat:@"daf/get_money_detailed/u_id/%@",[Utility getUserID]];
-    
+    [ZQLoadingView showProgressHUD:@"loading..."];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
         __strong typeof(self) strongSelf = weakSelf;
@@ -59,7 +59,7 @@
         }
     } failure:^(NSError *error) {
     
-    } animated:YES];
+    } animated:NO];
     
     
 }

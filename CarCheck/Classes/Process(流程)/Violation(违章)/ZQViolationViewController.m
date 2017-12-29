@@ -18,6 +18,7 @@
 #import "ZQCityModel.h"
 
 #import "ZQVioResultView.h"
+#import "NSString+Validation.h"
 
 @interface ZQViolationViewController ()<UITextFieldDelegate>
 
@@ -111,9 +112,9 @@ __weak typeof(self) weakSelf = self;
 //    [self showvehicleAgainstResult:dic];
 //    return;
     [self.view endEditing:YES];
-    NSString *carCodeStr = [self.carCodeTf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!carCodeStr.length) {
-        [ZQLoadingView showAlertHUD:@"请输入车牌号码" duration:SXLoadingTime];
+    NSString *carCodeStr = [self.carCodeTf.text trimDoneString];
+    if (carCodeStr.length !=6) {
+        [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
     }
     carCodeStr = [NSString stringWithFormat:@"%@%@%@",self.provinceBtn.titleLabel.text,self.cityCode.titleLabel.text,carCodeStr];

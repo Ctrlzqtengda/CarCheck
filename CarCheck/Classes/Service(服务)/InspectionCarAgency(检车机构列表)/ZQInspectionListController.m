@@ -117,10 +117,11 @@
         urlStr = [NSString stringWithFormat:@"daf/get_car_mechanism/u_id/%@/o_product/%f/o_range/%f/p/1",[Utility getUserID],[Utility getLongitude],[Utility getLatitude]];
     }
     //检车机构接口
+    [ZQLoadingView showProgressHUD:@"loading..."];
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
         if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
             {
                 NSArray *array = jsonDic[@"res"];
@@ -133,10 +134,11 @@
                         [strongSelf.agencyList removeAllObjects];
                     }
                     [strongSelf.tableView reloadData];
-                    [strongSelf.tableView.mj_header endRefreshing];
                 }
             }
         }
+        [strongSelf.tableView.mj_header endRefreshing];
+        [ZQLoadingView hideProgressHUD];
     } failure:^(NSError *error) {
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
@@ -145,7 +147,8 @@
             [strongSelf.tableView reloadData];
             [strongSelf.tableView.mj_header endRefreshing];
         }
-    } animated:YES];
+        [ZQLoadingView hideProgressHUD];
+    } animated:NO];
     /*
     __weak __typeof(self) weakSelf = self;
     __weak UITableView *tableView = self.tableView;
@@ -466,20 +469,17 @@
     }
     switch (self.subType) {
             case ZQSubScTypeCellPhone:{
-                NSString *phoneStr = [Utility getServerPhone];
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+                [Utility phoneCallAction];
             }
             break;
             
             case ZQSubScTypeVisit:{
 //                [self showSubView];
-                NSString *htmlStr = @"reservationNotice2.html";
-//                if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
-                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+//                NSString *htmlStr = @"reservationNotice2.html";
+////                if (![UdStorage isAgreeReservationNoticeForKey:htmlStr]) {
+//                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+               
+                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.6" testId:model.o_id andShowBottom:3];
                     Vc.title = @"机动车上门接送检车须知";
                 if ([Utility getIs_vip]) {
                     Vc.charge = [Utility getDoorToDoorOutlay_VIP].floatValue;
@@ -509,7 +509,8 @@
 //            }
 //            else
 //            {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+//                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr testId:model.o_id andShowBottom:3];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.2" testId:model.o_id andShowBottom:3];
                 Vc.title = @"预约须知";
                 Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
                  Vc.dSubType = self.subType;
@@ -581,7 +582,7 @@
     //        }
     //    }
     
-    NSLog(@"updateSearchResultsForSearchController");
+//    NSLog(@"updateSearchResultsForSearchController");
 //    NSString *searchString = [self.searchController.searchBar text];
 //    [self getAgencyListDataWithText:searchString];
 //    NSPredicate *preicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
@@ -598,29 +599,29 @@
 
 - (void)willPresentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"willPresentSearchController");
+//    NSLog(@"willPresentSearchController");
 }
 
 - (void)didPresentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"didPresentSearchController");
+//    NSLog(@"didPresentSearchController");
 //#warning 如果进入预编辑状态,searchBar消失(UISearchController套到TabBarController可能会出现这个情况),请添加下边这句话
     //    [self.view addSubview:self.searchController.searchBar];
 }
 
 - (void)willDismissSearchController:(UISearchController *)searchController
 {
-    NSLog(@"willDismissSearchController");
+//    NSLog(@"willDismissSearchController");
 }
 
 - (void)didDismissSearchController:(UISearchController *)searchController
 {
-    NSLog(@"didDismissSearchController");
+//    NSLog(@"didDismissSearchController");
 }
 
 - (void)presentSearchController:(UISearchController *)searchController
 {
-    NSLog(@"presentSearchController");
+//    NSLog(@"presentSearchController");
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {

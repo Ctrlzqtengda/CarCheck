@@ -240,7 +240,6 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==1) {
-        NSLog(@"订单%ld",indexPath.row);
         if (indexPath.row==4) {
 //            YReturnsViewController *vc = [[YReturnsViewController alloc]init];
 //            [self.navigationController pushViewController:vc animated:YES];
@@ -250,7 +249,6 @@ forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
 //            [self.navigationController pushViewController:vc animated:YES];
         }
     }else if (indexPath.section==2){
-        NSLog(@"业务%ld",indexPath.row);
         if (indexPath.row==0) {
 //            YPersonCouponViewController *vc = [[YPersonCouponViewController alloc]init];
 //            [self.navigationController pushViewController:vc animated:YES];

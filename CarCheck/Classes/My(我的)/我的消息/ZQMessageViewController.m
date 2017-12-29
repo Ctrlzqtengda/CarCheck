@@ -27,17 +27,22 @@
     [super viewDidLoad];
     self.title = @"消息中心";
     [self.view addSubview:self.tableView];
-    [self getMessageListData];
+    __weak __typeof(self) weakSelf = self;
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [weakSelf getMessageListData];
+    }];
+    [self.tableView.mj_header beginRefreshing];
+//    [self getMessageListData];
 }
 - (void)getMessageListData
 {
     NSString *urlStr = [NSString stringWithFormat:@"daf/get_news/u_id/%@",[Utility getUserID]];
-
+    [ZQLoadingView showProgressHUD:@"loading..."];
     //我的消息接口
     __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
         if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
             if (strongSelf)
             {
                 NSArray *array = jsonDic[@"res"];
@@ -58,10 +63,10 @@
                         self.noDataView.noOrderLabel.text = @"您当前无消息";
                     }
                     [strongSelf.tableView reloadData];
-                    [strongSelf.tableView.mj_header endRefreshing];
                 }
             }
         }
+        [strongSelf.tableView.mj_header endRefreshing];
     } failure:^(NSError *error) {
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf)
@@ -70,7 +75,7 @@
             [strongSelf.tableView reloadData];
             [strongSelf.tableView.mj_header endRefreshing];
         }
-    } animated:YES];
+    } animated:NO];
 }
 - (UITableView *)tableView
 {

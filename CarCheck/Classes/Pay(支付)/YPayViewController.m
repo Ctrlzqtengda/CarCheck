@@ -81,7 +81,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = [NSString stringWithFormat:@"%@收银台",@"carCheck"];
+//     self.title = [NSString stringWithFormat:@"%@收银台",@"carCheck"];
+    self.title = @"收银台";
     _chooseIndex = 1;
 //    self.rightBtn.frame = CGRectMake(__kWidth-70, 35, 58, 15);
 //    self.rightBtn.titleLabel.font = MFont(14);
@@ -207,8 +208,8 @@
             if ([jsonDic[@"code"] integerValue] != 100)
             {
                 [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
-                    NSLog(@"YpayVC微信支付结果:%@",result);
                     if (error) {
+                         NSLog(@"YpayVC微信支付结果:%@",result);
                         //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
                         //                        [strongSelf getPayStatus:nil];
                         [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];

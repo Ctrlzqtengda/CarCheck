@@ -61,15 +61,32 @@
     [self.view addSubview:self.QRIV];
 
     
-    UILabel*rightLb =[[UILabel alloc]initWithFrame:CGRectMake((__kWidth-200)/2, __kHeight-76, 200, 76)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, __kHeight-76, 80, 30)];
+    label.font = [UIFont systemFontOfSize:16];
+    label.textColor = [UIColor darkTextColor];
+    label.text = @"客服热线: ";
+    [self.view addSubview:label];
+    
+    UIButton *phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame),CGRectGetMinY(label.frame),100, 30)];
+    phoneBtn.titleLabel.font = MFont(16);
+    [phoneBtn setTitle:[Utility getServerPhone] forState:BtnNormal];
+    [phoneBtn setTitleColor:__DefaultColor forState:BtnNormal];
+    //    [phoneBtn setTitleColor:[UIColor blueColor] forState:BtnNormal];
+    [phoneBtn addTarget:self action:@selector(phoneBtnAction) forControlEvents:BtnTouchUpInside];
+    [self.view addSubview:phoneBtn];
+    
+    UILabel*rightLb =[[UILabel alloc]initWithFrame:CGRectMake((__kWidth-200)/2, CGRectGetMaxY(label.frame), 200, 20)];
     [self.view addSubview:rightLb];
     rightLb.textAlignment = NSTextAlignmentCenter;
     rightLb.textColor = __TextColor;
-    rightLb.font = MFont(12);
-    rightLb.numberOfLines = 0;
-    rightLb.text = [NSString stringWithFormat:@"客服热线：%@\n 微信公众号:河北领投网络科技有限公司",[Utility getServerPhone]];
-}
+    rightLb.font = MFont(16);
+    rightLb.text = @"微信公众号: 新概念检车";
 
+}
+- (void)phoneBtnAction
+{
+    [Utility phoneCallAction];
+}
 - (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size
 {
     CGRect extent = CGRectIntegral(image.extent);

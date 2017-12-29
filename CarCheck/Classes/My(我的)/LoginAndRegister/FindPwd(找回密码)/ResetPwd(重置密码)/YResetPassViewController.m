@@ -107,7 +107,6 @@
 
 
 - (void)sureSave{
-    NSLog(@"确认");
 //    [JKHttpRequestService POST:@"Register/resetPassword" withParameters:@{@"app_user_id":[UdStorage getObjectforKey:Userid],@"newPassword1":_passWord,@"newPassword2":_rePassWord} success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
 //        if (succe) {
 //            NSArray *vcs = self.navigationController.viewControllers;

@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mobile = [Utility getUserPhone];
     temp = 60;
     rIsVerify = NO;
     [self getNavis];
@@ -94,6 +95,7 @@
         switch (i) {
             case 0:{
                 inputTF.placeholder = @"请输入您的手机号";
+                inputTF.text = self.mobile;
             }
                 break;
             case 1:{

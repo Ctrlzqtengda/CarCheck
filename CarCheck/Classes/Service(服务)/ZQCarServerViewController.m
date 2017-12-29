@@ -80,9 +80,7 @@
                         //                    strongSelf.imageArray = muArray;
                         //                    [strongSelf.mainView reloadData];
                         strongSelf.aheadView.imageStrArray = muArray;
-                        [strongSelf.aheadView startWithBlock:^(NSInteger index) {
-                            
-                        }];
+                        [strongSelf showBanner];
                         return ;
                     }
                 }
@@ -99,6 +97,22 @@
 //        }
     } animated:NO];
     
+}
+- (void)showBanner
+{
+    __weak typeof(self) weakSelf = self;
+    [self.aheadView startWithBlock:^(NSInteger index) {
+        __strong typeof(self) strongSelf = weakSelf;
+                if (strongSelf) {
+                    ZQBannerModel *bModel = strongSelf.bannerArray[index];
+                    NSString *urlStr = bModel.b_url;
+                    urlStr = @"http://www.baidu.com";
+                    ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:urlStr andShowBottom:NO];
+                    Vc.title = bModel.text;
+                    [Vc setHidesBottomBarWhenPushed:YES];
+                    [strongSelf.navigationController pushViewController:Vc animated:YES];
+                };
+    }];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -145,7 +159,7 @@
 }
 
 -(void)getData {
-    _appointArray = @[@"预约须知",@"在线预约",@"电话预约检车"];
+    _appointArray = @[@"预约须知",@"在线预约",@"电话预约"];
     _imagePpointArray = @[@"know",@"online",@"phone"];
 //    _dataArray = @[@{@"title":@"违章查询",@"image":@"weizhang"},@{@"title":@"检车机构",@"image":@"jianche"},@{@"title":@"保险服务",@"image":@"baoxian"},@{@"title":@"车辆维修",@"image":@"weixiu"},@{@"title":@"代缴罚款",@"image":@"fakuan"},@{@"title":@"常见问题",@"image":@"wenti"},@{@"title":@"法律咨询",@"image":@"falv"}];
 
@@ -230,12 +244,7 @@
             case 3:
             {
                 //车辆维修站
-                NSString *phoneStr = [Utility getServerPhone];
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+                [Utility phoneCallAction];
 //                ZQMaintainViewController *vc = [[ZQMaintainViewController alloc] init];
 //                [vc setHidesBottomBarWhenPushed:YES];
 //                [self.navigationController pushViewController:vc animated:YES];
@@ -257,7 +266,8 @@
             }
                 case 5:
             {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+//                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+                 ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.4" andShowBottom:NO];
                 Vc.title = @"常见问题";
                 [Vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:Vc animated:YES];
@@ -266,23 +276,13 @@
             case 6:
             {
                 //法律咨询
-                NSString *phoneStr = [Utility getServerPhone];
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+                [Utility phoneCallAction];
                 break;
             }
             case 7:
             {
                //加油充值
-                NSString *phoneStr = [Utility getServerPhone];
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+                [Utility phoneCallAction];
 //                ZQRechargeViewController *Vc = [[ZQRechargeViewController alloc] init];
 //                [Vc setHidesBottomBarWhenPushed:YES];
 //                [self.navigationController pushViewController:Vc animated:YES];
@@ -298,7 +298,8 @@
         switch (indexPath.row) {
             case 0:
             {
-                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"reservationNotice.html" andShowBottom:NO];
+//                ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"reservationNotice.html" andShowBottom:NO];
+                 ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.2" andShowBottom:NO];
                 Vc.title = @"预约须知";
                 [Vc setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:Vc animated:YES];
@@ -330,12 +331,7 @@
             }
             case 2:
             {
-                NSString *phoneStr = [Utility getServerPhone];
-                NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                UIApplication * app = [UIApplication sharedApplication];
-                if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                    [app openURL:[NSURL URLWithString:PhoneStr]];
-                }
+                [Utility phoneCallAction];
                 
 //                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:phoneStr preferredStyle:UIAlertControllerStyleAlert];
 //                [alert addAction:[UIAlertAction actionWithTitle:@"呼叫" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -443,6 +439,12 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     if (section == 0) {
+        if (__kWidth>320) {
+            if (__kWidth>375) {
+                return CGSizeMake(__kWidth, 210);
+            }
+            return CGSizeMake(__kWidth, 180);
+        }
         return CGSizeMake(__kWidth, 150);
     }else if(section == 1){
 //        return CGSizeMake(__kWidth, 40);

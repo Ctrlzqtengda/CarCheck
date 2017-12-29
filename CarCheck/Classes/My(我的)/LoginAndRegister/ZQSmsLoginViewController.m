@@ -38,6 +38,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mobile = [Utility getUserPhone];
     temp = 60;
     [self initView];
     [self getNavis];
@@ -96,6 +97,7 @@
 //        inputTF.delegate = self;
         if (!i) {
             inputTF.placeholder = @"请输入验证手机";
+            inputTF.text = self.mobile;
         }else{
             UIButton *codeBtn = [[UIButton alloc]initWithFrame:CGRectMake(__kWidth-148, 3, 85, 40)];
             [putV addSubview:codeBtn];
@@ -160,7 +162,6 @@
 
 #pragma mark ==获取验证码==
 -(void)getCode{
-    NSLog(@"获取验证码");
     if (_mobile.length) {
         if (![_mobile isValidMobilePhoneNumber]) {
             [ZQLoadingView showAlertHUD:@"手机号格式不正确" duration:SXLoadingTime];
@@ -209,7 +210,6 @@
 }
 #pragma mark ==登录==
 -(void)Login{
-    NSLog(@"登录");
     [self.view endEditing:YES];
     if (IsNilString(_mobile)||IsNilString(_verify)) {
         return;
@@ -222,7 +222,6 @@
 //            [UdStorage storageObject:dic[@"app_user_id"] forKey:Userid];
 //
             if (YES) {
-                NSLog(@"登录成功");
 //                [UdStorage storageObject:name forKey:UserName];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }else{
@@ -241,13 +240,11 @@
 
 #pragma mark ==无法登录==
 -(void)cannotLogin{
-    NSLog(@"账户登录");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark ==注册==
 -(void)Logon{
-    NSLog(@"注册");
     ZQRegisterViewController *vc= [[ZQRegisterViewController alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }

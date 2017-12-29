@@ -194,8 +194,9 @@
             if (strongSelf)
             {
                 [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
-                    NSLog(@"微信支付结果:%@",result);
+
                     if (error) {
+                                            NSLog(@"微信支付结果:%@",result);
                         //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
                         //                    [strongSelf getPayStatus:nil];
                         [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];

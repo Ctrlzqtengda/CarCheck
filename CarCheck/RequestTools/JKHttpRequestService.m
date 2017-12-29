@@ -45,10 +45,22 @@
                 [ZQLoadingView hideProgressHUD];
             }
         }
-        NSLog(@"接口返回数据%@",dic);
+        else
+        {
+            if (succe) {
+              [ZQLoadingView hideProgressHUD];
+            }
+            else{
+                NSString *infoStr = dic[@"codeInfo"];
+                if (infoStr.length) {
+                    [ZQLoadingView showAlertHUD:infoStr duration:SXLoadingTime];
+                }
+            }
+        }
+//        NSLog(@"接口返回数据%@",dic);
         success(responseObject,succe,dic);
     } failure:^(NSURLSessionDataTask *  task, NSError *  error) {
-        NSLog(@"%@",error.description);
+//        NSLog(@"%@",error.description);
         if (animated) {
             [ZQLoadingView showAlertHUD:@"网络故障" duration:SXLoadingTime];
         }

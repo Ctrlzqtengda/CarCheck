@@ -34,4 +34,13 @@
     
     return output;
 }
+- (NSString *)trimDoneString
+{
+    NSCharacterSet *whitespaces = [NSCharacterSet whitespaceCharacterSet];
+    NSPredicate *noEmptyStrings = [NSPredicate predicateWithFormat:@"SELF != ''"];
+    
+    NSArray *parts = [self componentsSeparatedByCharactersInSet:whitespaces];
+    NSArray *filteredArray = [parts filteredArrayUsingPredicate:noEmptyStrings];
+    return [filteredArray componentsJoinedByString:@" "];
+}
 @end

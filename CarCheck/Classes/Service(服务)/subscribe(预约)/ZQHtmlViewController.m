@@ -81,13 +81,18 @@
             if ([_urlString hasPrefix:@"agency"]) {
                 [self requestInstitutionDetailData];
             }
-            else{
-                
-                NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
-                NSString *path = [mainBundleDirectory stringByAppendingPathComponent:_urlString];
-                NSURL *url = [NSURL fileURLWithPath:path];
-                NSURLRequest *request = [NSURLRequest requestWithURL:url];
-                [self.webView loadRequest:request];
+            else
+            {
+                if ([_urlString hasPrefix:@"notice"]) {
+                    [self requestNoticeDetailData];
+                }
+                else{
+                    NSString *mainBundleDirectory = [[NSBundle mainBundle] bundlePath];
+                    NSString *path = [mainBundleDirectory stringByAppendingPathComponent:_urlString];
+                    NSURL *url = [NSURL fileURLWithPath:path];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                    [self.webView loadRequest:request];
+                }
             }
         }
     }
@@ -111,6 +116,35 @@
                 }
             }
         }
+    } failure:^(NSError *error) {
+    } animated:NO];
+}
+- (void)requestNoticeDetailData
+{
+    //机构详情接口http://localhost/Myjob/chejian/index.php/api/base/websitenotes/id/8
+    NSString *noticeId = [[self.urlString componentsSeparatedByString:@"."] lastObject];
+    NSString *urlStr = [NSString stringWithFormat:@"base/websitenotes/id/%@",noticeId];
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        if (succe) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                NSString *jsonStr = jsonDic[@"list"][@"content"];
+                if ([jsonStr isKindOfClass:[NSString class]]) {
+                    [strongSelf.webView loadHTMLString:jsonStr baseURL:nil];
+                    return ;
+                }
+            }
+        }
+        NSString *mesStr = jsonDic[@"message"];
+        if ([mesStr isKindOfClass:[NSString class]]) {
+            if (mesStr.length) {
+                [ZQLoadingView showAlertHUD:mesStr duration:SXLoadingTime];
+                return;
+            }
+        }
+        [ZQLoadingView showAlertHUD:@"请求失败" duration:SXLoadingTime];
     } failure:^(NSError *error) {
     } animated:NO];
 }
@@ -201,8 +235,9 @@
 //        [self.navigationController pushViewController:vc animated:YES];
         
         if (self.dSubType == 2) {
-            NSString *htmlStr = @"reservationNotice2.html";
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//            NSString *htmlStr = @"reservationNotice2.html";
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.6" andShowBottom:3];
             Vc.title = @"机动车上门接送检车须知";
             if ([Utility getIs_vip]) {
                 Vc.charge = [Utility getDoorToDoorOutlay_VIP].floatValue;
@@ -218,8 +253,9 @@
         }
         else if (self.dSubType == 0)
         {
-            NSString *htmlStr = @"reservationNotice3.html";
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//            NSString *htmlStr = @"reservationNotice3.html";
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.2" andShowBottom:3];
             Vc.title = @"预约须知";
             Vc.classString = NSStringFromClass([ZQUpSubdataViewController class]);
             [self.navigationController pushViewController:Vc animated:YES];
@@ -313,30 +349,30 @@
 }
 // 页面开始加载时调用
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
-    NSLog(@"开始加载");
+//    NSLog(@"开始加载");
     self.progressV.hidden = NO;
     self.progressV.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
 }
 // 当内容开始返回时调用
 - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
-    NSLog(@"返回加载");
+//    NSLog(@"返回加载");
 }
 // 页面加载完成之后调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    NSLog(@"加载完成");
+//    NSLog(@"加载完成");
     self.progressV.hidden = YES;
     [self.webView evaluateJavaScript:@"document.documentElement.style.webkitTouchCallout='none';" completionHandler:nil];
     [self.webView evaluateJavaScript:@"document.documentElement.style.webkitUserSelect='none';"completionHandler:nil];
 }
 // 页面加载失败时调用
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
-    NSLog(@"加载失败");
+//    NSLog(@"加载失败");
 }
 
 -(WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
 {
     
-    NSLog(@"createWebViewWithConfiguration");
+//    NSLog(@"createWebViewWithConfiguration");
     
     if (!navigationAction.targetFrame.isMainFrame) {
         

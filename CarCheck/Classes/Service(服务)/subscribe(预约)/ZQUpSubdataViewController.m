@@ -106,6 +106,7 @@
     self.insuranceImg.userInteractionEnabled = YES;
     self.carCodeTf.keyboardType = UIKeyboardTypeASCIICapable;
     self.carCodeTf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    self.phoneTf.text = [Utility getUserPhone];
 }
 
 - (void)getCarTypeData
@@ -206,7 +207,7 @@
         [ZQLoadingView showAlertHUD:@"请输入手机号" duration:SXLoadingTime];
         return;
     }
-    NSString *carCodeStr = [self.carCodeTf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *carCodeStr = [self.carCodeTf.text trimDoneString];
     if (carCodeStr.length!=6) {
         [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
@@ -282,11 +283,14 @@
     ZQSubTimeViewController *subVC = [[ZQSubTimeViewController alloc] initWithNibName:@"ZQSubTimeViewController" bundle:nil];
     subVC.requestUrl = urlStr;
 //    subVC.uploadImageArr = imageArr;
-    subVC.uploadImageArr = @[UIImageJPEGRepresentation(licenseImage, 0.5),UIImageJPEGRepresentation(frontImage, 0.5),UIImageJPEGRepresentation(backImage, 0.5),UIImageJPEGRepresentation(insuranceImg, 0.5)];
+//    subVC.uploadImageArr = @[UIImageJPEGRepresentation(licenseImage, 0.5),UIImageJPEGRepresentation(frontImage, 0.5),UIImageJPEGRepresentation(backImage, 0.5),UIImageJPEGRepresentation(insuranceImg, 0.5)];
+    subVC.uploadImageArr = @[[self imageData:licenseImage],[self imageData:frontImage],[self imageData:backImage],[self imageData:insuranceImg]];
+
     if (self.serviceCharge>0) {
         subVC.serviceChargeMoney = _serviceCharge;
     }
     subVC.costMoney = moneyStr;
+    subVC.time_tes_id = self.b_testing_id;
     [self.navigationController pushViewController:subVC animated:YES];
 }
 #pragma mark ==YBuyingDatePickerDelegate==
@@ -302,6 +306,33 @@
 -(void)chooseImageAction:(UITapGestureRecognizer *)sender {
     
     _tempImgView = (UIImageView *)sender.view;
+    
+    UIAlertController *actionSheetController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cameraAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+        pickerVC.delegate = self;
+        pickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self.tabBarController presentViewController:pickerVC animated:YES completion:nil];
+    }];
+    UIAlertAction *albumAction = [UIAlertAction actionWithTitle:@"我的相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+        //想要知道选择的图片
+        pickerVC.delegate = self;
+        //开启编辑状态
+        pickerVC.allowsEditing = YES;
+        (void)(pickerVC.videoQuality = UIImagePickerControllerQualityTypeLow),           // 最低的质量,适合通过蜂窝网络传输
+        [self presentViewController:pickerVC animated:YES completion:nil];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [actionSheetController addAction:cameraAction];
+    [actionSheetController addAction:albumAction];
+    [actionSheetController addAction:cancelAction];
+    [self presentViewController:actionSheetController animated:YES completion:nil];
+    
+    /*
     UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
     //想要知道选择的图片
     pickerVC.delegate = self;
@@ -309,17 +340,34 @@
     pickerVC.allowsEditing = YES;
     (void)(pickerVC.videoQuality = UIImagePickerControllerQualityTypeLow),           // 最低的质量,适合通过蜂窝网络传输
     [self presentViewController:pickerVC animated:YES completion:nil];
-    
+    */
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
 //    NSLog(@"%@",info);
 //    [_tempImgView setImage:info[UIImagePickerControllerOriginalImage]];
-    [_tempImgView setImage:info[UIImagePickerControllerEditedImage]];
+    
+    [_tempImgView setImage:info[UIImagePickerControllerOriginalImage]];
     [picker dismissViewControllerAnimated:YES completion:^{
         
     }];
+    
+}
+- (NSData *)imageData:(UIImage *)myimage{
+    NSData *data=UIImageJPEGRepresentation(myimage, 1.0);
+    if (data.length>100*1024) {
+        if (data.length>1024*1024) {//1M以及以上
+            data=UIImageJPEGRepresentation(myimage, 0.1);
+            
+        }else if (data.length>512*1024) {//0.5M-1M
+            data=UIImageJPEGRepresentation(myimage, 0.5);
+            
+        }else if (data.length>200*1024) {//0.25M-0.5M
+            data=UIImageJPEGRepresentation(myimage, 0.9);
+            
+        }    }
+    return data;
     
 }
 

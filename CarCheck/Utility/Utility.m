@@ -359,4 +359,45 @@
         }
     }
 }
+
+//打电话
++ (void)phoneCallAction
+{
+    NSString *phoneStr = [Utility getServerPhone];
+//    NSString* PhoneStr = [NSString stringWithFormat:@"tel:%@",phoneStr];
+//    UIApplication * app = [UIApplication sharedApplication];
+//    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
+//        if (@available(iOS 10.0, *)) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:PhoneStr] options:@{} completionHandler:nil];
+//        } else {
+//           [app openURL:[NSURL URLWithString:PhoneStr]];
+//        }
+//    }
+    
+    NSString *str= [NSString stringWithFormat:@"tel://%@",phoneStr];
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"请拨打新概念检车统一客服热线: %@",phoneStr] preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}];
+    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"呼叫" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:str]]) {
+            if (@available(iOS 10.0, *)) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str] options:@{} completionHandler:nil];
+            } else {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            }
+        }
+
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:otherAction];
+
+    [[Utility getCurrentNavigationController] presentViewController:alertController animated:YES completion:nil];
+}
++ (UINavigationController *)getCurrentNavigationController
+{
+    UITabBarController *tbc = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    return (UINavigationController *)tbc.selectedViewController;
+}
 @end

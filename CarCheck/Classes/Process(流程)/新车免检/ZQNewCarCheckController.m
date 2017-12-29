@@ -39,6 +39,7 @@
     _titleArray = @[@"车主姓名",@"手机号码",@"车辆号码",@"收货地址"];
     _placeArray = @[@"请输入车主姓名",@"请输入手机号码",@"请输入车辆号码",@"请输入详细的收货地址"];
     _contentArray = [NSMutableArray arrayWithArray:@[@"",@"",@"",@""]];
+    _contentArray[1] = [Utility getUserPhone];
 }
 -(void)initViews {
     
@@ -118,7 +119,7 @@
         [ZQLoadingView showAlertHUD:@"请输入手机号码" duration:SXLoadingTime];
         return;
     }
-    NSString *carCardStr = [self.contentArray[2] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *carCardStr = [self.contentArray[2] trimDoneString];
     if (carCardStr.length != 6) {
         [ZQLoadingView showAlertHUD:@"请输入正确车牌号码" duration:SXLoadingTime];
         return;
@@ -151,12 +152,7 @@
 }
 - (void)phoneBtnAction
 {
-    NSString *phoneStr = [Utility getServerPhone];
-    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-    UIApplication * app = [UIApplication sharedApplication];
-    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-        [app openURL:[NSURL URLWithString:PhoneStr]];
-    }
+    [Utility phoneCallAction];
 }
 #pragma mark ZQVioUpTableViewCellDelegate
 -(void)showChooseView {
@@ -202,6 +198,9 @@
     else
     {
         type = ZQVioUpCellType2;
+    }
+    if (indexPath.row==1) {
+        cell.contentTf.text = [Utility getUserPhone];
     }
     cell.contentTf.delegate = self;
     //        cell.contentTf.text = _contentArray[indexPath.row];

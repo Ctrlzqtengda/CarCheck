@@ -51,6 +51,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mobile = [Utility getUserPhone];
     temp = 60;
     [self initView];
     [self getNavis];
@@ -111,6 +112,7 @@
             {
                 headIV.frame = CGRectMake(11, 11, 24, 24);
                 inputTF.placeholder = @"已验证手机";
+                inputTF.text = self.mobile;
             }
                 break;
             case 1:
@@ -167,7 +169,6 @@
 
 #pragma mark ==获取验证码==
 -(void)getCode{
-    NSLog(@"获取验证码");
     [self.view endEditing:YES];
     if (_mobile.length) {
         if (![_mobile isValidMobilePhoneNumber]) {
@@ -218,7 +219,6 @@
 }
 #pragma mark ==换一张==
 -(void)change{
-    NSLog(@"换一张图");
    _numIV.image =[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://api.yisu.cn/Home/Register/verify"]]];
 }
 #pragma mark ==找回密码==
@@ -243,8 +243,6 @@
         [ZQLoadingView showAlertHUD:@"请输入新密码" duration:1.5];
         return;
     }
-    
-    NSLog(@"找回密码");
     __weak __typeof(self)weakSelf = self;
     NSString *urlStr = [NSString stringWithFormat:@"daf/password_recovery/phone/%@/password/%@",_mobile,_picCode];
 

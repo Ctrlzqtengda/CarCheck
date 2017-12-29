@@ -295,12 +295,7 @@
                 case 2:
                 {
 //                    type = ZQSubScTypeCellPhone;
-                    NSString *phoneStr = [Utility getServerPhone];
-                    NSString* PhoneStr = [NSString stringWithFormat:@"tel://%@",phoneStr];
-                    UIApplication * app = [UIApplication sharedApplication];
-                    if ([app canOpenURL:[NSURL URLWithString:PhoneStr]]) {
-                        [app openURL:[NSURL URLWithString:PhoneStr]];
-                    }
+                    [Utility phoneCallAction];
                     return;
                 }
                     break;
@@ -315,7 +310,8 @@
                         //                    }
                         //                    else
                         //                    {
-                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+//                        ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:htmlStr andShowBottom:3];
+                         ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.5" andShowBottom:3];
                         Vc.title = @"新车免检预约服务须知";
                         Vc.classString = NSStringFromClass([ZQNewCarCheckController class]);
                         [Vc setHidesBottomBarWhenPushed:YES];
@@ -338,7 +334,8 @@
 //            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
 //            [self.navigationController pushViewController:subVC animated:YES];
             
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"platformIntroduction.html" andShowBottom:NO];
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"platformIntroduction.html" andShowBottom:NO];
+            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.3" andShowBottom:NO];
             Vc.title = @"平台介绍";
             [Vc setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:Vc animated:YES];
@@ -385,7 +382,8 @@
         case 3:{
 //            ZQProblemViewController *subVC = [[ZQProblemViewController alloc] init];
 //            [self.navigationController pushViewController:subVC animated:YES];
-            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+//            ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"questions.html" andShowBottom:NO];
+             ZQHtmlViewController *Vc = [[ZQHtmlViewController alloc] initWithUrlString:@"notice.4" andShowBottom:NO];
             Vc.title = @"常见问题";
             [Vc setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:Vc animated:YES];

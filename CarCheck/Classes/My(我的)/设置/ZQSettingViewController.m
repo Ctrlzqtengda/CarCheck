@@ -184,7 +184,7 @@
 - (void)requestShareData
 {
     NSString *urlStr = [NSString stringWithFormat:@"daf/update_share/u_id/%@",[Utility getUserID]];
-    NSLog(@"分享回调接口:%@",urlStr);
+//    NSLog(@"分享回调接口:%@",urlStr);
     //我的消息接口
 //    __weak typeof(self) weakSelf = self;
     [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
