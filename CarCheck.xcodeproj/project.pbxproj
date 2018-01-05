@@ -57,8 +57,6 @@
 		5EA0FEEC1F8B395B005E882C /* ZQOnlineAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEB1F8B395B005E882C /* ZQOnlineAlertView.m */; };
 		5EA0FEF01F8B3E83005E882C /* ZQMyBookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */; };
 		5EA0FEF41F8B3EB9005E882C /* ZQMyBooingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */; };
-		5EACB3B11FB0099C00A3E88C /* forfeit.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EACB3B01FB0099B00A3E88C /* forfeit.html */; };
-		5EACB3B31FB0326A00A3E88C /* reservationNotice.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EACB3B21FB0326A00A3E88C /* reservationNotice.html */; };
 		5EB733621FBD7F9E0071F4D2 /* NSDate+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733611FBD7F9E0071F4D2 /* NSDate+helper.m */; };
 		5EB733651FBE74800071F4D2 /* ZQDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733641FBE74800071F4D2 /* ZQDateModel.m */; };
 		5EB7336A1FBED0DF0071F4D2 /* ZQVIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733691FBED0DF0071F4D2 /* ZQVIPViewController.m */; };
@@ -68,7 +66,6 @@
 		5EB733771FBEE09F0071F4D2 /* ZQBuyVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733761FBEE09F0071F4D2 /* ZQBuyVipViewController.m */; };
 		5EB7337B1FC1182D0071F4D2 /* ZQVIPBuyCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB7337A1FC1182C0071F4D2 /* ZQVIPBuyCardView.m */; };
 		5EB7337E1FC126840071F4D2 /* ZQVIPContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB7337D1FC126840071F4D2 /* ZQVIPContentCell.m */; };
-		5EB733801FC12EC50071F4D2 /* vip_detail.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7337F1FC12EC50071F4D2 /* vip_detail.html */; };
 		5EB733831FC12F5B0071F4D2 /* ZQVIPFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733821FC12F5B0071F4D2 /* ZQVIPFootView.m */; };
 		5EB733861FC133FA0071F4D2 /* ZQVIPDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB733851FC133FA0071F4D2 /* ZQVIPDetailController.m */; };
 		5EC1478D1FD4E43000DB9434 /* GPSNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1478B1FD4E43000DB9434 /* GPSNaviViewController.m */; };
@@ -79,15 +76,9 @@
 		5EC1479F1FD532D100DB9434 /* ZQProCityPickerV.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1479E1FD532D100DB9434 /* ZQProCityPickerV.m */; };
 		5EC147A21FD55CD900DB9434 /* ZQVioResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC147A11FD55CD900DB9434 /* ZQVioResultView.m */; };
 		5EC147A61FD78A4300DB9434 /* ZQNewUpVioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC147A51FD78A4300DB9434 /* ZQNewUpVioViewController.m */; };
-		5EDCC0EF1FAC4D90007789DC /* questions.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0EE1FAC4D8F007789DC /* questions.html */; };
-		5EDCC0F11FAC59E4007789DC /* agency.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F01FAC59E4007789DC /* agency.html */; };
 		5EDCC0F31FAC5C5A007789DC /* agency.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F21FAC5C59007789DC /* agency.png */; };
 		5EDCC0F61FAC8256007789DC /* ZQMaintainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCC0F51FAC8256007789DC /* ZQMaintainCell.m */; };
-		5EE703B61FB2E8F900D2945F /* reservationNotice2.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE703B51FB2E8F900D2945F /* reservationNotice2.html */; };
-		5EE703B81FB2EE8000D2945F /* NewCarNotice.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE703B71FB2EE8000D2945F /* NewCarNotice.html */; };
 		5EE703BC1FB2F1A500D2945F /* ZQNewCarCheckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EE703BB1FB2F1A500D2945F /* ZQNewCarCheckController.m */; };
-		5EE703BE1FB30A6E00D2945F /* platformIntroduction.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE703BD1FB30A6D00D2945F /* platformIntroduction.html */; };
-		5EE703C01FB30CFF00D2945F /* reservationNotice3.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE703BF1FB30CFF00D2945F /* reservationNotice3.html */; };
 		5EEA2FD21F8B634A000AD168 /* ZQFeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */; };
 		5EEA2FD61F8B6743000AD168 /* FBTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EEA2FD51F8B6743000AD168 /* FBTextView.m */; };
 		5EF0A5CD1FE79CFD00C29A0F /* ZQPayPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0A5CC1FE79CFD00C29A0F /* ZQPayPasswordController.m */; };
@@ -274,8 +265,6 @@
 		5EA0FEEF1F8B3E83005E882C /* ZQMyBookingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBookingViewController.m; sourceTree = "<group>"; };
 		5EA0FEF21F8B3EB9005E882C /* ZQMyBooingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMyBooingCell.h; sourceTree = "<group>"; };
 		5EA0FEF31F8B3EB9005E882C /* ZQMyBooingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMyBooingCell.m; sourceTree = "<group>"; };
-		5EACB3B01FB0099B00A3E88C /* forfeit.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = forfeit.html; sourceTree = "<group>"; };
-		5EACB3B21FB0326A00A3E88C /* reservationNotice.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = reservationNotice.html; sourceTree = "<group>"; };
 		5EB733601FBD7F9E0071F4D2 /* NSDate+helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+helper.h"; sourceTree = "<group>"; };
 		5EB733611FBD7F9E0071F4D2 /* NSDate+helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+helper.m"; sourceTree = "<group>"; };
 		5EB733631FBE74800071F4D2 /* ZQDateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQDateModel.h; sourceTree = "<group>"; };
@@ -292,7 +281,6 @@
 		5EB7337A1FC1182C0071F4D2 /* ZQVIPBuyCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQVIPBuyCardView.m; sourceTree = "<group>"; };
 		5EB7337C1FC126840071F4D2 /* ZQVIPContentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQVIPContentCell.h; sourceTree = "<group>"; };
 		5EB7337D1FC126840071F4D2 /* ZQVIPContentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQVIPContentCell.m; sourceTree = "<group>"; };
-		5EB7337F1FC12EC50071F4D2 /* vip_detail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = vip_detail.html; sourceTree = "<group>"; };
 		5EB733811FC12F5B0071F4D2 /* ZQVIPFootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQVIPFootView.h; sourceTree = "<group>"; };
 		5EB733821FC12F5B0071F4D2 /* ZQVIPFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQVIPFootView.m; sourceTree = "<group>"; };
 		5EB733841FC133FA0071F4D2 /* ZQVIPDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQVIPDetailController.h; sourceTree = "<group>"; };
@@ -313,17 +301,11 @@
 		5EC147A11FD55CD900DB9434 /* ZQVioResultView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQVioResultView.m; sourceTree = "<group>"; };
 		5EC147A41FD78A4300DB9434 /* ZQNewUpVioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQNewUpVioViewController.h; sourceTree = "<group>"; };
 		5EC147A51FD78A4300DB9434 /* ZQNewUpVioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQNewUpVioViewController.m; sourceTree = "<group>"; };
-		5EDCC0EE1FAC4D8F007789DC /* questions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = questions.html; sourceTree = "<group>"; };
-		5EDCC0F01FAC59E4007789DC /* agency.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agency.html; sourceTree = "<group>"; };
 		5EDCC0F21FAC5C59007789DC /* agency.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agency.png; sourceTree = "<group>"; };
 		5EDCC0F41FAC8256007789DC /* ZQMaintainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQMaintainCell.h; sourceTree = "<group>"; };
 		5EDCC0F51FAC8256007789DC /* ZQMaintainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQMaintainCell.m; sourceTree = "<group>"; };
-		5EE703B51FB2E8F900D2945F /* reservationNotice2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = reservationNotice2.html; sourceTree = "<group>"; };
-		5EE703B71FB2EE8000D2945F /* NewCarNotice.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NewCarNotice.html; sourceTree = "<group>"; };
 		5EE703BA1FB2F1A500D2945F /* ZQNewCarCheckController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQNewCarCheckController.h; sourceTree = "<group>"; };
 		5EE703BB1FB2F1A500D2945F /* ZQNewCarCheckController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQNewCarCheckController.m; sourceTree = "<group>"; };
-		5EE703BD1FB30A6D00D2945F /* platformIntroduction.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = platformIntroduction.html; sourceTree = "<group>"; };
-		5EE703BF1FB30CFF00D2945F /* reservationNotice3.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = reservationNotice3.html; sourceTree = "<group>"; };
 		5EEA2FD01F8B634A000AD168 /* ZQFeedBackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZQFeedBackViewController.h; sourceTree = "<group>"; };
 		5EEA2FD11F8B634A000AD168 /* ZQFeedBackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZQFeedBackViewController.m; sourceTree = "<group>"; };
 		5EEA2FD41F8B6743000AD168 /* FBTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBTextView.h; sourceTree = "<group>"; };
@@ -963,19 +945,10 @@
 		F04ACD881F79E20B00F4C50D = {
 			isa = PBXGroup;
 			children = (
-				5EB7337F1FC12EC50071F4D2 /* vip_detail.html */,
 				5EB733731FBED9940071F4D2 /* WechatIMG47@2x.png */,
 				5E6252931FB5984800DC9AB9 /* icon29@2x.png */,
 				5EF0A60C1FEB910C00C29A0F /* appIcon@2x.png */,
 				5EDCC0F21FAC5C59007789DC /* agency.png */,
-				5EDCC0F01FAC59E4007789DC /* agency.html */,
-				5EDCC0EE1FAC4D8F007789DC /* questions.html */,
-				5EACB3B01FB0099B00A3E88C /* forfeit.html */,
-				5EACB3B21FB0326A00A3E88C /* reservationNotice.html */,
-				5EE703B51FB2E8F900D2945F /* reservationNotice2.html */,
-				5EE703BF1FB30CFF00D2945F /* reservationNotice3.html */,
-				5EE703B71FB2EE8000D2945F /* NewCarNotice.html */,
-				5EE703BD1FB30A6D00D2945F /* platformIntroduction.html */,
 				5EA0FEBA1F8A2FD7005E882C /* YPAddress.plist */,
 				F04ACD931F79E20B00F4C50D /* CarCheck */,
 				F04ACD921F79E20B00F4C50D /* Products */,
@@ -1409,16 +1382,9 @@
 			files = (
 				5EA0FEC91F8A3FBB005E882C /* YPAddress.plist in Resources */,
 				F0CF42451FA819C6000C5929 /* ZQVioUpTableViewCell.xib in Resources */,
-				5EE703C01FB30CFF00D2945F /* reservationNotice3.html in Resources */,
-				5EDCC0F11FAC59E4007789DC /* agency.html in Resources */,
 				F0F5481A1F8488D400E76ACF /* ZQViolationViewController.xib in Resources */,
 				F0F5481F1F8497A800E76ACF /* ZQPayVioViewController.xib in Resources */,
-				5EDCC0EF1FAC4D90007789DC /* questions.html in Resources */,
-				5EB733801FC12EC50071F4D2 /* vip_detail.html in Resources */,
 				F0F5483E1F87445E00E76ACF /* ZQTimeCollectionViewCell.xib in Resources */,
-				5EE703BE1FB30A6E00D2945F /* platformIntroduction.html in Resources */,
-				5EE703B61FB2E8F900D2945F /* reservationNotice2.html in Resources */,
-				5EACB3B31FB0326A00A3E88C /* reservationNotice.html in Resources */,
 				F0F548391F8735E800E76ACF /* ZQCollectionViewCell.xib in Resources */,
 				5EB733741FBED9950071F4D2 /* WechatIMG47@2x.png in Resources */,
 				F0F47F7E1F8B290600DF54AC /* ZQUpSubdataViewController.xib in Resources */,
@@ -1426,13 +1392,11 @@
 				5E6252941FB5984800DC9AB9 /* icon29@2x.png in Resources */,
 				F04ACDDF1F7A506700F4C50D /* Launch Screen.storyboard in Resources */,
 				F0F548401F8749B500E76ACF /* ZQSubTimeViewController.xib in Resources */,
-				5EE703B81FB2EE8000D2945F /* NewCarNotice.html in Resources */,
 				5EDCC0F31FAC5C5A007789DC /* agency.png in Resources */,
 				F04ACD9E1F79E20B00F4C50D /* Assets.xcassets in Resources */,
 				5EF0C53B1FE7561600577FDD /* PasswordKeyboard.xib in Resources */,
 				5EB733721FBED4790071F4D2 /* ZQNewVIPViewController.xib in Resources */,
 				F06AE6841FA9A17B00599243 /* ZQCarInsMapViewController.xib in Resources */,
-				5EACB3B11FB0099C00A3E88C /* forfeit.html in Resources */,
 				F0F548451F87515C00E76ACF /* ZQOnlineSubViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

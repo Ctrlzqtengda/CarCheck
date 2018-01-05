@@ -132,7 +132,8 @@
             {
                 NSString *jsonStr = jsonDic[@"list"][@"content"];
                 if ([jsonStr isKindOfClass:[NSString class]]) {
-                    [strongSelf.webView loadHTMLString:jsonStr baseURL:nil];
+                    NSString *htmlStr = [NSString stringWithFormat:@"<!DOCTYPE html>\n<html>\n<head>\n<meta name=\"viewport\"content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no\"/>\n<meta http-equiv=\"Content-Type\" content=\"texthtml; charset=UTF-8\"/>\n<style>body{\n\t max-width: 100%% !important; \n\theight: auto;\n\tfont-family:\"San Francisco\",sans-serif !important; font-size: 18px !important;\n}\n</style>\n</head>\n<body>\n\n%@</body>\n</html>", jsonStr];
+                    [strongSelf.webView loadHTMLString:htmlStr baseURL:nil];
                     return ;
                 }
             }

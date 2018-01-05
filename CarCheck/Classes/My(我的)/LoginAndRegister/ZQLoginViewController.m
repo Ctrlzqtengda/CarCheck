@@ -187,9 +187,9 @@
             }
             [strongSelf dismissViewControllerAnimated:YES completion:nil];
             //    给推送注册别名
-//            [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
-//
-//            } seq:5];
+            [JPUSHService setAlias:@"1234567890" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+
+            } seq:5];
         }
     } failure:^(NSError *error) {
 

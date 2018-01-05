@@ -94,7 +94,8 @@
             self.imgView.hidden = YES;
             self.provinceCodeLabel.hidden = YES;
             self.contentTf.enabled = YES;
-            self.contentTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+//            self.contentTf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            self.contentTf.keyboardType = UIKeyboardTypeDefault;
             self.tfRightInset.constant = 8;
             self.rightImgView.hidden = YES;
             self.contentTf.textAlignment = NSTextAlignmentLeft;

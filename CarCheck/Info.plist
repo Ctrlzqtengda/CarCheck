@@ -72,7 +72,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>3.0</string>
 	<key>Camera Usage Description</key>
 	<string>相机</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -102,11 +102,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App需要您的同意,才能访问相机</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>为了给您提供附近的检车机构，请“允许”我们访问您的位置</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>为了给您提供附近的检车机构，请“允许”我们访问您的位置</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>'新概念检车' 需要获取你当前的位置</string>
+	<string>为了给您提供附近的检车机构，请“允许”我们访问您的位置</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App需要您的同意,才能访问相册</string>
 	<key>UIRequiredDeviceCapabilities</key>

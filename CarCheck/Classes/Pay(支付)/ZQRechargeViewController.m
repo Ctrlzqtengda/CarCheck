@@ -166,7 +166,7 @@
     switch (indexPath.row) {
         case 0:
             {
-                [ZQLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
+                [self requestAliPay];
             }
             break;
         case 1:
@@ -228,6 +228,37 @@
 //                            strongSelf.rechargeSuccess();
 //                        }
 //                    }
+        } failure:^(NSError *error) {
+        } animated:YES];
+    }
+    else
+    {
+        [ZQLoadingView showAlertHUD:@"请填写金额" duration:SXLoadingTime];
+    }
+}
+- (void)requestAliPay
+{
+    if (_payMoney.floatValue > 0) {
+        NSString *urlStr = [NSString stringWithFormat:@"daf/wx_order/channel/alipay/u_id/%@/money/%.2f",[Utility getUserID],_payMoney.floatValue];
+        __weak typeof(self) weakSelf = self;
+        [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (strongSelf)
+            {
+                [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
+                    
+                    if (error) {
+                        NSLog(@"支付宝支付结果:%@",result);
+                        //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
+                        //                    [strongSelf getPayStatus:nil];
+                        [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
+                    }
+                    else
+                    {
+                        [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+                    }
+                }];
+            }
         } failure:^(NSError *error) {
         } animated:YES];
     }

@@ -18,8 +18,11 @@
 #define WbID @"3311610802"
 #define WbSecret @"36b4142ac5d137f32d51cd7d"
 //极光
-#define JPKey @"8f0ab8de2397697351bec55b"
-#define JPSecret @"f7c189dc704d83cdb042add9"
+//#define JPKey @"8f0ab8de2397697351bec55b"
+//#define JPSecret @"f7c189dc704d83cdb042add9"
+#define JPKey @"c00f675f1aada5aa879601e5"
+#define JPSecret @"a30e4d86aeaeb8eaf38ba3d9"
+
 
 #import "AppDelegate.h"
 #import "BaseNavigationController.h"
@@ -233,6 +236,21 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    if (@available(iOS 10.0, *)) {
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        content.badge = @(-1);
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"clearBadge" content:content trigger:nil];
+        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        }];
+    } else {
+        UILocalNotification *clearEpisodeNotification = [[UILocalNotification alloc] init];
+        clearEpisodeNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        clearEpisodeNotification.timeZone = [NSTimeZone systemTimeZone];
+        clearEpisodeNotification.applicationIconBadgeNumber = -1;
+        [[UIApplication sharedApplication] scheduleLocalNotification: clearEpisodeNotification];
+    }
+    
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }

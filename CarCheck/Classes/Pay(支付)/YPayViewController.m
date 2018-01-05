@@ -150,7 +150,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.row) {
         case 0:
-            [ZQLoadingView showAlertHUD:@"暂不支持支付宝支付" duration:SXLoadingTime];
+            [self requestAliPayData];
             break;
        case 1:
         {
@@ -226,23 +226,60 @@
 }
 - (void)requestAliPayData
 {
-    //    NSString *urlStr = [NSString stringWithFormat:@"daf/get_service_money/u_id/orderNum/%@/channel/wx/",[Utility getUserID],@"",@""];
-    __weak typeof(self) weakSelf = self;
-    [JKHttpRequestService POST:@"daf/get_service_money" withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
-        if (succe) {
-            __strong typeof(self) strongSelf = weakSelf;
-            if (strongSelf)
+    NSString *urlStr = nil;
+    switch (self.aPayType) {
+        case ZQPayVIPView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wx_vip_order/u_id/%@/channel/alipay",[Utility getUserID]];
+        }
+            break;
+        case ZQPayNewCarView:
+        {
+            if (self.orderNo.length) {
+                urlStr = [NSString stringWithFormat:@"daf/n_bespeak_order/u_id/%@/channel/alipay/order_no/%@",[Utility getUserID],self.orderNo];
+            }
+            else
             {
-                NSArray *array = jsonDic[@"res"];
-                if ([array isKindOfClass:[NSArray class]]) {
-                    if (array.count) {
-                        [Utility saveServiceMoneyWithArray:array];
+                [ZQLoadingView showAlertHUD:@"没有订单号" duration:SXLoadingTime];
+            }
+        }
+            break;
+        case ZQPayAFineView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/wx_fine_order/u_id/%@/channel/alipay/order_no/%@",[Utility getUserID],self.orderNo];
+        }
+            break;
+        case ZQPayBookingView:
+        {
+            urlStr = [NSString stringWithFormat:@"daf/upload_order/u_id/%@/channel/alipay/order_no/%@",[Utility getUserID],self.orderNo];
+        }
+            break;
+        default:
+            break;
+    }
+    __weak typeof(self) weakSelf = self;
+    [JKHttpRequestService POST:urlStr withParameters:nil success:^(id responseObject, BOOL succe, NSDictionary *jsonDic) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf)
+        {
+            if ([jsonDic[@"code"] integerValue] != 100)
+            {
+                [Pingpp createPayment:jsonDic viewController:strongSelf appURLScheme:@"CarCheckSchemes" withCompletion:^(NSString *result, PingppError *error) {
+                    if (error) {
+                        NSLog(@"YpayVC支付宝支付结果:%@",result);
+                        //                        [[NSNotificationCenter defaultCenter] postNotificationName:YSOrderPayStatus object:@[@"成功"] userInfo:nil];
+                        //                        [strongSelf getPayStatus:nil];
+                        [ZQLoadingView showAlertHUD:result duration:SXLoadingTime];
                     }
-                }
+                    else
+                    {
+                        [ZQLoadingView showAlertHUD:@"支付成功" duration:SXLoadingTime];
+                    }
+                }];
             }
         }
     } failure:^(NSError *error) {
-    } animated:NO];
+    } animated:YES];
 }
 - (void)requestWallet_vip_orderPay
 {
